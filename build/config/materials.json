@@ -42,6 +42,34 @@
         "G4_Cf": {
             "type": "nist",
             "name": "G4_Cf"
+        },
+        "G4_Al": {
+            "type": "nist",
+            "name": "G4_Al"
+        },
+        "G4_Cu": {
+            "type": "nist",
+            "name": "G4_Cu"
+        },
+        "G4_SODIUM_IODIDE": {
+            "type": "nist",
+            "name": "G4_SODIUM_IODIDE"
+        },
+        "G4_PLEXIGLASS": {
+            "type": "nist",
+            "name": "G4_PLEXIGLASS"
+        },
+        "G4_POLYETHYLENE": {
+            "type": "nist",
+            "name": "G4_POLYETHYLENE"
+        },
+        "G4_PLASTIC_SC_VINYLTOLUENE": {
+            "type": "nist",
+            "name": "G4_PLASTIC_SC_VINYLTOLUENE"
+        },
+        "G4_Ge": {
+            "type": "nist",
+            "name": "G4_Ge"
         }
     }
 }

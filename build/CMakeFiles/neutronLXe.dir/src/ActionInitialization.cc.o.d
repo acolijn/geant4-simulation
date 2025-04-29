@@ -1,9 +1,9 @@
 CMakeFiles/neutronLXe.dir/src/ActionInitialization.cc.o: \
- /user/z37/test_windsurf/src/ActionInitialization.cc \
+ /user/z37/geant4_projects/geant4-simulation/src/ActionInitialization.cc \
  /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/include/stdc-predef.h \
- /user/z37/test_windsurf/include/ActionInitialization.hh \
+ /user/z37/geant4_projects/geant4-simulation/include/ActionInitialization.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4VUserActionInitialization.hh \
- /user/z37/test_windsurf/include/PrimaryGeneratorAction.hh \
+ /user/z37/geant4_projects/geant4-simulation/include/PrimaryGeneratorAction.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4VUserPrimaryGeneratorAction.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4ParticleGun.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/globals.hh \
@@ -307,7 +307,7 @@ CMakeFiles/neutronLXe.dir/src/ActionInitialization.cc.o: \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4PrimaryParticle.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4ParticleMomentum.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/globals.hh \
- /user/z37/test_windsurf/include/RunAction.hh \
+ /user/z37/geant4_projects/geant4-simulation/include/RunAction.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4UserRunAction.hh \
  /data/xenon/miniconda3/envs/g4/include/Rtypes.h \
  /data/xenon/miniconda3/envs/g4/include/RtypesCore.h \

@@ -1,7 +1,7 @@
 CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.o: \
- /user/z37/test_windsurf/src/DetectorConstruction.cc \
+ /user/z37/geant4_projects/geant4-simulation/src/DetectorConstruction.cc \
  /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/include/stdc-predef.h \
- /user/z37/test_windsurf/include/DetectorConstruction.hh \
+ /user/z37/geant4_projects/geant4-simulation/include/DetectorConstruction.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4VUserDetectorConstruction.hh \
  /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/vector \
  /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/bits/stl_algobase.h \
@@ -323,8 +323,8 @@ CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.o: \
  /data/xenon/miniconda3/envs/g4/include/CLHEP/Vector/Rotation.icc \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4VPhysicalVolume.icc \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4LogicalVolume.icc \
- /user/z37/test_windsurf/include/GeometryParser.hh \
- /user/z37/test_windsurf/include/json.hpp \
+ /user/z37/geant4_projects/geant4-simulation/include/GeometryParser.hh \
+ /user/z37/geant4_projects/geant4-simulation/include/json.hpp \
  /data/xenon/miniconda3/envs/g4/include/nlohmann/json.hpp \
  /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/cstddef \
  /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/functional \

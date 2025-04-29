@@ -1,8 +1,8 @@
 CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.o: \
- /user/z37/test_windsurf/src/GeometryParser.cc \
+ /user/z37/geant4_projects/geant4-simulation/src/GeometryParser.cc \
  /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/include/stdc-predef.h \
- /user/z37/test_windsurf/include/GeometryParser.hh \
- /user/z37/test_windsurf/include/json.hpp \
+ /user/z37/geant4_projects/geant4-simulation/include/GeometryParser.hh \
+ /user/z37/geant4_projects/geant4-simulation/include/json.hpp \
  /data/xenon/miniconda3/envs/g4/include/nlohmann/json.hpp \
  /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/algorithm \
  /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/bits/stl_algobase.h \

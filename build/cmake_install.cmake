@@ -1,4 +1,4 @@
-# Install script for directory: /user/z37/test_windsurf
+# Install script for directory: /user/z37/geant4_projects/geant4-simulation
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/user/z37/test_windsurf/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/user/z37/geant4_projects/geant4-simulation/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

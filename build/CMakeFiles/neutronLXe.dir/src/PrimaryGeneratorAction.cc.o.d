@@ -1,7 +1,7 @@
 CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.o: \
- /user/z37/test_windsurf/src/PrimaryGeneratorAction.cc \
+ /user/z37/geant4_projects/geant4-simulation/src/PrimaryGeneratorAction.cc \
  /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/include/stdc-predef.h \
- /user/z37/test_windsurf/include/PrimaryGeneratorAction.hh \
+ /user/z37/geant4_projects/geant4-simulation/include/PrimaryGeneratorAction.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4VUserPrimaryGeneratorAction.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4ParticleGun.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/globals.hh \

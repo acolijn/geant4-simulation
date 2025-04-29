@@ -1,0 +1,55 @@
+# Build directory
+/build/
+
+# Compiled Object files
+*.o
+*.obj
+*.lo
+*.slo
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.a
+*.la
+*.lai
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# Root files (data)
+*.root
+
+# Backup files
+*~
+*.bak
+*.swp
+
+# IDE specific files
+.vscode/
+.idea/
+*.user
+
+# Documentation build directories
+docs/_build/
+docs/html/
+docs/**/_build/
+docs/**/html/
