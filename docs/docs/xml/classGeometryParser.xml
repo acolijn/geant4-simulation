@@ -1,0 +1,482 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classGeometryParser" kind="class" language="C++" prot="public">
+    <compoundname>GeometryParser</compoundname>
+    <includes refid="GeometryParser_8hh" local="no">GeometryParser.hh</includes>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classGeometryParser_1a670e3a0541915a69130fb810bf99370e" prot="private" static="no" mutable="no">
+        <type><ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref></type>
+        <definition>json GeometryParser::geometryConfig</definition>
+        <argsstring></argsstring>
+        <name>geometryConfig</name>
+        <qualifiedname>GeometryParser::geometryConfig</qualifiedname>
+        <briefdescription>
+<para>Geometry configuration. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="52" column="10" bodyfile="/user/z37/test_windsurf/include/GeometryParser.hh" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classGeometryParser_1acea20d9e9d83c566133aa9f8dbbaf654" prot="private" static="no" mutable="no">
+        <type><ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref></type>
+        <definition>json GeometryParser::materialsConfig</definition>
+        <argsstring></argsstring>
+        <name>materialsConfig</name>
+        <qualifiedname>GeometryParser::materialsConfig</qualifiedname>
+        <briefdescription>
+<para>Materials configuration. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="53" column="10" bodyfile="/user/z37/test_windsurf/include/GeometryParser.hh" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classGeometryParser_1a9cc65fe4e3627f1a7009e7a040d454b0" prot="private" static="no" mutable="no">
+        <type>std::map&lt; std::string, G4Material * &gt;</type>
+        <definition>std::map&lt;std::string, G4Material*&gt; GeometryParser::materials</definition>
+        <argsstring></argsstring>
+        <name>materials</name>
+        <qualifiedname>GeometryParser::materials</qualifiedname>
+        <briefdescription>
+<para>Cache of created materials. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="55" column="14" bodyfile="/user/z37/test_windsurf/include/GeometryParser.hh" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classGeometryParser_1a17e226b77c81f528bf5bdb8ee0c5976c" prot="private" static="no" mutable="no">
+        <type>std::map&lt; std::string, G4LogicalVolume * &gt;</type>
+        <definition>std::map&lt;std::string, G4LogicalVolume*&gt; GeometryParser::volumes</definition>
+        <argsstring></argsstring>
+        <name>volumes</name>
+        <qualifiedname>GeometryParser::volumes</qualifiedname>
+        <briefdescription>
+<para>Cache of created volumes. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="56" column="14" bodyfile="/user/z37/test_windsurf/include/GeometryParser.hh" bodystart="56" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classGeometryParser_1a8345530e9b723ba00f6d993234ec0975" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>GeometryParser::GeometryParser</definition>
+        <argsstring>()</argsstring>
+        <name>GeometryParser</name>
+        <qualifiedname>GeometryParser::GeometryParser</qualifiedname>
+        <briefdescription>
+<para>Constructor. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Default constructor for <ref refid="classGeometryParser" kindref="compound">GeometryParser</ref>.</para>
+<para>Initializes an empty geometry parser without loading any configuration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="28" column="5" bodyfile="/user/z37/test_windsurf/src/GeometryParser.cc" bodystart="14" bodyend="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classGeometryParser_1a14f8bde579a496f9d65331290890a71e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>GeometryParser::~GeometryParser</definition>
+        <argsstring>()</argsstring>
+        <name>~GeometryParser</name>
+        <qualifiedname>GeometryParser::~GeometryParser</qualifiedname>
+        <briefdescription>
+<para>Destructor. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Destructor for <ref refid="classGeometryParser" kindref="compound">GeometryParser</ref>.</para>
+<para>Memory management of G4 objects is handled by Geant4 </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="31" column="5" bodyfile="/user/z37/test_windsurf/src/GeometryParser.cc" bodystart="21" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classGeometryParser_1a6137e170737934faccb18e6754f53f0a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void GeometryParser::LoadGeometryConfig</definition>
+        <argsstring>(const std::string &amp;filename)</argsstring>
+        <name>LoadGeometryConfig</name>
+        <qualifiedname>GeometryParser::LoadGeometryConfig</qualifiedname>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>filename</declname>
+        </param>
+        <briefdescription>
+<para>Load geometry configuration from JSON file. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Load detector geometry configuration from a JSON file.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>filename</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Path to geometry JSON file</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>filename</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Path to the JSON configuration file </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>std::runtime_error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if file cannot be opened or parsed</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+Reads and parses the geometry configuration file into the geometryConfig member </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="37" column="10" bodyfile="/user/z37/test_windsurf/src/GeometryParser.cc" bodystart="30" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="classGeometryParser_1a06bb278eb2df23afc7aa128bb9e22a3f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void GeometryParser::LoadMaterialsConfig</definition>
+        <argsstring>(const std::string &amp;filename)</argsstring>
+        <name>LoadMaterialsConfig</name>
+        <qualifiedname>GeometryParser::LoadMaterialsConfig</qualifiedname>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>filename</declname>
+        </param>
+        <briefdescription>
+<para>Load materials configuration from JSON file. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Load material definitions from a JSON file.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>filename</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Path to materials JSON file</para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>filename</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Path to the JSON materials configuration file </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>std::runtime_error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if file cannot be opened or parsed</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+Reads and parses the materials configuration file into the materialsConfig member </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="43" column="10" bodyfile="/user/z37/test_windsurf/src/GeometryParser.cc" bodystart="44" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="classGeometryParser_1a2c431afc7ac6099584ba8a15ed61d37a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>G4VPhysicalVolume *</type>
+        <definition>G4VPhysicalVolume * GeometryParser::ConstructGeometry</definition>
+        <argsstring>()</argsstring>
+        <name>ConstructGeometry</name>
+        <qualifiedname>GeometryParser::ConstructGeometry</qualifiedname>
+        <briefdescription>
+<para>Create the world volume from loaded configuration. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Construct the complete detector geometry.</para>
+<para><simplesect kind="return"><para>Pointer to the physical world volume</para>
+</simplesect>
+<simplesect kind="return"><para>Pointer to the world physical volume</para>
+</simplesect>
+Creates the world volume and places all other volumes within it according to the loaded geometry configuration </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="49" column="23" bodyfile="/user/z37/test_windsurf/src/GeometryParser.cc" bodystart="202" bodyend="223"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classGeometryParser_1ad0bad320ed7173ebffd0883d0ac6c281" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>G4Material *</type>
+        <definition>G4Material * GeometryParser::CreateMaterial</definition>
+        <argsstring>(const std::string &amp;name, const json &amp;config)</argsstring>
+        <name>CreateMaterial</name>
+        <qualifiedname>GeometryParser::CreateMaterial</qualifiedname>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>const <ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref> &amp;</type>
+          <declname>config</declname>
+        </param>
+        <briefdescription>
+<para>Create a G4Material from JSON configuration. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Material name </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>config</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>JSON configuration for the material </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Pointer to created G4Material</para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Name of the material to create </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>config</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>JSON object containing material properties </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Pointer to the created or cached G4Material </para>
+</simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>std::runtime_error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if material creation fails</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+Supports creation of materials from NIST database or by element composition. For compound materials, requires density, state, temperature, and composition. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="64" column="16" bodyfile="/user/z37/test_windsurf/src/GeometryParser.cc" bodystart="61" bodyend="110"/>
+      </memberdef>
+      <memberdef kind="function" id="classGeometryParser_1a0baf12b3b2c03025edc3f42542e0f3fe" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>G4LogicalVolume *</type>
+        <definition>G4LogicalVolume * GeometryParser::CreateVolume</definition>
+        <argsstring>(const json &amp;config)</argsstring>
+        <name>CreateVolume</name>
+        <qualifiedname>GeometryParser::CreateVolume</qualifiedname>
+        <param>
+          <type>const <ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref> &amp;</type>
+          <declname>config</declname>
+        </param>
+        <briefdescription>
+<para>Create a G4LogicalVolume from JSON configuration. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>config</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>JSON configuration for the volume </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Pointer to created G4LogicalVolume</para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>config</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>JSON object containing volume properties </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Pointer to the created G4LogicalVolume </para>
+</simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>std::runtime_error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if volume creation fails</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+Creates a logical volume with specified material and shape. Currently supports box shapes only. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="71" column="21" bodyfile="/user/z37/test_windsurf/src/GeometryParser.cc" bodystart="160" bodyend="194"/>
+      </memberdef>
+      <memberdef kind="function" id="classGeometryParser_1a7e83ca0cff750a631d912ca29b31b9ba" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>G4ThreeVector</type>
+        <definition>G4ThreeVector GeometryParser::ParseVector</definition>
+        <argsstring>(const json &amp;vec)</argsstring>
+        <name>ParseVector</name>
+        <qualifiedname>GeometryParser::ParseVector</qualifiedname>
+        <param>
+          <type>const <ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref> &amp;</type>
+          <declname>vec</declname>
+        </param>
+        <briefdescription>
+<para>Convert JSON vector to G4ThreeVector with units. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Convert a JSON vector definition to G4ThreeVector.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>vec</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>JSON object containing x,y,z and unit </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>G4ThreeVector with applied units</para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>vec</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>JSON object containing x,y,z components and unit </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>G4ThreeVector with components scaled to proper units</para>
+</simplesect>
+Expects JSON format: {&quot;x&quot;: val, &quot;y&quot;: val, &quot;z&quot;: val, &quot;unit&quot;: &quot;mm|cm|m&quot;} </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="78" column="19" bodyfile="/user/z37/test_windsurf/src/GeometryParser.cc" bodystart="118" bodyend="130"/>
+      </memberdef>
+      <memberdef kind="function" id="classGeometryParser_1a3c5dff63c3d5fb09368cacec478fe3a2" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>G4RotationMatrix *</type>
+        <definition>G4RotationMatrix * GeometryParser::ParseRotation</definition>
+        <argsstring>(const json &amp;rot)</argsstring>
+        <name>ParseRotation</name>
+        <qualifiedname>GeometryParser::ParseRotation</qualifiedname>
+        <param>
+          <type>const <ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref> &amp;</type>
+          <declname>rot</declname>
+        </param>
+        <briefdescription>
+<para>Convert JSON rotation to G4RotationMatrix. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Convert JSON rotation angles to G4RotationMatrix.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rot</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>JSON object containing rotation angles </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Pointer to new G4RotationMatrix</para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rot</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>JSON object containing rotation angles </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Pointer to new G4RotationMatrix</para>
+</simplesect>
+Expects JSON format: {&quot;x&quot;: angle_x, &quot;y&quot;: angle_y, &quot;z&quot;: angle_z} Angles should be in degrees </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="85" column="22" bodyfile="/user/z37/test_windsurf/src/GeometryParser.cc" bodystart="139" bodyend="150"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Parses JSON configuration files for geometry and materials. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>This class handles the parsing of external JSON configuration files for both detector geometry and materials. It provides methods to:<itemizedlist>
+<listitem><para>Load and parse JSON files</para>
+</listitem><listitem><para>Create G4 materials from JSON descriptions</para>
+</listitem><listitem><para>Create G4 volumes from JSON descriptions </para>
+</listitem></itemizedlist>
+</para>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>GeometryParser</label>
+        <link refid="classGeometryParser"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>geometryConfig</edgelabel>
+          <edgelabel>materialsConfig</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>materials</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>volumes</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>json</label>
+      </node>
+      <node id="4">
+        <label>map&lt; std::string, G4LogicalVolume * &gt;</label>
+      </node>
+      <node id="3">
+        <label>map&lt; std::string, G4Material * &gt;</label>
+      </node>
+    </collaborationgraph>
+    <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="25" column="1" bodyfile="/user/z37/test_windsurf/include/GeometryParser.hh" bodystart="25" bodyend="86"/>
+    <listofallmembers>
+      <member refid="classGeometryParser_1a2c431afc7ac6099584ba8a15ed61d37a" prot="public" virt="non-virtual"><scope>GeometryParser</scope><name>ConstructGeometry</name></member>
+      <member refid="classGeometryParser_1ad0bad320ed7173ebffd0883d0ac6c281" prot="private" virt="non-virtual"><scope>GeometryParser</scope><name>CreateMaterial</name></member>
+      <member refid="classGeometryParser_1a0baf12b3b2c03025edc3f42542e0f3fe" prot="private" virt="non-virtual"><scope>GeometryParser</scope><name>CreateVolume</name></member>
+      <member refid="classGeometryParser_1a670e3a0541915a69130fb810bf99370e" prot="private" virt="non-virtual"><scope>GeometryParser</scope><name>geometryConfig</name></member>
+      <member refid="classGeometryParser_1a8345530e9b723ba00f6d993234ec0975" prot="public" virt="non-virtual"><scope>GeometryParser</scope><name>GeometryParser</name></member>
+      <member refid="classGeometryParser_1a6137e170737934faccb18e6754f53f0a" prot="public" virt="non-virtual"><scope>GeometryParser</scope><name>LoadGeometryConfig</name></member>
+      <member refid="classGeometryParser_1a06bb278eb2df23afc7aa128bb9e22a3f" prot="public" virt="non-virtual"><scope>GeometryParser</scope><name>LoadMaterialsConfig</name></member>
+      <member refid="classGeometryParser_1a9cc65fe4e3627f1a7009e7a040d454b0" prot="private" virt="non-virtual"><scope>GeometryParser</scope><name>materials</name></member>
+      <member refid="classGeometryParser_1acea20d9e9d83c566133aa9f8dbbaf654" prot="private" virt="non-virtual"><scope>GeometryParser</scope><name>materialsConfig</name></member>
+      <member refid="classGeometryParser_1a3c5dff63c3d5fb09368cacec478fe3a2" prot="private" virt="non-virtual"><scope>GeometryParser</scope><name>ParseRotation</name></member>
+      <member refid="classGeometryParser_1a7e83ca0cff750a631d912ca29b31b9ba" prot="private" virt="non-virtual"><scope>GeometryParser</scope><name>ParseVector</name></member>
+      <member refid="classGeometryParser_1a17e226b77c81f528bf5bdb8ee0c5976c" prot="private" virt="non-virtual"><scope>GeometryParser</scope><name>volumes</name></member>
+      <member refid="classGeometryParser_1a14f8bde579a496f9d65331290890a71e" prot="public" virt="non-virtual"><scope>GeometryParser</scope><name>~GeometryParser</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

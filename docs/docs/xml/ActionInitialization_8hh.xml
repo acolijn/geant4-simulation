@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="ActionInitialization_8hh" kind="file" language="C++">
+    <compoundname>ActionInitialization.hh</compoundname>
+    <includes local="yes">G4VUserActionInitialization.hh</includes>
+    <includedby refid="ActionInitialization_8cc" local="yes">/user/z37/test_windsurf/src/ActionInitialization.cc</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>/user/z37/test_windsurf/include/ActionInitialization.hh</label>
+        <link refid="ActionInitialization_8hh"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>G4VUserActionInitialization.hh</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>/user/z37/test_windsurf/include/ActionInitialization.hh</label>
+        <link refid="ActionInitialization_8hh"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/user/z37/test_windsurf/src/ActionInitialization.cc</label>
+        <link refid="ActionInitialization_8cc"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classActionInitialization" prot="public">ActionInitialization</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>ActionInitialization_h</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ActionInitialization_h<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4VUserActionInitialization.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="classActionInitialization" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classActionInitialization" kindref="compound">ActionInitialization</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classG4VUserActionInitialization" kindref="compound">G4VUserActionInitialization</ref></highlight></codeline>
+<codeline lineno="18"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classActionInitialization_1ad7c1e53093b731f00b91e643e50b7d94" kindref="member">ActionInitialization</ref>();</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classActionInitialization_1acaf37c7dc69ff697782dccd6b41e73a1" kindref="member">~ActionInitialization</ref>();</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classActionInitialization_1a48c24b5a340ef3e8a69f44f9b6bf02be" kindref="member">BuildForMaster</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classActionInitialization_1a9b8f6328b1b2e3ba39a1c230774cab66" kindref="member">Build</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/user/z37/test_windsurf/include/ActionInitialization.hh"/>
+  </compounddef>
+</doxygen>

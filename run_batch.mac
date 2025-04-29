@@ -1,0 +1,19 @@
+# Batch mode macro for running simulations
+# This macro is executed after pre_init.mac and detector initialization
+/detector/setGeometryFile config/advanced_geometry.json
+/detector/setMaterialsFile config/materials.json
+
+# Disable visualization for batch mode
+/vis/disable
+
+# Particle gun settings
+/gun/particle neutron
+/gun/energy 1 MeV
+/gun/position 0 0 0 cm
+/gun/direction 0 0 1
+
+# Run settings
+/run/initialize
+/run/beamOn 100  # Adjust the number of events as needed
+
+# You can add other batch mode settings here

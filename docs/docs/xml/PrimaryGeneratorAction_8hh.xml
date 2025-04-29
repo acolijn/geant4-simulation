@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="PrimaryGeneratorAction_8hh" kind="file" language="C++">
+    <compoundname>PrimaryGeneratorAction.hh</compoundname>
+    <includes local="yes">G4VUserPrimaryGeneratorAction.hh</includes>
+    <includes local="yes">G4ParticleGun.hh</includes>
+    <includes local="yes">globals.hh</includes>
+    <includedby refid="ActionInitialization_8cc" local="yes">/user/z37/test_windsurf/src/ActionInitialization.cc</includedby>
+    <includedby refid="PrimaryGeneratorAction_8cc" local="yes">/user/z37/test_windsurf/src/PrimaryGeneratorAction.cc</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>/user/z37/test_windsurf/include/PrimaryGeneratorAction.hh</label>
+        <link refid="PrimaryGeneratorAction_8hh"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>G4ParticleGun.hh</label>
+      </node>
+      <node id="2">
+        <label>G4VUserPrimaryGeneratorAction.hh</label>
+      </node>
+      <node id="4">
+        <label>globals.hh</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>/user/z37/test_windsurf/include/PrimaryGeneratorAction.hh</label>
+        <link refid="PrimaryGeneratorAction_8hh"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/user/z37/test_windsurf/src/ActionInitialization.cc</label>
+        <link refid="ActionInitialization_8cc"/>
+      </node>
+      <node id="3">
+        <label>/user/z37/test_windsurf/src/PrimaryGeneratorAction.cc</label>
+        <link refid="PrimaryGeneratorAction_8cc"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classPrimaryGeneratorAction" prot="public">PrimaryGeneratorAction</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>PrimaryGeneratorAction_h</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PrimaryGeneratorAction_h<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4VUserPrimaryGeneratorAction.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4ParticleGun.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;globals.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal">G4ParticleGun;</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal">G4Event;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21" refid="classPrimaryGeneratorAction" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classPrimaryGeneratorAction" kindref="compound">PrimaryGeneratorAction</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classG4VUserPrimaryGeneratorAction" kindref="compound">G4VUserPrimaryGeneratorAction</ref></highlight></codeline>
+<codeline lineno="22"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classPrimaryGeneratorAction_1a4bbef83d397d84b434541f8720bf747d" kindref="member">PrimaryGeneratorAction</ref>();<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classPrimaryGeneratorAction_1ad236fbc210171b9178446778b6bdfb40" kindref="member">~PrimaryGeneratorAction</ref>();</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classPrimaryGeneratorAction_1a67d83efdbb2b6e6f97a001dc921ea003" kindref="member">GeneratePrimaries</ref>(G4Event*<sp/>anEvent);<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="46" refid="classPrimaryGeneratorAction_1a4b74ac1aea3dab53c17b86dbd2eebb9f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>G4ParticleGun*<sp/><ref refid="classPrimaryGeneratorAction_1a4b74ac1aea3dab53c17b86dbd2eebb9f" kindref="member">fParticleGun</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="47"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/user/z37/test_windsurf/include/PrimaryGeneratorAction.hh"/>
+  </compounddef>
+</doxygen>

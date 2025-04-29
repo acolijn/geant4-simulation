@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classG4UserRunAction" kind="class" language="C++" prot="public">
+    <compoundname>G4UserRunAction</compoundname>
+    <derivedcompoundref refid="classRunAction" prot="public" virt="non-virtual">RunAction</derivedcompoundref>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>G4UserRunAction</label>
+        <link refid="classG4UserRunAction"/>
+      </node>
+      <node id="2">
+        <label>RunAction</label>
+        <link refid="classRunAction"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <location file="/user/z37/test_windsurf/include/RunAction.hh" line="21" column="1"/>
+    <listofallmembers>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="RunAction_8hh" kind="file" language="C++">
+    <compoundname>RunAction.hh</compoundname>
+    <includes local="yes">G4UserRunAction.hh</includes>
+    <includes local="yes">globals.hh</includes>
+    <includes local="yes">Rtypes.h</includes>
+    <includedby refid="ActionInitialization_8cc" local="yes">/user/z37/test_windsurf/src/ActionInitialization.cc</includedby>
+    <includedby refid="RunAction_8cc" local="yes">/user/z37/test_windsurf/src/RunAction.cc</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>/user/z37/test_windsurf/include/RunAction.hh</label>
+        <link refid="RunAction_8hh"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>G4UserRunAction.hh</label>
+      </node>
+      <node id="4">
+        <label>Rtypes.h</label>
+      </node>
+      <node id="3">
+        <label>globals.hh</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="1">
+        <label>/user/z37/test_windsurf/include/RunAction.hh</label>
+        <link refid="RunAction_8hh"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/user/z37/test_windsurf/src/ActionInitialization.cc</label>
+        <link refid="ActionInitialization_8cc"/>
+      </node>
+      <node id="3">
+        <label>/user/z37/test_windsurf/src/RunAction.cc</label>
+        <link refid="RunAction_8cc"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classRunAction" prot="public">RunAction</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>RunAction_h</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>RunAction_h<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4UserRunAction.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;globals.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Rtypes.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal">TFile;</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal">TTree;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21" refid="classRunAction" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classRunAction" kindref="compound">RunAction</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classG4UserRunAction" kindref="compound">G4UserRunAction</ref></highlight></codeline>
+<codeline lineno="22"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classRunAction_1a535a70dd2811b2212753372dcb5a2f50" kindref="member">RunAction</ref>();</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="classRunAction_1a6c584eb414c62a6238d5ea9a55601e1c" kindref="member">~RunAction</ref>();</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classRunAction_1a40026727cd17429e25d28a2910aa6083" kindref="member">BeginOfRunAction</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>G4Run*<sp/>run);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classRunAction_1a70c999b4d496cd85116b67c68b7d6ce0" kindref="member">EndOfRunAction</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>G4Run*<sp/>run);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="56" refid="classRunAction_1a051ac35d80ac000ba37388fc85764a90" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>TFile*<sp/><ref refid="classRunAction_1a051ac35d80ac000ba37388fc85764a90" kindref="member">rootFile</ref>;<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="57" refid="classRunAction_1a984248d83373c36c7b42c503d95060d4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>TTree*<sp/><ref refid="classRunAction_1a984248d83373c36c7b42c503d95060d4" kindref="member">eventTree</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Variables<sp/>to<sp/>store<sp/>in<sp/>ROOT<sp/>tree</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="classRunAction_1ab55ba908a4b4fd61b0d3edcc8e23d7d1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>Double_t<sp/><ref refid="classRunAction_1ab55ba908a4b4fd61b0d3edcc8e23d7d1" kindref="member">fEnergyDep</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="61" refid="classRunAction_1a120742dc9725d8d45c5637f9fa711a4b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>Double_t<sp/><ref refid="classRunAction_1a120742dc9725d8d45c5637f9fa711a4b" kindref="member">fTrackLength</ref>;<sp/><sp/></highlight></codeline>
+<codeline lineno="62" refid="classRunAction_1a723fbaa1ec56509328f32d2c713ba85b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>Int_t<sp/><ref refid="classRunAction_1a723fbaa1ec56509328f32d2c713ba85b" kindref="member">fNeutronCount</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="63"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/user/z37/test_windsurf/include/RunAction.hh"/>
+  </compounddef>
+</doxygen>

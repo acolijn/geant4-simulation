@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classG4VUserDetectorConstruction" kind="class" language="C++" prot="public">
+    <compoundname>G4VUserDetectorConstruction</compoundname>
+    <derivedcompoundref refid="classDetectorConstruction" prot="public" virt="non-virtual">DetectorConstruction</derivedcompoundref>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>G4VUserDetectorConstruction</label>
+        <link refid="classG4VUserDetectorConstruction"/>
+      </node>
+      <node id="2">
+        <label>DetectorConstruction</label>
+        <link refid="classDetectorConstruction"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <location file="/user/z37/test_windsurf/include/DetectorConstruction.hh" line="16" column="1"/>
+    <listofallmembers>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

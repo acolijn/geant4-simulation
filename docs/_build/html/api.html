@@ -1,0 +1,761 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; Windsurf 1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f2a433a1"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Simulation Details" href="simulation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Windsurf
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="geometry.html">Geometry Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Details</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#geometryparser">GeometryParser</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv414GeometryParser"><code class="docutils literal notranslate"><span class="pre">GeometryParser</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser14GeometryParserEv"><code class="docutils literal notranslate"><span class="pre">GeometryParser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParserD0Ev"><code class="docutils literal notranslate"><span class="pre">~GeometryParser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser18LoadGeometryConfigERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">LoadGeometryConfig()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser19LoadMaterialsConfigERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">LoadMaterialsConfig()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser17ConstructGeometryEv"><code class="docutils literal notranslate"><span class="pre">ConstructGeometry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser14CreateMaterialERKNSt6stringERK4json"><code class="docutils literal notranslate"><span class="pre">CreateMaterial()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser12CreateVolumeERK4json"><code class="docutils literal notranslate"><span class="pre">CreateVolume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser11ParseVectorERK4json"><code class="docutils literal notranslate"><span class="pre">ParseVector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser13ParseRotationERK4json"><code class="docutils literal notranslate"><span class="pre">ParseRotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser14geometryConfigE"><code class="docutils literal notranslate"><span class="pre">geometryConfig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser15materialsConfigE"><code class="docutils literal notranslate"><span class="pre">materialsConfig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser9materialsE"><code class="docutils literal notranslate"><span class="pre">materials</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N14GeometryParser7volumesE"><code class="docutils literal notranslate"><span class="pre">volumes</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#detectorconstruction">DetectorConstruction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv420DetectorConstruction"><code class="docutils literal notranslate"><span class="pre">DetectorConstruction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N20DetectorConstruction20DetectorConstructionERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">DetectorConstruction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N20DetectorConstructionD0Ev"><code class="docutils literal notranslate"><span class="pre">~DetectorConstruction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N20DetectorConstruction9ConstructEv"><code class="docutils literal notranslate"><span class="pre">Construct()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N20DetectorConstruction6parserE"><code class="docutils literal notranslate"><span class="pre">parser</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N20DetectorConstruction12geometryFileE"><code class="docutils literal notranslate"><span class="pre">geometryFile</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N20DetectorConstruction13materialsFileE"><code class="docutils literal notranslate"><span class="pre">materialsFile</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N20DetectorConstruction9lXeVolumeE"><code class="docutils literal notranslate"><span class="pre">lXeVolume</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#primarygeneratoraction">PrimaryGeneratorAction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv422PrimaryGeneratorAction"><code class="docutils literal notranslate"><span class="pre">PrimaryGeneratorAction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N22PrimaryGeneratorAction22PrimaryGeneratorActionEv"><code class="docutils literal notranslate"><span class="pre">PrimaryGeneratorAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N22PrimaryGeneratorActionD0Ev"><code class="docutils literal notranslate"><span class="pre">~PrimaryGeneratorAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N22PrimaryGeneratorAction17GeneratePrimariesEP7G4Event"><code class="docutils literal notranslate"><span class="pre">GeneratePrimaries()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N22PrimaryGeneratorAction12fParticleGunE"><code class="docutils literal notranslate"><span class="pre">fParticleGun</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#runaction">RunAction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv49RunAction"><code class="docutils literal notranslate"><span class="pre">RunAction</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9RunAction9RunActionEv"><code class="docutils literal notranslate"><span class="pre">RunAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9RunActionD0Ev"><code class="docutils literal notranslate"><span class="pre">~RunAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9RunAction16BeginOfRunActionEPK5G4Run"><code class="docutils literal notranslate"><span class="pre">BeginOfRunAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9RunAction14EndOfRunActionEPK5G4Run"><code class="docutils literal notranslate"><span class="pre">EndOfRunAction()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9RunAction8rootFileE"><code class="docutils literal notranslate"><span class="pre">rootFile</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9RunAction9eventTreeE"><code class="docutils literal notranslate"><span class="pre">eventTree</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9RunAction10fEnergyDepE"><code class="docutils literal notranslate"><span class="pre">fEnergyDep</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9RunAction12fTrackLengthE"><code class="docutils literal notranslate"><span class="pre">fTrackLength</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N9RunAction13fNeutronCountE"><code class="docutils literal notranslate"><span class="pre">fNeutronCount</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#actioninitialization">ActionInitialization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv420ActionInitialization"><code class="docutils literal notranslate"><span class="pre">ActionInitialization</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N20ActionInitialization20ActionInitializationEv"><code class="docutils literal notranslate"><span class="pre">ActionInitialization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4N20ActionInitializationD0Ev"><code class="docutils literal notranslate"><span class="pre">~ActionInitialization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK20ActionInitialization14BuildForMasterEv"><code class="docutils literal notranslate"><span class="pre">BuildForMaster()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#_CPPv4NK20ActionInitialization5BuildEv"><code class="docutils literal notranslate"><span class="pre">Build()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Windsurf</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<section id="geometryparser">
+<h2>GeometryParser<a class="headerlink" href="#geometryparser" title="Link to this heading"></a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv414GeometryParser">
+<span id="_CPPv314GeometryParser"></span><span id="_CPPv214GeometryParser"></span><span id="GeometryParser"></span><span class="target" id="classGeometryParser"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GeometryParser</span></span></span><a class="headerlink" href="#_CPPv414GeometryParser" title="Link to this definition"></a><br /></dt>
+<dd><p>Parses JSON configuration files for geometry and materials. </p>
+<p>This class handles the parsing of external JSON configuration files for both detector geometry and materials. It provides methods to:<ul class="simple">
+<li><p>Load and parse JSON files</p></li>
+<li><p>Create G4 materials from JSON descriptions</p></li>
+<li><p>Create G4 volumes from JSON descriptions </p></li>
+</ul>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser14GeometryParserEv">
+<span id="_CPPv3N14GeometryParser14GeometryParserEv"></span><span id="_CPPv2N14GeometryParser14GeometryParserEv"></span><span id="GeometryParser::GeometryParser"></span><span class="target" id="classGeometryParser_1a8345530e9b723ba00f6d993234ec0975"></span><span class="sig-name descname"><span class="n"><span class="pre">GeometryParser</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14GeometryParser14GeometryParserEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Constructor. </p>
+<p>Default constructor for <a class="reference internal" href="#classGeometryParser"><span class="std std-ref">GeometryParser</span></a>.</p>
+<p>Initializes an empty geometry parser without loading any configuration </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParserD0Ev">
+<span id="_CPPv3N14GeometryParserD0Ev"></span><span id="_CPPv2N14GeometryParserD0Ev"></span><span id="GeometryParser::~GeometryParser"></span><span class="target" id="classGeometryParser_1a14f8bde579a496f9d65331290890a71e"></span><span class="sig-name descname"><span class="n"><span class="pre">~GeometryParser</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14GeometryParserD0Ev" title="Link to this definition"></a><br /></dt>
+<dd><p>Destructor. </p>
+<p>Destructor for <a class="reference internal" href="#classGeometryParser"><span class="std std-ref">GeometryParser</span></a>.</p>
+<p>Memory management of G4 objects is handled by Geant4 </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser18LoadGeometryConfigERKNSt6stringE">
+<span id="_CPPv3N14GeometryParser18LoadGeometryConfigERKNSt6stringE"></span><span id="_CPPv2N14GeometryParser18LoadGeometryConfigERKNSt6stringE"></span><span id="GeometryParser::LoadGeometryConfig__ssCR"></span><span class="target" id="classGeometryParser_1a6137e170737934faccb18e6754f53f0a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LoadGeometryConfig</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">filename</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14GeometryParser18LoadGeometryConfigERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Load geometry configuration from JSON file. </p>
+<p>Load detector geometry configuration from a JSON file.</p>
+<p>
+Reads and parses the geometry configuration file into the geometryConfig member </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – Path to geometry JSON file</p></li>
+<li><p><strong>filename</strong> – Path to the JSON configuration file </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">std</span><span class="p">::</span><span class="n">runtime_error</span></span></span> – if file cannot be opened or parsed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser19LoadMaterialsConfigERKNSt6stringE">
+<span id="_CPPv3N14GeometryParser19LoadMaterialsConfigERKNSt6stringE"></span><span id="_CPPv2N14GeometryParser19LoadMaterialsConfigERKNSt6stringE"></span><span id="GeometryParser::LoadMaterialsConfig__ssCR"></span><span class="target" id="classGeometryParser_1a06bb278eb2df23afc7aa128bb9e22a3f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LoadMaterialsConfig</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">filename</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14GeometryParser19LoadMaterialsConfigERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Load materials configuration from JSON file. </p>
+<p>Load material definitions from a JSON file.</p>
+<p>
+Reads and parses the materials configuration file into the materialsConfig member </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – Path to materials JSON file</p></li>
+<li><p><strong>filename</strong> – Path to the JSON materials configuration file </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">std</span><span class="p">::</span><span class="n">runtime_error</span></span></span> – if file cannot be opened or parsed</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser17ConstructGeometryEv">
+<span id="_CPPv3N14GeometryParser17ConstructGeometryEv"></span><span id="_CPPv2N14GeometryParser17ConstructGeometryEv"></span><span id="GeometryParser::ConstructGeometry"></span><span class="target" id="classGeometryParser_1a2c431afc7ac6099584ba8a15ed61d37a"></span><span class="n"><span class="pre">G4VPhysicalVolume</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">ConstructGeometry</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14GeometryParser17ConstructGeometryEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Create the world volume from loaded configuration. </p>
+<p>Construct the complete detector geometry.</p>
+<p>
+Creates the world volume and places all other volumes within it according to the loaded geometry configuration </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pointer to the physical world volume</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pointer to the world physical volume</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser14CreateMaterialERKNSt6stringERK4json">
+<span id="_CPPv3N14GeometryParser14CreateMaterialERKNSt6stringERK4json"></span><span id="_CPPv2N14GeometryParser14CreateMaterialERKNSt6stringERK4json"></span><span id="GeometryParser::CreateMaterial__ssCR.jsonCR"></span><span class="target" id="classGeometryParser_1ad0bad320ed7173ebffd0883d0ac6c281"></span><span class="n"><span class="pre">G4Material</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">CreateMaterial</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">json</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">config</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14GeometryParser14CreateMaterialERKNSt6stringERK4json" title="Link to this definition"></a><br /></dt>
+<dd><p>Create a G4Material from JSON configuration. </p>
+<p>
+Supports creation of materials from NIST database or by element composition. For compound materials, requires density, state, temperature, and composition. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – Material name </p></li>
+<li><p><strong>config</strong> – JSON configuration for the material </p></li>
+<li><p><strong>name</strong> – Name of the material to create </p></li>
+<li><p><strong>config</strong> – JSON object containing material properties </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">std</span><span class="p">::</span><span class="n">runtime_error</span></span></span> – if material creation fails</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pointer to created G4Material</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pointer to the created or cached G4Material </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser12CreateVolumeERK4json">
+<span id="_CPPv3N14GeometryParser12CreateVolumeERK4json"></span><span id="_CPPv2N14GeometryParser12CreateVolumeERK4json"></span><span id="GeometryParser::CreateVolume__jsonCR"></span><span class="target" id="classGeometryParser_1a0baf12b3b2c03025edc3f42542e0f3fe"></span><span class="n"><span class="pre">G4LogicalVolume</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">CreateVolume</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">json</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">config</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14GeometryParser12CreateVolumeERK4json" title="Link to this definition"></a><br /></dt>
+<dd><p>Create a G4LogicalVolume from JSON configuration. </p>
+<p>
+Creates a logical volume with specified material and shape. Currently supports box shapes only. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> – JSON configuration for the volume </p></li>
+<li><p><strong>config</strong> – JSON object containing volume properties </p></li>
+</ul>
+</dd>
+<dt class="field-even">Throws<span class="colon">:</span></dt>
+<dd class="field-even"><p><span><span class="cpp-expr sig sig-inline cpp"><span class="n">std</span><span class="p">::</span><span class="n">runtime_error</span></span></span> – if volume creation fails</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pointer to created G4LogicalVolume</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pointer to the created G4LogicalVolume </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser11ParseVectorERK4json">
+<span id="_CPPv3N14GeometryParser11ParseVectorERK4json"></span><span id="_CPPv2N14GeometryParser11ParseVectorERK4json"></span><span id="GeometryParser::ParseVector__jsonCR"></span><span class="target" id="classGeometryParser_1a7e83ca0cff750a631d912ca29b31b9ba"></span><span class="n"><span class="pre">G4ThreeVector</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ParseVector</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">json</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">vec</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14GeometryParser11ParseVectorERK4json" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert JSON vector to G4ThreeVector with units. </p>
+<p>Convert a JSON vector definition to G4ThreeVector.</p>
+<p>
+Expects JSON format: {“x”: val, “y”: val, “z”: val, “unit”: “mm|cm|m”} </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vec</strong> – JSON object containing x,y,z and unit </p></li>
+<li><p><strong>vec</strong> – JSON object containing x,y,z components and unit </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>G4ThreeVector with applied units</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>G4ThreeVector with components scaled to proper units</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser13ParseRotationERK4json">
+<span id="_CPPv3N14GeometryParser13ParseRotationERK4json"></span><span id="_CPPv2N14GeometryParser13ParseRotationERK4json"></span><span id="GeometryParser::ParseRotation__jsonCR"></span><span class="target" id="classGeometryParser_1a3c5dff63c3d5fb09368cacec478fe3a2"></span><span class="n"><span class="pre">G4RotationMatrix</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">ParseRotation</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">json</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rot</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14GeometryParser13ParseRotationERK4json" title="Link to this definition"></a><br /></dt>
+<dd><p>Convert JSON rotation to G4RotationMatrix. </p>
+<p>Convert JSON rotation angles to G4RotationMatrix.</p>
+<p>
+Expects JSON format: {“x”: angle_x, “y”: angle_y, “z”: angle_z} Angles should be in degrees </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rot</strong> – JSON object containing rotation angles </p></li>
+<li><p><strong>rot</strong> – JSON object containing rotation angles </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pointer to new G4RotationMatrix</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pointer to new G4RotationMatrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser14geometryConfigE">
+<span id="_CPPv3N14GeometryParser14geometryConfigE"></span><span id="_CPPv2N14GeometryParser14geometryConfigE"></span><span id="GeometryParser::geometryConfig__json"></span><span class="target" id="classGeometryParser_1a670e3a0541915a69130fb810bf99370e"></span><span class="n"><span class="pre">json</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">geometryConfig</span></span></span><a class="headerlink" href="#_CPPv4N14GeometryParser14geometryConfigE" title="Link to this definition"></a><br /></dt>
+<dd><p>Geometry configuration. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser15materialsConfigE">
+<span id="_CPPv3N14GeometryParser15materialsConfigE"></span><span id="_CPPv2N14GeometryParser15materialsConfigE"></span><span id="GeometryParser::materialsConfig__json"></span><span class="target" id="classGeometryParser_1acea20d9e9d83c566133aa9f8dbbaf654"></span><span class="n"><span class="pre">json</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">materialsConfig</span></span></span><a class="headerlink" href="#_CPPv4N14GeometryParser15materialsConfigE" title="Link to this definition"></a><br /></dt>
+<dd><p>Materials configuration. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser9materialsE">
+<span id="_CPPv3N14GeometryParser9materialsE"></span><span id="_CPPv2N14GeometryParser9materialsE"></span><span id="GeometryParser::materials__std::map:ss.G4MaterialP:"></span><span class="target" id="classGeometryParser_1a9cc65fe4e3627f1a7009e7a040d454b0"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">G4Material</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">materials</span></span></span><a class="headerlink" href="#_CPPv4N14GeometryParser9materialsE" title="Link to this definition"></a><br /></dt>
+<dd><p>Cache of created materials. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N14GeometryParser7volumesE">
+<span id="_CPPv3N14GeometryParser7volumesE"></span><span id="_CPPv2N14GeometryParser7volumesE"></span><span id="GeometryParser::volumes__std::map:ss.G4LogicalVolumeP:"></span><span class="target" id="classGeometryParser_1a17e226b77c81f528bf5bdb8ee0c5976c"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">map</span></span><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">G4LogicalVolume</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">volumes</span></span></span><a class="headerlink" href="#_CPPv4N14GeometryParser7volumesE" title="Link to this definition"></a><br /></dt>
+<dd><p>Cache of created volumes. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="detectorconstruction">
+<h2>DetectorConstruction<a class="headerlink" href="#detectorconstruction" title="Link to this heading"></a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv420DetectorConstruction">
+<span id="_CPPv320DetectorConstruction"></span><span id="_CPPv220DetectorConstruction"></span><span id="DetectorConstruction"></span><span class="target" id="classDetectorConstruction"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DetectorConstruction</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">G4VUserDetectorConstruction</span></span><a class="headerlink" href="#_CPPv420DetectorConstruction" title="Link to this definition"></a><br /></dt>
+<dd><p>Constructs the detector geometry from JSON configuration files. </p>
+<p>This class reads geometry and material definitions from JSON files and constructs the complete detector setup. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N20DetectorConstruction20DetectorConstructionERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N20DetectorConstruction20DetectorConstructionERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N20DetectorConstruction20DetectorConstructionERKNSt6stringERKNSt6stringE"></span><span id="DetectorConstruction::DetectorConstruction__ssCR.ssCR"></span><span class="target" id="classDetectorConstruction_1a9ce1061267e7713fd6de5bcc405a0344"></span><span class="sig-name descname"><span class="n"><span class="pre">DetectorConstruction</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">geomFile</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;config/geometry.json&quot;</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">matFile</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;config/materials.json&quot;</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N20DetectorConstruction20DetectorConstructionERKNSt6stringERKNSt6stringE" title="Link to this definition"></a><br /></dt>
+<dd><p>Constructor. </p>
+<p>Constructor implementation.</p>
+<p>
+Initializes the geometry parser with the specified configuration files. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>geomFile</strong> – Path to geometry configuration file </p></li>
+<li><p><strong>matFile</strong> – Path to materials configuration file</p></li>
+<li><p><strong>geomFile</strong> – Path to geometry configuration file </p></li>
+<li><p><strong>matFile</strong> – Path to materials configuration file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N20DetectorConstructionD0Ev">
+<span id="_CPPv3N20DetectorConstructionD0Ev"></span><span id="_CPPv2N20DetectorConstructionD0Ev"></span><span id="DetectorConstruction::~DetectorConstruction"></span><span class="target" id="classDetectorConstruction_1a73013cab35a2b470338da2e4686edea3"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~DetectorConstruction</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N20DetectorConstructionD0Ev" title="Link to this definition"></a><br /></dt>
+<dd><p>Destructor. </p>
+<p>Destructor implementation.</p>
+<p>No explicit cleanup needed as Geant4 handles memory management for all detector volumes. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N20DetectorConstruction9ConstructEv">
+<span id="_CPPv3N20DetectorConstruction9ConstructEv"></span><span id="_CPPv2N20DetectorConstruction9ConstructEv"></span><span id="DetectorConstruction::Construct"></span><span class="target" id="classDetectorConstruction_1a662c618480b345a747f014b845d5ffdf"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="n"><span class="pre">G4VPhysicalVolume</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">Construct</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N20DetectorConstruction9ConstructEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Construct detector geometry from configuration files. </p>
+<p>Constructs the detector geometry from JSON configuration.</p>
+<p>
+This method:<ol class="lowerroman simple">
+<li><p>Loads geometry and materials configurations</p></li>
+<li><p>Constructs all volumes using the <a class="reference internal" href="#classGeometryParser"><span class="std std-ref">GeometryParser</span></a></p></li>
+<li><p>Stores a pointer to the LXe volume for scoring</p></li>
+</ol>
+</p>
+<p>The complete geometry specification is read from the JSON files, allowing for easy modification without recompiling. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pointer to the world physical volume</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pointer to the world physical volume</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N20DetectorConstruction6parserE">
+<span id="_CPPv3N20DetectorConstruction6parserE"></span><span id="_CPPv2N20DetectorConstruction6parserE"></span><span id="DetectorConstruction::parser__GeometryParser"></span><span class="target" id="classDetectorConstruction_1a561a2dc3198a792da76b64cf34a830b1"></span><a class="reference internal" href="#_CPPv414GeometryParser" title="GeometryParser"><span class="n"><span class="pre">GeometryParser</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parser</span></span></span><a class="headerlink" href="#_CPPv4N20DetectorConstruction6parserE" title="Link to this definition"></a><br /></dt>
+<dd><p>Parser for JSON configuration. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N20DetectorConstruction12geometryFileE">
+<span id="_CPPv3N20DetectorConstruction12geometryFileE"></span><span id="_CPPv2N20DetectorConstruction12geometryFileE"></span><span id="DetectorConstruction::geometryFile__ss"></span><span class="target" id="classDetectorConstruction_1afada5ee6a2254658d0472586c7e07262"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">geometryFile</span></span></span><a class="headerlink" href="#_CPPv4N20DetectorConstruction12geometryFileE" title="Link to this definition"></a><br /></dt>
+<dd><p>Path to geometry config file. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N20DetectorConstruction13materialsFileE">
+<span id="_CPPv3N20DetectorConstruction13materialsFileE"></span><span id="_CPPv2N20DetectorConstruction13materialsFileE"></span><span id="DetectorConstruction::materialsFile__ss"></span><span class="target" id="classDetectorConstruction_1aa030db18f6f4ee1a4e458a1247a50dc4"></span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">materialsFile</span></span></span><a class="headerlink" href="#_CPPv4N20DetectorConstruction13materialsFileE" title="Link to this definition"></a><br /></dt>
+<dd><p>Path to materials config file. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N20DetectorConstruction9lXeVolumeE">
+<span id="_CPPv3N20DetectorConstruction9lXeVolumeE"></span><span id="_CPPv2N20DetectorConstruction9lXeVolumeE"></span><span id="DetectorConstruction::lXeVolume__G4LogicalVolumeP"></span><span class="target" id="classDetectorConstruction_1a9145cd2f5dfaaa6ab9b2c8b9a885a91d"></span><span class="n"><span class="pre">G4LogicalVolume</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">lXeVolume</span></span></span><a class="headerlink" href="#_CPPv4N20DetectorConstruction9lXeVolumeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Pointer to LXe volume for scoring. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="primarygeneratoraction">
+<h2>PrimaryGeneratorAction<a class="headerlink" href="#primarygeneratoraction" title="Link to this heading"></a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv422PrimaryGeneratorAction">
+<span id="_CPPv322PrimaryGeneratorAction"></span><span id="_CPPv222PrimaryGeneratorAction"></span><span id="PrimaryGeneratorAction"></span><span class="target" id="classPrimaryGeneratorAction"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PrimaryGeneratorAction</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">G4VUserPrimaryGeneratorAction</span></span><a class="headerlink" href="#_CPPv422PrimaryGeneratorAction" title="Link to this definition"></a><br /></dt>
+<dd><p>Handles the generation of primary neutrons for the simulation. </p>
+<p>This class configures and manages the particle gun that generates primary neutrons. The neutrons are generated with:<ul class="simple">
+<li><p>Energy: 1 MeV (configurable through macro)</p></li>
+<li><p>Position: Random points on top face of world volume</p></li>
+<li><p>Direction: Downward along Z-axis </p></li>
+</ul>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N22PrimaryGeneratorAction22PrimaryGeneratorActionEv">
+<span id="_CPPv3N22PrimaryGeneratorAction22PrimaryGeneratorActionEv"></span><span id="_CPPv2N22PrimaryGeneratorAction22PrimaryGeneratorActionEv"></span><span id="PrimaryGeneratorAction::PrimaryGeneratorAction"></span><span class="target" id="classPrimaryGeneratorAction_1a4bbef83d397d84b434541f8720bf747d"></span><span class="sig-name descname"><span class="n"><span class="pre">PrimaryGeneratorAction</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N22PrimaryGeneratorAction22PrimaryGeneratorActionEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Constructor. </p>
+<p>Constructor implementation.</p>
+<p>Initializes the particle gun and sets default neutron properties</p>
+<p>Sets up the particle gun with default neutron properties:<ul class="simple">
+<li><p>Particle type: neutron</p></li>
+<li><p>Energy: 1 MeV</p></li>
+<li><p>Direction: Along positive Z axis (0,0,1)</p></li>
+<li><p>Number of particles per event: 1 </p></li>
+</ul>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N22PrimaryGeneratorActionD0Ev">
+<span id="_CPPv3N22PrimaryGeneratorActionD0Ev"></span><span id="_CPPv2N22PrimaryGeneratorActionD0Ev"></span><span id="PrimaryGeneratorAction::~PrimaryGeneratorAction"></span><span class="target" id="classPrimaryGeneratorAction_1ad236fbc210171b9178446778b6bdfb40"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~PrimaryGeneratorAction</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N22PrimaryGeneratorActionD0Ev" title="Link to this definition"></a><br /></dt>
+<dd><p>Destructor. </p>
+<p>Destructor implementation.</p>
+<p>Cleans up the particle gun object to prevent memory leaks. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N22PrimaryGeneratorAction17GeneratePrimariesEP7G4Event">
+<span id="_CPPv3N22PrimaryGeneratorAction17GeneratePrimariesEP7G4Event"></span><span id="_CPPv2N22PrimaryGeneratorAction17GeneratePrimariesEP7G4Event"></span><span id="PrimaryGeneratorAction::GeneratePrimaries__G4EventP"></span><span class="target" id="classPrimaryGeneratorAction_1a67d83efdbb2b6e6f97a001dc921ea003"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GeneratePrimaries</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">G4Event</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">anEvent</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N22PrimaryGeneratorAction17GeneratePrimariesEP7G4Event" title="Link to this definition"></a><br /></dt>
+<dd><p>Generates primary particles for each event. </p>
+<p>
+For each event, this method:<ol class="lowerroman simple">
+<li><p>Generates a random position on the top face</p></li>
+<li><p>Sets the particle gun position</p></li>
+<li><p>Creates the primary vertex</p></li>
+</ol>
+</p>
+<p>
+For each event, this method:<ol class="lowerroman simple">
+<li><p>Generates a random position on the top face of the world volume<ul class="simple">
+<li><p>x: Random position within ±15 cm</p></li>
+<li><p>y: Random position within ±15 cm</p></li>
+<li><p>z: Fixed at top of world volume (-1m)</p></li>
+</ul>
+</p></li>
+<li><p>Sets the particle gun position</p></li>
+<li><p>Creates the primary vertex</p></li>
+</ol>
+</p>
+<p>The random distribution ensures good coverage of the liquid xenon target. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>anEvent</strong> – Pointer to the current G4Event</p></li>
+<li><p><strong>anEvent</strong> – The current G4Event being processed</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N22PrimaryGeneratorAction12fParticleGunE">
+<span id="_CPPv3N22PrimaryGeneratorAction12fParticleGunE"></span><span id="_CPPv2N22PrimaryGeneratorAction12fParticleGunE"></span><span id="PrimaryGeneratorAction::fParticleGun__G4ParticleGunP"></span><span class="target" id="classPrimaryGeneratorAction_1a4b74ac1aea3dab53c17b86dbd2eebb9f"></span><span class="n"><span class="pre">G4ParticleGun</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">fParticleGun</span></span></span><a class="headerlink" href="#_CPPv4N22PrimaryGeneratorAction12fParticleGunE" title="Link to this definition"></a><br /></dt>
+<dd><p>Pointer to the particle gun. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="runaction">
+<h2>RunAction<a class="headerlink" href="#runaction" title="Link to this heading"></a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv49RunAction">
+<span id="_CPPv39RunAction"></span><span id="_CPPv29RunAction"></span><span id="RunAction"></span><span class="target" id="classRunAction"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RunAction</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">G4UserRunAction</span></span><a class="headerlink" href="#_CPPv49RunAction" title="Link to this definition"></a><br /></dt>
+<dd><p>Handles ROOT output creation and management for the simulation. </p>
+<p>This class manages the ROOT file output, creating a TTree structure to store simulation results including:<ul class="simple">
+<li><p>Energy deposits in liquid xenon</p></li>
+<li><p>Neutron track lengths</p></li>
+<li><p>Neutron counting </p></li>
+</ul>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9RunAction9RunActionEv">
+<span id="_CPPv3N9RunAction9RunActionEv"></span><span id="_CPPv2N9RunAction9RunActionEv"></span><span id="RunAction::RunAction"></span><span class="target" id="classRunAction_1a535a70dd2811b2212753372dcb5a2f50"></span><span class="sig-name descname"><span class="n"><span class="pre">RunAction</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9RunAction9RunActionEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Constructor. </p>
+<p>Constructor implementation.</p>
+<p>Initializes ROOT file and tree pointers to nullptr</p>
+<p>Initializes all member variables:<ul class="simple">
+<li><p>ROOT file pointer to nullptr</p></li>
+<li><p>TTree pointer to nullptr</p></li>
+<li><p>Data variables to zero</p></li>
+</ul>
+</p>
+<p>The actual ROOT objects are created in BeginOfRunAction </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9RunActionD0Ev">
+<span id="_CPPv3N9RunActionD0Ev"></span><span id="_CPPv2N9RunActionD0Ev"></span><span id="RunAction::~RunAction"></span><span class="target" id="classRunAction_1a6c584eb414c62a6238d5ea9a55601e1c"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~RunAction</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9RunActionD0Ev" title="Link to this definition"></a><br /></dt>
+<dd><p>Destructor. </p>
+<p>Destructor implementation.</p>
+<p>Ensures proper cleanup of ROOT file</p>
+<p>Ensures proper cleanup of the ROOT file. The TTree is automatically deleted when the file is deleted. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9RunAction16BeginOfRunActionEPK5G4Run">
+<span id="_CPPv3N9RunAction16BeginOfRunActionEPK5G4Run"></span><span id="_CPPv2N9RunAction16BeginOfRunActionEPK5G4Run"></span><span id="RunAction::BeginOfRunAction__G4RunCP"></span><span class="target" id="classRunAction_1a40026727cd17429e25d28a2910aa6083"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BeginOfRunAction</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">G4Run</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">run</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9RunAction16BeginOfRunActionEPK5G4Run" title="Link to this definition"></a><br /></dt>
+<dd><p>Called at the start of each run. </p>
+<p>Initialization at the start of each run.</p>
+<p>
+Creates the ROOT file and sets up the TTree structure with all necessary branches for data storage</p>
+<p>
+Creates and configures the ROOT output:<ol class="lowerroman simple">
+<li><p>Creates a new ROOT file ‘neutron_data.root’</p></li>
+<li><p>Creates a TTree ‘neutronTree’</p></li>
+<li><p>Sets up branches for:<ul class="simple">
+<li><p>Energy deposits (Double_t)</p></li>
+<li><p>Track lengths (Double_t)</p></li>
+<li><p>Neutron counts (Int_t) </p></li>
+</ul>
+</p></li>
+</ol>
+</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>run</strong> – Pointer to the G4Run (not used)</p></li>
+<li><p><strong>run</strong> – Pointer to the G4Run (unused)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9RunAction14EndOfRunActionEPK5G4Run">
+<span id="_CPPv3N9RunAction14EndOfRunActionEPK5G4Run"></span><span id="_CPPv2N9RunAction14EndOfRunActionEPK5G4Run"></span><span id="RunAction::EndOfRunAction__G4RunCP"></span><span class="target" id="classRunAction_1a70c999b4d496cd85116b67c68b7d6ce0"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EndOfRunAction</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">G4Run</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">run</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9RunAction14EndOfRunActionEPK5G4Run" title="Link to this definition"></a><br /></dt>
+<dd><p>Called at the end of each run. </p>
+<p>Cleanup at the end of each run.</p>
+<p>
+Writes the ROOT file and properly closes it</p>
+<p>
+Finalizes the ROOT output:<ol class="lowerroman simple">
+<li><p>Writes all data to disk</p></li>
+<li><p>Properly closes the ROOT file</p></li>
+</ol>
+</p>
+<p>After this method, the ROOT file is ready for analysis. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>run</strong> – Pointer to the G4Run (not used)</p></li>
+<li><p><strong>run</strong> – Pointer to the G4Run (unused)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N9RunAction8rootFileE">
+<span id="_CPPv3N9RunAction8rootFileE"></span><span id="_CPPv2N9RunAction8rootFileE"></span><span id="RunAction::rootFile__TFileP"></span><span class="target" id="classRunAction_1a051ac35d80ac000ba37388fc85764a90"></span><span class="n"><span class="pre">TFile</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">rootFile</span></span></span><a class="headerlink" href="#_CPPv4N9RunAction8rootFileE" title="Link to this definition"></a><br /></dt>
+<dd><p>Pointer to ROOT output file. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N9RunAction9eventTreeE">
+<span id="_CPPv3N9RunAction9eventTreeE"></span><span id="_CPPv2N9RunAction9eventTreeE"></span><span id="RunAction::eventTree__TTreeP"></span><span class="target" id="classRunAction_1a984248d83373c36c7b42c503d95060d4"></span><span class="n"><span class="pre">TTree</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">eventTree</span></span></span><a class="headerlink" href="#_CPPv4N9RunAction9eventTreeE" title="Link to this definition"></a><br /></dt>
+<dd><p>Pointer to main data TTree. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N9RunAction10fEnergyDepE">
+<span id="_CPPv3N9RunAction10fEnergyDepE"></span><span id="_CPPv2N9RunAction10fEnergyDepE"></span><span id="RunAction::fEnergyDep__Double_t"></span><span class="target" id="classRunAction_1ab55ba908a4b4fd61b0d3edcc8e23d7d1"></span><span class="n"><span class="pre">Double_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fEnergyDep</span></span></span><a class="headerlink" href="#_CPPv4N9RunAction10fEnergyDepE" title="Link to this definition"></a><br /></dt>
+<dd><p>Energy deposit in LXe [MeV]. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N9RunAction12fTrackLengthE">
+<span id="_CPPv3N9RunAction12fTrackLengthE"></span><span id="_CPPv2N9RunAction12fTrackLengthE"></span><span id="RunAction::fTrackLength__Double_t"></span><span class="target" id="classRunAction_1a120742dc9725d8d45c5637f9fa711a4b"></span><span class="n"><span class="pre">Double_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fTrackLength</span></span></span><a class="headerlink" href="#_CPPv4N9RunAction12fTrackLengthE" title="Link to this definition"></a><br /></dt>
+<dd><p>Neutron track length [mm]. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N9RunAction13fNeutronCountE">
+<span id="_CPPv3N9RunAction13fNeutronCountE"></span><span id="_CPPv2N9RunAction13fNeutronCountE"></span><span id="RunAction::fNeutronCount__Int_t"></span><span class="target" id="classRunAction_1a723fbaa1ec56509328f32d2c713ba85b"></span><span class="n"><span class="pre">Int_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fNeutronCount</span></span></span><a class="headerlink" href="#_CPPv4N9RunAction13fNeutronCountE" title="Link to this definition"></a><br /></dt>
+<dd><p>Number of neutrons in event. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+<section id="actioninitialization">
+<h2>ActionInitialization<a class="headerlink" href="#actioninitialization" title="Link to this heading"></a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv420ActionInitialization">
+<span id="_CPPv320ActionInitialization"></span><span id="_CPPv220ActionInitialization"></span><span id="ActionInitialization"></span><span class="target" id="classActionInitialization"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ActionInitialization</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">G4VUserActionInitialization</span></span><a class="headerlink" href="#_CPPv420ActionInitialization" title="Link to this definition"></a><br /></dt>
+<dd><p>Initializes all user action classes for the simulation. </p>
+<p>This class is responsible for creating and registering all user action classes, including:<ul class="simple">
+<li><p><a class="reference internal" href="#classPrimaryGeneratorAction"><span class="std std-ref">PrimaryGeneratorAction</span></a> for neutron generation</p></li>
+<li><p><a class="reference internal" href="#classRunAction"><span class="std std-ref">RunAction</span></a> for ROOT output management</p></li>
+</ul>
+</p>
+<p>It handles both sequential and multi-threaded execution modes. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N20ActionInitialization20ActionInitializationEv">
+<span id="_CPPv3N20ActionInitialization20ActionInitializationEv"></span><span id="_CPPv2N20ActionInitialization20ActionInitializationEv"></span><span id="ActionInitialization::ActionInitialization"></span><span class="target" id="classActionInitialization_1ad7c1e53093b731f00b91e643e50b7d94"></span><span class="sig-name descname"><span class="n"><span class="pre">ActionInitialization</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N20ActionInitialization20ActionInitializationEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Constructor. </p>
+<p>Constructor implementation.</p>
+<p>No initialization needed in constructor</p>
+<p>Calls the base class constructor. No additional initialization needed. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N20ActionInitializationD0Ev">
+<span id="_CPPv3N20ActionInitializationD0Ev"></span><span id="_CPPv2N20ActionInitializationD0Ev"></span><span id="ActionInitialization::~ActionInitialization"></span><span class="target" id="classActionInitialization_1acaf37c7dc69ff697782dccd6b41e73a1"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~ActionInitialization</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N20ActionInitializationD0Ev" title="Link to this definition"></a><br /></dt>
+<dd><p>Destructor. </p>
+<p>Destructor implementation.</p>
+<p>No cleanup needed as user actions are managed by Geant4 kernel. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK20ActionInitialization14BuildForMasterEv">
+<span id="_CPPv3NK20ActionInitialization14BuildForMasterEv"></span><span id="_CPPv2NK20ActionInitialization14BuildForMasterEv"></span><span id="ActionInitialization::BuildForMasterC"></span><span class="target" id="classActionInitialization_1a48c24b5a340ef3e8a69f44f9b6bf02be"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BuildForMaster</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK20ActionInitialization14BuildForMasterEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Creates user actions for master thread. </p>
+<p>Implementation of master thread initialization.</p>
+<p>Called only in multi-threading mode. Creates actions that should only run on the master thread, specifically the <a class="reference internal" href="#classRunAction"><span class="std std-ref">RunAction</span></a> for ROOT file management.</p>
+<p>Creates only the <a class="reference internal" href="#classRunAction"><span class="std std-ref">RunAction</span></a> for the master thread in MT mode. This ensures proper handling of the ROOT output file in multi-threaded execution. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK20ActionInitialization5BuildEv">
+<span id="_CPPv3NK20ActionInitialization5BuildEv"></span><span id="_CPPv2NK20ActionInitialization5BuildEv"></span><span id="ActionInitialization::BuildC"></span><span class="target" id="classActionInitialization_1a9b8f6328b1b2e3ba39a1c230774cab66"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Build</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK20ActionInitialization5BuildEv" title="Link to this definition"></a><br /></dt>
+<dd><p>Creates user actions for worker threads. </p>
+<p>Implementation of worker thread initialization.</p>
+<p>Creates all necessary user action objects:<ul class="simple">
+<li><p><a class="reference internal" href="#classPrimaryGeneratorAction"><span class="std std-ref">PrimaryGeneratorAction</span></a> for neutron generation</p></li>
+<li><p><a class="reference internal" href="#classRunAction"><span class="std std-ref">RunAction</span></a> for data collection</p></li>
+</ul>
+</p>
+<p>Creates all necessary user actions for simulation:<ol class="lowerroman simple">
+<li><p><a class="reference internal" href="#classPrimaryGeneratorAction"><span class="std std-ref">PrimaryGeneratorAction</span></a> - Creates neutrons</p></li>
+<li><p><a class="reference internal" href="#classRunAction"><span class="std std-ref">RunAction</span></a> - Handles data collection</p></li>
+</ol>
+</p>
+<p>This method is called for each worker thread in MT mode, and for the main thread in sequential mode. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="simulation.html" class="btn btn-neutral float-left" title="Simulation Details" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Windsurf Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

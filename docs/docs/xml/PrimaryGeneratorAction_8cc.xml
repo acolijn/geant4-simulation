@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="PrimaryGeneratorAction_8cc" kind="file" language="C++">
+    <compoundname>PrimaryGeneratorAction.cc</compoundname>
+    <includes refid="PrimaryGeneratorAction_8hh" local="yes">PrimaryGeneratorAction.hh</includes>
+    <includes local="yes">G4LogicalVolumeStore.hh</includes>
+    <includes local="yes">G4LogicalVolume.hh</includes>
+    <includes local="yes">G4Box.hh</includes>
+    <includes local="yes">G4Event.hh</includes>
+    <includes local="yes">G4ParticleGun.hh</includes>
+    <includes local="yes">G4ParticleTable.hh</includes>
+    <includes local="yes">G4ParticleDefinition.hh</includes>
+    <includes local="yes">G4SystemOfUnits.hh</includes>
+    <includes local="yes">Randomize.hh</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>PrimaryGeneratorAction.hh</label>
+        <link refid="PrimaryGeneratorAction_8hh"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/user/z37/test_windsurf/src/PrimaryGeneratorAction.cc</label>
+        <link refid="PrimaryGeneratorAction_8cc"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>G4Box.hh</label>
+      </node>
+      <node id="9">
+        <label>G4Event.hh</label>
+      </node>
+      <node id="7">
+        <label>G4LogicalVolume.hh</label>
+      </node>
+      <node id="6">
+        <label>G4LogicalVolumeStore.hh</label>
+      </node>
+      <node id="11">
+        <label>G4ParticleDefinition.hh</label>
+      </node>
+      <node id="4">
+        <label>G4ParticleGun.hh</label>
+      </node>
+      <node id="10">
+        <label>G4ParticleTable.hh</label>
+      </node>
+      <node id="12">
+        <label>G4SystemOfUnits.hh</label>
+      </node>
+      <node id="3">
+        <label>G4VUserPrimaryGeneratorAction.hh</label>
+      </node>
+      <node id="13">
+        <label>Randomize.hh</label>
+      </node>
+      <node id="5">
+        <label>globals.hh</label>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+<para>Implementation of the <ref refid="classPrimaryGeneratorAction" kindref="compound">PrimaryGeneratorAction</ref> class. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Handles the generation of primary neutrons for the simulation, including their initial position, energy, and direction. </para>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="PrimaryGeneratorAction_8hh" kindref="compound">PrimaryGeneratorAction.hh</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4LogicalVolumeStore.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4LogicalVolume.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4Box.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4Event.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4ParticleGun.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4ParticleTable.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4ParticleDefinition.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4SystemOfUnits.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Randomize.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><ref refid="classPrimaryGeneratorAction_1a4bbef83d397d84b434541f8720bf747d" kindref="member">PrimaryGeneratorAction::PrimaryGeneratorAction</ref>()</highlight></codeline>
+<codeline lineno="31"><highlight class="normal">:<sp/><ref refid="classG4VUserPrimaryGeneratorAction" kindref="compound">G4VUserPrimaryGeneratorAction</ref>(),</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/>fParticleGun(nullptr)</highlight></codeline>
+<codeline lineno="33"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>G4int<sp/>n_particle<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/>fParticleGun<sp/>=<sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/>G4ParticleGun(n_particle);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Configure<sp/>the<sp/>particle<sp/>gun<sp/>for<sp/>neutrons</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>G4ParticleTable*<sp/>particleTable<sp/>=<sp/>G4ParticleTable::GetParticleTable();</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/>G4ParticleDefinition*<sp/>particle<sp/>=<sp/>particleTable-&gt;FindParticle(</highlight><highlight class="stringliteral">&quot;neutron&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/>fParticleGun-&gt;SetParticleDefinition(particle);</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>fParticleGun-&gt;SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>fParticleGun-&gt;SetParticleEnergy(1.0*MeV);<sp/><sp/></highlight><highlight class="comment">//<sp/>Initial<sp/>neutron<sp/>energy</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><ref refid="classPrimaryGeneratorAction_1ad236fbc210171b9178446778b6bdfb40" kindref="member">PrimaryGeneratorAction::~PrimaryGeneratorAction</ref>()</highlight></codeline>
+<codeline lineno="51"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">delete</highlight><highlight class="normal"><sp/><ref refid="classPrimaryGeneratorAction_1a4b74ac1aea3dab53c17b86dbd2eebb9f" kindref="member">fParticleGun</ref>;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classPrimaryGeneratorAction_1a67d83efdbb2b6e6f97a001dc921ea003" kindref="member">PrimaryGeneratorAction::GeneratePrimaries</ref>(G4Event*<sp/>anEvent)</highlight></codeline>
+<codeline lineno="70"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Generate<sp/>random<sp/>position<sp/>on<sp/>top<sp/>face<sp/>of<sp/>world<sp/>volume</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/>G4double<sp/>worldZHalfLength<sp/>=<sp/>1.0*m;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>G4double<sp/>x0<sp/>=<sp/>30.0*cm<sp/>*<sp/>(G4UniformRand()-0.5);<sp/><sp/></highlight><highlight class="comment">//<sp/>Random<sp/>x<sp/>in<sp/>[-15cm,<sp/>15cm]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>G4double<sp/>y0<sp/>=<sp/>30.0*cm<sp/>*<sp/>(G4UniformRand()-0.5);<sp/><sp/></highlight><highlight class="comment">//<sp/>Random<sp/>y<sp/>in<sp/>[-15cm,<sp/>15cm]</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>G4double<sp/>z0<sp/>=<sp/>-worldZHalfLength;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Top<sp/>of<sp/>world<sp/>volume</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Set<sp/>position<sp/>and<sp/>generate<sp/>the<sp/>vertex</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classPrimaryGeneratorAction_1a4b74ac1aea3dab53c17b86dbd2eebb9f" kindref="member">fParticleGun</ref>-&gt;SetParticlePosition(G4ThreeVector(x0,y0,z0));</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classPrimaryGeneratorAction_1a4b74ac1aea3dab53c17b86dbd2eebb9f" kindref="member">fParticleGun</ref>-&gt;GeneratePrimaryVertex(anEvent);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/user/z37/test_windsurf/src/PrimaryGeneratorAction.cc"/>
+  </compounddef>
+</doxygen>

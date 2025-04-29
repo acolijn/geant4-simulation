@@ -1,0 +1,47 @@
+{
+    "materials": {
+        "LXe": {
+            "type": "element_based",
+            "density": 3.02,
+            "density_unit": "g/cm3",
+            "state": "liquid",
+            "temperature": 165.0,
+            "temperature_unit": "kelvin",
+            "composition": {
+                "Xe": 1
+            }
+        },
+        "air": {
+            "type": "nist",
+            "name": "G4_AIR"
+        },
+        "G4_AIR": {
+            "type": "nist",
+            "name": "G4_AIR"
+        },
+        "G4_WATER": {
+            "type": "nist",
+            "name": "G4_WATER"
+        },
+        "water": {
+            "type": "compound",
+            "density": 1.0,
+            "density_unit": "g/cm3",
+            "state": "liquid",
+            "temperature": 293.15,
+            "temperature_unit": "kelvin",
+            "composition": {
+                "H": 2,
+                "O": 1
+            }
+        },
+        "G4_Si": {
+            "type": "nist",
+            "name": "G4_Si"
+        },
+        "G4_Cf": {
+            "type": "nist",
+            "name": "G4_Cf"
+        }
+    }
+}

@@ -1,0 +1,123 @@
+#ifndef GeometryParser_h
+#define GeometryParser_h 1
+
+#include "json.hpp"
+#include "G4Material.hh"
+#include "G4VPhysicalVolume.hh"
+#include "G4LogicalVolume.hh"
+#include "G4ThreeVector.hh"
+#include "G4RotationMatrix.hh"
+#include "G4VSolid.hh"
+#include <string>
+#include <map>
+#include <vector>
+#include <memory>
+
+using json = nlohmann::json;
+
+/**
+ * @class GeometryParser
+ * @brief Parses JSON configuration files for geometry and materials
+ *
+ * This class handles the parsing of external JSON configuration files
+ * for both detector geometry and materials. It provides methods to:
+ * - Load and parse JSON files
+ * - Create G4 materials from JSON descriptions
+ * - Create G4 volumes from JSON descriptions
+ */
+class GeometryParser {
+public:
+    /** @brief Constructor */
+    GeometryParser();
+    
+    /** @brief Destructor */
+    ~GeometryParser();
+
+    /**
+     * @brief Load geometry configuration from JSON file
+     * @param filename Path to geometry JSON file
+     */
+    void LoadGeometryConfig(const std::string& filename);
+
+    /**
+     * @brief Load materials configuration from JSON file
+     * @param filename Path to materials JSON file
+     */
+    void LoadMaterialsConfig(const std::string& filename);
+
+    /**
+     * @brief Create the world volume from loaded configuration
+     * @return Pointer to the physical world volume
+     */
+    G4VPhysicalVolume* ConstructGeometry();
+
+private:
+    json geometryConfig;    ///< Geometry configuration
+    json materialsConfig;   ///< Materials configuration
+    
+    std::map<std::string, G4Material*> materials;        ///< Cache of created materials
+    std::map<std::string, G4LogicalVolume*> volumes;    ///< Cache of created volumes
+    std::map<std::string, G4VSolid*> solids;           ///< Cache of created solids
+    std::string configPath;                           ///< Path to the configuration files
+
+    /**
+     * @brief Create a G4Material from JSON configuration
+     * @param name Material name
+     * @param config JSON configuration for the material
+     * @return Pointer to created G4Material
+     */
+    G4Material* CreateMaterial(const std::string& name, const json& config);
+
+    /**
+     * @brief Create a G4LogicalVolume from JSON configuration
+     * @param config JSON configuration for the volume
+     * @return Pointer to created G4LogicalVolume
+     */
+    G4LogicalVolume* CreateVolume(const json& config);
+    
+    /**
+     * @brief Create a G4VSolid from JSON configuration
+     * @param config JSON configuration for the solid
+     * @param name Name for the solid
+     * @return Pointer to created G4VSolid
+     */
+    G4VSolid* CreateSolid(const json& config, const std::string& name);
+    
+    /**
+     * @brief Create a boolean solid (union, subtraction, intersection)
+     * @param config JSON configuration for the boolean operation
+     * @param name Name for the resulting solid
+     * @return Pointer to created G4VSolid
+     */
+    G4VSolid* CreateBooleanSolid(const json& config, const std::string& name);
+    
+    /**
+     * @brief Load and parse an external JSON geometry file
+     * @param filename Path to the external JSON file
+     * @return JSON object containing the parsed file
+     */
+    json LoadExternalGeometry(const std::string& filename);
+    
+    /**
+     * @brief Import an assembled geometry from an external JSON file
+     * @param config JSON configuration for the import
+     * @param parentVolume Parent logical volume to place the imported geometry in
+     */
+    void ImportAssembledGeometry(const json& config, G4LogicalVolume* parentVolume);
+
+    /**
+     * @brief Convert JSON vector to G4ThreeVector with units
+     * @param vec JSON object containing x,y,z and unit
+     * @return G4ThreeVector with applied units
+     */
+    G4ThreeVector ParseVector(const json& vec);
+
+    /**
+     * @brief Convert JSON rotation to G4RotationMatrix
+     * @param rot JSON object containing rotation angles
+     * @return Pointer to new G4RotationMatrix
+     */
+    G4RotationMatrix* ParseRotation(const json& rot);
+};
+
+#endif

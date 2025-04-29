@@ -1,0 +1,3 @@
+/user/z37/test_windsurf/build/CMakeFiles/neutronLXe.dir
+/user/z37/test_windsurf/build/CMakeFiles/edit_cache.dir
+/user/z37/test_windsurf/build/CMakeFiles/rebuild_cache.dir

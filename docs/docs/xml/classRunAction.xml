@@ -1,0 +1,296 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="classRunAction" kind="class" language="C++" prot="public">
+    <compoundname>RunAction</compoundname>
+    <basecompoundref refid="classG4UserRunAction" prot="public" virt="non-virtual">G4UserRunAction</basecompoundref>
+    <includes refid="RunAction_8hh" local="no">RunAction.hh</includes>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classRunAction_1a051ac35d80ac000ba37388fc85764a90" prot="private" static="no" mutable="no">
+        <type>TFile *</type>
+        <definition>TFile* RunAction::rootFile</definition>
+        <argsstring></argsstring>
+        <name>rootFile</name>
+        <qualifiedname>RunAction::rootFile</qualifiedname>
+        <briefdescription>
+<para>Pointer to ROOT output file. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/RunAction.hh" line="56" column="11" bodyfile="/user/z37/test_windsurf/include/RunAction.hh" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classRunAction_1a984248d83373c36c7b42c503d95060d4" prot="private" static="no" mutable="no">
+        <type>TTree *</type>
+        <definition>TTree* RunAction::eventTree</definition>
+        <argsstring></argsstring>
+        <name>eventTree</name>
+        <qualifiedname>RunAction::eventTree</qualifiedname>
+        <briefdescription>
+<para>Pointer to main data TTree. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/RunAction.hh" line="57" column="11" bodyfile="/user/z37/test_windsurf/include/RunAction.hh" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classRunAction_1ab55ba908a4b4fd61b0d3edcc8e23d7d1" prot="private" static="no" mutable="no">
+        <type>Double_t</type>
+        <definition>Double_t RunAction::fEnergyDep</definition>
+        <argsstring></argsstring>
+        <name>fEnergyDep</name>
+        <qualifiedname>RunAction::fEnergyDep</qualifiedname>
+        <briefdescription>
+<para>Energy deposit in LXe [MeV]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/RunAction.hh" line="60" column="14" bodyfile="/user/z37/test_windsurf/include/RunAction.hh" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classRunAction_1a120742dc9725d8d45c5637f9fa711a4b" prot="private" static="no" mutable="no">
+        <type>Double_t</type>
+        <definition>Double_t RunAction::fTrackLength</definition>
+        <argsstring></argsstring>
+        <name>fTrackLength</name>
+        <qualifiedname>RunAction::fTrackLength</qualifiedname>
+        <briefdescription>
+<para>Neutron track length [mm]. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/RunAction.hh" line="61" column="14" bodyfile="/user/z37/test_windsurf/include/RunAction.hh" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classRunAction_1a723fbaa1ec56509328f32d2c713ba85b" prot="private" static="no" mutable="no">
+        <type>Int_t</type>
+        <definition>Int_t RunAction::fNeutronCount</definition>
+        <argsstring></argsstring>
+        <name>fNeutronCount</name>
+        <qualifiedname>RunAction::fNeutronCount</qualifiedname>
+        <briefdescription>
+<para>Number of neutrons in event. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/RunAction.hh" line="62" column="11" bodyfile="/user/z37/test_windsurf/include/RunAction.hh" bodystart="62" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classRunAction_1a535a70dd2811b2212753372dcb5a2f50" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>RunAction::RunAction</definition>
+        <argsstring>()</argsstring>
+        <name>RunAction</name>
+        <qualifiedname>RunAction::RunAction</qualifiedname>
+        <briefdescription>
+<para>Constructor. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Constructor implementation.</para>
+<para>Initializes ROOT file and tree pointers to nullptr</para>
+<para>Initializes all member variables:<itemizedlist>
+<listitem><para>ROOT file pointer to nullptr</para>
+</listitem><listitem><para>TTree pointer to nullptr</para>
+</listitem><listitem><para>Data variables to zero</para>
+</listitem></itemizedlist>
+</para>
+<para>The actual ROOT objects are created in BeginOfRunAction </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/RunAction.hh" line="29" column="5" bodyfile="/user/z37/test_windsurf/src/RunAction.cc" bodystart="28" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classRunAction_1a6c584eb414c62a6238d5ea9a55601e1c" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>RunAction::~RunAction</definition>
+        <argsstring>()</argsstring>
+        <name>~RunAction</name>
+        <qualifiedname>RunAction::~RunAction</qualifiedname>
+        <briefdescription>
+<para>Destructor. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Destructor implementation.</para>
+<para>Ensures proper cleanup of ROOT file</para>
+<para>Ensures proper cleanup of the ROOT file. The TTree is automatically deleted when the file is deleted. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/RunAction.hh" line="36" column="13" bodyfile="/user/z37/test_windsurf/src/RunAction.cc" bodystart="43" bodyend="46"/>
+      </memberdef>
+      <memberdef kind="function" id="classRunAction_1a40026727cd17429e25d28a2910aa6083" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void RunAction::BeginOfRunAction</definition>
+        <argsstring>(const G4Run *run)</argsstring>
+        <name>BeginOfRunAction</name>
+        <qualifiedname>RunAction::BeginOfRunAction</qualifiedname>
+        <param>
+          <type>const G4Run *</type>
+          <declname>run</declname>
+        </param>
+        <briefdescription>
+<para>Called at the start of each run. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Initialization at the start of each run.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>run</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the G4Run (not used)</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+Creates the ROOT file and sets up the TTree structure with all necessary branches for data storage</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>run</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the G4Run (unused)</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+Creates and configures the ROOT output:<orderedlist>
+<listitem><para>Creates a new ROOT file &apos;neutron_data.root&apos;</para>
+</listitem><listitem><para>Creates a TTree &apos;neutronTree&apos;</para>
+</listitem><listitem><para>Sets up branches for:<itemizedlist>
+<listitem><para>Energy deposits (Double_t)</para>
+</listitem><listitem><para>Track lengths (Double_t)</para>
+</listitem><listitem><para>Neutron counts (Int_t) </para>
+</listitem></itemizedlist>
+</para>
+</listitem></orderedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/RunAction.hh" line="45" column="18" bodyfile="/user/z37/test_windsurf/src/RunAction.cc" bodystart="60" bodyend="70"/>
+      </memberdef>
+      <memberdef kind="function" id="classRunAction_1a70c999b4d496cd85116b67c68b7d6ce0" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void RunAction::EndOfRunAction</definition>
+        <argsstring>(const G4Run *run)</argsstring>
+        <name>EndOfRunAction</name>
+        <qualifiedname>RunAction::EndOfRunAction</qualifiedname>
+        <param>
+          <type>const G4Run *</type>
+          <declname>run</declname>
+        </param>
+        <briefdescription>
+<para>Called at the end of each run. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Cleanup at the end of each run.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>run</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the G4Run (not used)</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+Writes the ROOT file and properly closes it</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>run</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the G4Run (unused)</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+Finalizes the ROOT output:<orderedlist>
+<listitem><para>Writes all data to disk</para>
+</listitem><listitem><para>Properly closes the ROOT file</para>
+</listitem></orderedlist>
+</para>
+<para>After this method, the ROOT file is ready for analysis. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/RunAction.hh" line="53" column="18" bodyfile="/user/z37/test_windsurf/src/RunAction.cc" bodystart="82" bodyend="86"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Handles ROOT output creation and management for the simulation. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>This class manages the ROOT file output, creating a TTree structure to store simulation results including:<itemizedlist>
+<listitem><para>Energy deposits in liquid xenon</para>
+</listitem><listitem><para>Neutron track lengths</para>
+</listitem><listitem><para>Neutron counting </para>
+</listitem></itemizedlist>
+</para>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>G4UserRunAction</label>
+        <link refid="classG4UserRunAction"/>
+      </node>
+      <node id="1">
+        <label>RunAction</label>
+        <link refid="classRunAction"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="5">
+        <label>Double_t</label>
+      </node>
+      <node id="2">
+        <label>G4UserRunAction</label>
+        <link refid="classG4UserRunAction"/>
+      </node>
+      <node id="6">
+        <label>Int_t</label>
+      </node>
+      <node id="1">
+        <label>RunAction</label>
+        <link refid="classRunAction"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>rootFile</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>eventTree</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>fEnergyDep</edgelabel>
+          <edgelabel>fTrackLength</edgelabel>
+        </childnode>
+        <childnode refid="6" relation="usage">
+          <edgelabel>fNeutronCount</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>TFile *</label>
+      </node>
+      <node id="4">
+        <label>TTree *</label>
+      </node>
+    </collaborationgraph>
+    <location file="/user/z37/test_windsurf/include/RunAction.hh" line="21" column="1" bodyfile="/user/z37/test_windsurf/include/RunAction.hh" bodystart="22" bodyend="63"/>
+    <listofallmembers>
+      <member refid="classRunAction_1a40026727cd17429e25d28a2910aa6083" prot="public" virt="virtual"><scope>RunAction</scope><name>BeginOfRunAction</name></member>
+      <member refid="classRunAction_1a70c999b4d496cd85116b67c68b7d6ce0" prot="public" virt="virtual"><scope>RunAction</scope><name>EndOfRunAction</name></member>
+      <member refid="classRunAction_1a984248d83373c36c7b42c503d95060d4" prot="private" virt="non-virtual"><scope>RunAction</scope><name>eventTree</name></member>
+      <member refid="classRunAction_1ab55ba908a4b4fd61b0d3edcc8e23d7d1" prot="private" virt="non-virtual"><scope>RunAction</scope><name>fEnergyDep</name></member>
+      <member refid="classRunAction_1a723fbaa1ec56509328f32d2c713ba85b" prot="private" virt="non-virtual"><scope>RunAction</scope><name>fNeutronCount</name></member>
+      <member refid="classRunAction_1a120742dc9725d8d45c5637f9fa711a4b" prot="private" virt="non-virtual"><scope>RunAction</scope><name>fTrackLength</name></member>
+      <member refid="classRunAction_1a051ac35d80ac000ba37388fc85764a90" prot="private" virt="non-virtual"><scope>RunAction</scope><name>rootFile</name></member>
+      <member refid="classRunAction_1a535a70dd2811b2212753372dcb5a2f50" prot="public" virt="non-virtual"><scope>RunAction</scope><name>RunAction</name></member>
+      <member refid="classRunAction_1a6c584eb414c62a6238d5ea9a55601e1c" prot="public" virt="virtual"><scope>RunAction</scope><name>~RunAction</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

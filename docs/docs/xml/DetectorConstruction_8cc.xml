@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.10.0" xml:lang="en-US">
+  <compounddef id="DetectorConstruction_8cc" kind="file" language="C++">
+    <compoundname>DetectorConstruction.cc</compoundname>
+    <includes refid="DetectorConstruction_8hh" local="yes">DetectorConstruction.hh</includes>
+    <includes local="yes">G4SystemOfUnits.hh</includes>
+    <incdepgraph>
+      <node id="2">
+        <label>DetectorConstruction.hh</label>
+        <link refid="DetectorConstruction_8hh"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>GeometryParser.hh</label>
+        <link refid="GeometryParser_8hh"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/user/z37/test_windsurf/src/DetectorConstruction.cc</label>
+        <link refid="DetectorConstruction_8cc"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>G4LogicalVolume.hh</label>
+      </node>
+      <node id="7">
+        <label>G4Material.hh</label>
+      </node>
+      <node id="10">
+        <label>G4RotationMatrix.hh</label>
+      </node>
+      <node id="13">
+        <label>G4SystemOfUnits.hh</label>
+      </node>
+      <node id="9">
+        <label>G4ThreeVector.hh</label>
+      </node>
+      <node id="8">
+        <label>G4VPhysicalVolume.hh</label>
+      </node>
+      <node id="3">
+        <label>G4VUserDetectorConstruction.hh</label>
+      </node>
+      <node id="6">
+        <label>json.hpp</label>
+      </node>
+      <node id="12">
+        <label>map</label>
+      </node>
+      <node id="11">
+        <label>string</label>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+<para>Implementation of the <ref refid="classDetectorConstruction" kindref="compound">DetectorConstruction</ref> class. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="DetectorConstruction_8hh" kindref="compound">DetectorConstruction.hh</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4SystemOfUnits.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><ref refid="classDetectorConstruction_1a9ce1061267e7713fd6de5bcc405a0344" kindref="member">DetectorConstruction::DetectorConstruction</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>geomFile,</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>matFile)</highlight></codeline>
+<codeline lineno="18"><highlight class="normal">:<sp/><ref refid="classG4VUserDetectorConstruction" kindref="compound">G4VUserDetectorConstruction</ref>(),</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/>geometryFile(geomFile),</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/>materialsFile(matFile),</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/>lXeVolume(nullptr)</highlight></codeline>
+<codeline lineno="22"><highlight class="normal">{<sp/>}</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><ref refid="classDetectorConstruction_1a73013cab35a2b470338da2e4686edea3" kindref="member">DetectorConstruction::~DetectorConstruction</ref>()</highlight></codeline>
+<codeline lineno="31"><highlight class="normal">{<sp/>}</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal">G4VPhysicalVolume*<sp/><ref refid="classDetectorConstruction_1a662c618480b345a747f014b845d5ffdf" kindref="member">DetectorConstruction::Construct</ref>()</highlight></codeline>
+<codeline lineno="46"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Load<sp/>configuration<sp/>files</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classDetectorConstruction_1a561a2dc3198a792da76b64cf34a830b1" kindref="member">parser</ref>.<ref refid="classGeometryParser_1a06bb278eb2df23afc7aa128bb9e22a3f" kindref="member">LoadMaterialsConfig</ref>(<ref refid="classDetectorConstruction_1aa030db18f6f4ee1a4e458a1247a50dc4" kindref="member">materialsFile</ref>);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classDetectorConstruction_1a561a2dc3198a792da76b64cf34a830b1" kindref="member">parser</ref>.<ref refid="classGeometryParser_1a6137e170737934faccb18e6754f53f0a" kindref="member">LoadGeometryConfig</ref>(<ref refid="classDetectorConstruction_1afada5ee6a2254658d0472586c7e07262" kindref="member">geometryFile</ref>);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Construct<sp/>the<sp/>geometry</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>G4VPhysicalVolume*<sp/>worldPhys<sp/>=<sp/><ref refid="classDetectorConstruction_1a561a2dc3198a792da76b64cf34a830b1" kindref="member">parser</ref>.<ref refid="classGeometryParser_1a2c431afc7ac6099584ba8a15ed61d37a" kindref="member">ConstructGeometry</ref>();</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Get<sp/>pointer<sp/>to<sp/>LXe<sp/>volume<sp/>for<sp/>scoring</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>The<sp/>LXe<sp/>volume<sp/>should<sp/>be<sp/>the<sp/>first<sp/>daughter<sp/>of<sp/>the<sp/>world<sp/>volume</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/>G4LogicalVolume*<sp/>worldLV<sp/>=<sp/>worldPhys-&gt;GetLogicalVolume();</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(worldLV-&gt;GetNoDaughters()<sp/>&gt;<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>G4VPhysicalVolume*<sp/>lxePhys<sp/>=<sp/>worldLV-&gt;GetDaughter(0);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classDetectorConstruction_1a9145cd2f5dfaaa6ab9b2c8b9a885a91d" kindref="member">lXeVolume</ref><sp/>=<sp/>lxePhys-&gt;GetLogicalVolume();</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>worldPhys;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/user/z37/test_windsurf/src/DetectorConstruction.cc"/>
+  </compounddef>
+</doxygen>

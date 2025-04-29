@@ -1,0 +1,9 @@
+# Pre-initialization macro
+# This macro is executed before detector construction and initialization
+# It sets up the geometry and materials configuration files
+
+# Set the geometry and materials files
+/detector/setGeometryFile config/geometry.json
+/detector/setMaterialsFile config/materials.json
+
+# You can add other pre-initialization settings here

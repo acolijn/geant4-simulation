@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="dir_d44c64559bbebec7f509842c48db8b23" kind="dir">
+    <compoundname>/user/z37/test_windsurf/include</compoundname>
+    <innerfile refid="ActionInitialization_8hh">ActionInitialization.hh</innerfile>
+    <innerfile refid="DetectorConstruction_8hh">DetectorConstruction.hh</innerfile>
+    <innerfile refid="GeometryParser_8hh">GeometryParser.hh</innerfile>
+    <innerfile refid="PrimaryGeneratorAction_8hh">PrimaryGeneratorAction.hh</innerfile>
+    <innerfile refid="RunAction_8hh">RunAction.hh</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/user/z37/test_windsurf/include/"/>
+  </compounddef>
+</doxygen>

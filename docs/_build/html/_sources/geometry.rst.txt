@@ -1,0 +1,40 @@
+Geometry Configuration
+=====================
+
+The detector geometry in Windsurf is configured through JSON files, making it easy to modify without recompiling the code.
+
+Configuration Files
+-----------------
+
+Two main configuration files are used:
+
+1. Geometry Configuration
+   - Defines the physical structure of the detector
+   - Specifies dimensions, positions, and rotations
+   - Defines the hierarchy of volumes
+
+2. Materials Configuration
+   - Defines all materials used in the simulation
+   - Specifies material properties and compositions
+
+JSON Format
+----------
+
+The geometry configuration uses a hierarchical JSON format:
+
+.. code-block:: json
+
+    {
+        "world": {
+            "name": "World",
+            "material": "G4_AIR",
+            "dimensions": {
+                "x": 2.0,
+                "y": 2.0,
+                "z": 2.0,
+                "unit": "m"
+            }
+        }
+    }
+
+For detailed API documentation of the geometry parser, see :doc:`api`.

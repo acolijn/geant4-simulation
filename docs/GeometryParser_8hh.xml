@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="GeometryParser_8hh" kind="file" language="C++">
+    <compoundname>GeometryParser.hh</compoundname>
+    <includes local="yes">json.hpp</includes>
+    <includes local="yes">G4Material.hh</includes>
+    <includes local="yes">G4VPhysicalVolume.hh</includes>
+    <includes local="yes">G4LogicalVolume.hh</includes>
+    <includes local="yes">G4ThreeVector.hh</includes>
+    <includes local="yes">G4RotationMatrix.hh</includes>
+    <includes local="no">string</includes>
+    <includes local="no">map</includes>
+    <includedby refid="GeometryParser_8cc" local="yes">/user/z37/test_windsurf/src/GeometryParser.cc</includedby>
+    <includedby refid="DetectorConstruction_8hh" local="yes">/user/z37/test_windsurf/include/DetectorConstruction.hh</includedby>
+    <incdepgraph>
+      <node id="8">
+        <label>string</label>
+      </node>
+      <node id="9">
+        <label>map</label>
+      </node>
+      <node id="2">
+        <label>json.hpp</label>
+      </node>
+      <node id="3">
+        <label>G4Material.hh</label>
+      </node>
+      <node id="7">
+        <label>G4RotationMatrix.hh</label>
+      </node>
+      <node id="4">
+        <label>G4VPhysicalVolume.hh</label>
+      </node>
+      <node id="6">
+        <label>G4ThreeVector.hh</label>
+      </node>
+      <node id="1">
+        <label>/user/z37/test_windsurf/include/GeometryParser.hh</label>
+        <link refid="GeometryParser_8hh"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>G4LogicalVolume.hh</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4">
+        <label>/user/z37/test_windsurf/src/DetectorConstruction.cc</label>
+        <link refid="DetectorConstruction_8cc"/>
+      </node>
+      <node id="3">
+        <label>/user/z37/test_windsurf/include/DetectorConstruction.hh</label>
+        <link refid="DetectorConstruction_8hh"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>/user/z37/test_windsurf/src/GeometryParser.cc</label>
+        <link refid="GeometryParser_8cc"/>
+      </node>
+      <node id="1">
+        <label>/user/z37/test_windsurf/include/GeometryParser.hh</label>
+        <link refid="GeometryParser_8hh"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classGeometryParser" prot="public">GeometryParser</innerclass>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" prot="public" static="no">
+        <type>nlohmann::json</type>
+        <definition>using json =  nlohmann::json</definition>
+        <argsstring></argsstring>
+        <name>json</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/GeometryParser.hh" line="13" column="1" bodyfile="/user/z37/test_windsurf/include/GeometryParser.hh" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>GeometryParser_h</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GeometryParser_h<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;json.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4Material.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4VPhysicalVolume.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4LogicalVolume.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4ThreeVector.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;G4RotationMatrix.hh&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;map&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13" refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">using</highlight><highlight class="normal"><sp/><ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref><sp/>=<sp/><ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">nlohmann::json</ref>;</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25" refid="classGeometryParser" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classGeometryParser" kindref="compound">GeometryParser</ref><sp/>{</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classGeometryParser_1a8345530e9b723ba00f6d993234ec0975" kindref="member">GeometryParser</ref>();</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="classGeometryParser_1a14f8bde579a496f9d65331290890a71e" kindref="member">~GeometryParser</ref>();</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classGeometryParser_1a6137e170737934faccb18e6754f53f0a" kindref="member">LoadGeometryConfig</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>filename);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="classGeometryParser_1a06bb278eb2df23afc7aa128bb9e22a3f" kindref="member">LoadMaterialsConfig</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>filename);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>G4VPhysicalVolume*<sp/><ref refid="classGeometryParser_1a2c431afc7ac6099584ba8a15ed61d37a" kindref="member">ConstructGeometry</ref>();</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="52" refid="classGeometryParser_1a670e3a0541915a69130fb810bf99370e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref><sp/><ref refid="classGeometryParser_1a670e3a0541915a69130fb810bf99370e" kindref="member">geometryConfig</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="53" refid="classGeometryParser_1acea20d9e9d83c566133aa9f8dbbaf654" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref><sp/><ref refid="classGeometryParser_1acea20d9e9d83c566133aa9f8dbbaf654" kindref="member">materialsConfig</ref>;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="55" refid="classGeometryParser_1a9cc65fe4e3627f1a7009e7a040d454b0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>std::map&lt;std::string,<sp/>G4Material*&gt;<sp/><ref refid="classGeometryParser_1a9cc65fe4e3627f1a7009e7a040d454b0" kindref="member">materials</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="56" refid="classGeometryParser_1a17e226b77c81f528bf5bdb8ee0c5976c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/>std::map&lt;std::string,<sp/>G4LogicalVolume*&gt;<sp/><ref refid="classGeometryParser_1a17e226b77c81f528bf5bdb8ee0c5976c" kindref="member">volumes</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/>G4Material*<sp/><ref refid="classGeometryParser_1ad0bad320ed7173ebffd0883d0ac6c281" kindref="member">CreateMaterial</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string&amp;<sp/>name,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref>&amp;<sp/>config);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>G4LogicalVolume*<sp/><ref refid="classGeometryParser_1a0baf12b3b2c03025edc3f42542e0f3fe" kindref="member">CreateVolume</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref>&amp;<sp/>config);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>G4ThreeVector<sp/><ref refid="classGeometryParser_1a7e83ca0cff750a631d912ca29b31b9ba" kindref="member">ParseVector</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref>&amp;<sp/>vec);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>G4RotationMatrix*<sp/><ref refid="classGeometryParser_1a3c5dff63c3d5fb09368cacec478fe3a2" kindref="member">ParseRotation</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="GeometryParser_8hh_1ab701e3ac61a85b337ec5c1abaad6742d" kindref="member">json</ref>&amp;<sp/>rot);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+    </programlisting>
+    <location file="/user/z37/test_windsurf/include/GeometryParser.hh"/>
+  </compounddef>
+</doxygen>

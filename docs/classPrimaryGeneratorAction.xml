@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classPrimaryGeneratorAction" kind="class" language="C++" prot="public">
+    <compoundname>PrimaryGeneratorAction</compoundname>
+    <basecompoundref refid="classG4VUserPrimaryGeneratorAction" prot="public" virt="non-virtual">G4VUserPrimaryGeneratorAction</basecompoundref>
+    <includes refid="PrimaryGeneratorAction_8hh" local="no">PrimaryGeneratorAction.hh</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classPrimaryGeneratorAction_1a4b74ac1aea3dab53c17b86dbd2eebb9f" prot="private" static="no" mutable="no">
+        <type>G4ParticleGun *</type>
+        <definition>G4ParticleGun* PrimaryGeneratorAction::fParticleGun</definition>
+        <argsstring></argsstring>
+        <name>fParticleGun</name>
+        <briefdescription>
+<para>Pointer to the particle gun. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/PrimaryGeneratorAction.hh" line="46" column="19" bodyfile="/user/z37/test_windsurf/include/PrimaryGeneratorAction.hh" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classPrimaryGeneratorAction_1a4bbef83d397d84b434541f8720bf747d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>PrimaryGeneratorAction::PrimaryGeneratorAction</definition>
+        <argsstring>()</argsstring>
+        <name>PrimaryGeneratorAction</name>
+        <briefdescription>
+<para>Constructor. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Constructor implementation.</para>
+<para>Initializes the particle gun and sets default neutron properties</para>
+<para>Sets up the particle gun with default neutron properties:<itemizedlist>
+<listitem><para>Particle type: neutron</para>
+</listitem><listitem><para>Energy: 1 MeV</para>
+</listitem><listitem><para>Direction: Along positive Z axis (0,0,1)</para>
+</listitem><listitem><para>Number of particles per event: 1 </para>
+</listitem></itemizedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/PrimaryGeneratorAction.hh" line="29" column="5" bodyfile="/user/z37/test_windsurf/src/PrimaryGeneratorAction.cc" bodystart="30" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="classPrimaryGeneratorAction_1ad236fbc210171b9178446778b6bdfb40" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type></type>
+        <definition>PrimaryGeneratorAction::~PrimaryGeneratorAction</definition>
+        <argsstring>()</argsstring>
+        <name>~PrimaryGeneratorAction</name>
+        <briefdescription>
+<para>Destructor. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Destructor implementation.</para>
+<para>Cleans up the particle gun object to prevent memory leaks. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/PrimaryGeneratorAction.hh" line="32" column="13" bodyfile="/user/z37/test_windsurf/src/PrimaryGeneratorAction.cc" bodystart="50" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="classPrimaryGeneratorAction_1a67d83efdbb2b6e6f97a001dc921ea003" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>void PrimaryGeneratorAction::GeneratePrimaries</definition>
+        <argsstring>(G4Event *anEvent)</argsstring>
+        <name>GeneratePrimaries</name>
+        <param>
+          <type>G4Event *</type>
+          <declname>anEvent</declname>
+        </param>
+        <briefdescription>
+<para>Generates primary particles for each event. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>anEvent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the current G4Event</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+For each event, this method:<orderedlist>
+<listitem><para>Generates a random position on the top face</para>
+</listitem><listitem><para>Sets the particle gun position</para>
+</listitem><listitem><para>Creates the primary vertex</para>
+</listitem></orderedlist>
+</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>anEvent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The current G4Event being processed</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+For each event, this method:<orderedlist>
+<listitem><para>Generates a random position on the top face of the world volume<itemizedlist>
+<listitem><para>x: Random position within ±15 cm</para>
+</listitem><listitem><para>y: Random position within ±15 cm</para>
+</listitem><listitem><para>z: Fixed at top of world volume (-1m)</para>
+</listitem></itemizedlist>
+</para>
+</listitem><listitem><para>Sets the particle gun position</para>
+</listitem><listitem><para>Creates the primary vertex</para>
+</listitem></orderedlist>
+</para>
+<para>The random distribution ensures good coverage of the liquid xenon target. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/user/z37/test_windsurf/include/PrimaryGeneratorAction.hh" line="43" column="18" bodyfile="/user/z37/test_windsurf/src/PrimaryGeneratorAction.cc" bodystart="69" bodyend="80"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Handles the generation of primary neutrons for the simulation. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>This class configures and manages the particle gun that generates primary neutrons. The neutrons are generated with:<itemizedlist>
+<listitem><para>Energy: 1 MeV (configurable through macro)</para>
+</listitem><listitem><para>Position: Random points on top face of world volume</para>
+</listitem><listitem><para>Direction: Downward along Z-axis </para>
+</listitem></itemizedlist>
+</para>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>G4VUserPrimaryGeneratorAction</label>
+        <link refid="classG4VUserPrimaryGeneratorAction"/>
+      </node>
+      <node id="1">
+        <label>PrimaryGeneratorAction</label>
+        <link refid="classPrimaryGeneratorAction"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="2">
+        <label>G4VUserPrimaryGeneratorAction</label>
+        <link refid="classG4VUserPrimaryGeneratorAction"/>
+      </node>
+      <node id="1">
+        <label>PrimaryGeneratorAction</label>
+        <link refid="classPrimaryGeneratorAction"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>fParticleGun</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>G4ParticleGun *</label>
+      </node>
+    </collaborationgraph>
+    <location file="/user/z37/test_windsurf/include/PrimaryGeneratorAction.hh" line="21" column="1" bodyfile="/user/z37/test_windsurf/include/PrimaryGeneratorAction.hh" bodystart="22" bodyend="47"/>
+    <listofallmembers>
+      <member refid="classPrimaryGeneratorAction_1a4b74ac1aea3dab53c17b86dbd2eebb9f" prot="private" virt="non-virtual"><scope>PrimaryGeneratorAction</scope><name>fParticleGun</name></member>
+      <member refid="classPrimaryGeneratorAction_1a67d83efdbb2b6e6f97a001dc921ea003" prot="public" virt="virtual"><scope>PrimaryGeneratorAction</scope><name>GeneratePrimaries</name></member>
+      <member refid="classPrimaryGeneratorAction_1a4bbef83d397d84b434541f8720bf747d" prot="public" virt="non-virtual"><scope>PrimaryGeneratorAction</scope><name>PrimaryGeneratorAction</name></member>
+      <member refid="classPrimaryGeneratorAction_1ad236fbc210171b9178446778b6bdfb40" prot="public" virt="virtual"><scope>PrimaryGeneratorAction</scope><name>~PrimaryGeneratorAction</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

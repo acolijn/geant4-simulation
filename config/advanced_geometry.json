@@ -1,0 +1,85 @@
+{
+    "world": {
+        "type": "box",
+        "name": "World",
+        "material": "G4_AIR",
+        "size": {
+            "x": 2.0,
+            "y": 2.0,
+            "z": 2.0,
+            "unit": "m"
+        },
+        "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "unit": "m"
+        },
+        "rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "unit": "deg"
+        }
+    },
+    "volumes": [
+        {
+            "type": "box",
+            "name": "LXeTank",
+            "material": "LXe",
+            "size": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0,
+                "unit": "cm"
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "unit": "cm"
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "unit": "deg"
+            },
+            "mother_volume": "World"
+        },
+        {
+            "type": "cylinder",
+            "name": "PhotonDetector",
+            "material": "G4_Si",
+            "radius": 10.0,
+            "height": 2.0,
+            "inner_radius": 0.0,
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 60.0,
+                "unit": "cm"
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "unit": "deg"
+            },
+            "mother_volume": "World"
+        },
+        {
+            "type": "sphere",
+            "name": "CalibrationSource",
+            "material": "G4_Cf",
+            "radius": 5.0,
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": -60.0,
+                "unit": "cm"
+            },
+            "mother_volume": "World"
+        }
+    ]
+}

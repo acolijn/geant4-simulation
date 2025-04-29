@@ -1,0 +1,24 @@
+# Visualization settings
+# This macro is executed in interactive mode after detector initialization
+/detector/setGeometryFile config/super_advanced_geometry.json
+#/detector/setGeometryFile config/geometry.json
+/detector/setMaterialsFile config/materials.json
+
+/run/initialize
+
+# Visualization settings
+/vis/open OGL
+/vis/drawVolume
+/vis/viewer/set/viewpointVector 1 1 1
+/vis/viewer/set/lightsVector 1 1 1
+/vis/viewer/set/style wireframe
+/vis/viewer/set/auxiliaryEdge true
+/vis/viewer/set/lineSegmentsPerCircle 100
+/vis/scene/add/trajectories smooth
+/vis/scene/endOfEventAction accumulate
+
+# Particle gun settings
+/gun/particle neutron
+/gun/energy 1 MeV
+
+# You can add other visualization and interactive settings here

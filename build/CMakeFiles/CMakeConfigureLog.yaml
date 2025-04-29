@@ -1,0 +1,860 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:204 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Linux - 5.14.0-503.15.1.el9_5.x86_64 - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc 
+      Build flags: -march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/data/xenon/miniconda3/envs/g4/include
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        /user/z37/test_windsurf/build/CMakeFiles/3.26.5/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ 
+      Build flags: -fvisibility-inlines-hidden;-fmessage-length=0;-march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/data/xenon/miniconda3/envs/g4/include
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is GNU, found in:
+        /user/z37/test_windsurf/build/CMakeFiles/3.26.5/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-A6gYXp"
+      binary: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-A6gYXp"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-A6gYXp
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_58f2b/fast && /bin/gmake  -f CMakeFiles/cmTC_58f2b.dir/build.make CMakeFiles/cmTC_58f2b.dir/build
+        gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-A6gYXp'
+        Building C object CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs
+        could not find specs file conda.specs
+        COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc
+        Target: x86_64-conda-linux-gnu
+        Configured with: ../configure --prefix=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho --with-slibdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --libdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --mandir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/man --build=x86_64-conda-linux-gnu --host=x86_64-conda-linux-gnu --target=x86_64-conda-linux-gnu --enable-default-pie --enable-languages=c,c++,fortran,objc,obj-c++ --enable-__cxa_atexit --disable-libmudflap --enable-libgomp --disable-libssp --enable-libquadmath --enable-libquadmath-support --enable-libsanitizer --enable-lto --enable-threads=posix --enable-target-optspace --enable-plugin --enable-gold --disable-nls --disable-bootstrap --disable-multilib --enable-long-long --with-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-build-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-gxx-include-dir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/include/c++/12.3.0 --with-pkgversion='conda-forge gcc 12.3.0-7' --with-bugurl=https://github.com/conda-forge/ctng-compilers-feedstock/issues/new/choose
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 12.3.0 (conda-forge gcc 12.3.0-7) 
+        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_58f2b.dir/'
+         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1 -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_58f2b.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -march=nocona -mtune=haswell -O2 -version -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o
+        GNU assembler version 2.40 (x86_64-conda-linux-gnu) using BFD version (GNU Binutils) 2.40
+        GNU C17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)
+        	compiled by GNU C version 13.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include"
+        ignoring nonexistent directory "/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/local/include"
+        ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed"
+        ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /data/xenon/miniconda3/envs/g4/include
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include
+         /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/include
+        End of search list.
+        GNU C17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)
+        	compiled by GNU C version 13.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        Compiler executable checksum: 8baa67e68f618f3403d40a3a5efe3080
+        COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/
+        LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/
+        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_58f2b
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_58f2b.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o -o cmTC_58f2b 
+        Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs
+        could not find specs file conda.specs
+        COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc
+        COLLECT_LTO_WRAPPER=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper
+        Target: x86_64-conda-linux-gnu
+        Configured with: ../configure --prefix=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho --with-slibdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --libdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --mandir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/man --build=x86_64-conda-linux-gnu --host=x86_64-conda-linux-gnu --target=x86_64-conda-linux-gnu --enable-default-pie --enable-languages=c,c++,fortran,objc,obj-c++ --enable-__cxa_atexit --disable-libmudflap --enable-libgomp --disable-libssp --enable-libquadmath --enable-libquadmath-support --enable-libsanitizer --enable-lto --enable-threads=posix --enable-target-optspace --enable-plugin --enable-gold --disable-nls --disable-bootstrap --disable-multilib --enable-long-long --with-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-build-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-gxx-include-dir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/include/c++/12.3.0 --with-pkgversion='conda-forge gcc 12.3.0-7' --with-bugurl=https://github.com/conda-forge/ctng-compilers-feedstock/issues/new/choose
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 12.3.0 (conda-forge gcc 12.3.0-7) 
+        COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/
+        LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/
+        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_58f2b' '-dumpdir' 'cmTC_58f2b.'
+         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccbgx1lV.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_58f2b /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib
+        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_58f2b' '-dumpdir' 'cmTC_58f2b.'
+        gmake[1]: Leaving directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-A6gYXp'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/data/xenon/miniconda3/envs/g4/include]
+          add: [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include]
+          add: [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed]
+          add: [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include]
+          add: [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/include]
+        end of search list found
+        collapse include dir [/data/xenon/miniconda3/envs/g4/include] ==> [/data/xenon/miniconda3/envs/g4/include]
+        collapse include dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include]
+        collapse include dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed]
+        collapse include dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include]
+        collapse include dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/include] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/include]
+        implicit include dirs: [/data/xenon/miniconda3/envs/g4/include;/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include;/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:152 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(x86_64-conda-linux-gnu-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-A6gYXp]
+        ignore line: []
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_58f2b/fast && /bin/gmake  -f CMakeFiles/cmTC_58f2b.dir/build.make CMakeFiles/cmTC_58f2b.dir/build]
+        ignore line: [gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-A6gYXp']
+        ignore line: [Building C object CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs]
+        ignore line: [could not find specs file conda.specs]
+        ignore line: [COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc]
+        ignore line: [Target: x86_64-conda-linux-gnu]
+        ignore line: [Configured with: ../configure --prefix=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho --with-slibdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --libdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --mandir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/man --build=x86_64-conda-linux-gnu --host=x86_64-conda-linux-gnu --target=x86_64-conda-linux-gnu --enable-default-pie --enable-languages=c c++ fortran objc obj-c++ --enable-__cxa_atexit --disable-libmudflap --enable-libgomp --disable-libssp --enable-libquadmath --enable-libquadmath-support --enable-libsanitizer --enable-lto --enable-threads=posix --enable-target-optspace --enable-plugin --enable-gold --disable-nls --disable-bootstrap --disable-multilib --enable-long-long --with-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-build-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-gxx-include-dir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/include/c++/12.3.0 --with-pkgversion='conda-forge gcc 12.3.0-7' --with-bugurl=https://github.com/conda-forge/ctng-compilers-feedstock/issues/new/choose]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 12.3.0 (conda-forge gcc 12.3.0-7) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_58f2b.dir/']
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1 -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_58f2b.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -march=nocona -mtune=haswell -O2 -version -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o]
+        ignore line: [GNU assembler version 2.40 (x86_64-conda-linux-gnu) using BFD version (GNU Binutils) 2.40]
+        ignore line: [GNU C17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include"]
+        ignore line: [ignoring nonexistent directory "/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/local/include"]
+        ignore line: [ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed"]
+        ignore line: [ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/include]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [GNU C17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [Compiler executable checksum: 8baa67e68f618f3403d40a3a5efe3080]
+        ignore line: [COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_58f2b]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_58f2b.dir/link.txt --verbose=1]
+        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl -O2 -Wl --sort-common -Wl --as-needed -Wl -z relro -Wl -z now -Wl --disable-new-dtags -Wl --gc-sections -Wl --allow-shlib-undefined -Wl -rpath /data/xenon/miniconda3/envs/g4/lib -Wl -rpath-link /data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o -o cmTC_58f2b ]
+        ignore line: [Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs]
+        ignore line: [could not find specs file conda.specs]
+        ignore line: [COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc]
+        ignore line: [COLLECT_LTO_WRAPPER=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper]
+        ignore line: [Target: x86_64-conda-linux-gnu]
+        ignore line: [Configured with: ../configure --prefix=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho --with-slibdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --libdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --mandir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/man --build=x86_64-conda-linux-gnu --host=x86_64-conda-linux-gnu --target=x86_64-conda-linux-gnu --enable-default-pie --enable-languages=c c++ fortran objc obj-c++ --enable-__cxa_atexit --disable-libmudflap --enable-libgomp --disable-libssp --enable-libquadmath --enable-libquadmath-support --enable-libsanitizer --enable-lto --enable-threads=posix --enable-target-optspace --enable-plugin --enable-gold --disable-nls --disable-bootstrap --disable-multilib --enable-long-long --with-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-build-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-gxx-include-dir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/include/c++/12.3.0 --with-pkgversion='conda-forge gcc 12.3.0-7' --with-bugurl=https://github.com/conda-forge/ctng-compilers-feedstock/issues/new/choose]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 12.3.0 (conda-forge gcc 12.3.0-7) ]
+        ignore line: [COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_58f2b' '-dumpdir' 'cmTC_58f2b.']
+        link line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccbgx1lV.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_58f2b /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib]
+          arg [/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccbgx1lV.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [--sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_58f2b] ==> ignore
+          arg [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o]
+          arg [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o]
+          arg [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o]
+          arg [-L/data/xenon/miniconda3/envs/g4/lib] ==> dir [/data/xenon/miniconda3/envs/g4/lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../..] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../..]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib]
+          arg [-O2] ==> ignore
+          arg [--sort-common] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-znow] ==> ignore
+          arg [--disable-new-dtags] ==> ignore
+          arg [--gc-sections] ==> ignore
+          arg [--allow-shlib-undefined] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/data/xenon/miniconda3/envs/g4/lib] ==> ignore
+          arg [-rpath-link] ==> ignore
+          arg [/data/xenon/miniconda3/envs/g4/lib] ==> ignore
+          arg [CMakeFiles/cmTC_58f2b.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o]
+          arg [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o]
+          arg [-rpath] ==> ignore
+          arg [/data/xenon/miniconda3/envs/g4/lib] ==> ignore
+        collapse obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/Scrt1.o]
+        collapse obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/crti.o]
+        collapse obj [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o]
+        collapse obj [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o]
+        collapse obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/crtn.o]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/lib] ==> [/data/xenon/miniconda3/envs/g4/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib] ==> [/data/xenon/miniconda3/envs/g4/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../..] ==> [/data/xenon/miniconda3/envs/g4/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib]
+        implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+        implicit objs: [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/Scrt1.o;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/crti.o;/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o;/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/crtn.o]
+        implicit dirs: [/data/xenon/miniconda3/envs/g4/lib;/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0;/data/xenon/miniconda3/envs/g4/lib/gcc;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/lib;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/lib;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-g9VxL5"
+      binary: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-g9VxL5"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "-fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-g9VxL5
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_72f86/fast && /bin/gmake  -f CMakeFiles/cmTC_72f86.dir/build.make CMakeFiles/cmTC_72f86.dir/build
+        gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-g9VxL5'
+        Building CXX object CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++   -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs
+        could not find specs file conda.specs
+        COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++
+        Target: x86_64-conda-linux-gnu
+        Configured with: ../configure --prefix=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho --with-slibdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --libdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --mandir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/man --build=x86_64-conda-linux-gnu --host=x86_64-conda-linux-gnu --target=x86_64-conda-linux-gnu --enable-default-pie --enable-languages=c,c++,fortran,objc,obj-c++ --enable-__cxa_atexit --disable-libmudflap --enable-libgomp --disable-libssp --enable-libquadmath --enable-libquadmath-support --enable-libsanitizer --enable-lto --enable-threads=posix --enable-target-optspace --enable-plugin --enable-gold --disable-nls --disable-bootstrap --disable-multilib --enable-long-long --with-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-build-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-gxx-include-dir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/include/c++/12.3.0 --with-pkgversion='conda-forge gcc 12.3.0-7' --with-bugurl=https://github.com/conda-forge/ctng-compilers-feedstock/issues/new/choose
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 12.3.0 (conda-forge gcc 12.3.0-7) 
+        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_72f86.dir/'
+         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1plus -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -D_GNU_SOURCE -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_72f86.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -march=nocona -mtune=haswell -O2 -version -fvisibility-inlines-hidden -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o
+        GNU assembler version 2.40 (x86_64-conda-linux-gnu) using BFD version (GNU Binutils) 2.40
+        GNU C++17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)
+        	compiled by GNU C version 13.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include"
+        ignoring nonexistent directory "/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/local/include"
+        ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed"
+        ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /data/xenon/miniconda3/envs/g4/include
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0/x86_64-conda-linux-gnu
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0/backward
+         /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/include
+        End of search list.
+        GNU C++17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)
+        	compiled by GNU C version 13.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        Compiler executable checksum: 5e225246064ad1966efe9c4a3399914e
+        COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/
+        LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/
+        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_72f86
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_72f86.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_72f86 
+        Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs
+        could not find specs file conda.specs
+        COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++
+        COLLECT_LTO_WRAPPER=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper
+        Target: x86_64-conda-linux-gnu
+        Configured with: ../configure --prefix=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho --with-slibdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --libdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --mandir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/man --build=x86_64-conda-linux-gnu --host=x86_64-conda-linux-gnu --target=x86_64-conda-linux-gnu --enable-default-pie --enable-languages=c,c++,fortran,objc,obj-c++ --enable-__cxa_atexit --disable-libmudflap --enable-libgomp --disable-libssp --enable-libquadmath --enable-libquadmath-support --enable-libsanitizer --enable-lto --enable-threads=posix --enable-target-optspace --enable-plugin --enable-gold --disable-nls --disable-bootstrap --disable-multilib --enable-long-long --with-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-build-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-gxx-include-dir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/include/c++/12.3.0 --with-pkgversion='conda-forge gcc 12.3.0-7' --with-bugurl=https://github.com/conda-forge/ctng-compilers-feedstock/issues/new/choose
+        Thread model: posix
+        Supported LTO compression algorithms: zlib
+        gcc version 12.3.0 (conda-forge gcc 12.3.0-7) 
+        COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/
+        LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/
+        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_72f86' '-shared-libgcc' '-dumpdir' 'cmTC_72f86.'
+         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccMn8akN.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_72f86 /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib
+        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_72f86' '-shared-libgcc' '-dumpdir' 'cmTC_72f86.'
+        gmake[1]: Leaving directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-g9VxL5'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:127 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/data/xenon/miniconda3/envs/g4/include]
+          add: [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include]
+          add: [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed]
+          add: [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include]
+          add: [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0]
+          add: [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0/x86_64-conda-linux-gnu]
+          add: [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0/backward]
+          add: [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/include]
+        end of search list found
+        collapse include dir [/data/xenon/miniconda3/envs/g4/include] ==> [/data/xenon/miniconda3/envs/g4/include]
+        collapse include dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include]
+        collapse include dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed]
+        collapse include dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include]
+        collapse include dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0]
+        collapse include dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0/x86_64-conda-linux-gnu] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/x86_64-conda-linux-gnu]
+        collapse include dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0/backward] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/backward]
+        collapse include dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/include] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/include]
+        implicit include dirs: [/data/xenon/miniconda3/envs/g4/include;/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include;/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/x86_64-conda-linux-gnu;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/backward;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:152 (message)"
+      - "/usr/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(x86_64-conda-linux-gnu-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-g9VxL5]
+        ignore line: []
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_72f86/fast && /bin/gmake  -f CMakeFiles/cmTC_72f86.dir/build.make CMakeFiles/cmTC_72f86.dir/build]
+        ignore line: [gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-g9VxL5']
+        ignore line: [Building CXX object CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++   -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs]
+        ignore line: [could not find specs file conda.specs]
+        ignore line: [COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++]
+        ignore line: [Target: x86_64-conda-linux-gnu]
+        ignore line: [Configured with: ../configure --prefix=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho --with-slibdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --libdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --mandir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/man --build=x86_64-conda-linux-gnu --host=x86_64-conda-linux-gnu --target=x86_64-conda-linux-gnu --enable-default-pie --enable-languages=c c++ fortran objc obj-c++ --enable-__cxa_atexit --disable-libmudflap --enable-libgomp --disable-libssp --enable-libquadmath --enable-libquadmath-support --enable-libsanitizer --enable-lto --enable-threads=posix --enable-target-optspace --enable-plugin --enable-gold --disable-nls --disable-bootstrap --disable-multilib --enable-long-long --with-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-build-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-gxx-include-dir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/include/c++/12.3.0 --with-pkgversion='conda-forge gcc 12.3.0-7' --with-bugurl=https://github.com/conda-forge/ctng-compilers-feedstock/issues/new/choose]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 12.3.0 (conda-forge gcc 12.3.0-7) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_72f86.dir/']
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1plus -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -D_GNU_SOURCE -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_72f86.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -march=nocona -mtune=haswell -O2 -version -fvisibility-inlines-hidden -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [GNU assembler version 2.40 (x86_64-conda-linux-gnu) using BFD version (GNU Binutils) 2.40]
+        ignore line: [GNU C++17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include"]
+        ignore line: [ignoring nonexistent directory "/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/local/include"]
+        ignore line: [ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed"]
+        ignore line: [ignoring duplicate directory "/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/include]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/include]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0/x86_64-conda-linux-gnu]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/../../x86_64-conda-linux-gnu/include/c++/12.3.0/backward]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/include]
+        ignore line: [End of search list.]
+        ignore line: [GNU C++17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [Compiler executable checksum: 5e225246064ad1966efe9c4a3399914e]
+        ignore line: [COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_72f86]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_72f86.dir/link.txt --verbose=1]
+        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl -O2 -Wl --sort-common -Wl --as-needed -Wl -z relro -Wl -z now -Wl --disable-new-dtags -Wl --gc-sections -Wl --allow-shlib-undefined -Wl -rpath /data/xenon/miniconda3/envs/g4/lib -Wl -rpath-link /data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_72f86 ]
+        ignore line: [Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs]
+        ignore line: [could not find specs file conda.specs]
+        ignore line: [COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++]
+        ignore line: [COLLECT_LTO_WRAPPER=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper]
+        ignore line: [Target: x86_64-conda-linux-gnu]
+        ignore line: [Configured with: ../configure --prefix=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho --with-slibdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --libdir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/lib --mandir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/man --build=x86_64-conda-linux-gnu --host=x86_64-conda-linux-gnu --target=x86_64-conda-linux-gnu --enable-default-pie --enable-languages=c c++ fortran objc obj-c++ --enable-__cxa_atexit --disable-libmudflap --enable-libgomp --disable-libssp --enable-libquadmath --enable-libquadmath-support --enable-libsanitizer --enable-lto --enable-threads=posix --enable-target-optspace --enable-plugin --enable-gold --disable-nls --disable-bootstrap --disable-multilib --enable-long-long --with-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-build-sysroot=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/sysroot --with-gxx-include-dir=/home/conda/feedstock_root/build_artifacts/gcc_compilers_1715013812730/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placeho/x86_64-conda-linux-gnu/include/c++/12.3.0 --with-pkgversion='conda-forge gcc 12.3.0-7' --with-bugurl=https://github.com/conda-forge/ctng-compilers-feedstock/issues/new/choose]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib]
+        ignore line: [gcc version 12.3.0 (conda-forge gcc 12.3.0-7) ]
+        ignore line: [COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/]
+        ignore line: [LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_72f86' '-shared-libgcc' '-dumpdir' 'cmTC_72f86.']
+        link line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccMn8akN.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_72f86 /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib]
+          arg [/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccMn8akN.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_72f86] ==> ignore
+          arg [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o]
+          arg [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o]
+          arg [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o]
+          arg [-L/data/xenon/miniconda3/envs/g4/lib] ==> dir [/data/xenon/miniconda3/envs/g4/lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../..] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../..]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib]
+          arg [-L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib] ==> dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib]
+          arg [-O2] ==> ignore
+          arg [--sort-common] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-znow] ==> ignore
+          arg [--disable-new-dtags] ==> ignore
+          arg [--gc-sections] ==> ignore
+          arg [--allow-shlib-undefined] ==> ignore
+          arg [-rpath] ==> ignore
+          arg [/data/xenon/miniconda3/envs/g4/lib] ==> ignore
+          arg [-rpath-link] ==> ignore
+          arg [/data/xenon/miniconda3/envs/g4/lib] ==> ignore
+          arg [CMakeFiles/cmTC_72f86.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o]
+          arg [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o]
+          arg [-rpath] ==> ignore
+          arg [/data/xenon/miniconda3/envs/g4/lib] ==> ignore
+        collapse obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/Scrt1.o]
+        collapse obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/crti.o]
+        collapse obj [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o]
+        collapse obj [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o]
+        collapse obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/crtn.o]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/lib] ==> [/data/xenon/miniconda3/envs/g4/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc] ==> [/data/xenon/miniconda3/envs/g4/lib/gcc]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib] ==> [/data/xenon/miniconda3/envs/g4/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../..] ==> [/data/xenon/miniconda3/envs/g4/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/lib]
+        collapse library dir [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib] ==> [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib]
+        implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/Scrt1.o;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/crti.o;/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o;/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib/crtn.o]
+        implicit dirs: [/data/xenon/miniconda3/envs/g4/lib;/data/xenon/miniconda3/envs/g4/lib/gcc/x86_64-conda-linux-gnu/12.3.0;/data/xenon/miniconda3/envs/g4/lib/gcc;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/lib;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/lib;/data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/sysroot/usr/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCSourceCompiles.cmake:76 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "/usr/share/cmake/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
+      - "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/PTL/PTLConfig.cmake:56 (find_dependency)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
+      - "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Geant4Config.cmake:292 (find_dependency)"
+      - "CMakeLists.txt:5 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-Q8eiPB"
+      binary: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-Q8eiPB"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib"
+      CMAKE_MODULE_PATH: "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Modules"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-Q8eiPB
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_619ed/fast && /bin/gmake  -f CMakeFiles/cmTC_619ed.dir/build.make CMakeFiles/cmTC_619ed.dir/build
+        gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-Q8eiPB'
+        Building C object CMakeFiles/cmTC_619ed.dir/src.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -DCMAKE_HAVE_LIBC_PTHREAD  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -o CMakeFiles/cmTC_619ed.dir/src.c.o -c /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-Q8eiPB/src.c
+        Linking C executable cmTC_619ed
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_619ed.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_619ed.dir/src.c.o -o cmTC_619ed 
+        /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/ld: CMakeFiles/cmTC_619ed.dir/src.c.o: in function `main':
+        src.c:(.text.startup.main+0x24): undefined reference to `pthread_create'
+        /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/ld: src.c:(.text.startup.main+0x2e): undefined reference to `pthread_detach'
+        /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/ld: src.c:(.text.startup.main+0x38): undefined reference to `pthread_cancel'
+        /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/ld: src.c:(.text.startup.main+0x44): undefined reference to `pthread_join'
+        /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/ld: src.c:(.text.startup.main+0x50): undefined reference to `pthread_atfork'
+        collect2: error: ld returned 1 exit status
+        gmake[1]: *** [CMakeFiles/cmTC_619ed.dir/build.make:99: cmTC_619ed] Error 1
+        gmake[1]: Leaving directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-Q8eiPB'
+        gmake: *** [Makefile:127: cmTC_619ed/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindThreads.cmake:136 (try_compile)"
+      - "/usr/share/cmake/Modules/FindThreads.cmake:169 (_threads_check_flag_pthread)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
+      - "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/PTL/PTLConfig.cmake:56 (find_dependency)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
+      - "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Geant4Config.cmake:292 (find_dependency)"
+      - "CMakeLists.txt:5 (find_package)"
+    checks:
+      - "Check if compiler accepts -pthread"
+    directories:
+      source: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-dkeB56"
+      binary: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-dkeB56"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib"
+      CMAKE_MODULE_PATH: "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Modules"
+    buildResult:
+      variable: "THREADS_HAVE_PTHREAD_ARG"
+      cached: true
+      stdout: |
+        Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-dkeB56
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_81321/fast && /bin/gmake  -f CMakeFiles/cmTC_81321.dir/build.make CMakeFiles/cmTC_81321.dir/build
+        gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-dkeB56'
+        Building C object CMakeFiles/cmTC_81321.dir/CheckForPthreads.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -o CMakeFiles/cmTC_81321.dir/CheckForPthreads.c.o -c /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-dkeB56/CheckForPthreads.c
+        Linking C executable cmTC_81321
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_81321.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_81321.dir/CheckForPthreads.c.o -o cmTC_81321  -pthread 
+        gmake[1]: Leaving directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-dkeB56'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckLibraryExists.cmake:71 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:498 (check_library_exists)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
+      - "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Geant4Config.cmake:400 (find_dependency)"
+      - "CMakeLists.txt:5 (find_package)"
+    checks:
+      - "Looking for XOpenDisplay in /data/xenon/miniconda3/envs/g4/lib/libX11.so;/data/xenon/miniconda3/envs/g4/lib/libXext.so"
+    directories:
+      source: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-KDsxQv"
+      binary: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-KDsxQv"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib"
+      CMAKE_MODULE_PATH: "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Modules"
+    buildResult:
+      variable: "X11_LIB_X11_SOLO"
+      cached: true
+      stdout: |
+        Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-KDsxQv
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_75b06/fast && /bin/gmake  -f CMakeFiles/cmTC_75b06.dir/build.make CMakeFiles/cmTC_75b06.dir/build
+        gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-KDsxQv'
+        Building C object CMakeFiles/cmTC_75b06.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=XOpenDisplay -o CMakeFiles/cmTC_75b06.dir/CheckFunctionExists.c.o -c /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-KDsxQv/CheckFunctionExists.c
+        Linking C executable cmTC_75b06
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_75b06.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=XOpenDisplay -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_75b06.dir/CheckFunctionExists.c.o -o cmTC_75b06  /data/xenon/miniconda3/envs/g4/lib/libX11.so /data/xenon/miniconda3/envs/g4/lib/libXext.so 
+        gmake[1]: Leaving directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-KDsxQv'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckFunctionExists.cmake:91 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:513 (check_function_exists)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
+      - "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Geant4Config.cmake:400 (find_dependency)"
+      - "CMakeLists.txt:5 (find_package)"
+    checks:
+      - "Looking for gethostbyname"
+    directories:
+      source: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-OlmRyh"
+      binary: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-OlmRyh"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib"
+      CMAKE_MODULE_PATH: "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Modules"
+    buildResult:
+      variable: "CMAKE_HAVE_GETHOSTBYNAME"
+      cached: true
+      stdout: |
+        Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-OlmRyh
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_afb42/fast && /bin/gmake  -f CMakeFiles/cmTC_afb42.dir/build.make CMakeFiles/cmTC_afb42.dir/build
+        gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-OlmRyh'
+        Building C object CMakeFiles/cmTC_afb42.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=gethostbyname -o CMakeFiles/cmTC_afb42.dir/CheckFunctionExists.c.o -c /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-OlmRyh/CheckFunctionExists.c
+        Linking C executable cmTC_afb42
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_afb42.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=gethostbyname -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_afb42.dir/CheckFunctionExists.c.o -o cmTC_afb42 
+        gmake[1]: Leaving directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-OlmRyh'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckFunctionExists.cmake:91 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:527 (check_function_exists)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
+      - "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Geant4Config.cmake:400 (find_dependency)"
+      - "CMakeLists.txt:5 (find_package)"
+    checks:
+      - "Looking for connect"
+    directories:
+      source: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-swONiY"
+      binary: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-swONiY"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib"
+      CMAKE_MODULE_PATH: "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Modules"
+    buildResult:
+      variable: "CMAKE_HAVE_CONNECT"
+      cached: true
+      stdout: |
+        Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-swONiY
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_718d2/fast && /bin/gmake  -f CMakeFiles/cmTC_718d2.dir/build.make CMakeFiles/cmTC_718d2.dir/build
+        gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-swONiY'
+        Building C object CMakeFiles/cmTC_718d2.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=connect -o CMakeFiles/cmTC_718d2.dir/CheckFunctionExists.c.o -c /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-swONiY/CheckFunctionExists.c
+        Linking C executable cmTC_718d2
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_718d2.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=connect -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_718d2.dir/CheckFunctionExists.c.o -o cmTC_718d2 
+        gmake[1]: Leaving directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-swONiY'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckFunctionExists.cmake:91 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:536 (check_function_exists)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
+      - "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Geant4Config.cmake:400 (find_dependency)"
+      - "CMakeLists.txt:5 (find_package)"
+    checks:
+      - "Looking for remove"
+    directories:
+      source: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-jjqBr5"
+      binary: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-jjqBr5"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib"
+      CMAKE_MODULE_PATH: "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Modules"
+    buildResult:
+      variable: "CMAKE_HAVE_REMOVE"
+      cached: true
+      stdout: |
+        Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-jjqBr5
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_6380d/fast && /bin/gmake  -f CMakeFiles/cmTC_6380d.dir/build.make CMakeFiles/cmTC_6380d.dir/build
+        gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-jjqBr5'
+        Building C object CMakeFiles/cmTC_6380d.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=remove -o CMakeFiles/cmTC_6380d.dir/CheckFunctionExists.c.o -c /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-jjqBr5/CheckFunctionExists.c
+        Linking C executable cmTC_6380d
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6380d.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=remove -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_6380d.dir/CheckFunctionExists.c.o -o cmTC_6380d 
+        gmake[1]: Leaving directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-jjqBr5'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckFunctionExists.cmake:91 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:545 (check_function_exists)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
+      - "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Geant4Config.cmake:400 (find_dependency)"
+      - "CMakeLists.txt:5 (find_package)"
+    checks:
+      - "Looking for shmat"
+    directories:
+      source: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-YAN4sT"
+      binary: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-YAN4sT"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib"
+      CMAKE_MODULE_PATH: "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Modules"
+    buildResult:
+      variable: "CMAKE_HAVE_SHMAT"
+      cached: true
+      stdout: |
+        Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-YAN4sT
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_fff47/fast && /bin/gmake  -f CMakeFiles/cmTC_fff47.dir/build.make CMakeFiles/cmTC_fff47.dir/build
+        gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-YAN4sT'
+        Building C object CMakeFiles/cmTC_fff47.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=shmat -o CMakeFiles/cmTC_fff47.dir/CheckFunctionExists.c.o -c /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-YAN4sT/CheckFunctionExists.c
+        Linking C executable cmTC_fff47
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fff47.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=shmat -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_fff47.dir/CheckFunctionExists.c.o -o cmTC_fff47 
+        gmake[1]: Leaving directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-YAN4sT'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CheckLibraryExists.cmake:71 (try_compile)"
+      - "/usr/share/cmake/Modules/FindX11.cmake:555 (check_library_exists)"
+      - "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake:76 (find_package)"
+      - "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Geant4Config.cmake:400 (find_dependency)"
+      - "CMakeLists.txt:5 (find_package)"
+    checks:
+      - "Looking for IceConnectionNumber in ICE"
+    directories:
+      source: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-FoI3AN"
+      binary: "/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-FoI3AN"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "-Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib"
+      CMAKE_MODULE_PATH: "/data/xenon/miniconda3/envs/g4/lib/cmake/Geant4/Modules"
+    buildResult:
+      variable: "CMAKE_LIB_ICE_HAS_ICECONNECTIONNUMBER"
+      cached: true
+      stdout: |
+        Change Dir: /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-FoI3AN
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_7b266/fast && /bin/gmake  -f CMakeFiles/cmTC_7b266.dir/build.make CMakeFiles/cmTC_7b266.dir/build
+        gmake[1]: Entering directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-FoI3AN'
+        Building C object CMakeFiles/cmTC_7b266.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -o CMakeFiles/cmTC_7b266.dir/CheckFunctionExists.c.o -c /user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-FoI3AN/CheckFunctionExists.c
+        Linking C executable cmTC_7b266
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7b266.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_7b266.dir/CheckFunctionExists.c.o -o cmTC_7b266  -lICE 
+        gmake[1]: Leaving directory '/user/z37/test_windsurf/build/CMakeFiles/CMakeScratch/TryCompile-FoI3AN'
+        
+      exitCode: 0
+...
