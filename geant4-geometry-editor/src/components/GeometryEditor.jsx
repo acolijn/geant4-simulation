@@ -39,10 +39,17 @@ const GeometryEditor = ({
   const selectedObject = getSelectedGeometryObject();
 
   // Handle property changes
-  const handlePropertyChange = (property, value, allowNegative = true) => {
+  const handlePropertyChange = (property, value, allowNegative = true, isStringProperty = false) => {
     if (!selectedGeometry) return;
     
     const updatedObject = { ...getSelectedGeometryObject() };
+    
+    // Special handling for string properties like name and material
+    if (isStringProperty) {
+      updatedObject[property] = value;
+      onUpdateGeometry(selectedGeometry, updatedObject);
+      return;
+    }
     
     // Process numeric values
     let processedValue = value;
@@ -137,7 +144,12 @@ const GeometryEditor = ({
         <TextField
           label="Name"
           value={selectedObject.name || ''}
-          onChange={(e) => handlePropertyChange('name', e.target.value)}
+          onChange={(e) => {
+            e.stopPropagation();
+            handlePropertyChange('name', e.target.value, true, true);
+          }}
+          onClick={(e) => e.stopPropagation()}
+          onFocus={(e) => e.stopPropagation()}
           fullWidth
           margin="normal"
           size="small"
@@ -148,7 +160,15 @@ const GeometryEditor = ({
           <Select
             value={selectedObject.material || ''}
             label="Material"
-            onChange={(e) => handlePropertyChange('material', e.target.value)}
+            onChange={(e) => {
+              e.stopPropagation();
+              handlePropertyChange('material', e.target.value, true, true);
+            }}
+            onClick={(e) => e.stopPropagation()}
+            MenuProps={{
+              onClick: (e) => e.stopPropagation(),
+              PaperProps: { onClick: (e) => e.stopPropagation() }
+            }}
           >
             {Object.keys(materials).map((material) => (
               <MenuItem key={material} value={material}>
