@@ -166,6 +166,7 @@ G4ThreeVector GeometryParser::ParseVector(const json& vec) {
  * @return Pointer to new G4RotationMatrix
  * @details Expects JSON format: {"x": angle_x, "y": angle_y, "z": angle_z}
  *          Angles should be in degrees
+ *          Rotations are applied in the Geant4 sequence: first X, then Y, then Z
  */
 G4RotationMatrix* GeometryParser::ParseRotation(const json& rot) {
     G4double rx = rot["x"].get<double>();
@@ -177,7 +178,16 @@ G4RotationMatrix* GeometryParser::ParseRotation(const json& rot) {
     if (unit == "deg") scale = deg;
     else if (unit == "rad") scale = rad;
     
-    return new G4RotationMatrix(rx*scale, ry*scale, rz*scale);
+    // Create a rotation matrix using individual rotations around each axis
+    // This ensures rotations are applied in the correct sequence: X, then Y, then Z
+    G4RotationMatrix* rotMatrix = new G4RotationMatrix();
+    
+    // Apply rotations in sequence (Geant4 uses active rotations)
+    rotMatrix->rotateX(rx*scale);
+    rotMatrix->rotateY(ry*scale);
+    rotMatrix->rotateZ(rz*scale);
+    
+    return rotMatrix;
 }
 
 /**
