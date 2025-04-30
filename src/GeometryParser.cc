@@ -306,14 +306,25 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     }
     else if (type == "sphere") {
         G4double rmin = 0;
-        G4double rmax = config["radius"].get<double>() * mm;
+        G4double rmax = config["radius"].get<double>();
         G4double sphi = 0;
         G4double dphi = 360 * deg;
         G4double stheta = 0;
         G4double dtheta = 180 * deg;
         
+        // Apply unit scaling for radius
+        G4double lengthScale = mm; // Default to mm if no unit specified
+        if (config.contains("unit")) {
+            std::string unit = config["unit"].get<std::string>();
+            if (unit == "mm") lengthScale = mm;
+            else if (unit == "cm") lengthScale = cm;
+            else if (unit == "m") lengthScale = m;
+        }
+        
+        rmax *= lengthScale;
+        
         if (config.contains("inner_radius")) {
-            rmin = config["inner_radius"].get<double>() * mm;
+            rmin = config["inner_radius"].get<double>() * lengthScale;
         }
         if (config.contains("start_phi")) {
             sphi = config["start_phi"].get<double>() * deg;
@@ -332,13 +343,28 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     }
     else if (type == "cylinder" || type == "tube") {
         G4double rmin = 0;
-        G4double rmax = config["radius"].get<double>() * mm;
-        G4double hz = config["height"].get<double>() * mm / 2;
+        G4double rmax = config["radius"].get<double>();
+        G4double hz = config["height"].get<double>() / 2; // Half-height for G4Tubs
         G4double sphi = 0;
         G4double dphi = 360 * deg;
         
+        // Apply unit scaling for dimensions
+        G4double lengthScale = mm; // Default to mm if no unit specified
+        if (config.contains("unit")) {
+            std::string unit = config["unit"].get<std::string>();
+            if (unit == "mm") lengthScale = mm;
+            else if (unit == "cm") lengthScale = cm;
+            else if (unit == "m") lengthScale = m;
+        }
+        
+        rmax *= lengthScale;
+        hz *= lengthScale;
+        
         if (config.contains("inner_radius")) {
-            rmin = config["inner_radius"].get<double>() * mm;
+            rmin = config["inner_radius"].get<double>() * lengthScale;
+        } else if (config.contains("innerRadius")) {
+            // Support both naming conventions
+            rmin = config["innerRadius"].get<double>() * lengthScale;
         }
         if (config.contains("start_phi")) {
             sphi = config["start_phi"].get<double>() * deg;

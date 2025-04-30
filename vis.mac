@@ -15,6 +15,7 @@
 /vis/viewer/set/style wireframe
 /vis/viewer/set/auxiliaryEdge true
 /vis/viewer/set/lineSegmentsPerCircle 100
+/vis/scene/add/axes
 /vis/scene/add/trajectories smooth
 /vis/scene/endOfEventAction accumulate
 

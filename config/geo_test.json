@@ -25,31 +25,32 @@
   "volumes": [
     {
       "type": "cylinder",
-      "name": "NewCylinder_1",
-      "material": "LXe",
+      "name": "NewCylinder",
+      "material": "G4_AIR",
       "position": {
-        "x": -11.089,
-        "y": 2.856,
+        "x": 0,
+        "y": 0,
         "z": 0,
         "unit": "cm"
       },
       "rotation": {
-        "x": 0,
-        "y": 20,
-        "z": 20,
+        "x": 45,
+        "y": 0,
+        "z": 0,
         "unit": "deg"
       },
       "mother_volume": "World",
-      "radius": 500,
-      "height": 250,
-      "inner_radius": 0
+      "radius": 50,
+      "height": 10,
+      "inner_radius": 0,
+      "unit": "cm"
     },
     {
       "type": "box",
       "name": "NewBox",
-      "material": "G4_Cu",
+      "material": "G4_AIR",
       "position": {
-        "x": 64,
+        "x": 75,
         "y": 0,
         "z": 0,
         "unit": "cm"
@@ -62,9 +63,9 @@
       },
       "mother_volume": "World",
       "size": {
-        "x": 20,
-        "y": 30,
-        "z": 20,
+        "x": 10,
+        "y": 10,
+        "z": 10,
         "unit": "cm"
       }
     }
