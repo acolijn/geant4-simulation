@@ -1,5 +1,5 @@
 Welcome to Windsurf's documentation!
-================================
+=================================
 
 Windsurf is a Geant4-based neutron detector simulation framework.
 

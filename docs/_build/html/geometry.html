@@ -47,6 +47,9 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Geometry Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#configuration-files">Configuration Files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#json-format">JSON Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#units">Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rotations">Rotations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cylinder-orientation">Cylinder Orientation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation Details</a></li>
@@ -100,16 +103,112 @@
 <span class="w">    </span><span class="nt">&quot;world&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;World&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;material&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;G4_AIR&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;dimensions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;box&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.0</span><span class="p">,</span>
 <span class="w">            </span><span class="nt">&quot;unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;m&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;position&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cm&quot;</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;rotation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;deg&quot;</span>
 <span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;volumes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Detector&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cylinder&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;material&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;G4_Si&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;radius&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;height&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cm&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;position&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cm&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;rotation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;deg&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;mother_volume&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;World&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+</section>
+<section id="units">
+<h2>Units<a class="headerlink" href="#units" title="Link to this heading"></a></h2>
+<p>All dimensions in the geometry configuration can specify units:</p>
+<ul class="simple">
+<li><p>Length units: “mm”, “cm”, “m” (default is “mm” if not specified)</p></li>
+<li><p>Angle units: “deg”, “rad” (default is “deg” if not specified)</p></li>
+</ul>
+<p>For shape-specific dimensions (like radius, height), you can specify the unit in two ways:</p>
+<ol class="arabic">
+<li><p>As a property of the vector (for position, size):</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;position&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cm&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>As a direct property of the volume (for radius, height, etc.):</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;radius&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">5.0</span><span class="p">,</span>
+<span class="nt">&quot;height&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span>
+<span class="nt">&quot;unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cm&quot;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="rotations">
+<h2>Rotations<a class="headerlink" href="#rotations" title="Link to this heading"></a></h2>
+<p>Rotations are specified in the following format:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="nt">&quot;rotation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;x&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">30.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;y&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;z&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">45.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;deg&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Rotations are applied in the Geant4 sequence:</p>
+<ol class="arabic simple">
+<li><p>First rotation around X axis</p></li>
+<li><p>Then rotation around the new Y axis</p></li>
+<li><p>Finally rotation around the new Z axis</p></li>
+</ol>
+</section>
+<section id="cylinder-orientation">
+<h2>Cylinder Orientation<a class="headerlink" href="#cylinder-orientation" title="Link to this heading"></a></h2>
+<p>Cylinders in Geant4 are created with:</p>
+<ul class="simple">
+<li><p>The circular face in the X-Y plane</p></li>
+<li><p>The height extending along the Z-axis</p></li>
+</ul>
+<p>This means that rotations will behave as follows:</p>
+<ul class="simple">
+<li><p>X rotation: Tilts the cylinder around the X axis</p></li>
+<li><p>Y rotation: Tilts the cylinder around the Y axis</p></li>
+<li><p>Z rotation: Rotates the cylinder around its central axis (Z)</p></li>
+</ul>
 <p>For detailed API documentation of the geometry parser, see <a class="reference internal" href="api.html"><span class="doc">API Reference</span></a>.</p>
 </section>
 </section>

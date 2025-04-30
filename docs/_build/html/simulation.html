@@ -46,6 +46,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="geometry.html">Geometry Configuration</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Simulation Details</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#geometry-editor-integration">Geometry Editor Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#unit-handling">Unit Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rotation-system">Rotation System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#primary-generator">Primary Generator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-collection">Data Collection</a></li>
 </ul>
@@ -80,6 +83,45 @@
   <section id="simulation-details">
 <h1>Simulation Details<a class="headerlink" href="#simulation-details" title="Link to this heading"></a></h1>
 <p>Windsurf simulates neutron transport through a liquid xenon detector using Geant4.</p>
+<section id="geometry-editor-integration">
+<h2>Geometry Editor Integration<a class="headerlink" href="#geometry-editor-integration" title="Link to this heading"></a></h2>
+<p>Windsurf now integrates with a web-based geometry editor that allows you to:</p>
+<ul class="simple">
+<li><p>Create and edit detector geometries visually</p></li>
+<li><p>Export geometry configurations as JSON files</p></li>
+<li><p>Preview the 3D representation of your detector</p></li>
+</ul>
+<p>The geometry editor ensures consistent coordinate systems with Geant4:</p>
+<ul class="simple">
+<li><p>Z-axis points upward</p></li>
+<li><p>Cylinders are created with their circular face in the X-Y plane</p></li>
+<li><p>Height extends along the Z-axis</p></li>
+<li><p>Rotations follow Geant4’s sequential rotation system</p></li>
+</ul>
+</section>
+<section id="unit-handling">
+<h2>Unit Handling<a class="headerlink" href="#unit-handling" title="Link to this heading"></a></h2>
+<p>The simulation now properly handles units for all geometry dimensions:</p>
+<ul class="simple">
+<li><p>Length units: “mm”, “cm”, “m” (default is “mm” if not specified)</p></li>
+<li><p>Angle units: “deg”, “rad” (default is “deg” if not specified)</p></li>
+</ul>
+<p>Units can be specified in two ways:</p>
+<ol class="arabic simple">
+<li><p>As a property of vectors (position, size)</p></li>
+<li><p>As a direct property of volumes (radius, height)</p></li>
+</ol>
+</section>
+<section id="rotation-system">
+<h2>Rotation System<a class="headerlink" href="#rotation-system" title="Link to this heading"></a></h2>
+<p>Rotations are applied in the Geant4 sequence:</p>
+<ol class="arabic simple">
+<li><p>First rotation around X axis</p></li>
+<li><p>Then rotation around the new Y axis</p></li>
+<li><p>Finally rotation around the new Z axis</p></li>
+</ol>
+<p>This sequential rotation system ensures consistent behavior between the geometry editor and the Geant4 simulation.</p>
+</section>
 <section id="primary-generator">
 <h2>Primary Generator<a class="headerlink" href="#primary-generator" title="Link to this heading"></a></h2>
 <p>The simulation uses a particle gun to generate primary neutrons:</p>
