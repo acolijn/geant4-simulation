@@ -15,11 +15,15 @@ git rm --cached -r docs/html/ docs/docs/html/ 2>/dev/null || true
 echo "Removing XML documentation files..."
 git rm --cached docs/*.xml docs/docs/xml/*.xml 2>/dev/null || true
 
-# Remove any other build directories
-echo "Removing other build directories..."
+# Remove build directories
+echo "Removing build directories..."
 git rm --cached -r docs/_build/ docs/**/_build/ 2>/dev/null || true
 
-# Update .gitignore to ensure XML files are also ignored
+# Specifically target docs/_build/html directory
+echo "Specifically targeting docs/_build/html directory..."
+git rm --cached -r docs/_build/html/ 2>/dev/null || true
+
+# Update .gitignore to ensure XML files and build directories are properly ignored
 echo "Updating .gitignore file..."
 if ! grep -q "# Documentation XML files" .gitignore; then
   cat >> .gitignore << EOF
@@ -27,6 +31,16 @@ if ! grep -q "# Documentation XML files" .gitignore; then
 # Documentation XML files
 docs/*.xml
 docs/**/*.xml
+EOF
+fi
+
+# Make sure build directories are properly ignored
+if ! grep -q "# Documentation build directories" .gitignore; then
+  cat >> .gitignore << EOF
+
+# Documentation build directories
+docs/_build/
+docs/**/_build/
 EOF
 fi
 
