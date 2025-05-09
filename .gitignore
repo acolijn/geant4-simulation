@@ -53,3 +53,7 @@ docs/_build/
 docs/html/
 docs/**/_build/
 docs/**/html/
+
+# Documentation XML files
+docs/*.xml
+docs/**/*.xml
