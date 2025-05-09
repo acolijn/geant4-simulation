@@ -1,75 +1,39 @@
 {
-    "materials": {
-        "LXe": {
-            "type": "element_based",
-            "density": 3.02,
-            "density_unit": "g/cm3",
-            "state": "liquid",
-            "temperature": 165.0,
-            "temperature_unit": "kelvin",
-            "composition": {
-                "Xe": 1
-            }
-        },
-        "air": {
-            "type": "nist",
-            "name": "G4_AIR"
-        },
-        "G4_AIR": {
-            "type": "nist",
-            "name": "G4_AIR"
-        },
-        "G4_WATER": {
-            "type": "nist",
-            "name": "G4_WATER"
-        },
-        "water": {
-            "type": "compound",
-            "density": 1.0,
-            "density_unit": "g/cm3",
-            "state": "liquid",
-            "temperature": 293.15,
-            "temperature_unit": "kelvin",
-            "composition": {
-                "H": 2,
-                "O": 1
-            }
-        },
-        "G4_Si": {
-            "type": "nist",
-            "name": "G4_Si"
-        },
-        "G4_Cf": {
-            "type": "nist",
-            "name": "G4_Cf"
-        },
-        "G4_Al": {
-            "type": "nist",
-            "name": "G4_Al"
-        },
-        "G4_Cu": {
-            "type": "nist",
-            "name": "G4_Cu"
-        },
-        "G4_SODIUM_IODIDE": {
-            "type": "nist",
-            "name": "G4_SODIUM_IODIDE"
-        },
-        "G4_PLEXIGLASS": {
-            "type": "nist",
-            "name": "G4_PLEXIGLASS"
-        },
-        "G4_POLYETHYLENE": {
-            "type": "nist",
-            "name": "G4_POLYETHYLENE"
-        },
-        "G4_PLASTIC_SC_VINYLTOLUENE": {
-            "type": "nist",
-            "name": "G4_PLASTIC_SC_VINYLTOLUENE"
-        },
-        "G4_Ge": {
-            "type": "nist",
-            "name": "G4_Ge"
-        }
+  "materials": {
+    "LXe": {
+      "type": "element_based",
+      "density": 3.02,
+      "density_unit": "g/cm3",
+      "state": "liquid",
+      "temperature": 165,
+      "temperature_unit": "kelvin",
+      "composition": {
+        "Xe": 1
+      }
+    },
+    "G4_AIR": {
+      "type": "nist",
+      "name": "G4_AIR"
+    },
+    "G4_WATER": {
+      "type": "nist",
+      "name": "G4_WATER"
+    },
+    "G4_Si": {
+      "type": "nist",
+      "name": "G4_Si"
+    },
+    "G4_Cf": {
+      "type": "nist",
+      "name": "G4_Cf"
+    },
+    "G4_Al": {
+      "type": "nist",
+      "name": "G4_Al"
+    },
+    "G4_Cu": {
+      "type": "nist",
+      "name": "G4_Cu"
     }
+  }
 }

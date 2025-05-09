@@ -24,35 +24,60 @@
   },
   "volumes": [
     {
-      "type": "cylinder",
-      "name": "NewCylinder",
+      "type": "box",
+      "name": "PMT_base_0",
       "material": "G4_AIR",
       "position": {
-        "x": 0,
+        "x": -66.04518147026498,
         "y": 0,
-        "z": 0,
+        "z": 12.223806858491983,
         "unit": "cm"
       },
       "rotation": {
-        "x": 45,
+        "x": 0,
         "y": 0,
         "z": 0,
         "unit": "deg"
       },
-      "mother_volume": "World",
-      "radius": 50,
+      "size": {
+        "x": 10,
+        "y": 10,
+        "z": 10,
+        "unit": "cm"
+      },
+      "_sourceId": "source-base-1746794108394",
+      "mother_volume": "World"
+    },
+    {
+      "type": "cylinder",
+      "name": "PMT_glass_0",
+      "material": "LXe",
+      "position": {
+        "x": 45.02474140931379,
+        "y": 0,
+        "z": 4.420749609096404,
+        "unit": "cm"
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "unit": "deg"
+      },
+      "mother_volume": "PMT_base_0",
+      "radius": 5,
       "height": 10,
       "inner_radius": 0,
       "unit": "cm"
     },
     {
       "type": "box",
-      "name": "NewBox",
+      "name": "PMT_base_1",
       "material": "G4_AIR",
       "position": {
-        "x": 75,
+        "x": -60.86614345780829,
         "y": 0,
-        "z": 0,
+        "z": -32.881344910490085,
         "unit": "cm"
       },
       "rotation": {
@@ -61,13 +86,83 @@
         "z": 0,
         "unit": "deg"
       },
-      "mother_volume": "World",
       "size": {
         "x": 10,
         "y": 10,
         "z": 10,
         "unit": "cm"
-      }
+      },
+      "_sourceId": "source-base-1746794108394",
+      "mother_volume": "World"
+    },
+    {
+      "type": "cylinder",
+      "name": "PMT_glass_1",
+      "material": "LXe",
+      "position": {
+        "x": 45.02474140931379,
+        "y": 0,
+        "z": 4.420749609096404,
+        "unit": "cm"
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "unit": "deg"
+      },
+      "mother_volume": "PMT_base_1",
+      "radius": 5,
+      "height": 10,
+      "inner_radius": 0,
+      "unit": "cm"
+    },
+    {
+      "type": "box",
+      "name": "PMT_base_2",
+      "material": "G4_AIR",
+      "position": {
+        "x": 74.47231238023689,
+        "y": 0,
+        "z": 21.173965702473005,
+        "unit": "cm"
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "unit": "deg"
+      },
+      "size": {
+        "x": 10,
+        "y": 10,
+        "z": 10,
+        "unit": "cm"
+      },
+      "_sourceId": "source-base-1746794108394",
+      "mother_volume": "World"
+    },
+    {
+      "type": "cylinder",
+      "name": "PMT_glass_2",
+      "material": "LXe",
+      "position": {
+        "x": 45.02474140931379,
+        "y": 0,
+        "z": 4.420749609096404,
+        "unit": "cm"
+      },
+      "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "unit": "deg"
+      },
+      "mother_volume": "PMT_base_2",
+      "radius": 5,
+      "height": 10,
+      "inner_radius": 0,
+      "unit": "cm"
     }
   ]
 }

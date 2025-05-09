@@ -95,11 +95,15 @@ G4Material* GeometryParser::CreateMaterial(const std::string& name, const json& 
         return materials[name];
     }
 
+    // print material config
+    std::cout << "Material config: " << config << std::endl;
+    
     G4Material* material = nullptr;
     std::string type = config["type"].get<std::string>();
 
     if (type == "nist") {
         // Get material from NIST database
+        std::cout << "NIST material: " << config["name"] << std::endl;
         G4NistManager* nist = G4NistManager::Instance();
         material = nist->FindOrBuildMaterial(config["name"].get<std::string>());
     }
@@ -136,6 +140,7 @@ G4Material* GeometryParser::CreateMaterial(const std::string& name, const json& 
         throw std::runtime_error("Failed to create material: " + name);
     }
 
+    std::cout << "Created material: " << name << std::endl;
     materials[name] = material;
     return material;
 }
@@ -199,6 +204,7 @@ G4RotationMatrix* GeometryParser::ParseRotation(const json& rot) {
  *          Supports all Geant4 shapes, boolean operations, and external geometries.
  */
 G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
+    std::cout << "Creating volume: " << config["name"] << std::endl;
     std::string name = config["name"].get<std::string>();
     
     // Check if volume already exists
@@ -222,6 +228,7 @@ G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
     G4LogicalVolume* logicalVolume = new G4LogicalVolume(solid, material, name);
     volumes[name] = logicalVolume;
     
+    std::cout << "Created volume: " << name << std::endl;
     return logicalVolume;
 }
 
@@ -246,21 +253,30 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             ImportAssembledGeometry(volConfig, motherVolume);
             continue;
         }
+
+        std::cout << "Creating volume: " << volConfig["name"] << std::endl;
         
         G4LogicalVolume* logicalVolume = CreateVolume(volConfig);
+        std::cout << "Created volume: " << volConfig["name"] << std::endl;
+        
+        std::cout << "Placing volume: " << volConfig["name"] << std::endl;
         G4ThreeVector position = ParseVector(volConfig["position"]);
         G4RotationMatrix* rotation = nullptr;
+        std::cout << "Position: " << position << std::endl;
         
         if (volConfig.contains("rotation")) {
             rotation = ParseRotation(volConfig["rotation"]);
+            std::cout << "Rotation: " << rotation << std::endl;
         }
         
         std::string motherName = volConfig["mother_volume"].get<std::string>();
         G4LogicalVolume* motherVolume = volumes[motherName];
+        std::cout << "Mother volume: " << motherName << std::endl;
         
         // Check for multiple copies (replicas or parameterized volumes)
         if (volConfig.contains("copies") && volConfig["copies"].get<int>() > 1) {
             int copies = volConfig["copies"].get<int>();
+            std::cout << "Number of copies: " << copies << std::endl;
             
             // Simple placement for multiple copies
             for (int i = 0; i < copies; i++) {
@@ -278,6 +294,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             }
         } else {
             // Single placement
+            std::cout << "Placing single volume: " << volConfig["name"] << std::endl;
             new G4PVPlacement(rotation, position, logicalVolume,
                             volConfig["name"].get<std::string>(),
                             motherVolume, false, 0);
