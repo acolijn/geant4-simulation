@@ -110,6 +110,7 @@ def run_doxygen():
         print("Running Doxygen...")
         doxyfile_path = os.path.abspath('Doxyfile')
         if os.path.exists(doxyfile_path):
+            print(f"Found Doxyfile at {doxyfile_path}")
             subprocess.call(['doxygen', doxyfile_path], shell=True)
             print("Doxygen completed successfully using Doxyfile")
         else:
@@ -120,7 +121,9 @@ def run_doxygen():
         print(f"Error running Doxygen: {e}")
 
 # Run Doxygen before Sphinx processes the documentation
-run_doxygen()
+if not on_rtd:
+    # Only run Doxygen locally - ReadTheDocs will handle it automatically
+    run_doxygen()
 
 def setup(app):
     # This function is called by Sphinx during the build process
