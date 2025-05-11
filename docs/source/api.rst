@@ -1,8 +1,11 @@
 API Reference
 =============
 
+Core Classes
+-----------
+
 GeometryParser
---------------
+~~~~~~~~~~~~~~
 
 .. doxygenclass:: GeometryParser
    :members:
@@ -10,15 +13,45 @@ GeometryParser
    :private-members:
 
 DetectorConstruction
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 .. doxygenclass:: DetectorConstruction
    :members:
    :protected-members:
    :private-members:
 
+Hits and Sensitive Detectors
+---------------------------
+
+MyHit
+~~~~~
+
+.. doxygenclass:: MyHit
+   :members:
+   :protected-members:
+   :private-members:
+
+MySensitiveDetector
+~~~~~~~~~~~~~~~~~~~
+
+.. doxygenclass:: MySensitiveDetector
+   :members:
+   :protected-members:
+   :private-members:
+
+Event Processing
+---------------
+
+EventAction
+~~~~~~~~~~~
+
+.. doxygenclass:: EventAction
+   :members:
+   :protected-members:
+   :private-members:
+
 PrimaryGeneratorAction
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. doxygenclass:: PrimaryGeneratorAction
    :members:
@@ -26,7 +59,7 @@ PrimaryGeneratorAction
    :private-members:
 
 RunAction
----------
+~~~~~~~~~
 
 .. doxygenclass:: RunAction
    :members:
@@ -34,7 +67,7 @@ RunAction
    :private-members:
 
 ActionInitialization
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 .. doxygenclass:: ActionInitialization
    :members:
