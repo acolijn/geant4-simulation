@@ -80,10 +80,20 @@ html_theme_options = {
 
 # -- Breathe configuration -------------------------------------------------
 
-# Setup the breathe extension
-breathe_projects = {
-    "Geant4-Simulation": os.path.abspath(os.path.join(os.getcwd(), 'doxygen/xml'))
-}
+# Setup the breathe extension with special handling for ReadTheDocs
+if on_rtd:
+    # On ReadTheDocs, the XML files are in a different location
+    breathe_projects = {
+        "Geant4-Simulation": os.path.abspath('/home/docs/checkouts/readthedocs.org/user_builds/geant4-simulation/checkouts/latest/docs/doxygen/xml')
+    }
+    # Create the directory if it doesn't exist
+    os.makedirs(breathe_projects['Geant4-Simulation'], exist_ok=True)
+else:
+    # For local builds, use the local path
+    breathe_projects = {
+        "Geant4-Simulation": os.path.abspath(os.path.join(os.getcwd(), 'doxygen/xml'))
+    }
+
 breathe_default_project = "Geant4-Simulation"
 breathe_default_members = ('members', 'undoc-members')
 

@@ -10,6 +10,12 @@ build:
   apt_packages:
     - doxygen
     - graphviz
+  jobs:
+    pre_build:
+      # Run Doxygen to generate XML files
+      - cd docs && doxygen
+      # Debug: List the generated files
+      - ls -la docs/doxygen/xml
 
 # Python requirements
 python:
