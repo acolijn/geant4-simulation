@@ -69,39 +69,28 @@ highlight_language = 'cpp'
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 # Make sure the XML directory exists
-doxygen_xml_dir = os.path.abspath('doxygen/xml')
-os.makedirs(doxygen_xml_dir, exist_ok=True)
+os.makedirs('doxygen/xml', exist_ok=True)
 
-# Update breathe configuration with the correct path
-breathe_projects = {
-    "Geant4-Simulation": doxygen_xml_dir
-}
+# Always run Doxygen during the Sphinx build process
+def run_doxygen():
+    try:
+        print("Running Doxygen...")
+        doxyfile_path = os.path.abspath('Doxyfile')
+        if os.path.exists(doxyfile_path):
+            subprocess.call(['doxygen', doxyfile_path], shell=True)
+            print("Doxygen completed successfully using Doxyfile")
+        else:
+            print(f"Doxyfile not found at {doxyfile_path}, trying default command")
+            subprocess.call(['doxygen'], shell=True)
+            print("Doxygen completed successfully using default command")
+    except Exception as e:
+        print(f"Error running Doxygen: {e}")
+
+# Run Doxygen before Sphinx processes the documentation
+run_doxygen()
 
 def setup(app):
-    # Run doxygen if we're on ReadTheDocs
-    if on_rtd:
-        # Ensure the doxygen directory exists
-        os.makedirs('doxygen', exist_ok=True)
-        
-        # Run doxygen from the docs directory
-        current_dir = os.getcwd()
-        print(f"Current directory: {current_dir}")
-        
-        try:
-            print("Running Doxygen...")
-            subprocess.call(['doxygen', 'Doxyfile'], cwd=current_dir)
-            print("Doxygen completed successfully")
-        except Exception as e:
-            print(f"Error running Doxygen: {e}")
-    else:
-        print("Not on ReadTheDocs, skipping Doxygen generation")
-        
-    # Check if the XML directory exists and has files
-    if os.path.exists(doxygen_xml_dir):
-        xml_files = os.listdir(doxygen_xml_dir)
-        print(f"XML directory contains {len(xml_files)} files")
-    else:
-        print(f"XML directory does not exist: {doxygen_xml_dir}")
-        
+    # This function is called by Sphinx during the build process
+    # We don't need to do anything here since we already ran Doxygen above
     return
 
