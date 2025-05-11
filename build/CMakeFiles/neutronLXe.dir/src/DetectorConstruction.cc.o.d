@@ -441,6 +441,72 @@ CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.o: \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4RotationMatrix.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4VSolid.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4VSolid.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4VSensitiveDetector.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4VHit.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4Step.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4StepPoint.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4Allocator.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4AllocatorPool.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4SteppingControl.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4StepStatus.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4TouchableHandle.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4VTouchable.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4VTouchable.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4ReferenceCountedHandle.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4Material.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4LogicalVolume.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4StepPoint.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4TrackVector.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4Profiler.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4Profiler.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/PTL/Globals.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/PTL/Types.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/PTL/Utility.hh \
+ /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/set \
+ /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/bits/stl_set.h \
+ /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/bits/stl_multiset.h \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4Step.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4Track.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/trkdefs.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4DynamicParticle.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4ParticleDefinition.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4PDefManager.hh \
+ /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/stdlib.h \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/pwdefs.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4ParticleDefinition.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4LorentzVector.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4ParticleMomentum.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4ElectronOccupancy.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4DynamicParticle.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4TrackStatus.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4VUserTrackInformation.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4PhysicsModelCatalog.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4Track.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4HCofThisEvent.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4VHitsCollection.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4VReadOutGeometry.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4SensitiveVolumeList.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4TouchableHistory.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationHistory.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4AffineTransform.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4Transform3D.hh \
+ /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/Transform3D.h \
+ /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/defs.h \
+ /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/Transform3D.icc \
+ /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/Point3D.h \
+ /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/BasicVector3D.h \
+ /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/Vector3D.h \
+ /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/Normal3D.h \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4AffineTransform.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationLevel.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationLevelRep.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationLevelRep.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationLevel.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationHistoryPool.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationHistory.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4TouchableHistory.icc \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4CollectionNameVector.hh \
+ /data/xenon/miniconda3/envs/g4/include/Geant4/G4VSDFilter.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4UImessenger.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4UIdirectory.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4UIcommand.hh \
@@ -457,26 +523,13 @@ CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.o: \
  /data/xenon/miniconda3/envs/g4/include/Geant4/rundefs.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4Event.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/evtdefs.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4Allocator.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4AllocatorPool.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4PrimaryVertex.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/pwdefs.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4PrimaryParticle.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4HCofThisEvent.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4VHitsCollection.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4DCofThisEvent.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4VDigiCollection.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4TrajectoryContainer.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4VTrajectory.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4VUserEventInformation.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4Profiler.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4Profiler.icc \
- /data/xenon/miniconda3/envs/g4/include/Geant4/PTL/Globals.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/PTL/Types.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/PTL/Utility.hh \
- /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/set \
- /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/bits/stl_set.h \
- /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/bits/stl_multiset.h \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4EventManager.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4StackManager.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4UserStackingAction.hh \
@@ -484,34 +537,6 @@ CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.o: \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4StackedTrack.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4TrackStack.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4SmartTrackStack.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4Track.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/trkdefs.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4LogicalVolume.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4DynamicParticle.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4ParticleDefinition.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4PDefManager.hh \
- /data/xenon/miniconda3/envs/g4/x86_64-conda-linux-gnu/include/c++/12.3.0/stdlib.h \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4ParticleDefinition.icc \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4LorentzVector.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4ParticleMomentum.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4ElectronOccupancy.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4DynamicParticle.icc \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4TrackStatus.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4TouchableHandle.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4VTouchable.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4VTouchable.icc \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4ReferenceCountedHandle.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4VUserTrackInformation.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4PhysicsModelCatalog.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4Material.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4Track.icc \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4Step.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4StepPoint.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4SteppingControl.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4StepStatus.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4StepPoint.icc \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4TrackVector.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4Step.icc \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4PrimaryTransformer.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4ParticleTable.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4ParticleTableIterator.hh \
@@ -581,30 +606,11 @@ CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.o: \
  /data/xenon/miniconda3/envs/g4/include/CLHEP/Random/RandStudentT.h \
  /data/xenon/miniconda3/envs/g4/include/CLHEP/Random/RandStudentT.icc \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4Navigator.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4AffineTransform.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4Transform3D.hh \
- /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/Transform3D.h \
- /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/defs.h \
- /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/Transform3D.icc \
- /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/Point3D.h \
- /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/BasicVector3D.h \
- /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/Vector3D.h \
- /data/xenon/miniconda3/envs/g4/include/CLHEP/Geometry/Normal3D.h \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4AffineTransform.icc \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4GRSVolume.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4GRSVolume.icc \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4GRSSolid.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4GRSSolid.icc \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4TouchableHistoryHandle.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4TouchableHistory.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationHistory.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationLevel.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationLevelRep.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationLevelRep.icc \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationLevel.icc \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationHistoryPool.hh \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4NavigationHistory.icc \
- /data/xenon/miniconda3/envs/g4/include/Geant4/G4TouchableHistory.icc \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4NormalNavigation.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4VSolid.hh \
  /data/xenon/miniconda3/envs/g4/include/Geant4/G4AuxiliaryNavServices.hh \

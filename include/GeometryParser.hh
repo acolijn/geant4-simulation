@@ -8,6 +8,7 @@
 #include "G4ThreeVector.hh"
 #include "G4RotationMatrix.hh"
 #include "G4VSolid.hh"
+#include "G4VSensitiveDetector.hh"
 #include <string>
 #include <map>
 #include <vector>
@@ -50,6 +51,12 @@ public:
      * @return Pointer to the physical world volume
      */
     G4VPhysicalVolume* ConstructGeometry();
+    
+    /**
+     * @brief Setup sensitive detectors for active volumes
+     * @details This method assigns sensitive detectors to volumes marked as active in the JSON config
+     */
+    void SetupSensitiveDetectors();
 
 private:
     json geometryConfig;    ///< Geometry configuration
@@ -57,6 +64,7 @@ private:
     
     std::map<std::string, G4Material*> materials;        ///< Cache of created materials
     std::map<std::string, G4LogicalVolume*> volumes;    ///< Cache of created volumes
+    std::map<std::string, G4LogicalVolume*> logicalVolumeMap;  ///< Map of logical volumes by name
     std::map<std::string, G4VSolid*> solids;           ///< Cache of created solids
     std::string configPath;                           ///< Path to the configuration files
 

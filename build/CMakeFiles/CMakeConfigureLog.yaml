@@ -61,8 +61,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-6snuKx"
-      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-6snuKx"
+      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-rydQA3"
+      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-rydQA3"
     cmakeVariables:
       CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -71,12 +71,12 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-6snuKx
+        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-rydQA3
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_70b02/fast && /bin/gmake  -f CMakeFiles/cmTC_70b02.dir/build.make CMakeFiles/cmTC_70b02.dir/build
-        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-6snuKx'
-        Building C object CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_fd670/fast && /bin/gmake  -f CMakeFiles/cmTC_fd670.dir/build.make CMakeFiles/cmTC_fd670.dir/build
+        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-rydQA3'
+        Building C object CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
         Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs
         could not find specs file conda.specs
         COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc
@@ -85,9 +85,9 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib
         gcc version 12.3.0 (conda-forge gcc 12.3.0-7) 
-        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_70b02.dir/'
-         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1 -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_70b02.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -march=nocona -mtune=haswell -O2 -version -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |
-         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o
+        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_fd670.dir/'
+         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1 -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_fd670.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -march=nocona -mtune=haswell -O2 -version -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o
         GNU assembler version 2.40 (x86_64-conda-linux-gnu) using BFD version (GNU Binutils) 2.40
         GNU C17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)
         	compiled by GNU C version 13.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
@@ -112,10 +112,10 @@ events:
         Compiler executable checksum: 8baa67e68f618f3403d40a3a5efe3080
         COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/
         LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/
-        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_70b02
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_70b02.dir/link.txt --verbose=1
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o -o cmTC_70b02 
+        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_fd670
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fd670.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o -o cmTC_fd670 
         Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs
         could not find specs file conda.specs
         COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc
@@ -127,10 +127,10 @@ events:
         gcc version 12.3.0 (conda-forge gcc 12.3.0-7) 
         COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/
         LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/
-        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_70b02' '-dumpdir' 'cmTC_70b02.'
-         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccgM8gJl.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_70b02 /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib
-        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_70b02' '-dumpdir' 'cmTC_70b02.'
-        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-6snuKx'
+        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_fd670' '-dumpdir' 'cmTC_fd670.'
+         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccirpAiJ.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_fd670 /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib
+        COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_fd670' '-dumpdir' 'cmTC_fd670.'
+        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-rydQA3'
         
       exitCode: 0
   -
@@ -166,12 +166,12 @@ events:
     message: |
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(x86_64-conda-linux-gnu-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-6snuKx]
+        ignore line: [Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-rydQA3]
         ignore line: []
-        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_70b02/fast && /bin/gmake  -f CMakeFiles/cmTC_70b02.dir/build.make CMakeFiles/cmTC_70b02.dir/build]
-        ignore line: [gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-6snuKx']
-        ignore line: [Building C object CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_fd670/fast && /bin/gmake  -f CMakeFiles/cmTC_fd670.dir/build.make CMakeFiles/cmTC_fd670.dir/build]
+        ignore line: [gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-rydQA3']
+        ignore line: [Building C object CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
         ignore line: [Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs]
         ignore line: [could not find specs file conda.specs]
         ignore line: [COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc]
@@ -180,9 +180,9 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 12.3.0 (conda-forge gcc 12.3.0-7) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_70b02.dir/']
-        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1 -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_70b02.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -march=nocona -mtune=haswell -O2 -version -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |]
-        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_fd670.dir/']
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1 -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_fd670.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -march=nocona -mtune=haswell -O2 -version -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o]
         ignore line: [GNU assembler version 2.40 (x86_64-conda-linux-gnu) using BFD version (GNU Binutils) 2.40]
         ignore line: [GNU C17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)]
         ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
@@ -207,10 +207,10 @@ events:
         ignore line: [Compiler executable checksum: 8baa67e68f618f3403d40a3a5efe3080]
         ignore line: [COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/]
         ignore line: [LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_70b02]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_70b02.dir/link.txt --verbose=1]
-        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl -O2 -Wl --sort-common -Wl --as-needed -Wl -z relro -Wl -z now -Wl --disable-new-dtags -Wl --gc-sections -Wl --allow-shlib-undefined -Wl -rpath /data/xenon/miniconda3/envs/g4/lib -Wl -rpath-link /data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o -o cmTC_70b02 ]
+        ignore line: [COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o' '-c' '-dumpdir' 'CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_fd670]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fd670.dir/link.txt --verbose=1]
+        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl -O2 -Wl --sort-common -Wl --as-needed -Wl -z relro -Wl -z now -Wl --disable-new-dtags -Wl --gc-sections -Wl --allow-shlib-undefined -Wl -rpath /data/xenon/miniconda3/envs/g4/lib -Wl -rpath-link /data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o -o cmTC_fd670 ]
         ignore line: [Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs]
         ignore line: [could not find specs file conda.specs]
         ignore line: [COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc]
@@ -222,13 +222,13 @@ events:
         ignore line: [gcc version 12.3.0 (conda-forge gcc 12.3.0-7) ]
         ignore line: [COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/]
         ignore line: [LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_70b02' '-dumpdir' 'cmTC_70b02.']
-        link line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccgM8gJl.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_70b02 /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib]
+        ignore line: [COLLECT_GCC_OPTIONS='-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_fd670' '-dumpdir' 'cmTC_fd670.']
+        link line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/ccirpAiJ.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_fd670 /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib]
           arg [/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccgM8gJl.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccirpAiJ.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -242,7 +242,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_70b02] ==> ignore
+          arg [cmTC_fd670] ==> ignore
           arg [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o]
           arg [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o]
           arg [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o]
@@ -269,7 +269,7 @@ events:
           arg [/data/xenon/miniconda3/envs/g4/lib] ==> ignore
           arg [-rpath-link] ==> ignore
           arg [/data/xenon/miniconda3/envs/g4/lib] ==> ignore
-          arg [CMakeFiles/cmTC_70b02.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_fd670.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -316,8 +316,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-aDZTX2"
-      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-aDZTX2"
+      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-KKENKK"
+      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-KKENKK"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "-fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -326,12 +326,12 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-aDZTX2
+        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-KKENKK
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_43964/fast && /bin/gmake  -f CMakeFiles/cmTC_43964.dir/build.make CMakeFiles/cmTC_43964.dir/build
-        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-aDZTX2'
-        Building CXX object CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++   -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_db911/fast && /bin/gmake  -f CMakeFiles/cmTC_db911.dir/build.make CMakeFiles/cmTC_db911.dir/build
+        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-KKENKK'
+        Building CXX object CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++   -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs
         could not find specs file conda.specs
         COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++
@@ -340,9 +340,9 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib
         gcc version 12.3.0 (conda-forge gcc 12.3.0-7) 
-        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_43964.dir/'
-         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1plus -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -D_GNU_SOURCE -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_43964.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -march=nocona -mtune=haswell -O2 -version -fvisibility-inlines-hidden -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |
-         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o
+        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_db911.dir/'
+         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1plus -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -D_GNU_SOURCE -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_db911.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -march=nocona -mtune=haswell -O2 -version -fvisibility-inlines-hidden -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |
+         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o
         GNU assembler version 2.40 (x86_64-conda-linux-gnu) using BFD version (GNU Binutils) 2.40
         GNU C++17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)
         	compiled by GNU C version 13.2.0, GMP version 6.2.1, MPFR version 4.1.0, MPC version 1.2.1, isl version isl-0.24-GMP
@@ -370,10 +370,10 @@ events:
         Compiler executable checksum: 5e225246064ad1966efe9c4a3399914e
         COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/
         LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/
-        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_43964
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_43964.dir/link.txt --verbose=1
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_43964 
+        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_db911
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_db911.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_db911 
         Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs
         could not find specs file conda.specs
         COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++
@@ -385,10 +385,10 @@ events:
         gcc version 12.3.0 (conda-forge gcc 12.3.0-7) 
         COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/
         LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/
-        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_43964' '-shared-libgcc' '-dumpdir' 'cmTC_43964.'
-         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cc91oE6B.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_43964 /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib
-        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_43964' '-shared-libgcc' '-dumpdir' 'cmTC_43964.'
-        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-aDZTX2'
+        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_db911' '-shared-libgcc' '-dumpdir' 'cmTC_db911.'
+         /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cclUwnK5.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_db911 /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib
+        COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_db911' '-shared-libgcc' '-dumpdir' 'cmTC_db911.'
+        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-KKENKK'
         
       exitCode: 0
   -
@@ -430,12 +430,12 @@ events:
     message: |
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(x86_64-conda-linux-gnu-ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
-        ignore line: [Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-aDZTX2]
+        ignore line: [Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-KKENKK]
         ignore line: []
-        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_43964/fast && /bin/gmake  -f CMakeFiles/cmTC_43964.dir/build.make CMakeFiles/cmTC_43964.dir/build]
-        ignore line: [gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-aDZTX2']
-        ignore line: [Building CXX object CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++   -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_db911/fast && /bin/gmake  -f CMakeFiles/cmTC_db911.dir/build.make CMakeFiles/cmTC_db911.dir/build]
+        ignore line: [gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-KKENKK']
+        ignore line: [Building CXX object CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++   -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include    -v -o CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs]
         ignore line: [could not find specs file conda.specs]
         ignore line: [COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++]
@@ -444,9 +444,9 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib]
         ignore line: [gcc version 12.3.0 (conda-forge gcc 12.3.0-7) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_43964.dir/']
-        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1plus -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -D_GNU_SOURCE -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_43964.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -march=nocona -mtune=haswell -O2 -version -fvisibility-inlines-hidden -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |]
-        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_db911.dir/']
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/cc1plus -quiet -v -iprefix /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/ -isysroot /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot -D_GNU_SOURCE -isystem /data/xenon/miniconda3/envs/g4/include /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_db911.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -march=nocona -mtune=haswell -O2 -version -fvisibility-inlines-hidden -fmessage-length=0 -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -ffunction-sections -o - |]
+        ignore line: [ /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/as -v --64 -o CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o]
         ignore line: [GNU assembler version 2.40 (x86_64-conda-linux-gnu) using BFD version (GNU Binutils) 2.40]
         ignore line: [GNU C++17 (conda-forge gcc 12.3.0-7) version 12.3.0 (x86_64-conda-linux-gnu)]
         ignore line: [	compiled by GNU C version 13.2.0  GMP version 6.2.1  MPFR version 4.1.0  MPC version 1.2.1  isl version isl-0.24-GMP]
@@ -474,10 +474,10 @@ events:
         ignore line: [Compiler executable checksum: 5e225246064ad1966efe9c4a3399914e]
         ignore line: [COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/]
         ignore line: [LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_43964]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_43964.dir/link.txt --verbose=1]
-        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl -O2 -Wl --sort-common -Wl --as-needed -Wl -z relro -Wl -z now -Wl --disable-new-dtags -Wl --gc-sections -Wl --allow-shlib-undefined -Wl -rpath /data/xenon/miniconda3/envs/g4/lib -Wl -rpath-link /data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_43964 ]
+        ignore line: [COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-v' '-o' 'CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-dumpdir' 'CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_db911]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_db911.dir/link.txt --verbose=1]
+        ignore line: [/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl -O2 -Wl --sort-common -Wl --as-needed -Wl -z relro -Wl -z now -Wl --disable-new-dtags -Wl --gc-sections -Wl --allow-shlib-undefined -Wl -rpath /data/xenon/miniconda3/envs/g4/lib -Wl -rpath-link /data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib -v CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_db911 ]
         ignore line: [Reading specs from /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/specs]
         ignore line: [could not find specs file conda.specs]
         ignore line: [COLLECT_GCC=/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++]
@@ -489,13 +489,13 @@ events:
         ignore line: [gcc version 12.3.0 (conda-forge gcc 12.3.0-7) ]
         ignore line: [COMPILER_PATH=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/]
         ignore line: [LIBRARY_PATH=/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/:/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/:/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_43964' '-shared-libgcc' '-dumpdir' 'cmTC_43964.']
-        link line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cc91oE6B.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_43964 /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib]
+        ignore line: [COLLECT_GCC_OPTIONS='-fvisibility-inlines-hidden' '-fmessage-length=0' '-march=nocona' '-mtune=haswell' '-ftree-vectorize' '-fPIC' '-fstack-protector-strong' '-fno-plt' '-O2' '-ffunction-sections' '-pipe' '-isystem' '/data/xenon/miniconda3/envs/g4/include' '-L/data/xenon/miniconda3/envs/g4/lib' '-v' '-o' 'cmTC_db911' '-shared-libgcc' '-dumpdir' 'cmTC_db911.']
+        link line: [ /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2 -plugin /data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so -plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper -plugin-opt=-fresolution=/tmp/cclUwnK5.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_db911 /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o -L/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0 -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/lib -L/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../.. -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/lib -L/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib -O2 --sort-common --as-needed -z relro -z now --disable-new-dtags --gc-sections --allow-shlib-undefined -rpath /data/xenon/miniconda3/envs/g4/lib -rpath-link /data/xenon/miniconda3/envs/g4/lib CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtendS.o /data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crtn.o -rpath /data/xenon/miniconda3/envs/g4/lib]
           arg [/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/data/xenon/miniconda3/envs/g4/bin/../libexec/gcc/x86_64-conda-linux-gnu/12.3.0/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cc91oE6B.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cclUwnK5.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -509,7 +509,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_43964] ==> ignore
+          arg [cmTC_db911] ==> ignore
           arg [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/Scrt1.o]
           arg [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../x86_64-conda-linux-gnu/sysroot/usr/lib/../lib/crti.o]
           arg [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o] ==> obj [/data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/crtbeginS.o]
@@ -536,7 +536,7 @@ events:
           arg [/data/xenon/miniconda3/envs/g4/lib] ==> ignore
           arg [-rpath-link] ==> ignore
           arg [/data/xenon/miniconda3/envs/g4/lib] ==> ignore
-          arg [CMakeFiles/cmTC_43964.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_db911.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -585,8 +585,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CQYoji"
-      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CQYoji"
+      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-z2phXp"
+      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-z2phXp"
     cmakeVariables:
       CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -596,25 +596,25 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CQYoji
+        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-z2phXp
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_7932d/fast && /bin/gmake  -f CMakeFiles/cmTC_7932d.dir/build.make CMakeFiles/cmTC_7932d.dir/build
-        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CQYoji'
-        Building C object CMakeFiles/cmTC_7932d.dir/src.c.o
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -DCMAKE_HAVE_LIBC_PTHREAD  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -o CMakeFiles/cmTC_7932d.dir/src.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CQYoji/src.c
-        Linking C executable cmTC_7932d
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7932d.dir/link.txt --verbose=1
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_7932d.dir/src.c.o -o cmTC_7932d 
-        /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/ld: CMakeFiles/cmTC_7932d.dir/src.c.o: in function `main':
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_674c5/fast && /bin/gmake  -f CMakeFiles/cmTC_674c5.dir/build.make CMakeFiles/cmTC_674c5.dir/build
+        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-z2phXp'
+        Building C object CMakeFiles/cmTC_674c5.dir/src.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -DCMAKE_HAVE_LIBC_PTHREAD  -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -o CMakeFiles/cmTC_674c5.dir/src.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-z2phXp/src.c
+        Linking C executable cmTC_674c5
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_674c5.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_674c5.dir/src.c.o -o cmTC_674c5 
+        /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/ld: CMakeFiles/cmTC_674c5.dir/src.c.o: in function `main':
         src.c:(.text.startup.main+0x24): undefined reference to `pthread_create'
         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/ld: src.c:(.text.startup.main+0x2e): undefined reference to `pthread_detach'
         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/ld: src.c:(.text.startup.main+0x38): undefined reference to `pthread_cancel'
         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/ld: src.c:(.text.startup.main+0x44): undefined reference to `pthread_join'
         /data/xenon/miniconda3/envs/g4/bin/../lib/gcc/x86_64-conda-linux-gnu/12.3.0/../../../../x86_64-conda-linux-gnu/bin/ld: src.c:(.text.startup.main+0x50): undefined reference to `pthread_atfork'
         collect2: error: ld returned 1 exit status
-        gmake[1]: *** [CMakeFiles/cmTC_7932d.dir/build.make:99: cmTC_7932d] Error 1
-        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CQYoji'
-        gmake: *** [Makefile:127: cmTC_7932d/fast] Error 2
+        gmake[1]: *** [CMakeFiles/cmTC_674c5.dir/build.make:99: cmTC_674c5] Error 1
+        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-z2phXp'
+        gmake: *** [Makefile:127: cmTC_674c5/fast] Error 2
         
       exitCode: 2
   -
@@ -630,8 +630,8 @@ events:
     checks:
       - "Check if compiler accepts -pthread"
     directories:
-      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-4fyc7b"
-      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-4fyc7b"
+      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-A2rR5e"
+      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-A2rR5e"
     cmakeVariables:
       CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -641,16 +641,16 @@ events:
       variable: "THREADS_HAVE_PTHREAD_ARG"
       cached: true
       stdout: |
-        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-4fyc7b
+        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-A2rR5e
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_9a834/fast && /bin/gmake  -f CMakeFiles/cmTC_9a834.dir/build.make CMakeFiles/cmTC_9a834.dir/build
-        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-4fyc7b'
-        Building C object CMakeFiles/cmTC_9a834.dir/CheckForPthreads.c.o
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -o CMakeFiles/cmTC_9a834.dir/CheckForPthreads.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-4fyc7b/CheckForPthreads.c
-        Linking C executable cmTC_9a834
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9a834.dir/link.txt --verbose=1
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_9a834.dir/CheckForPthreads.c.o -o cmTC_9a834  -pthread 
-        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-4fyc7b'
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_0f2fe/fast && /bin/gmake  -f CMakeFiles/cmTC_0f2fe.dir/build.make CMakeFiles/cmTC_0f2fe.dir/build
+        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-A2rR5e'
+        Building C object CMakeFiles/cmTC_0f2fe.dir/CheckForPthreads.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -o CMakeFiles/cmTC_0f2fe.dir/CheckForPthreads.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-A2rR5e/CheckForPthreads.c
+        Linking C executable cmTC_0f2fe
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0f2fe.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include  -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_0f2fe.dir/CheckForPthreads.c.o -o cmTC_0f2fe  -pthread 
+        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-A2rR5e'
         
       exitCode: 0
   -
@@ -664,8 +664,8 @@ events:
     checks:
       - "Looking for XOpenDisplay in /data/xenon/miniconda3/envs/g4/lib/libX11.so;/data/xenon/miniconda3/envs/g4/lib/libXext.so"
     directories:
-      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-iiGxdM"
-      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-iiGxdM"
+      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-8vNvKQ"
+      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-8vNvKQ"
     cmakeVariables:
       CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -675,16 +675,16 @@ events:
       variable: "X11_LIB_X11_SOLO"
       cached: true
       stdout: |
-        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-iiGxdM
+        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-8vNvKQ
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_75c0c/fast && /bin/gmake  -f CMakeFiles/cmTC_75c0c.dir/build.make CMakeFiles/cmTC_75c0c.dir/build
-        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-iiGxdM'
-        Building C object CMakeFiles/cmTC_75c0c.dir/CheckFunctionExists.c.o
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=XOpenDisplay -o CMakeFiles/cmTC_75c0c.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-iiGxdM/CheckFunctionExists.c
-        Linking C executable cmTC_75c0c
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_75c0c.dir/link.txt --verbose=1
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=XOpenDisplay -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_75c0c.dir/CheckFunctionExists.c.o -o cmTC_75c0c  /data/xenon/miniconda3/envs/g4/lib/libX11.so /data/xenon/miniconda3/envs/g4/lib/libXext.so 
-        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-iiGxdM'
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_efdc1/fast && /bin/gmake  -f CMakeFiles/cmTC_efdc1.dir/build.make CMakeFiles/cmTC_efdc1.dir/build
+        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-8vNvKQ'
+        Building C object CMakeFiles/cmTC_efdc1.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=XOpenDisplay -o CMakeFiles/cmTC_efdc1.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-8vNvKQ/CheckFunctionExists.c
+        Linking C executable cmTC_efdc1
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_efdc1.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=XOpenDisplay -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_efdc1.dir/CheckFunctionExists.c.o -o cmTC_efdc1  /data/xenon/miniconda3/envs/g4/lib/libX11.so /data/xenon/miniconda3/envs/g4/lib/libXext.so 
+        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-8vNvKQ'
         
       exitCode: 0
   -
@@ -698,8 +698,8 @@ events:
     checks:
       - "Looking for gethostbyname"
     directories:
-      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-QA5APW"
-      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-QA5APW"
+      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-S2Tc5F"
+      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-S2Tc5F"
     cmakeVariables:
       CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -709,16 +709,16 @@ events:
       variable: "CMAKE_HAVE_GETHOSTBYNAME"
       cached: true
       stdout: |
-        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-QA5APW
+        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-S2Tc5F
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_ae44b/fast && /bin/gmake  -f CMakeFiles/cmTC_ae44b.dir/build.make CMakeFiles/cmTC_ae44b.dir/build
-        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-QA5APW'
-        Building C object CMakeFiles/cmTC_ae44b.dir/CheckFunctionExists.c.o
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=gethostbyname -o CMakeFiles/cmTC_ae44b.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-QA5APW/CheckFunctionExists.c
-        Linking C executable cmTC_ae44b
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ae44b.dir/link.txt --verbose=1
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=gethostbyname -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_ae44b.dir/CheckFunctionExists.c.o -o cmTC_ae44b 
-        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-QA5APW'
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_ced97/fast && /bin/gmake  -f CMakeFiles/cmTC_ced97.dir/build.make CMakeFiles/cmTC_ced97.dir/build
+        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-S2Tc5F'
+        Building C object CMakeFiles/cmTC_ced97.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=gethostbyname -o CMakeFiles/cmTC_ced97.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-S2Tc5F/CheckFunctionExists.c
+        Linking C executable cmTC_ced97
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ced97.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=gethostbyname -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_ced97.dir/CheckFunctionExists.c.o -o cmTC_ced97 
+        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-S2Tc5F'
         
       exitCode: 0
   -
@@ -732,8 +732,8 @@ events:
     checks:
       - "Looking for connect"
     directories:
-      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CuqqYy"
-      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CuqqYy"
+      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zYpIU8"
+      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zYpIU8"
     cmakeVariables:
       CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -743,16 +743,16 @@ events:
       variable: "CMAKE_HAVE_CONNECT"
       cached: true
       stdout: |
-        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CuqqYy
+        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zYpIU8
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_cc69e/fast && /bin/gmake  -f CMakeFiles/cmTC_cc69e.dir/build.make CMakeFiles/cmTC_cc69e.dir/build
-        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CuqqYy'
-        Building C object CMakeFiles/cmTC_cc69e.dir/CheckFunctionExists.c.o
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=connect -o CMakeFiles/cmTC_cc69e.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CuqqYy/CheckFunctionExists.c
-        Linking C executable cmTC_cc69e
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cc69e.dir/link.txt --verbose=1
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=connect -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_cc69e.dir/CheckFunctionExists.c.o -o cmTC_cc69e 
-        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-CuqqYy'
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_a12b3/fast && /bin/gmake  -f CMakeFiles/cmTC_a12b3.dir/build.make CMakeFiles/cmTC_a12b3.dir/build
+        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zYpIU8'
+        Building C object CMakeFiles/cmTC_a12b3.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=connect -o CMakeFiles/cmTC_a12b3.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zYpIU8/CheckFunctionExists.c
+        Linking C executable cmTC_a12b3
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a12b3.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=connect -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_a12b3.dir/CheckFunctionExists.c.o -o cmTC_a12b3 
+        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zYpIU8'
         
       exitCode: 0
   -
@@ -766,8 +766,8 @@ events:
     checks:
       - "Looking for remove"
     directories:
-      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-who7fJ"
-      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-who7fJ"
+      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zWkQJY"
+      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zWkQJY"
     cmakeVariables:
       CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -777,16 +777,16 @@ events:
       variable: "CMAKE_HAVE_REMOVE"
       cached: true
       stdout: |
-        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-who7fJ
+        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zWkQJY
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_51f14/fast && /bin/gmake  -f CMakeFiles/cmTC_51f14.dir/build.make CMakeFiles/cmTC_51f14.dir/build
-        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-who7fJ'
-        Building C object CMakeFiles/cmTC_51f14.dir/CheckFunctionExists.c.o
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=remove -o CMakeFiles/cmTC_51f14.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-who7fJ/CheckFunctionExists.c
-        Linking C executable cmTC_51f14
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_51f14.dir/link.txt --verbose=1
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=remove -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_51f14.dir/CheckFunctionExists.c.o -o cmTC_51f14 
-        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-who7fJ'
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_709b7/fast && /bin/gmake  -f CMakeFiles/cmTC_709b7.dir/build.make CMakeFiles/cmTC_709b7.dir/build
+        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zWkQJY'
+        Building C object CMakeFiles/cmTC_709b7.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=remove -o CMakeFiles/cmTC_709b7.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zWkQJY/CheckFunctionExists.c
+        Linking C executable cmTC_709b7
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_709b7.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=remove -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_709b7.dir/CheckFunctionExists.c.o -o cmTC_709b7 
+        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-zWkQJY'
         
       exitCode: 0
   -
@@ -800,8 +800,8 @@ events:
     checks:
       - "Looking for shmat"
     directories:
-      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-9dKKfo"
-      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-9dKKfo"
+      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-VxcU3o"
+      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-VxcU3o"
     cmakeVariables:
       CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -811,16 +811,16 @@ events:
       variable: "CMAKE_HAVE_SHMAT"
       cached: true
       stdout: |
-        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-9dKKfo
+        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-VxcU3o
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_a75f5/fast && /bin/gmake  -f CMakeFiles/cmTC_a75f5.dir/build.make CMakeFiles/cmTC_a75f5.dir/build
-        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-9dKKfo'
-        Building C object CMakeFiles/cmTC_a75f5.dir/CheckFunctionExists.c.o
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=shmat -o CMakeFiles/cmTC_a75f5.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-9dKKfo/CheckFunctionExists.c
-        Linking C executable cmTC_a75f5
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a75f5.dir/link.txt --verbose=1
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=shmat -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_a75f5.dir/CheckFunctionExists.c.o -o cmTC_a75f5 
-        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-9dKKfo'
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_b6bc8/fast && /bin/gmake  -f CMakeFiles/cmTC_b6bc8.dir/build.make CMakeFiles/cmTC_b6bc8.dir/build
+        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-VxcU3o'
+        Building C object CMakeFiles/cmTC_b6bc8.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=shmat -o CMakeFiles/cmTC_b6bc8.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-VxcU3o/CheckFunctionExists.c
+        Linking C executable cmTC_b6bc8
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b6bc8.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=shmat -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_b6bc8.dir/CheckFunctionExists.c.o -o cmTC_b6bc8 
+        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-VxcU3o'
         
       exitCode: 0
   -
@@ -834,8 +834,8 @@ events:
     checks:
       - "Looking for IceConnectionNumber in ICE"
     directories:
-      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-IbTT2c"
-      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-IbTT2c"
+      source: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-wc249M"
+      binary: "/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-wc249M"
     cmakeVariables:
       CMAKE_C_FLAGS: "-march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -845,16 +845,16 @@ events:
       variable: "CMAKE_LIB_ICE_HAS_ICECONNECTIONNUMBER"
       cached: true
       stdout: |
-        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-IbTT2c
+        Change Dir: /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-wc249M
         
-        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_851fc/fast && /bin/gmake  -f CMakeFiles/cmTC_851fc.dir/build.make CMakeFiles/cmTC_851fc.dir/build
-        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-IbTT2c'
-        Building C object CMakeFiles/cmTC_851fc.dir/CheckFunctionExists.c.o
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -o CMakeFiles/cmTC_851fc.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-IbTT2c/CheckFunctionExists.c
-        Linking C executable cmTC_851fc
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_851fc.dir/link.txt --verbose=1
-        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_851fc.dir/CheckFunctionExists.c.o -o cmTC_851fc  -lICE 
-        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-IbTT2c'
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /bin/gmake -f Makefile cmTC_c5e1b/fast && /bin/gmake  -f CMakeFiles/cmTC_c5e1b.dir/build.make CMakeFiles/cmTC_c5e1b.dir/build
+        gmake[1]: Entering directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-wc249M'
+        Building C object CMakeFiles/cmTC_c5e1b.dir/CheckFunctionExists.c.o
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -o CMakeFiles/cmTC_c5e1b.dir/CheckFunctionExists.c.o -c /user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-wc249M/CheckFunctionExists.c
+        Linking C executable cmTC_c5e1b
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c5e1b.dir/link.txt --verbose=1
+        /data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-cc -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /data/xenon/miniconda3/envs/g4/include -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -Wl,-O2 -Wl,--sort-common -Wl,--as-needed -Wl,-z,relro -Wl,-z,now -Wl,--disable-new-dtags -Wl,--gc-sections -Wl,--allow-shlib-undefined -Wl,-rpath,/data/xenon/miniconda3/envs/g4/lib -Wl,-rpath-link,/data/xenon/miniconda3/envs/g4/lib -L/data/xenon/miniconda3/envs/g4/lib  CMakeFiles/cmTC_c5e1b.dir/CheckFunctionExists.c.o -o cmTC_c5e1b  -lICE 
+        gmake[1]: Leaving directory '/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles/CMakeScratch/TryCompile-wc249M'
         
       exitCode: 0
 ...

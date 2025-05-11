@@ -111,10 +111,24 @@ CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.s"
 	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /user/z37/geant4_projects/geant4-simulation/src/DetectorConstruction.cc -o CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.s
 
+CMakeFiles/neutronLXe.dir/src/EventAction.cc.o: CMakeFiles/neutronLXe.dir/flags.make
+CMakeFiles/neutronLXe.dir/src/EventAction.cc.o: /user/z37/geant4_projects/geant4-simulation/src/EventAction.cc
+CMakeFiles/neutronLXe.dir/src/EventAction.cc.o: CMakeFiles/neutronLXe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/neutronLXe.dir/src/EventAction.cc.o"
+	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/neutronLXe.dir/src/EventAction.cc.o -MF CMakeFiles/neutronLXe.dir/src/EventAction.cc.o.d -o CMakeFiles/neutronLXe.dir/src/EventAction.cc.o -c /user/z37/geant4_projects/geant4-simulation/src/EventAction.cc
+
+CMakeFiles/neutronLXe.dir/src/EventAction.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/neutronLXe.dir/src/EventAction.cc.i"
+	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /user/z37/geant4_projects/geant4-simulation/src/EventAction.cc > CMakeFiles/neutronLXe.dir/src/EventAction.cc.i
+
+CMakeFiles/neutronLXe.dir/src/EventAction.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/neutronLXe.dir/src/EventAction.cc.s"
+	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /user/z37/geant4_projects/geant4-simulation/src/EventAction.cc -o CMakeFiles/neutronLXe.dir/src/EventAction.cc.s
+
 CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.o: CMakeFiles/neutronLXe.dir/flags.make
 CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.o: /user/z37/geant4_projects/geant4-simulation/src/GeometryParser.cc
 CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.o: CMakeFiles/neutronLXe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.o"
 	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.o -MF CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.o.d -o CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.o -c /user/z37/geant4_projects/geant4-simulation/src/GeometryParser.cc
 
 CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.i: cmake_force
@@ -125,10 +139,38 @@ CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.s"
 	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /user/z37/geant4_projects/geant4-simulation/src/GeometryParser.cc -o CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.s
 
+CMakeFiles/neutronLXe.dir/src/MyHit.cc.o: CMakeFiles/neutronLXe.dir/flags.make
+CMakeFiles/neutronLXe.dir/src/MyHit.cc.o: /user/z37/geant4_projects/geant4-simulation/src/MyHit.cc
+CMakeFiles/neutronLXe.dir/src/MyHit.cc.o: CMakeFiles/neutronLXe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/neutronLXe.dir/src/MyHit.cc.o"
+	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/neutronLXe.dir/src/MyHit.cc.o -MF CMakeFiles/neutronLXe.dir/src/MyHit.cc.o.d -o CMakeFiles/neutronLXe.dir/src/MyHit.cc.o -c /user/z37/geant4_projects/geant4-simulation/src/MyHit.cc
+
+CMakeFiles/neutronLXe.dir/src/MyHit.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/neutronLXe.dir/src/MyHit.cc.i"
+	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /user/z37/geant4_projects/geant4-simulation/src/MyHit.cc > CMakeFiles/neutronLXe.dir/src/MyHit.cc.i
+
+CMakeFiles/neutronLXe.dir/src/MyHit.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/neutronLXe.dir/src/MyHit.cc.s"
+	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /user/z37/geant4_projects/geant4-simulation/src/MyHit.cc -o CMakeFiles/neutronLXe.dir/src/MyHit.cc.s
+
+CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.o: CMakeFiles/neutronLXe.dir/flags.make
+CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.o: /user/z37/geant4_projects/geant4-simulation/src/MySensitiveDetector.cc
+CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.o: CMakeFiles/neutronLXe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.o"
+	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.o -MF CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.o.d -o CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.o -c /user/z37/geant4_projects/geant4-simulation/src/MySensitiveDetector.cc
+
+CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.i"
+	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /user/z37/geant4_projects/geant4-simulation/src/MySensitiveDetector.cc > CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.i
+
+CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.s"
+	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /user/z37/geant4_projects/geant4-simulation/src/MySensitiveDetector.cc -o CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.s
+
 CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.o: CMakeFiles/neutronLXe.dir/flags.make
 CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.o: /user/z37/geant4_projects/geant4-simulation/src/PrimaryGeneratorAction.cc
 CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.o: CMakeFiles/neutronLXe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.o"
 	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.o -MF CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.o.d -o CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.o -c /user/z37/geant4_projects/geant4-simulation/src/PrimaryGeneratorAction.cc
 
 CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.i: cmake_force
@@ -142,7 +184,7 @@ CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.s: cmake_force
 CMakeFiles/neutronLXe.dir/src/RunAction.cc.o: CMakeFiles/neutronLXe.dir/flags.make
 CMakeFiles/neutronLXe.dir/src/RunAction.cc.o: /user/z37/geant4_projects/geant4-simulation/src/RunAction.cc
 CMakeFiles/neutronLXe.dir/src/RunAction.cc.o: CMakeFiles/neutronLXe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/neutronLXe.dir/src/RunAction.cc.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/neutronLXe.dir/src/RunAction.cc.o"
 	/data/xenon/miniconda3/envs/g4/bin/x86_64-conda-linux-gnu-c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/neutronLXe.dir/src/RunAction.cc.o -MF CMakeFiles/neutronLXe.dir/src/RunAction.cc.o.d -o CMakeFiles/neutronLXe.dir/src/RunAction.cc.o -c /user/z37/geant4_projects/geant4-simulation/src/RunAction.cc
 
 CMakeFiles/neutronLXe.dir/src/RunAction.cc.i: cmake_force
@@ -158,7 +200,10 @@ neutronLXe_OBJECTS = \
 "CMakeFiles/neutronLXe.dir/neutronLXe.cc.o" \
 "CMakeFiles/neutronLXe.dir/src/ActionInitialization.cc.o" \
 "CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.o" \
+"CMakeFiles/neutronLXe.dir/src/EventAction.cc.o" \
 "CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.o" \
+"CMakeFiles/neutronLXe.dir/src/MyHit.cc.o" \
+"CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.o" \
 "CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.o" \
 "CMakeFiles/neutronLXe.dir/src/RunAction.cc.o"
 
@@ -168,7 +213,10 @@ neutronLXe_EXTERNAL_OBJECTS =
 neutronLXe: CMakeFiles/neutronLXe.dir/neutronLXe.cc.o
 neutronLXe: CMakeFiles/neutronLXe.dir/src/ActionInitialization.cc.o
 neutronLXe: CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.o
+neutronLXe: CMakeFiles/neutronLXe.dir/src/EventAction.cc.o
 neutronLXe: CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.o
+neutronLXe: CMakeFiles/neutronLXe.dir/src/MyHit.cc.o
+neutronLXe: CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.o
 neutronLXe: CMakeFiles/neutronLXe.dir/src/PrimaryGeneratorAction.cc.o
 neutronLXe: CMakeFiles/neutronLXe.dir/src/RunAction.cc.o
 neutronLXe: CMakeFiles/neutronLXe.dir/build.make
@@ -247,7 +295,7 @@ neutronLXe: /data/xenon/miniconda3/envs/g4/lib/libG4global.so
 neutronLXe: /data/xenon/miniconda3/envs/g4/lib/libG4ptl.so.2.3.3
 neutronLXe: /data/xenon/miniconda3/envs/g4/lib/libCLHEP-2.4.6.2.so
 neutronLXe: CMakeFiles/neutronLXe.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable neutronLXe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/user/z37/geant4_projects/geant4-simulation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable neutronLXe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/neutronLXe.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

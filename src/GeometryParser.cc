@@ -1,5 +1,7 @@
 #include "GeometryParser.hh"
 #include "G4NistManager.hh"
+#include "G4SDManager.hh"
+#include "MySensitiveDetector.hh"
 
 // Basic shapes
 #include "G4Box.hh"
@@ -301,6 +303,9 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
         }
     }
 
+    // Setup sensitive detectors for active volumes
+    SetupSensitiveDetectors();
+    
     return worldPV;
 }
 
@@ -648,6 +653,52 @@ json GeometryParser::LoadExternalGeometry(const std::string& filename) {
  * @details Imports a geometry defined in an external JSON file and places it
  *          in the parent volume with the specified transformation.
  */
+/**
+ * @brief Setup sensitive detectors for active volumes
+ * @details This method assigns sensitive detectors to volumes marked as active in the JSON config
+ */
+void GeometryParser::SetupSensitiveDetectors() {
+    // Get the SD manager
+    G4SDManager* sdManager = G4SDManager::GetSDMpointer();
+    
+    // Create and register the default sensitive detector
+    MySensitiveDetector* mySD = new MySensitiveDetector("MySD");
+    sdManager->AddNewDetector(mySD);
+    
+    // Iterate through all volumes in the JSON configuration
+    for (const auto& volConfig : geometryConfig["volumes"]) {
+        // Check if this volume is marked as active
+        if (volConfig.contains("isActive") && volConfig["isActive"].get<bool>()) {
+            // Get the hits collection name (default to "MyHitsCollection" if not specified)
+            std::string hitsCollName = "MyHitsCollection";
+            if (volConfig.contains("hitsCollectionName")) {
+                hitsCollName = volConfig["hitsCollectionName"].get<std::string>();
+            }
+            
+            // Only assign to MyHitsCollection for now
+            if (hitsCollName == "MyHitsCollection") {
+                // Get the logical volume
+                std::string volName = volConfig["name"].get<std::string>();
+                G4LogicalVolume* logicalVol = logicalVolumeMap[volName + "_logical"];
+                
+                if (logicalVol) {
+                    // Assign the sensitive detector to this logical volume
+                    G4cout << "Setting " << volName << " as sensitive detector" << G4endl;
+                    logicalVol->SetSensitiveDetector(mySD);
+                }
+            }
+        }
+    }
+}
+
+/**
+ * @brief Import an assembled geometry from an external JSON file
+ * @param config JSON configuration for the import
+ * @param parentVolume Parent logical volume to place the imported geometry in
+ * @throws std::runtime_error if import fails
+ * @details Imports a geometry defined in an external JSON file and places it
+ *          in the parent volume with the specified transformation.
+ */
 void GeometryParser::ImportAssembledGeometry(const json& config, G4LogicalVolume* parentVolume) {
     // Load the external file
     std::string filename = config["external_file"].get<std::string>();
@@ -679,7 +730,10 @@ void GeometryParser::ImportAssembledGeometry(const json& config, G4LogicalVolume
         
         // Create the volume
         G4LogicalVolume* logicalVolume = CreateVolume(volConfig);
-        externalVolumes[name] = logicalVolume;
+        volumes[volConfig["name"].get<std::string>()] = logicalVolume;
+        
+        // Store in logical volume map with _logical suffix for sensitive detector setup
+        logicalVolumeMap[volConfig["name"].get<std::string>() + "_logical"] = logicalVolume;
     }
     
     // Then, place all volumes

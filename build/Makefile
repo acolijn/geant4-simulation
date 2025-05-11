@@ -201,6 +201,30 @@ src/DetectorConstruction.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/neutronLXe.dir/build.make CMakeFiles/neutronLXe.dir/src/DetectorConstruction.cc.s
 .PHONY : src/DetectorConstruction.cc.s
 
+src/EventAction.o: src/EventAction.cc.o
+.PHONY : src/EventAction.o
+
+# target to build an object file
+src/EventAction.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/neutronLXe.dir/build.make CMakeFiles/neutronLXe.dir/src/EventAction.cc.o
+.PHONY : src/EventAction.cc.o
+
+src/EventAction.i: src/EventAction.cc.i
+.PHONY : src/EventAction.i
+
+# target to preprocess a source file
+src/EventAction.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/neutronLXe.dir/build.make CMakeFiles/neutronLXe.dir/src/EventAction.cc.i
+.PHONY : src/EventAction.cc.i
+
+src/EventAction.s: src/EventAction.cc.s
+.PHONY : src/EventAction.s
+
+# target to generate assembly for a file
+src/EventAction.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/neutronLXe.dir/build.make CMakeFiles/neutronLXe.dir/src/EventAction.cc.s
+.PHONY : src/EventAction.cc.s
+
 src/GeometryParser.o: src/GeometryParser.cc.o
 .PHONY : src/GeometryParser.o
 
@@ -224,6 +248,54 @@ src/GeometryParser.s: src/GeometryParser.cc.s
 src/GeometryParser.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/neutronLXe.dir/build.make CMakeFiles/neutronLXe.dir/src/GeometryParser.cc.s
 .PHONY : src/GeometryParser.cc.s
+
+src/MyHit.o: src/MyHit.cc.o
+.PHONY : src/MyHit.o
+
+# target to build an object file
+src/MyHit.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/neutronLXe.dir/build.make CMakeFiles/neutronLXe.dir/src/MyHit.cc.o
+.PHONY : src/MyHit.cc.o
+
+src/MyHit.i: src/MyHit.cc.i
+.PHONY : src/MyHit.i
+
+# target to preprocess a source file
+src/MyHit.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/neutronLXe.dir/build.make CMakeFiles/neutronLXe.dir/src/MyHit.cc.i
+.PHONY : src/MyHit.cc.i
+
+src/MyHit.s: src/MyHit.cc.s
+.PHONY : src/MyHit.s
+
+# target to generate assembly for a file
+src/MyHit.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/neutronLXe.dir/build.make CMakeFiles/neutronLXe.dir/src/MyHit.cc.s
+.PHONY : src/MyHit.cc.s
+
+src/MySensitiveDetector.o: src/MySensitiveDetector.cc.o
+.PHONY : src/MySensitiveDetector.o
+
+# target to build an object file
+src/MySensitiveDetector.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/neutronLXe.dir/build.make CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.o
+.PHONY : src/MySensitiveDetector.cc.o
+
+src/MySensitiveDetector.i: src/MySensitiveDetector.cc.i
+.PHONY : src/MySensitiveDetector.i
+
+# target to preprocess a source file
+src/MySensitiveDetector.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/neutronLXe.dir/build.make CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.i
+.PHONY : src/MySensitiveDetector.cc.i
+
+src/MySensitiveDetector.s: src/MySensitiveDetector.cc.s
+.PHONY : src/MySensitiveDetector.s
+
+# target to generate assembly for a file
+src/MySensitiveDetector.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/neutronLXe.dir/build.make CMakeFiles/neutronLXe.dir/src/MySensitiveDetector.cc.s
+.PHONY : src/MySensitiveDetector.cc.s
 
 src/PrimaryGeneratorAction.o: src/PrimaryGeneratorAction.cc.o
 .PHONY : src/PrimaryGeneratorAction.o
@@ -291,9 +363,18 @@ help:
 	@echo "... src/DetectorConstruction.o"
 	@echo "... src/DetectorConstruction.i"
 	@echo "... src/DetectorConstruction.s"
+	@echo "... src/EventAction.o"
+	@echo "... src/EventAction.i"
+	@echo "... src/EventAction.s"
 	@echo "... src/GeometryParser.o"
 	@echo "... src/GeometryParser.i"
 	@echo "... src/GeometryParser.s"
+	@echo "... src/MyHit.o"
+	@echo "... src/MyHit.i"
+	@echo "... src/MyHit.s"
+	@echo "... src/MySensitiveDetector.o"
+	@echo "... src/MySensitiveDetector.i"
+	@echo "... src/MySensitiveDetector.s"
 	@echo "... src/PrimaryGeneratorAction.o"
 	@echo "... src/PrimaryGeneratorAction.i"
 	@echo "... src/PrimaryGeneratorAction.s"
