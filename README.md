@@ -2,6 +2,8 @@
 
 This Geant4 application simulates neutron transport in a liquid xenon volume using high-precision neutron physics (HP).
 
+[![Documentation Status](https://readthedocs.org/projects/geant4-simulation/badge/?version=latest)](https://geant4-simulation.readthedocs.io/en/latest/?badge=latest)
+
 ## Requirements
 - Geant4 (with HP data files)
 - ROOT

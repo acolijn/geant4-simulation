@@ -82,10 +82,19 @@ html_theme_options = {
 
 # Setup the breathe extension
 breathe_projects = {
-    "Geant4-Simulation": "doxygen/xml"
+    "Geant4-Simulation": os.path.abspath(os.path.join(os.getcwd(), 'doxygen/xml'))
 }
 breathe_default_project = "Geant4-Simulation"
 breathe_default_members = ('members', 'undoc-members')
+
+# Debug output for Breathe
+print(f"Breathe project path: {breathe_projects['Geant4-Simulation']}")
+print(f"Current working directory: {os.getcwd()}")
+print(f"Does XML directory exist? {os.path.exists(breathe_projects['Geant4-Simulation'])}")
+if os.path.exists(breathe_projects['Geant4-Simulation']):
+    print(f"XML directory contents: {os.listdir(breathe_projects['Geant4-Simulation'])}")
+else:
+    print("XML directory does not exist, will be created by Doxygen")
 
 # Tell sphinx what the primary language being documented is.
 primary_domain = 'cpp'
@@ -116,10 +125,8 @@ def run_doxygen():
     except Exception as e:
         print(f"Error running Doxygen: {e}")
 
-# Run Doxygen before Sphinx processes the documentation
-if not on_rtd:
-    # Only run Doxygen locally - ReadTheDocs will handle it automatically
-    run_doxygen()
+# Run Doxygen for both local and ReadTheDocs builds
+run_doxygen()
 
 def setup(app):
     # This function is called by Sphinx during the build process
