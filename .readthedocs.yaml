@@ -1,5 +1,10 @@
+# .readthedocs.yaml
+# Read the Docs configuration file
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
 version: 2
 
+# Set the OS, Python version and other tools
 build:
   os: ubuntu-22.04
   tools:
@@ -7,25 +12,16 @@ build:
   apt_packages:
     - doxygen
     - graphviz
-  commands:
-    pre_build:
-      - cd docs && doxygen Doxyfile
 
+# Build documentation in the docs/ directory with Sphinx
 sphinx:
   configuration: docs/conf.py
   fail_on_warning: false
-  builder: html
 
+# Python requirements
 python:
   install:
     - requirements: docs/requirements.txt
-    - method: pip
-      path: .
 
 # Don't build any extra formats
 formats: []
-
-# Additional configuration
-submodules:
-  include: all
-  recursive: true

@@ -78,7 +78,30 @@ breathe_projects = {
 }
 
 def setup(app):
-    # We don't need to run Doxygen here since it's already run in the pre-build command
-    # This is just a placeholder for any other setup needed
-    pass
+    # Run doxygen if we're on ReadTheDocs
+    if on_rtd:
+        # Ensure the doxygen directory exists
+        os.makedirs('doxygen', exist_ok=True)
+        
+        # Run doxygen from the docs directory
+        current_dir = os.getcwd()
+        print(f"Current directory: {current_dir}")
+        
+        try:
+            print("Running Doxygen...")
+            subprocess.call(['doxygen', 'Doxyfile'], cwd=current_dir)
+            print("Doxygen completed successfully")
+        except Exception as e:
+            print(f"Error running Doxygen: {e}")
+    else:
+        print("Not on ReadTheDocs, skipping Doxygen generation")
+        
+    # Check if the XML directory exists and has files
+    if os.path.exists(doxygen_xml_dir):
+        xml_files = os.listdir(doxygen_xml_dir)
+        print(f"XML directory contains {len(xml_files)} files")
+    else:
+        print(f"XML directory does not exist: {doxygen_xml_dir}")
+        
+    return
 
