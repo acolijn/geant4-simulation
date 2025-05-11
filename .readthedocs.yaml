@@ -12,10 +12,13 @@ build:
     - graphviz
   jobs:
     pre_build:
+      # Create necessary directories
+      - mkdir -p docs/doxygen/xml
       # Run Doxygen to generate XML files
       - cd docs && doxygen
       # Debug: List the generated files
-      - ls -la docs/doxygen/xml
+      - ls -la docs/doxygen/xml || echo "XML directory not found"
+      - find docs -name "*.xml" | grep -v "__pycache__"
 
 # Python requirements
 python:

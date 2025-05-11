@@ -1,6 +1,6 @@
 PROJECT_NAME           = "Geant4-Simulation"
 PROJECT_BRIEF          = "A Geant4-based neutron detector simulation"
-OUTPUT_DIRECTORY       = .
+OUTPUT_DIRECTORY       = doxygen
 GENERATE_HTML          = YES
 GENERATE_LATEX         = NO
 GENERATE_XML           = YES
