@@ -7,14 +7,20 @@ build:
   apt_packages:
     - doxygen
     - graphviz
+  commands:
+    pre_build:
+      - cd docs && doxygen Doxyfile
 
 sphinx:
   configuration: docs/conf.py
   fail_on_warning: false
+  builder: html
 
 python:
   install:
     - requirements: docs/requirements.txt
+    - method: pip
+      path: .
 
 # Don't build any extra formats
 formats: []

@@ -64,19 +64,21 @@ primary_domain = 'cpp'
 # Tell sphinx what the pygments highlight language should be.
 highlight_language = 'cpp'
 
-# -- Run doxygen automatically during ReadTheDocs build ------------------
+# -- ReadTheDocs configuration ------------------
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
+# Make sure the XML directory exists
+doxygen_xml_dir = os.path.abspath('doxygen/xml')
+os.makedirs(doxygen_xml_dir, exist_ok=True)
+
+# Update breathe configuration with the correct path
+breathe_projects = {
+    "Geant4-Simulation": doxygen_xml_dir
+}
+
 def setup(app):
-    # Run doxygen if we're on ReadTheDocs or during local builds
-    doxygen_dir = Path('./doxygen')
-    xml_dir = doxygen_dir / 'xml'
-    xml_dir.mkdir(parents=True, exist_ok=True)
-    
-    # Change to the doxygen directory and run doxygen
-    cwd = os.getcwd()
-    os.chdir(str(doxygen_dir))
-    subprocess.call('doxygen', shell=True)
-    os.chdir(cwd)
+    # We don't need to run Doxygen here since it's already run in the pre-build command
+    # This is just a placeholder for any other setup needed
+    pass
 
