@@ -65,15 +65,11 @@ html_static_path = ['source/_static']
 # Files to exclude from building
 exclude_patterns = ['build', 'Thumbs.db', '.DS_Store', 'doxygen', '**.xml']
 
-# If we're on ReadTheDocs, we need to adjust some paths
+# Use standard paths for ReadTheDocs
 if on_rtd:
     # Make sure we can find the source files
-    html_extra_path = ['source']
-    # Include both the docs directory and the source directory in the search path
-    html_additional_pages = {'index': 'index.html'}
-    # Make sure we can find the index file
-    master_doc = 'index'
-    root_doc = 'index'
+    master_doc = 'source/index'
+    root_doc = 'source/index'
 
 # HTML output options
 html_theme = 'sphinx_rtd_theme'
