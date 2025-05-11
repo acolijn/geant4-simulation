@@ -3,8 +3,33 @@ import sys
 import subprocess
 from pathlib import Path
 
-# Add the source directory to the path so that Sphinx can find the .rst files
-sys.path.insert(0, os.path.abspath('source'))
+# Determine if we're on ReadTheDocs
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
+# Handle paths differently depending on where we're running
+if on_rtd:
+    # On ReadTheDocs, we need to adjust paths
+    print("Running on ReadTheDocs - adjusting paths")
+    # Get the current directory
+    current_dir = os.getcwd()
+    print(f"Current directory: {current_dir}")
+    
+    # Add the current directory to the path
+    sys.path.insert(0, os.path.abspath('.'))
+    
+    # If we're in the project root, add the docs directory
+    if os.path.exists('docs'):
+        sys.path.insert(0, os.path.abspath('docs'))
+        # Also add the source directory
+        if os.path.exists(os.path.join('docs', 'source')):
+            sys.path.insert(0, os.path.abspath(os.path.join('docs', 'source')))
+    
+    # Print the path for debugging
+    print(f"Python path: {sys.path}")
+else:
+    # For local builds, just add the current and source directories
+    sys.path.insert(0, os.path.abspath('.'))
+    sys.path.insert(0, os.path.abspath('source'))
 
 # Project information
 project = 'Geant4-Simulation'
@@ -28,12 +53,10 @@ source_suffix = {
     '.md': 'markdown',
 }
 source_encoding = 'utf-8-sig'
-source_parsers = {
-    '.md': 'myst_parser',
-}
 
 # The master toctree document
 master_doc = 'index'
+root_doc = 'index'
 
 # Path setup for templates and static files
 templates_path = ['source/_templates']
@@ -41,6 +64,16 @@ html_static_path = ['source/_static']
 
 # Files to exclude from building
 exclude_patterns = ['build', 'Thumbs.db', '.DS_Store', 'doxygen', '**.xml']
+
+# If we're on ReadTheDocs, we need to adjust some paths
+if on_rtd:
+    # Make sure we can find the source files
+    html_extra_path = ['source']
+    # Include both the docs directory and the source directory in the search path
+    html_additional_pages = {'index': 'index.html'}
+    # Make sure we can find the index file
+    master_doc = 'index'
+    root_doc = 'index'
 
 # HTML output options
 html_theme = 'sphinx_rtd_theme'
