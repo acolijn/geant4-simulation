@@ -552,6 +552,49 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
             }
         }
         
+        // Sort z-planes and corresponding radii if not already sorted
+        if (z_planes.size() >= 2) {
+            // Create a vector of indices
+            std::vector<size_t> indices(z_planes.size());
+            for (size_t i = 0; i < indices.size(); ++i) {
+                indices[i] = i;
+            }
+            
+            // Sort indices based on z values
+            std::sort(indices.begin(), indices.end(),
+                     [&z_planes](size_t a, size_t b) { return z_planes[a] < z_planes[b]; });
+            
+            // Check if already sorted
+            bool isSorted = true;
+            for (size_t i = 0; i < indices.size(); ++i) {
+                if (indices[i] != i) {
+                    isSorted = false;
+                    break;
+                }
+            }
+            
+            // If not sorted, reorder the vectors
+            if (!isSorted) {
+                G4cout << "Sorting z-planes for polycone " << name << G4endl;
+                
+                // Create temporary vectors with sorted values
+                std::vector<G4double> sorted_z(z_planes.size());
+                std::vector<G4double> sorted_rmin(rmin.size());
+                std::vector<G4double> sorted_rmax(rmax.size());
+                
+                for (size_t i = 0; i < indices.size(); ++i) {
+                    sorted_z[i] = z_planes[indices[i]];
+                    sorted_rmin[i] = rmin[indices[i]];
+                    sorted_rmax[i] = rmax[indices[i]];
+                }
+                
+                // Replace original vectors with sorted ones
+                z_planes = sorted_z;
+                rmin = sorted_rmin;
+                rmax = sorted_rmax;
+            }
+        }
+        
         // Validate that z-planes are in ascending order and rmin < rmax
         if (z_planes.size() < 2) {
             G4cerr << "Error in polycone " << name << ": need at least 2 z-planes, found " 
@@ -641,6 +684,49 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
                 z_planes.push_back(plane["z"].get<double>() * mm);
                 rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
                 rmax.push_back(plane["rmax"].get<double>() * mm);
+            }
+        }
+        
+        // Sort z-planes and corresponding radii if not already sorted
+        if (z_planes.size() >= 2) {
+            // Create a vector of indices
+            std::vector<size_t> indices(z_planes.size());
+            for (size_t i = 0; i < indices.size(); ++i) {
+                indices[i] = i;
+            }
+            
+            // Sort indices based on z values
+            std::sort(indices.begin(), indices.end(),
+                     [&z_planes](size_t a, size_t b) { return z_planes[a] < z_planes[b]; });
+            
+            // Check if already sorted
+            bool isSorted = true;
+            for (size_t i = 0; i < indices.size(); ++i) {
+                if (indices[i] != i) {
+                    isSorted = false;
+                    break;
+                }
+            }
+            
+            // If not sorted, reorder the vectors
+            if (!isSorted) {
+                G4cout << "Sorting z-planes for polyhedra " << name << G4endl;
+                
+                // Create temporary vectors with sorted values
+                std::vector<G4double> sorted_z(z_planes.size());
+                std::vector<G4double> sorted_rmin(rmin.size());
+                std::vector<G4double> sorted_rmax(rmax.size());
+                
+                for (size_t i = 0; i < indices.size(); ++i) {
+                    sorted_z[i] = z_planes[indices[i]];
+                    sorted_rmin[i] = rmin[indices[i]];
+                    sorted_rmax[i] = rmax[indices[i]];
+                }
+                
+                // Replace original vectors with sorted ones
+                z_planes = sorted_z;
+                rmin = sorted_rmin;
+                rmax = sorted_rmax;
             }
         }
         
