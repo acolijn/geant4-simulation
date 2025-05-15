@@ -149,22 +149,18 @@ G4Material* GeometryParser::CreateMaterial(const std::string& name, const json& 
 
 /**
  * @brief Convert a JSON vector definition to G4ThreeVector
- * @param vec JSON object containing x,y,z components and unit
- * @return G4ThreeVector with components scaled to proper units
- * @details Expects JSON format: {"x": val, "y": val, "z": val, "unit": "mm|cm|m"}
+ * @param vec JSON object containing x,y,z components
+ * @return G4ThreeVector with components in mm
+ * @details Expects JSON format: {"x": val, "y": val, "z": val}
+ *          All values are assumed to be in mm
  */
 G4ThreeVector GeometryParser::ParseVector(const json& vec) {
     G4double x = vec["x"].get<double>();
     G4double y = vec["y"].get<double>();
     G4double z = vec["z"].get<double>();
     
-    std::string unit = vec["unit"].get<std::string>();
-    G4double scale = 1.0;
-    if (unit == "mm") scale = mm;
-    else if (unit == "cm") scale = cm;
-    else if (unit == "m") scale = m;
-    
-    return G4ThreeVector(x*scale, y*scale, z*scale);
+    // All values are assumed to be in mm, so we multiply by mm to get the correct Geant4 units
+    return G4ThreeVector(x*mm, y*mm, z*mm);
 }
 
 /**
@@ -172,7 +168,7 @@ G4ThreeVector GeometryParser::ParseVector(const json& vec) {
  * @param rot JSON object containing rotation angles
  * @return Pointer to new G4RotationMatrix
  * @details Expects JSON format: {"x": angle_x, "y": angle_y, "z": angle_z}
- *          Angles should be in degrees
+ *          Angles are assumed to be in radians
  *          Rotations are applied in the Geant4 sequence: first X, then Y, then Z
  */
 G4RotationMatrix* GeometryParser::ParseRotation(const json& rot) {
@@ -180,19 +176,15 @@ G4RotationMatrix* GeometryParser::ParseRotation(const json& rot) {
     G4double ry = rot["y"].get<double>();
     G4double rz = rot["z"].get<double>();
     
-    std::string unit = rot["unit"].get<std::string>();
-    G4double scale = 1.0;
-    if (unit == "deg") scale = deg;
-    else if (unit == "rad") scale = rad;
-    
     // Create a rotation matrix using individual rotations around each axis
     // This ensures rotations are applied in the correct sequence: X, then Y, then Z
     G4RotationMatrix* rotMatrix = new G4RotationMatrix();
     
     // Apply rotations in sequence (Geant4 uses active rotations)
-    rotMatrix->rotateX(rx*scale);
-    rotMatrix->rotateY(ry*scale);
-    rotMatrix->rotateZ(rz*scale);
+    // Values are already in radians, but we need to multiply by rad for Geant4 units
+    rotMatrix->rotateX(rx*rad);
+    rotMatrix->rotateY(ry*rad);
+    rotMatrix->rotateZ(rz*rad);
     
     return rotMatrix;
 }
@@ -243,6 +235,7 @@ G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
     }
 
     // Get material
+    G4cout << "Material: " << config["material"] << G4endl;
     std::string mat_name = config["material"].get<std::string>();
     G4Material* material = nullptr;
     if (materials.find(mat_name) == materials.end()) {
@@ -250,9 +243,12 @@ G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
     } else {
         material = materials[mat_name];
     }
+    G4cout << "Material: " << material << G4endl;
 
     // Create solid
+    G4cout << "Creating solid: " << name << G4endl;
     G4VSolid* solid = CreateSolid(config, name);
+    G4cout << "Created solid: " << solid << G4endl;
 
     // Create logical volume
     G4LogicalVolume* logicalVolume = new G4LogicalVolume(solid, material, name);
@@ -270,9 +266,11 @@ G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
  */
 G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
     // Create world volume
-    G4LogicalVolume* worldLV = CreateVolume(geometryConfig["world"]);
+    G4cout << "Creating world volume" << G4endl;
+    G4LogicalVolume* worldLV = CreateVolume(geometryConfig["world"]);    
     G4VPhysicalVolume* worldPV = new G4PVPlacement(
         nullptr, G4ThreeVector(), worldLV, "World", nullptr, false, 0);
+    G4cout << "Created world physical volume" << G4endl;
 
     // Create other volumes
     for (const auto& volConfig : geometryConfig["volumes"]) {
@@ -284,13 +282,8 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             continue;
         }
 
-        std::cout << "Creating volume: " << volConfig["name"] << std::endl;
-        
         G4LogicalVolume* logicalVolume = CreateVolume(volConfig);
-        std::cout << "Created volume: " << volConfig["name"] << std::endl;
-        
-        std::cout << "Placing volume: " << volConfig["name"] << std::endl;
-        
+
         // Parse position and rotation using the new ParsePlacement function
         // which handles both the new placement format and legacy format
         G4ThreeVector position;
@@ -351,12 +344,25 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
  */
 G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& name) {
     // Check if solid already exists in cache
+    G4cout << "Checking solid cache for " << name << G4endl;
     if (solids.find(name) != solids.end()) {
+        G4cout << "Solid " << name << " already exists in cache" << G4endl;
         return solids[name];
     }
     
+    G4cout << "Creating solid " << name << G4endl;
     G4VSolid* solid = nullptr;
     std::string type = config["type"].get<std::string>();
+    
+    // Check for dimensions object
+    if (!config.contains("dimensions") && 
+        type != "union" && type != "subtraction" && type != "intersection") {
+        G4cerr << "Error: dimensions not found in solid " << name << " of type " << type << G4endl;
+        exit(1);
+    }
+    
+    // Get dimensions object for easier access (only for basic shapes)
+    const json& dims = config["dimensions"];
     
     // Handle boolean operations
     if (type == "union" || type == "subtraction" || type == "intersection") {
@@ -364,209 +370,326 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     }
     // Basic shapes
     else if (type == "box") {
-        G4ThreeVector size = ParseVector(config["size"]);
-        solid = new G4Box(name, size.x()/2, size.y()/2, size.z()/2);
+        // All dimensions are in mm, but we need to divide by 2 for half-dimensions
+        G4double dx = dims["x"].get<double>() * mm / 2;
+        G4double dy = dims["y"].get<double>() * mm / 2;
+        G4double dz = dims["z"].get<double>() * mm / 2;
+        solid = new G4Box(name, dx, dy, dz);
     }
     else if (type == "sphere") {
-        G4double rmin = 0;
-        G4double rmax = config["radius"].get<double>();
-        G4double sphi = 0;
-        G4double dphi = 360 * deg;
-        G4double stheta = 0;
-        G4double dtheta = 180 * deg;
+        // Get radius (required)
+        G4double rmax = dims["radius"].get<double>() * mm;
         
-        // Apply unit scaling for radius
-        G4double lengthScale = mm; // Default to mm if no unit specified
-        if (config.contains("unit")) {
-            std::string unit = config["unit"].get<std::string>();
-            if (unit == "mm") lengthScale = mm;
-            else if (unit == "cm") lengthScale = cm;
-            else if (unit == "m") lengthScale = m;
-        }
-        
-        rmax *= lengthScale;
-        
-        if (config.contains("inner_radius")) {
-            rmin = config["inner_radius"].get<double>() * lengthScale;
-        }
-        if (config.contains("start_phi")) {
-            sphi = config["start_phi"].get<double>() * deg;
-        }
-        if (config.contains("delta_phi")) {
-            dphi = config["delta_phi"].get<double>() * deg;
-        }
-        if (config.contains("start_theta")) {
-            stheta = config["start_theta"].get<double>() * deg;
-        }
-        if (config.contains("delta_theta")) {
-            dtheta = config["delta_theta"].get<double>() * deg;
-        }
+        // Get optional parameters with defaults
+        G4double rmin = dims.contains("inner_radius") ? dims["inner_radius"].get<double>() * mm : 0;
+        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
+        G4double stheta = dims.contains("start_theta") ? dims["start_theta"].get<double>() * rad : 0;
+        G4double dtheta = dims.contains("delta_theta") ? dims["delta_theta"].get<double>() * rad : M_PI * rad;
         
         solid = new G4Sphere(name, rmin, rmax, sphi, dphi, stheta, dtheta);
     }
     else if (type == "cylinder" || type == "tube") {
-        G4double rmin = 0;
-        G4double rmax = config["radius"].get<double>();
-        G4double hz = config["height"].get<double>() / 2; // Half-height for G4Tubs
-        G4double sphi = 0;
-        G4double dphi = 360 * deg;
+        // Get required parameters
+        G4double rmax = dims["radius"].get<double>() * mm;
+        G4double hz = dims["height"].get<double>() * mm / 2; // Half-height for G4Tubs
         
-        // Apply unit scaling for dimensions
-        G4double lengthScale = mm; // Default to mm if no unit specified
-        if (config.contains("unit")) {
-            std::string unit = config["unit"].get<std::string>();
-            if (unit == "mm") lengthScale = mm;
-            else if (unit == "cm") lengthScale = cm;
-            else if (unit == "m") lengthScale = m;
-        }
-        
-        rmax *= lengthScale;
-        hz *= lengthScale;
-        
-        if (config.contains("inner_radius")) {
-            rmin = config["inner_radius"].get<double>() * lengthScale;
-        } else if (config.contains("innerRadius")) {
-            // Support both naming conventions
-            rmin = config["innerRadius"].get<double>() * lengthScale;
-        }
-        if (config.contains("start_phi")) {
-            sphi = config["start_phi"].get<double>() * deg;
-        }
-        if (config.contains("delta_phi")) {
-            dphi = config["delta_phi"].get<double>() * deg;
-        }
+        // Get optional parameters with defaults
+        G4double rmin = dims.contains("inner_radius") ? dims["inner_radius"].get<double>() * mm : 0;
+        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
+
         
         solid = new G4Tubs(name, rmin, rmax, hz, sphi, dphi);
     }
     else if (type == "cone") {
-        G4double rmin1 = 0;
-        G4double rmax1 = config["radius1"].get<double>() * mm;
-        G4double rmin2 = 0;
-        G4double rmax2 = config["radius2"].get<double>() * mm;
-        G4double hz = config["height"].get<double>() * mm / 2;
-        G4double sphi = 0;
-        G4double dphi = 360 * deg;
+        // Get required parameters
+        G4double rmax1 = dims.contains("radius1") ? dims["radius1"].get<double>() * mm : 
+                        dims["rmax1"].get<double>() * mm;
+        G4double rmax2 = dims.contains("radius2") ? dims["radius2"].get<double>() * mm : 
+                        dims["rmax2"].get<double>() * mm;
+        G4double hz = dims.contains("height") ? dims["height"].get<double>() * mm / 2 : 
+                     dims["hz"].get<double>() * mm;
         
-        if (config.contains("inner_radius1")) {
-            rmin1 = config["inner_radius1"].get<double>() * mm;
+        // Get optional parameters with defaults
+        G4double rmin1 = 0;
+        if (dims.contains("inner_radius1")) {
+            rmin1 = dims["inner_radius1"].get<double>() * mm;
+        } else if (dims.contains("rmin1")) {
+            rmin1 = dims["rmin1"].get<double>() * mm;
         }
-        if (config.contains("inner_radius2")) {
-            rmin2 = config["inner_radius2"].get<double>() * mm;
+        
+        G4double rmin2 = 0;
+        if (dims.contains("inner_radius2")) {
+            rmin2 = dims["inner_radius2"].get<double>() * mm;
+        } else if (dims.contains("rmin2")) {
+            rmin2 = dims["rmin2"].get<double>() * mm;
         }
-        if (config.contains("start_phi")) {
-            sphi = config["start_phi"].get<double>() * deg;
-        }
-        if (config.contains("delta_phi")) {
-            dphi = config["delta_phi"].get<double>() * deg;
-        }
+        
+        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
         
         solid = new G4Cons(name, rmin1, rmax1, rmin2, rmax2, hz, sphi, dphi);
     }
-    else if (type == "trd") {
-        G4double x1 = config["x1"].get<double>() * mm / 2;
-        G4double x2 = config["x2"].get<double>() * mm / 2;
-        G4double y1 = config["y1"].get<double>() * mm / 2;
-        G4double y2 = config["y2"].get<double>() * mm / 2;
-        G4double hz = config["height"].get<double>() * mm / 2;
+    else if (type == "trd" || type == "trapezoid") {
+        // All values are in mm, but we need to divide by 2 for half-dimensions
+        G4double x1 = dims.contains("dx1") ? dims["dx1"].get<double>() * mm / 2 : 
+                     dims["x1"].get<double>() * mm / 2;
+        
+        G4double x2 = dims.contains("dx2") ? dims["dx2"].get<double>() * mm / 2 : 
+                     dims["x2"].get<double>() * mm / 2;
+        
+        G4double y1 = dims.contains("dy1") ? dims["dy1"].get<double>() * mm / 2 : 
+                     dims["y1"].get<double>() * mm / 2;
+        
+        G4double y2 = dims.contains("dy2") ? dims["dy2"].get<double>() * mm / 2 : 
+                     dims["y2"].get<double>() * mm / 2;
+        
+        G4double hz = dims.contains("dz") ? dims["dz"].get<double>() * mm : 
+                     dims["height"].get<double>() * mm / 2;
         
         solid = new G4Trd(name, x1, x2, y1, y2, hz);
     }
     else if (type == "torus") {
-        G4double rmin = 0;
-        G4double rmax = config["tube_radius"].get<double>() * mm;
-        G4double rtor = config["torus_radius"].get<double>() * mm;
-        G4double sphi = 0;
-        G4double dphi = 360 * deg;
+        // Get required parameters
+        G4double rmax = dims.contains("tube_radius") ? dims["tube_radius"].get<double>() * mm :
+                      dims["minor_radius"].get<double>() * mm;
         
-        if (config.contains("inner_radius")) {
-            rmin = config["inner_radius"].get<double>() * mm;
-        }
-        if (config.contains("start_phi")) {
-            sphi = config["start_phi"].get<double>() * deg;
-        }
-        if (config.contains("delta_phi")) {
-            dphi = config["delta_phi"].get<double>() * deg;
-        }
+        G4double rtor = dims.contains("torus_radius") ? dims["torus_radius"].get<double>() * mm :
+                      dims["major_radius"].get<double>() * mm;
+        
+        // Get optional parameters with defaults
+        G4double rmin = dims.contains("inner_radius") ? dims["inner_radius"].get<double>() * mm : 0;
+        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
         
         solid = new G4Torus(name, rmin, rmax, rtor, sphi, dphi);
     }
     else if (type == "ellipsoid") {
-        G4double ax = config["ax"].get<double>() * mm;
-        G4double by = config["by"].get<double>() * mm;
-        G4double cz = config["cz"].get<double>() * mm;
-        G4double zcut1 = -cz;
-        G4double zcut2 = cz;
+        // Get required parameters (semi-axes)
+        G4double ax = dims.contains("ax") ? dims["ax"].get<double>() * mm :
+                    dims["x_radius"].get<double>() * mm;
         
-        if (config.contains("zcut1")) {
-            zcut1 = config["zcut1"].get<double>() * mm;
-        }
-        if (config.contains("zcut2")) {
-            zcut2 = config["zcut2"].get<double>() * mm;
-        }
+        G4double by = dims.contains("by") ? dims["by"].get<double>() * mm :
+                    dims["y_radius"].get<double>() * mm;
+        
+        G4double cz = dims.contains("cz") ? dims["cz"].get<double>() * mm :
+                    dims["z_radius"].get<double>() * mm;
+        
+        // Set default z cuts and override if specified
+        G4double zcut1 = dims.contains("zcut1") ? dims["zcut1"].get<double>() * mm : -cz;
+        G4double zcut2 = dims.contains("zcut2") ? dims["zcut2"].get<double>() * mm : cz;
         
         solid = new G4Ellipsoid(name, ax, by, cz, zcut1, zcut2);
     }
     else if (type == "orb") {
-        G4double radius = config["radius"].get<double>() * mm;
+        // Get radius (required)
+        G4double radius = dims["radius"].get<double>() * mm;
+        
         solid = new G4Orb(name, radius);
     }
     else if (type == "elliptical_tube") {
-        G4double dx = config["dx"].get<double>() * mm;
-        G4double dy = config["dy"].get<double>() * mm;
-        G4double dz = config["dz"].get<double>() * mm;
+        // Get required parameters
+        G4double dx = dims.contains("dx") ? dims["dx"].get<double>() * mm :
+                    dims["x"].get<double>() * mm;
+        
+        G4double dy = dims.contains("dy") ? dims["dy"].get<double>() * mm :
+                    dims["y"].get<double>() * mm;
+        
+        // For z dimension, check multiple possible property names
+        G4double dz;
+        if (dims.contains("dz")) {
+            dz = dims["dz"].get<double>() * mm;
+        } else if (dims.contains("z")) {
+            dz = dims["z"].get<double>() * mm;
+        } else {
+            dz = dims["height"].get<double>() * mm / 2;
+        }
         
         solid = new G4EllipticalTube(name, dx, dy, dz);
     }
     else if (type == "polycone") {
-        G4double sphi = 0;
-        G4double dphi = 360 * deg;
+        // Get optional angular parameters with defaults
+        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
         
-        if (config.contains("start_phi")) {
-            sphi = config["start_phi"].get<double>() * deg;
-        }
-        if (config.contains("delta_phi")) {
-            dphi = config["delta_phi"].get<double>() * deg;
-        }
-        
-        // Get z planes and radii
+        // Get z planes and radii (all values in mm)
         std::vector<G4double> z_planes;
         std::vector<G4double> rmin;
         std::vector<G4double> rmax;
         
-        for (const auto& plane : config["planes"]) {
-            z_planes.push_back(plane["z"].get<double>() * mm);
-            rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
-            rmax.push_back(plane["rmax"].get<double>() * mm);
+        // Check if z, rmin, rmax arrays are in the dimensions object
+        if (dims.contains("z") && dims.contains("rmax")) {
+            // Get arrays from dimensions object
+            const auto& z_array = dims["z"];
+            const auto& rmax_array = dims["rmax"];
+            
+            // Check if there's an rmin array, otherwise use zeros
+            bool has_rmin = dims.contains("rmin");
+            const auto& rmin_array = has_rmin ? dims["rmin"] : json::array();
+            
+            // Fill the vectors
+            for (size_t i = 0; i < z_array.size(); i++) {
+                z_planes.push_back(z_array[i].get<double>() * mm);
+                rmax.push_back(rmax_array[i].get<double>() * mm);
+                rmin.push_back(has_rmin ? rmin_array[i].get<double>() * mm : 0);
+            }
+        }
+        // Check if planes array is in the dimensions
+        else if (dims.contains("planes")) {
+            for (const auto& plane : dims["planes"]) {
+                z_planes.push_back(plane["z"].get<double>() * mm);
+                rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
+                rmax.push_back(plane["rmax"].get<double>() * mm);
+            }
+        }
+        // Legacy format - check if planes array is directly in the config
+        else if (config.contains("planes")) {
+            for (const auto& plane : config["planes"]) {
+                z_planes.push_back(plane["z"].get<double>() * mm);
+                rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
+                rmax.push_back(plane["rmax"].get<double>() * mm);
+            }
         }
         
-        solid = new G4Polycone(name, sphi, dphi, z_planes.size(), 
-                            z_planes.data(), rmin.data(), rmax.data());
+        // Validate that z-planes are in ascending order and rmin < rmax
+        if (z_planes.size() < 2) {
+            G4cerr << "Error in polycone " << name << ": need at least 2 z-planes, found " 
+                   << z_planes.size() << G4endl;
+            exit(1);
+        }
+        
+        for (size_t i = 1; i < z_planes.size(); i++) {
+            if (z_planes[i] <= z_planes[i-1]) {
+                G4cerr << "Error in polycone " << name << ": z-planes must be in ascending order. "
+                       << "Found z[" << i-1 << "] = " << z_planes[i-1]/mm << " mm >= z[" 
+                       << i << "] = " << z_planes[i]/mm << " mm" << G4endl;
+                exit(1);
+            }
+        }
+        
+        for (size_t i = 0; i < z_planes.size(); i++) {
+            if (rmin[i] >= rmax[i]) {
+                G4cerr << "Error in polycone " << name << ": rmin must be less than rmax. "
+                       << "Found at z[" << i << "] = " << z_planes[i]/mm << " mm: rmin = " 
+                       << rmin[i]/mm << " mm >= rmax = " << rmax[i]/mm << " mm" << G4endl;
+                exit(1);
+            }
+        }
+        
+        // Create the polycone solid
+        try {
+            solid = new G4Polycone(name, sphi, dphi, z_planes.size(), 
+                                z_planes.data(), rmin.data(), rmax.data());
+        } catch (const std::exception& e) {
+            G4cerr << "Error creating polycone " << name << ": " << e.what() << G4endl;
+            G4cerr << "Z planes: ";
+            for (size_t i = 0; i < z_planes.size(); i++) {
+                G4cerr << z_planes[i]/mm << " ";
+            }
+            G4cerr << "\nRmin: ";
+            for (size_t i = 0; i < rmin.size(); i++) {
+                G4cerr << rmin[i]/mm << " ";
+            }
+            G4cerr << "\nRmax: ";
+            for (size_t i = 0; i < rmax.size(); i++) {
+                G4cerr << rmax[i]/mm << " ";
+            }
+            G4cerr << G4endl;
+            exit(1);
+        }
     }
     else if (type == "polyhedra") {
-        G4double sphi = 0;
-        G4double dphi = 360 * deg;
-        G4int numSides = config["num_sides"].get<int>();
+        // Get optional angular parameters with defaults
+        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
+        G4int numSides = dims.contains("num_sides") ? dims["num_sides"].get<int>() : 8;
         
-        if (config.contains("start_phi")) {
-            sphi = config["start_phi"].get<double>() * deg;
-        }
-        if (config.contains("delta_phi")) {
-            dphi = config["delta_phi"].get<double>() * deg;
-        }
-        
-        // Get z planes and radii
+        // Get z planes and radii (all values in mm)
         std::vector<G4double> z_planes;
         std::vector<G4double> rmin;
         std::vector<G4double> rmax;
         
-        for (const auto& plane : config["planes"]) {
-            z_planes.push_back(plane["z"].get<double>() * mm);
-            rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
-            rmax.push_back(plane["rmax"].get<double>() * mm);
+        // Check if z, rmin, rmax arrays are in the dimensions object
+        if (dims.contains("z") && dims.contains("rmax")) {
+            // Get arrays from dimensions object
+            const auto& z_array = dims["z"];
+            const auto& rmax_array = dims["rmax"];
+            
+            // Check if there's an rmin array, otherwise use zeros
+            bool has_rmin = dims.contains("rmin");
+            const auto& rmin_array = has_rmin ? dims["rmin"] : json::array();
+            
+            // Fill the vectors
+            for (size_t i = 0; i < z_array.size(); i++) {
+                z_planes.push_back(z_array[i].get<double>() * mm);
+                rmax.push_back(rmax_array[i].get<double>() * mm);
+                rmin.push_back(has_rmin ? rmin_array[i].get<double>() * mm : 0);
+            }
+        }
+        // Check if planes array is in the dimensions
+        else if (dims.contains("planes")) {
+            for (const auto& plane : dims["planes"]) {
+                z_planes.push_back(plane["z"].get<double>() * mm);
+                rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
+                rmax.push_back(plane["rmax"].get<double>() * mm);
+            }
+        }
+        // Legacy format - check if planes array is directly in the config
+        else if (config.contains("planes")) {
+            for (const auto& plane : config["planes"]) {
+                z_planes.push_back(plane["z"].get<double>() * mm);
+                rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
+                rmax.push_back(plane["rmax"].get<double>() * mm);
+            }
         }
         
-        solid = new G4Polyhedra(name, sphi, dphi, numSides, z_planes.size(), 
-                              z_planes.data(), rmin.data(), rmax.data());
+        // Validate that z-planes are in ascending order and rmin < rmax
+        if (z_planes.size() < 2) {
+            G4cerr << "Error in polyhedra " << name << ": need at least 2 z-planes, found " 
+                   << z_planes.size() << G4endl;
+            exit(1);
+        }
+        
+        for (size_t i = 1; i < z_planes.size(); i++) {
+            if (z_planes[i] <= z_planes[i-1]) {
+                G4cerr << "Error in polyhedra " << name << ": z-planes must be in ascending order. "
+                       << "Found z[" << i-1 << "] = " << z_planes[i-1]/mm << " mm >= z[" 
+                       << i << "] = " << z_planes[i]/mm << " mm" << G4endl;
+                exit(1);
+            }
+        }
+        
+        for (size_t i = 0; i < z_planes.size(); i++) {
+            if (rmin[i] >= rmax[i]) {
+                G4cerr << "Error in polyhedra " << name << ": rmin must be less than rmax. "
+                       << "Found at z[" << i << "] = " << z_planes[i]/mm << " mm: rmin = " 
+                       << rmin[i]/mm << " mm >= rmax = " << rmax[i]/mm << " mm" << G4endl;
+                exit(1);
+            }
+        }
+        
+        // Create the polyhedra solid
+        try {
+            solid = new G4Polyhedra(name, sphi, dphi, numSides, z_planes.size(), 
+                                  z_planes.data(), rmin.data(), rmax.data());
+        } catch (const std::exception& e) {
+            G4cerr << "Error creating polyhedra " << name << ": " << e.what() << G4endl;
+            G4cerr << "Z planes: ";
+            for (size_t i = 0; i < z_planes.size(); i++) {
+                G4cerr << z_planes[i]/mm << " ";
+            }
+            G4cerr << "\nRmin: ";
+            for (size_t i = 0; i < rmin.size(); i++) {
+                G4cerr << rmin[i]/mm << " ";
+            }
+            G4cerr << "\nRmax: ";
+            for (size_t i = 0; i < rmax.size(); i++) {
+                G4cerr << rmax[i]/mm << " ";
+            }
+            G4cerr << G4endl;
+            exit(1);
+        }
     }
     else {
         throw std::runtime_error("Unsupported solid type: " + type);
@@ -619,18 +742,26 @@ G4VSolid* GeometryParser::CreateBooleanSolid(const json& config, const std::stri
     G4ThreeVector position(0, 0, 0);
     G4RotationMatrix* rotation = nullptr;
     
-    // Check for relative_position first, then fall back to position for backward compatibility
-    if (config.contains("relative_position")) {
+    // Check for placement object first
+    if (config.contains("placement")) {
+        ParsePlacement(config, position, rotation);
+    }
+    // Check for relative_position, then fall back to position for backward compatibility
+    else if (config.contains("relative_position")) {
         position = ParseVector(config["relative_position"]);
-    } else if (config.contains("position") && !config.contains("mother_volume")) {
+        
+        if (config.contains("relative_rotation")) {
+            rotation = ParseRotation(config["relative_rotation"]);
+        }
+    } 
+    // Legacy format
+    else if (config.contains("position") && !config.contains("mother_volume")) {
         // Only use position if this is not a volume placement (no mother_volume)
         position = ParseVector(config["position"]);
-    }
-    
-    if (config.contains("rotation") && !config.contains("mother_volume")) {
-        rotation = ParseRotation(config["rotation"]);
-    } else if (config.contains("relative_rotation")) {
-        rotation = ParseRotation(config["relative_rotation"]);
+        
+        if (config.contains("rotation") && !config.contains("mother_volume")) {
+            rotation = ParseRotation(config["rotation"]);
+        }
     }
     
     // Create the boolean solid

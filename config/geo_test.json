@@ -3,68 +3,166 @@
     "type": "box",
     "name": "World",
     "material": "G4_AIR",
-    "size": {
-      "x": 200,
-      "y": 200,
-      "z": 200,
-      "unit": "cm"
+    "placement": {
+      "x": 0,
+      "y": 0,
+      "z": 0
     },
-    "placement": { "x": 0, "y": 0, "z": 0, "unit": "cm" }
+    "dimensions": {
+      "x": 2000,
+      "y": 2000,
+      "z": 2000
+    }
   },
   "volumes": [
     {
       "type": "box",
       "name": "PMT_base_0",
       "material": "G4_WATER",
-      "size": {
-        "x": 10,
-        "y": 10,
-        "z": 10,
-        "unit": "cm"
-      },
-      "_sourceId": "source-base-1746794108394",
       "isActive": true,
       "hitsCollectionName": "MyHitsCollection",
       "mother_volume": "World",
-      "placement": { "x": -12.054736910975876, "y": 0, "z": 34.74050820855309, "unit": "cm" }
+      "placement": {
+        "x": -1260.9109910018108,
+        "y": 0,
+        "z": 811.5489070695027
+      },
+      "dimensions": {
+        "x": 100,
+        "y": 100,
+        "z": 100
+      }
     },
     {
       "type": "cylinder",
       "name": "PMT_glass_0",
       "material": "LXe",
       "mother_volume": "PMT_base_0",
-      "radius": 5,
-      "height": 10,
       "inner_radius": 0,
-      "unit": "cm",
-      "placement": { "x": 45.02474140931379, "y": 0, "z": 4.420749609096404, "unit": "cm" }
+      "placement": {
+        "x": 450.2474140931379,
+        "y": 0,
+        "z": 44.20749609096404
+      },
+      "dimensions": {
+        "radius": 50,
+        "height": 100
+      }
     },
     {
       "type": "box",
-      "name": "PMT_base_1",
-      "material": "G4_WATER",
-      "size": {
-        "x": 10,
-        "y": 10,
-        "z": 10,
-        "unit": "cm"
-      },
-      "_sourceId": "source-base-1746794108394",
-      "isActive": true,
-      "hitsCollectionName": "MyHitsCollection",
+      "name": "Box_0",
+      "material": "G4_AIR",
       "mother_volume": "World",
-      "placement": { "x": -17.809764559624035, "y": 0, "z": -31.136863631400715, "unit": "cm", "rotation": { "x": 0, "y": 32, "z": 0, "unit": "deg" } }
+      "placement": {
+        "x": -1114.0054993847416,
+        "y": -1.1477453470177155e-13,
+        "z": 141.55072414274,
+        "rotation": {
+          "x": 0,
+          "y": 0.19198621771937624,
+          "z": 0
+        }
+      },
+      "dimensions": {
+        "x": 100,
+        "y": 100,
+        "z": 100
+      }
     },
     {
-      "type": "cylinder",
-      "name": "PMT_glass_1",
-      "material": "LXe",
-      "mother_volume": "PMT_base_1",
-      "radius": 5,
-      "height": 10,
-      "inner_radius": 0,
-      "unit": "cm",
-      "placement": { "x": 45.02474140931379, "y": 0, "z": 4.420749609096404, "unit": "cm" }
+      "type": "sphere",
+      "name": "Sphere_0",
+      "material": "G4_AIR",
+      "mother_volume": "World",
+      "placement": {
+        "x": -499.074463724289,
+        "y": 0,
+        "z": -610.4750136627466
+      },
+      "dimensions": {
+        "radius": 50
+      }
+    },
+    {
+      "type": "trapezoid",
+      "name": "Trapezoid_0",
+      "material": "G4_AIR",
+      "mother_volume": "World",
+      "placement": {
+        "x": 708.507497608523,
+        "y": 0,
+        "z": -610.4750136626895
+      },
+      "dimensions": {
+        "dx1": 50,
+        "dx2": 50,
+        "dy1": 50,
+        "dy2": 50,
+        "dz": 50
+      }
+    },
+    {
+      "type": "torus",
+      "name": "Torus_0",
+      "material": "G4_AIR",
+      "mother_volume": "World",
+      "placement": {
+        "x": 427.778111763601,
+        "y": 0,
+        "z": 619.3870576577137
+      },
+      "dimensions": {
+        "major_radius": 50,
+        "minor_radius": 10
+      }
+    },
+    {
+      "type": "ellipsoid",
+      "name": "Ellipsoid_0",
+      "material": "G4_AIR",
+      "mother_volume": "World",
+      "placement": {
+        "x": -191.60894589409506,
+        "y": 0,
+        "z": 245.0812098645403
+      },
+      "dimensions": {
+        "x_radius": 50,
+        "y_radius": 30,
+        "z_radius": 40
+      }
+    },
+    {
+      "type": "polycone",
+      "name": "Polycone_0",
+      "material": "G4_AIR",
+      "mother_volume": "World",
+      "placement": {
+        "x": 262.9052978546557,
+        "y": 0,
+        "z": 75.75237395812132
+      },
+      "dimensions": {
+        "z": [
+          -50,
+          0,
+          50,
+          170
+        ],
+        "rmin": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "rmax": [
+          30,
+          50,
+          20,
+          120
+        ]
+      }
     }
   ],
   "hitsCollections": [
@@ -72,8 +170,7 @@
       "name": "MyHitsCollection",
       "description": "Default hits collection for energy deposits",
       "associatedVolumes": [
-        "PMT_base_0",
-        "PMT_base_1"
+        "PMT_base_0"
       ]
     }
   ]
