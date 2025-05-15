@@ -9,36 +9,13 @@
       "z": 200,
       "unit": "cm"
     },
-    "position": {
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "unit": "cm"
-    },
-    "rotation": {
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "unit": "deg"
-    }
+    "placement": { "x": 0, "y": 0, "z": 0, "unit": "cm" }
   },
   "volumes": [
     {
       "type": "box",
       "name": "PMT_base_0",
-      "material": "G4_AIR",
-      "position": {
-        "x": -66.04518147026498,
-        "y": 0,
-        "z": 12.223806858491983,
-        "unit": "cm"
-      },
-      "rotation": {
-        "x": 0,
-        "y": 0,
-        "z": 0,
-        "unit": "deg"
-      },
+      "material": "G4_WATER",
       "size": {
         "x": 10,
         "y": 10,
@@ -46,46 +23,26 @@
         "unit": "cm"
       },
       "_sourceId": "source-base-1746794108394",
-      "mother_volume": "World"
+      "isActive": true,
+      "hitsCollectionName": "MyHitsCollection",
+      "mother_volume": "World",
+      "placement": { "x": -12.054736910975876, "y": 0, "z": 34.74050820855309, "unit": "cm" }
     },
     {
       "type": "cylinder",
       "name": "PMT_glass_0",
       "material": "LXe",
-      "position": {
-        "x": 45.02474140931379,
-        "y": 0,
-        "z": 4.420749609096404,
-        "unit": "cm"
-      },
-      "rotation": {
-        "x": 0,
-        "y": 0,
-        "z": 0,
-        "unit": "deg"
-      },
       "mother_volume": "PMT_base_0",
       "radius": 5,
       "height": 10,
       "inner_radius": 0,
-      "unit": "cm"
+      "unit": "cm",
+      "placement": { "x": 45.02474140931379, "y": 0, "z": 4.420749609096404, "unit": "cm" }
     },
     {
       "type": "box",
       "name": "PMT_base_1",
-      "material": "G4_AIR",
-      "position": {
-        "x": -60.86614345780829,
-        "y": 0,
-        "z": -32.881344910490085,
-        "unit": "cm"
-      },
-      "rotation": {
-        "x": 0,
-        "y": 0,
-        "z": 0,
-        "unit": "deg"
-      },
+      "material": "G4_WATER",
       "size": {
         "x": 10,
         "y": 10,
@@ -93,76 +50,31 @@
         "unit": "cm"
       },
       "_sourceId": "source-base-1746794108394",
-      "mother_volume": "World"
+      "isActive": true,
+      "hitsCollectionName": "MyHitsCollection",
+      "mother_volume": "World",
+      "placement": { "x": -17.809764559624035, "y": 0, "z": -31.136863631400715, "unit": "cm", "rotation": { "x": 0, "y": 32, "z": 0, "unit": "deg" } }
     },
     {
       "type": "cylinder",
       "name": "PMT_glass_1",
       "material": "LXe",
-      "position": {
-        "x": 45.02474140931379,
-        "y": 0,
-        "z": 4.420749609096404,
-        "unit": "cm"
-      },
-      "rotation": {
-        "x": 0,
-        "y": 0,
-        "z": 0,
-        "unit": "deg"
-      },
       "mother_volume": "PMT_base_1",
       "radius": 5,
       "height": 10,
       "inner_radius": 0,
-      "unit": "cm"
-    },
+      "unit": "cm",
+      "placement": { "x": 45.02474140931379, "y": 0, "z": 4.420749609096404, "unit": "cm" }
+    }
+  ],
+  "hitsCollections": [
     {
-      "type": "box",
-      "name": "PMT_base_2",
-      "material": "G4_AIR",
-      "position": {
-        "x": 74.47231238023689,
-        "y": 0,
-        "z": 21.173965702473005,
-        "unit": "cm"
-      },
-      "rotation": {
-        "x": 0,
-        "y": 0,
-        "z": 0,
-        "unit": "deg"
-      },
-      "size": {
-        "x": 10,
-        "y": 10,
-        "z": 10,
-        "unit": "cm"
-      },
-      "_sourceId": "source-base-1746794108394",
-      "mother_volume": "World"
-    },
-    {
-      "type": "cylinder",
-      "name": "PMT_glass_2",
-      "material": "LXe",
-      "position": {
-        "x": 45.02474140931379,
-        "y": 0,
-        "z": 4.420749609096404,
-        "unit": "cm"
-      },
-      "rotation": {
-        "x": 0,
-        "y": 0,
-        "z": 0,
-        "unit": "deg"
-      },
-      "mother_volume": "PMT_base_2",
-      "radius": 5,
-      "height": 10,
-      "inner_radius": 0,
-      "unit": "cm"
+      "name": "MyHitsCollection",
+      "description": "Default hits collection for energy deposits",
+      "associatedVolumes": [
+        "PMT_base_0",
+        "PMT_base_1"
+      ]
     }
   ]
 }

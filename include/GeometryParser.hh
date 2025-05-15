@@ -126,6 +126,16 @@ private:
      * @return Pointer to new G4RotationMatrix
      */
     G4RotationMatrix* ParseRotation(const json& rot);
+    
+    /**
+     * @brief Parse a placement object and extract position and rotation
+     * @param placement JSON object containing position and optional rotation
+     * @param position Reference to G4ThreeVector to store position
+     * @param rotation Reference to G4RotationMatrix pointer to store rotation
+     * @details Handles both the new format with a single placement object and
+     *          the legacy format with separate position and rotation objects
+     */
+    void ParsePlacement(const json& config, G4ThreeVector& position, G4RotationMatrix*& rotation);
 };
 
 #endif

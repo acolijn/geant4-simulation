@@ -30,6 +30,7 @@ MySensitiveDetector::~MySensitiveDetector() {}
 void MySensitiveDetector::Initialize(G4HCofThisEvent* hce)
 {
   // Create hits collection
+  G4cout << "Initializing hits collection for " << SensitiveDetectorName << G4endl;
   fHitsCollection = new MyHitsCollection(SensitiveDetectorName, collectionName[0]);
   
   // Add this collection to the HCE

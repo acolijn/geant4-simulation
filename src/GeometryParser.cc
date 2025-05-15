@@ -198,6 +198,34 @@ G4RotationMatrix* GeometryParser::ParseRotation(const json& rot) {
 }
 
 /**
+ * @brief Parse a placement object and extract position and rotation
+ * @param config JSON object containing placement information
+ * @param position Reference to G4ThreeVector to store position
+ * @param rotation Reference to G4RotationMatrix pointer to store rotation
+ * @details Handles both the new format with a single placement object and
+ *          the legacy format with separate position and rotation objects
+ */
+void GeometryParser::ParsePlacement(const json& config, G4ThreeVector& position, G4RotationMatrix*& rotation) {
+    // Initialize with default values
+    position = G4ThreeVector(0, 0, 0);
+    rotation = nullptr;
+    
+    // Check if using the new placement format
+    if (config.contains("placement")) {
+        // Parse position from placement object
+        position = ParseVector(config["placement"]);
+        
+        // Check if placement contains rotation
+        if (config["placement"].contains("rotation")) {
+            rotation = ParseRotation(config["placement"]["rotation"]);
+        }
+    }
+    else {
+        throw std::runtime_error("Invalid placement format");
+    }
+}
+
+/**
  * @brief Create a G4LogicalVolume from JSON configuration
  * @param config JSON object containing volume properties
  * @return Pointer to the created G4LogicalVolume
@@ -262,12 +290,15 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
         std::cout << "Created volume: " << volConfig["name"] << std::endl;
         
         std::cout << "Placing volume: " << volConfig["name"] << std::endl;
-        G4ThreeVector position = ParseVector(volConfig["position"]);
-        G4RotationMatrix* rotation = nullptr;
-        std::cout << "Position: " << position << std::endl;
         
-        if (volConfig.contains("rotation")) {
-            rotation = ParseRotation(volConfig["rotation"]);
+        // Parse position and rotation using the new ParsePlacement function
+        // which handles both the new placement format and legacy format
+        G4ThreeVector position;
+        G4RotationMatrix* rotation = nullptr;
+        ParsePlacement(volConfig, position, rotation);
+        
+        std::cout << "Position: " << position << std::endl;
+        if (rotation) {
             std::cout << "Rotation: " << rotation << std::endl;
         }
         
@@ -704,17 +735,11 @@ void GeometryParser::ImportAssembledGeometry(const json& config, G4LogicalVolume
     std::string filename = config["external_file"].get<std::string>();
     json externalConfig = LoadExternalGeometry(filename);
     
-    // Get transformation for the assembly
-    G4ThreeVector position(0, 0, 0);
+    // Get transformation for the assembly using the new ParsePlacement function
+    // which handles both the new placement format and legacy format
+    G4ThreeVector position;
     G4RotationMatrix* rotation = nullptr;
-    
-    if (config.contains("position")) {
-        position = ParseVector(config["position"]);
-    }
-    
-    if (config.contains("rotation")) {
-        rotation = ParseRotation(config["rotation"]);
-    }
+    ParsePlacement(config, position, rotation);
     
     // Create volumes from the external file
     std::map<std::string, G4LogicalVolume*> externalVolumes;
@@ -766,12 +791,10 @@ void GeometryParser::ImportAssembledGeometry(const json& config, G4LogicalVolume
             G4LogicalVolume* motherVolume = externalVolumes[motherName];
             G4LogicalVolume* logicalVolume = externalVolumes[name];
             
-            G4ThreeVector volPosition = ParseVector(volConfig["position"]);
+            // Parse position and rotation using the new ParsePlacement function
+            G4ThreeVector volPosition;
             G4RotationMatrix* volRotation = nullptr;
-            
-            if (volConfig.contains("rotation")) {
-                volRotation = ParseRotation(volConfig["rotation"]);
-            }
+            ParsePlacement(volConfig, volPosition, volRotation);
             
             new G4PVPlacement(volRotation, volPosition, logicalVolume, name, motherVolume, false, 0);
         }
