@@ -92,6 +92,96 @@ private:
     G4VSolid* CreateSolid(const json& config, const std::string& name);
     
     /**
+     * @brief Create a box solid from JSON configuration
+     * @param dims JSON object containing box dimensions
+     * @param name Name for the solid
+     * @return Pointer to created G4Box
+     */
+    G4VSolid* CreateBoxSolid(const json& dims, const std::string& name);
+    
+    /**
+     * @brief Create a sphere solid from JSON configuration
+     * @param dims JSON object containing sphere dimensions
+     * @param name Name for the solid
+     * @return Pointer to created G4Sphere
+     */
+    G4VSolid* CreateSphereSolid(const json& dims, const std::string& name);
+    
+    /**
+     * @brief Create a cylinder/tube solid from JSON configuration
+     * @param dims JSON object containing cylinder dimensions
+     * @param name Name for the solid
+     * @return Pointer to created G4Tubs
+     */
+    G4VSolid* CreateCylinderSolid(const json& dims, const std::string& name);
+    
+    /**
+     * @brief Create a cone solid from JSON configuration
+     * @param dims JSON object containing cone dimensions
+     * @param name Name for the solid
+     * @return Pointer to created G4Cons
+     */
+    G4VSolid* CreateConeSolid(const json& dims, const std::string& name);
+    
+    /**
+     * @brief Create a trapezoid solid from JSON configuration
+     * @param dims JSON object containing trapezoid dimensions
+     * @param name Name for the solid
+     * @return Pointer to created G4Trd
+     */
+    G4VSolid* CreateTrapezoidSolid(const json& dims, const std::string& name);
+    
+    /**
+     * @brief Create a torus solid from JSON configuration
+     * @param dims JSON object containing torus dimensions
+     * @param name Name for the solid
+     * @return Pointer to created G4Torus
+     */
+    G4VSolid* CreateTorusSolid(const json& dims, const std::string& name);
+    
+    /**
+     * @brief Create an ellipsoid solid from JSON configuration
+     * @param dims JSON object containing ellipsoid dimensions
+     * @param name Name for the solid
+     * @return Pointer to created G4Ellipsoid
+     */
+    G4VSolid* CreateEllipsoidSolid(const json& dims, const std::string& name);
+    
+    /**
+     * @brief Create an orb solid from JSON configuration
+     * @param dims JSON object containing orb dimensions
+     * @param name Name for the solid
+     * @return Pointer to created G4Orb
+     */
+    G4VSolid* CreateOrbSolid(const json& dims, const std::string& name);
+    
+    /**
+     * @brief Create an elliptical tube solid from JSON configuration
+     * @param dims JSON object containing elliptical tube dimensions
+     * @param name Name for the solid
+     * @return Pointer to created G4EllipticalTube
+     */
+    G4VSolid* CreateEllipticalTubeSolid(const json& dims, const std::string& name);
+    
+    /**
+     * @brief Create a polycone solid from JSON configuration
+     * @param config JSON configuration for the polycone (needs both dims and possibly config)
+     * @param dims JSON object containing polycone dimensions
+     * @param name Name for the solid
+     * @return Pointer to created G4Polycone
+     */
+    G4VSolid* CreatePolyconeSolid(const json& config, const json& dims, const std::string& name);
+    
+    /**
+     * @brief Create a polyhedra solid from JSON configuration
+     * @param config JSON configuration for the polyhedra (needs both dims and possibly config)
+     * @param dims JSON object containing polyhedra dimensions
+     * @param name Name for the solid
+     * @return Pointer to created G4VSolid
+     */
+    G4VSolid* CreatePolyhedraSolid(const json& config, const json& dims, const std::string& name);
+    
+    /**
      * @brief Create a boolean solid (union, subtraction, intersection)
      * @param config JSON configuration for the boolean operation
      * @param name Name for the resulting solid

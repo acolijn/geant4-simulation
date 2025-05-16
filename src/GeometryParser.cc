@@ -364,418 +364,42 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     // Get dimensions object for easier access (only for basic shapes)
     const json& dims = config["dimensions"];
     
-    // Handle boolean operations
+    // Dispatch to appropriate shape creation function based on type
     if (type == "union" || type == "subtraction" || type == "intersection") {
         solid = CreateBooleanSolid(config, name);
     }
-    // Basic shapes
     else if (type == "box") {
-        // All dimensions are in mm, but we need to divide by 2 for half-dimensions
-        G4double dx = dims["x"].get<double>() * mm / 2;
-        G4double dy = dims["y"].get<double>() * mm / 2;
-        G4double dz = dims["z"].get<double>() * mm / 2;
-        solid = new G4Box(name, dx, dy, dz);
+        solid = CreateBoxSolid(dims, name);
     }
     else if (type == "sphere") {
-        // Get radius (required)
-        G4double rmax = dims["radius"].get<double>() * mm;
-        
-        // Get optional parameters with defaults
-        G4double rmin = dims.contains("inner_radius") ? dims["inner_radius"].get<double>() * mm : 0;
-        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
-        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
-        G4double stheta = dims.contains("start_theta") ? dims["start_theta"].get<double>() * rad : 0;
-        G4double dtheta = dims.contains("delta_theta") ? dims["delta_theta"].get<double>() * rad : M_PI * rad;
-        
-        solid = new G4Sphere(name, rmin, rmax, sphi, dphi, stheta, dtheta);
+        solid = CreateSphereSolid(dims, name);
     }
     else if (type == "cylinder" || type == "tube") {
-        // Get required parameters
-        G4double rmax = dims["radius"].get<double>() * mm;
-        G4double hz = dims["height"].get<double>() * mm / 2; // Half-height for G4Tubs
-        
-        // Get optional parameters with defaults
-        G4double rmin = dims.contains("inner_radius") ? dims["inner_radius"].get<double>() * mm : 0;
-        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
-        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
-
-        
-        solid = new G4Tubs(name, rmin, rmax, hz, sphi, dphi);
+        solid = CreateCylinderSolid(dims, name);
     }
     else if (type == "cone") {
-        // Get required parameters
-        G4double rmax1 = dims.contains("radius1") ? dims["radius1"].get<double>() * mm : 
-                        dims["rmax1"].get<double>() * mm;
-        G4double rmax2 = dims.contains("radius2") ? dims["radius2"].get<double>() * mm : 
-                        dims["rmax2"].get<double>() * mm;
-        G4double hz = dims.contains("height") ? dims["height"].get<double>() * mm / 2 : 
-                     dims["hz"].get<double>() * mm;
-        
-        // Get optional parameters with defaults
-        G4double rmin1 = 0;
-        if (dims.contains("inner_radius1")) {
-            rmin1 = dims["inner_radius1"].get<double>() * mm;
-        } else if (dims.contains("rmin1")) {
-            rmin1 = dims["rmin1"].get<double>() * mm;
-        }
-        
-        G4double rmin2 = 0;
-        if (dims.contains("inner_radius2")) {
-            rmin2 = dims["inner_radius2"].get<double>() * mm;
-        } else if (dims.contains("rmin2")) {
-            rmin2 = dims["rmin2"].get<double>() * mm;
-        }
-        
-        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
-        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
-        
-        solid = new G4Cons(name, rmin1, rmax1, rmin2, rmax2, hz, sphi, dphi);
+        solid = CreateConeSolid(dims, name);
     }
     else if (type == "trd" || type == "trapezoid") {
-        // All values are in mm, but we need to divide by 2 for half-dimensions
-        G4double x1 = dims.contains("dx1") ? dims["dx1"].get<double>() * mm / 2 : 
-                     dims["x1"].get<double>() * mm / 2;
-        
-        G4double x2 = dims.contains("dx2") ? dims["dx2"].get<double>() * mm / 2 : 
-                     dims["x2"].get<double>() * mm / 2;
-        
-        G4double y1 = dims.contains("dy1") ? dims["dy1"].get<double>() * mm / 2 : 
-                     dims["y1"].get<double>() * mm / 2;
-        
-        G4double y2 = dims.contains("dy2") ? dims["dy2"].get<double>() * mm / 2 : 
-                     dims["y2"].get<double>() * mm / 2;
-        
-        G4double hz = dims.contains("dz") ? dims["dz"].get<double>() * mm : 
-                     dims["height"].get<double>() * mm / 2;
-        
-        solid = new G4Trd(name, x1, x2, y1, y2, hz);
+        solid = CreateTrapezoidSolid(dims, name);
     }
     else if (type == "torus") {
-        // Get required parameters
-        G4double rmax = dims.contains("tube_radius") ? dims["tube_radius"].get<double>() * mm :
-                      dims["minor_radius"].get<double>() * mm;
-        
-        G4double rtor = dims.contains("torus_radius") ? dims["torus_radius"].get<double>() * mm :
-                      dims["major_radius"].get<double>() * mm;
-        
-        // Get optional parameters with defaults
-        G4double rmin = dims.contains("inner_radius") ? dims["inner_radius"].get<double>() * mm : 0;
-        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
-        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
-        
-        solid = new G4Torus(name, rmin, rmax, rtor, sphi, dphi);
+        solid = CreateTorusSolid(dims, name);
     }
     else if (type == "ellipsoid") {
-        // Get required parameters (semi-axes)
-        G4double ax = dims.contains("ax") ? dims["ax"].get<double>() * mm :
-                    dims["x_radius"].get<double>() * mm;
-        
-        G4double by = dims.contains("by") ? dims["by"].get<double>() * mm :
-                    dims["y_radius"].get<double>() * mm;
-        
-        G4double cz = dims.contains("cz") ? dims["cz"].get<double>() * mm :
-                    dims["z_radius"].get<double>() * mm;
-        
-        // Set default z cuts and override if specified
-        G4double zcut1 = dims.contains("zcut1") ? dims["zcut1"].get<double>() * mm : -cz;
-        G4double zcut2 = dims.contains("zcut2") ? dims["zcut2"].get<double>() * mm : cz;
-        
-        solid = new G4Ellipsoid(name, ax, by, cz, zcut1, zcut2);
+        solid = CreateEllipsoidSolid(dims, name);
     }
     else if (type == "orb") {
-        // Get radius (required)
-        G4double radius = dims["radius"].get<double>() * mm;
-        
-        solid = new G4Orb(name, radius);
+        solid = CreateOrbSolid(dims, name);
     }
     else if (type == "elliptical_tube") {
-        // Get required parameters
-        G4double dx = dims.contains("dx") ? dims["dx"].get<double>() * mm :
-                    dims["x"].get<double>() * mm;
-        
-        G4double dy = dims.contains("dy") ? dims["dy"].get<double>() * mm :
-                    dims["y"].get<double>() * mm;
-        
-        // For z dimension, check multiple possible property names
-        G4double dz;
-        if (dims.contains("dz")) {
-            dz = dims["dz"].get<double>() * mm;
-        } else if (dims.contains("z")) {
-            dz = dims["z"].get<double>() * mm;
-        } else {
-            dz = dims["height"].get<double>() * mm / 2;
-        }
-        
-        solid = new G4EllipticalTube(name, dx, dy, dz);
+        solid = CreateEllipticalTubeSolid(dims, name);
     }
     else if (type == "polycone") {
-        // Get optional angular parameters with defaults
-        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
-        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
-        
-        // Get z planes and radii (all values in mm)
-        std::vector<G4double> z_planes;
-        std::vector<G4double> rmin;
-        std::vector<G4double> rmax;
-        
-        // Check if z, rmin, rmax arrays are in the dimensions object
-        if (dims.contains("z") && dims.contains("rmax")) {
-            // Get arrays from dimensions object
-            const auto& z_array = dims["z"];
-            const auto& rmax_array = dims["rmax"];
-            
-            // Check if there's an rmin array, otherwise use zeros
-            bool has_rmin = dims.contains("rmin");
-            const auto& rmin_array = has_rmin ? dims["rmin"] : json::array();
-            
-            // Fill the vectors
-            for (size_t i = 0; i < z_array.size(); i++) {
-                z_planes.push_back(z_array[i].get<double>() * mm);
-                rmax.push_back(rmax_array[i].get<double>() * mm);
-                rmin.push_back(has_rmin ? rmin_array[i].get<double>() * mm : 0);
-            }
-        }
-        // Check if planes array is in the dimensions
-        else if (dims.contains("planes")) {
-            for (const auto& plane : dims["planes"]) {
-                z_planes.push_back(plane["z"].get<double>() * mm);
-                rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
-                rmax.push_back(plane["rmax"].get<double>() * mm);
-            }
-        }
-        // Legacy format - check if planes array is directly in the config
-        else if (config.contains("planes")) {
-            for (const auto& plane : config["planes"]) {
-                z_planes.push_back(plane["z"].get<double>() * mm);
-                rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
-                rmax.push_back(plane["rmax"].get<double>() * mm);
-            }
-        }
-        
-        // Sort z-planes and corresponding radii if not already sorted
-        if (z_planes.size() >= 2) {
-            // Create a vector of indices
-            std::vector<size_t> indices(z_planes.size());
-            for (size_t i = 0; i < indices.size(); ++i) {
-                indices[i] = i;
-            }
-            
-            // Sort indices based on z values
-            std::sort(indices.begin(), indices.end(),
-                     [&z_planes](size_t a, size_t b) { return z_planes[a] < z_planes[b]; });
-            
-            // Check if already sorted
-            bool isSorted = true;
-            for (size_t i = 0; i < indices.size(); ++i) {
-                if (indices[i] != i) {
-                    isSorted = false;
-                    break;
-                }
-            }
-            
-            // If not sorted, reorder the vectors
-            if (!isSorted) {
-                G4cout << "Sorting z-planes for polycone " << name << G4endl;
-                
-                // Create temporary vectors with sorted values
-                std::vector<G4double> sorted_z(z_planes.size());
-                std::vector<G4double> sorted_rmin(rmin.size());
-                std::vector<G4double> sorted_rmax(rmax.size());
-                
-                for (size_t i = 0; i < indices.size(); ++i) {
-                    sorted_z[i] = z_planes[indices[i]];
-                    sorted_rmin[i] = rmin[indices[i]];
-                    sorted_rmax[i] = rmax[indices[i]];
-                }
-                
-                // Replace original vectors with sorted ones
-                z_planes = sorted_z;
-                rmin = sorted_rmin;
-                rmax = sorted_rmax;
-            }
-        }
-        
-        // Validate that z-planes are in ascending order and rmin < rmax
-        if (z_planes.size() < 2) {
-            G4cerr << "Error in polycone " << name << ": need at least 2 z-planes, found " 
-                   << z_planes.size() << G4endl;
-            exit(1);
-        }
-        
-        for (size_t i = 1; i < z_planes.size(); i++) {
-            if (z_planes[i] <= z_planes[i-1]) {
-                G4cerr << "Error in polycone " << name << ": z-planes must be in ascending order. "
-                       << "Found z[" << i-1 << "] = " << z_planes[i-1]/mm << " mm >= z[" 
-                       << i << "] = " << z_planes[i]/mm << " mm" << G4endl;
-                exit(1);
-            }
-        }
-        
-        for (size_t i = 0; i < z_planes.size(); i++) {
-            if (rmin[i] >= rmax[i]) {
-                G4cerr << "Error in polycone " << name << ": rmin must be less than rmax. "
-                       << "Found at z[" << i << "] = " << z_planes[i]/mm << " mm: rmin = " 
-                       << rmin[i]/mm << " mm >= rmax = " << rmax[i]/mm << " mm" << G4endl;
-                exit(1);
-            }
-        }
-        
-        // Create the polycone solid
-        try {
-            solid = new G4Polycone(name, sphi, dphi, z_planes.size(), 
-                                z_planes.data(), rmin.data(), rmax.data());
-        } catch (const std::exception& e) {
-            G4cerr << "Error creating polycone " << name << ": " << e.what() << G4endl;
-            G4cerr << "Z planes: ";
-            for (size_t i = 0; i < z_planes.size(); i++) {
-                G4cerr << z_planes[i]/mm << " ";
-            }
-            G4cerr << "\nRmin: ";
-            for (size_t i = 0; i < rmin.size(); i++) {
-                G4cerr << rmin[i]/mm << " ";
-            }
-            G4cerr << "\nRmax: ";
-            for (size_t i = 0; i < rmax.size(); i++) {
-                G4cerr << rmax[i]/mm << " ";
-            }
-            G4cerr << G4endl;
-            exit(1);
-        }
+        solid = CreatePolyconeSolid(config, dims, name);
     }
     else if (type == "polyhedra") {
-        // Get optional angular parameters with defaults
-        G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
-        G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
-        G4int numSides = dims.contains("num_sides") ? dims["num_sides"].get<int>() : 8;
-        
-        // Get z planes and radii (all values in mm)
-        std::vector<G4double> z_planes;
-        std::vector<G4double> rmin;
-        std::vector<G4double> rmax;
-        
-        // Check if z, rmin, rmax arrays are in the dimensions object
-        if (dims.contains("z") && dims.contains("rmax")) {
-            // Get arrays from dimensions object
-            const auto& z_array = dims["z"];
-            const auto& rmax_array = dims["rmax"];
-            
-            // Check if there's an rmin array, otherwise use zeros
-            bool has_rmin = dims.contains("rmin");
-            const auto& rmin_array = has_rmin ? dims["rmin"] : json::array();
-            
-            // Fill the vectors
-            for (size_t i = 0; i < z_array.size(); i++) {
-                z_planes.push_back(z_array[i].get<double>() * mm);
-                rmax.push_back(rmax_array[i].get<double>() * mm);
-                rmin.push_back(has_rmin ? rmin_array[i].get<double>() * mm : 0);
-            }
-        }
-        // Check if planes array is in the dimensions
-        else if (dims.contains("planes")) {
-            for (const auto& plane : dims["planes"]) {
-                z_planes.push_back(plane["z"].get<double>() * mm);
-                rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
-                rmax.push_back(plane["rmax"].get<double>() * mm);
-            }
-        }
-        // Legacy format - check if planes array is directly in the config
-        else if (config.contains("planes")) {
-            for (const auto& plane : config["planes"]) {
-                z_planes.push_back(plane["z"].get<double>() * mm);
-                rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
-                rmax.push_back(plane["rmax"].get<double>() * mm);
-            }
-        }
-        
-        // Sort z-planes and corresponding radii if not already sorted
-        if (z_planes.size() >= 2) {
-            // Create a vector of indices
-            std::vector<size_t> indices(z_planes.size());
-            for (size_t i = 0; i < indices.size(); ++i) {
-                indices[i] = i;
-            }
-            
-            // Sort indices based on z values
-            std::sort(indices.begin(), indices.end(),
-                     [&z_planes](size_t a, size_t b) { return z_planes[a] < z_planes[b]; });
-            
-            // Check if already sorted
-            bool isSorted = true;
-            for (size_t i = 0; i < indices.size(); ++i) {
-                if (indices[i] != i) {
-                    isSorted = false;
-                    break;
-                }
-            }
-            
-            // If not sorted, reorder the vectors
-            if (!isSorted) {
-                G4cout << "Sorting z-planes for polyhedra " << name << G4endl;
-                
-                // Create temporary vectors with sorted values
-                std::vector<G4double> sorted_z(z_planes.size());
-                std::vector<G4double> sorted_rmin(rmin.size());
-                std::vector<G4double> sorted_rmax(rmax.size());
-                
-                for (size_t i = 0; i < indices.size(); ++i) {
-                    sorted_z[i] = z_planes[indices[i]];
-                    sorted_rmin[i] = rmin[indices[i]];
-                    sorted_rmax[i] = rmax[indices[i]];
-                }
-                
-                // Replace original vectors with sorted ones
-                z_planes = sorted_z;
-                rmin = sorted_rmin;
-                rmax = sorted_rmax;
-            }
-        }
-        
-        // Validate that z-planes are in ascending order and rmin < rmax
-        if (z_planes.size() < 2) {
-            G4cerr << "Error in polyhedra " << name << ": need at least 2 z-planes, found " 
-                   << z_planes.size() << G4endl;
-            exit(1);
-        }
-        
-        for (size_t i = 1; i < z_planes.size(); i++) {
-            if (z_planes[i] <= z_planes[i-1]) {
-                G4cerr << "Error in polyhedra " << name << ": z-planes must be in ascending order. "
-                       << "Found z[" << i-1 << "] = " << z_planes[i-1]/mm << " mm >= z[" 
-                       << i << "] = " << z_planes[i]/mm << " mm" << G4endl;
-                exit(1);
-            }
-        }
-        
-        for (size_t i = 0; i < z_planes.size(); i++) {
-            if (rmin[i] >= rmax[i]) {
-                G4cerr << "Error in polyhedra " << name << ": rmin must be less than rmax. "
-                       << "Found at z[" << i << "] = " << z_planes[i]/mm << " mm: rmin = " 
-                       << rmin[i]/mm << " mm >= rmax = " << rmax[i]/mm << " mm" << G4endl;
-                exit(1);
-            }
-        }
-        
-        // Create the polyhedra solid
-        try {
-            solid = new G4Polyhedra(name, sphi, dphi, numSides, z_planes.size(), 
-                                  z_planes.data(), rmin.data(), rmax.data());
-        } catch (const std::exception& e) {
-            G4cerr << "Error creating polyhedra " << name << ": " << e.what() << G4endl;
-            G4cerr << "Z planes: ";
-            for (size_t i = 0; i < z_planes.size(); i++) {
-                G4cerr << z_planes[i]/mm << " ";
-            }
-            G4cerr << "\nRmin: ";
-            for (size_t i = 0; i < rmin.size(); i++) {
-                G4cerr << rmin[i]/mm << " ";
-            }
-            G4cerr << "\nRmax: ";
-            for (size_t i = 0; i < rmax.size(); i++) {
-                G4cerr << rmax[i]/mm << " ";
-            }
-            G4cerr << G4endl;
-            exit(1);
-        }
+        solid = CreatePolyhedraSolid(config, dims, name);
     }
     else {
         throw std::runtime_error("Unsupported solid type: " + type);
@@ -1015,5 +639,433 @@ void GeometryParser::ImportAssembledGeometry(const json& config, G4LogicalVolume
             
             new G4PVPlacement(volRotation, volPosition, logicalVolume, name, motherVolume, false, 0);
         }
+    }
+}
+// Box solid creation function
+G4VSolid* GeometryParser::CreateBoxSolid(const json& dims, const std::string& name) {
+    // All dimensions are in mm, but we need to divide by 2 for half-dimensions
+    G4double dx = dims["x"].get<double>() * mm / 2;
+    G4double dy = dims["y"].get<double>() * mm / 2;
+    G4double dz = dims["z"].get<double>() * mm / 2;
+    return new G4Box(name, dx, dy, dz);
+}
+
+// Sphere solid creation function
+G4VSolid* GeometryParser::CreateSphereSolid(const json& dims, const std::string& name) {
+    // Get radius (required)
+    G4double rmax = dims["radius"].get<double>() * mm;
+    
+    // Get optional parameters with defaults
+    G4double rmin = dims.contains("inner_radius") ? dims["inner_radius"].get<double>() * mm : 0;
+    G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+    G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
+    G4double stheta = dims.contains("start_theta") ? dims["start_theta"].get<double>() * rad : 0;
+    G4double dtheta = dims.contains("delta_theta") ? dims["delta_theta"].get<double>() * rad : M_PI * rad;
+    
+    return new G4Sphere(name, rmin, rmax, sphi, dphi, stheta, dtheta);
+}
+
+// Cylinder/tube solid creation function
+G4VSolid* GeometryParser::CreateCylinderSolid(const json& dims, const std::string& name) {
+    // Get required parameters
+    G4double rmax = dims["radius"].get<double>() * mm;
+    G4double hz = dims["height"].get<double>() * mm / 2; // Half-height for G4Tubs
+    
+    // Get optional parameters with defaults
+    G4double rmin = dims.contains("inner_radius") ? dims["inner_radius"].get<double>() * mm : 0;
+    G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+    G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
+    
+    return new G4Tubs(name, rmin, rmax, hz, sphi, dphi);
+}
+
+// Cone solid creation function
+G4VSolid* GeometryParser::CreateConeSolid(const json& dims, const std::string& name) {
+    // Get required parameters
+    G4double rmax1 = dims.contains("radius1") ? dims["radius1"].get<double>() * mm : 
+                    dims["rmax1"].get<double>() * mm;
+    G4double rmax2 = dims.contains("radius2") ? dims["radius2"].get<double>() * mm : 
+                    dims["rmax2"].get<double>() * mm;
+    G4double hz = dims.contains("height") ? dims["height"].get<double>() * mm / 2 : 
+                 dims["hz"].get<double>() * mm;
+    
+    // Get optional parameters with defaults
+    G4double rmin1 = 0;
+    if (dims.contains("inner_radius1")) {
+        rmin1 = dims["inner_radius1"].get<double>() * mm;
+    } else if (dims.contains("rmin1")) {
+        rmin1 = dims["rmin1"].get<double>() * mm;
+    }
+    
+    G4double rmin2 = 0;
+    if (dims.contains("inner_radius2")) {
+        rmin2 = dims["inner_radius2"].get<double>() * mm;
+    } else if (dims.contains("rmin2")) {
+        rmin2 = dims["rmin2"].get<double>() * mm;
+    }
+    
+    G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+    G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
+    
+    return new G4Cons(name, rmin1, rmax1, rmin2, rmax2, hz, sphi, dphi);
+}
+
+// Trapezoid solid creation function
+G4VSolid* GeometryParser::CreateTrapezoidSolid(const json& dims, const std::string& name) {
+    // All values are in mm, but we need to divide by 2 for half-dimensions
+    G4double x1 = dims.contains("dx1") ? dims["dx1"].get<double>() * mm / 2 : 
+                 dims["x1"].get<double>() * mm / 2;
+    
+    G4double x2 = dims.contains("dx2") ? dims["dx2"].get<double>() * mm / 2 : 
+                 dims["x2"].get<double>() * mm / 2;
+    
+    G4double y1 = dims.contains("dy1") ? dims["dy1"].get<double>() * mm / 2 : 
+                 dims["y1"].get<double>() * mm / 2;
+    
+    G4double y2 = dims.contains("dy2") ? dims["dy2"].get<double>() * mm / 2 : 
+                 dims["y2"].get<double>() * mm / 2;
+    
+    G4double hz = dims.contains("dz") ? dims["dz"].get<double>() * mm : 
+                 dims["height"].get<double>() * mm / 2;
+    
+    return new G4Trd(name, x1, x2, y1, y2, hz);
+}
+
+// Torus solid creation function
+G4VSolid* GeometryParser::CreateTorusSolid(const json& dims, const std::string& name) {
+    // Get required parameters
+    G4double rmax = dims.contains("tube_radius") ? dims["tube_radius"].get<double>() * mm :
+                  dims["minor_radius"].get<double>() * mm;
+    
+    G4double rtor = dims.contains("torus_radius") ? dims["torus_radius"].get<double>() * mm :
+                  dims["major_radius"].get<double>() * mm;
+    
+    // Get optional parameters with defaults
+    G4double rmin = dims.contains("inner_radius") ? dims["inner_radius"].get<double>() * mm : 0;
+    G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+    G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
+    
+    return new G4Torus(name, rmin, rmax, rtor, sphi, dphi);
+}
+
+// Ellipsoid solid creation function
+G4VSolid* GeometryParser::CreateEllipsoidSolid(const json& dims, const std::string& name) {
+    // Get required parameters (semi-axes)
+    G4double ax = dims.contains("ax") ? dims["ax"].get<double>() * mm :
+                dims["x_radius"].get<double>() * mm;
+    
+    G4double by = dims.contains("by") ? dims["by"].get<double>() * mm :
+                dims["y_radius"].get<double>() * mm;
+    
+    G4double cz = dims.contains("cz") ? dims["cz"].get<double>() * mm :
+                dims["z_radius"].get<double>() * mm;
+    
+    // Set default z cuts and override if specified
+    G4double zcut1 = dims.contains("zcut1") ? dims["zcut1"].get<double>() * mm : -cz;
+    G4double zcut2 = dims.contains("zcut2") ? dims["zcut2"].get<double>() * mm : cz;
+    
+    return new G4Ellipsoid(name, ax, by, cz, zcut1, zcut2);
+}
+
+// Orb solid creation function
+G4VSolid* GeometryParser::CreateOrbSolid(const json& dims, const std::string& name) {
+    // Get radius (required)
+    G4double radius = dims["radius"].get<double>() * mm;
+    
+    return new G4Orb(name, radius);
+}
+
+// Elliptical tube solid creation function
+G4VSolid* GeometryParser::CreateEllipticalTubeSolid(const json& dims, const std::string& name) {
+    // Get required parameters
+    G4double dx = dims.contains("dx") ? dims["dx"].get<double>() * mm :
+                dims["x"].get<double>() * mm;
+    
+    G4double dy = dims.contains("dy") ? dims["dy"].get<double>() * mm :
+                dims["y"].get<double>() * mm;
+    
+    // For z dimension, check multiple possible property names
+    G4double dz;
+    if (dims.contains("dz")) {
+        dz = dims["dz"].get<double>() * mm;
+    } else if (dims.contains("z")) {
+        dz = dims["z"].get<double>() * mm;
+    } else {
+        dz = dims["height"].get<double>() * mm / 2;
+    }
+    
+    return new G4EllipticalTube(name, dx, dy, dz);
+}
+
+// Polycone solid creation function
+G4VSolid* GeometryParser::CreatePolyconeSolid(const json& config, const json& dims, const std::string& name) {
+    // Get optional angular parameters with defaults
+    G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+    G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
+    
+    // Get z planes and radii (all values in mm)
+    std::vector<G4double> z_planes;
+    std::vector<G4double> rmin;
+    std::vector<G4double> rmax;
+    
+    // Check if z, rmin, rmax arrays are in the dimensions object
+    if (dims.contains("z") && dims.contains("rmax")) {
+        // Get arrays from dimensions object
+        const auto& z_array = dims["z"];
+        const auto& rmax_array = dims["rmax"];
+        
+        // Check if there's an rmin array, otherwise use zeros
+        bool has_rmin = dims.contains("rmin");
+        const auto& rmin_array = has_rmin ? dims["rmin"] : json::array();
+        
+        // Fill the vectors
+        for (size_t i = 0; i < z_array.size(); i++) {
+            z_planes.push_back(z_array[i].get<double>() * mm);
+            rmax.push_back(rmax_array[i].get<double>() * mm);
+            rmin.push_back(has_rmin ? rmin_array[i].get<double>() * mm : 0);
+        }
+    }
+    // Check if planes array is in the dimensions
+    else if (dims.contains("planes")) {
+        for (const auto& plane : dims["planes"]) {
+            z_planes.push_back(plane["z"].get<double>() * mm);
+            rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
+            rmax.push_back(plane["rmax"].get<double>() * mm);
+        }
+    }
+    // Legacy format - check if planes array is directly in the config
+    else if (config.contains("planes")) {
+        for (const auto& plane : config["planes"]) {
+            z_planes.push_back(plane["z"].get<double>() * mm);
+            rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
+            rmax.push_back(plane["rmax"].get<double>() * mm);
+        }
+    }
+    
+    // Sort z-planes and corresponding radii if not already sorted
+    if (z_planes.size() >= 2) {
+        // Create a vector of indices
+        std::vector<size_t> indices(z_planes.size());
+        for (size_t i = 0; i < indices.size(); ++i) {
+            indices[i] = i;
+        }
+        
+        // Sort indices based on z values
+        std::sort(indices.begin(), indices.end(),
+                 [&z_planes](size_t a, size_t b) { return z_planes[a] < z_planes[b]; });
+        
+        // Check if already sorted
+        bool isSorted = true;
+        for (size_t i = 0; i < indices.size(); ++i) {
+            if (indices[i] != i) {
+                isSorted = false;
+                break;
+            }
+        }
+        
+        // If not sorted, reorder the vectors
+        if (!isSorted) {
+            G4cout << "Sorting z-planes for polycone " << name << G4endl;
+            
+            // Create temporary vectors with sorted values
+            std::vector<G4double> sorted_z(z_planes.size());
+            std::vector<G4double> sorted_rmin(rmin.size());
+            std::vector<G4double> sorted_rmax(rmax.size());
+            
+            for (size_t i = 0; i < indices.size(); ++i) {
+                sorted_z[i] = z_planes[indices[i]];
+                sorted_rmin[i] = rmin[indices[i]];
+                sorted_rmax[i] = rmax[indices[i]];
+            }
+            
+            // Replace original vectors with sorted ones
+            z_planes = sorted_z;
+            rmin = sorted_rmin;
+            rmax = sorted_rmax;
+        }
+    }
+    
+    // Validate that z-planes are in ascending order and rmin < rmax
+    if (z_planes.size() < 2) {
+        G4cerr << "Error in polycone " << name << ": need at least 2 z-planes, found " 
+               << z_planes.size() << G4endl;
+        exit(1);
+    }
+    
+    for (size_t i = 1; i < z_planes.size(); i++) {
+        if (z_planes[i] <= z_planes[i-1]) {
+            G4cerr << "Error in polycone " << name << ": z-planes must be in ascending order. "
+                   << "Found z[" << i-1 << "] = " << z_planes[i-1]/mm << " mm >= z[" 
+                   << i << "] = " << z_planes[i]/mm << " mm" << G4endl;
+            exit(1);
+        }
+    }
+    
+    for (size_t i = 0; i < z_planes.size(); i++) {
+        if (rmin[i] >= rmax[i]) {
+            G4cerr << "Error in polycone " << name << ": rmin must be less than rmax. "
+                   << "Found at z[" << i << "] = " << z_planes[i]/mm << " mm: rmin = " 
+                   << rmin[i]/mm << " mm >= rmax = " << rmax[i]/mm << " mm" << G4endl;
+            exit(1);
+        }
+    }
+    
+    // Create the polycone solid
+    try {
+        return new G4Polycone(name, sphi, dphi, z_planes.size(), 
+                            z_planes.data(), rmin.data(), rmax.data());
+    } catch (const std::exception& e) {
+        G4cerr << "Error creating polycone " << name << ": " << e.what() << G4endl;
+        G4cerr << "Z planes: ";
+        for (size_t i = 0; i < z_planes.size(); i++) {
+            G4cerr << z_planes[i]/mm << " ";
+        }
+        G4cerr << "\nRmin: ";
+        for (size_t i = 0; i < rmin.size(); i++) {
+            G4cerr << rmin[i]/mm << " ";
+        }
+        G4cerr << "\nRmax: ";
+        for (size_t i = 0; i < rmax.size(); i++) {
+            G4cerr << rmax[i]/mm << " ";
+        }
+        G4cerr << G4endl;
+        exit(1);
+    }
+}
+
+// Polyhedra solid creation function
+G4VSolid* GeometryParser::CreatePolyhedraSolid(const json& config, const json& dims, const std::string& name) {
+    // Get optional angular parameters with defaults
+    G4double sphi = dims.contains("start_phi") ? dims["start_phi"].get<double>() * rad : 0;
+    G4double dphi = dims.contains("delta_phi") ? dims["delta_phi"].get<double>() * rad : 2 * M_PI * rad;
+    G4int numSides = dims.contains("num_sides") ? dims["num_sides"].get<int>() : 8;
+    
+    // Get z planes and radii (all values in mm)
+    std::vector<G4double> z_planes;
+    std::vector<G4double> rmin;
+    std::vector<G4double> rmax;
+    
+    // Check if z, rmin, rmax arrays are in the dimensions object
+    if (dims.contains("z") && dims.contains("rmax")) {
+        // Get arrays from dimensions object
+        const auto& z_array = dims["z"];
+        const auto& rmax_array = dims["rmax"];
+        
+        // Check if there's an rmin array, otherwise use zeros
+        bool has_rmin = dims.contains("rmin");
+        const auto& rmin_array = has_rmin ? dims["rmin"] : json::array();
+        
+        // Fill the vectors
+        for (size_t i = 0; i < z_array.size(); i++) {
+            z_planes.push_back(z_array[i].get<double>() * mm);
+            rmax.push_back(rmax_array[i].get<double>() * mm);
+            rmin.push_back(has_rmin ? rmin_array[i].get<double>() * mm : 0);
+        }
+    }
+    // Check if planes array is in the dimensions
+    else if (dims.contains("planes")) {
+        for (const auto& plane : dims["planes"]) {
+            z_planes.push_back(plane["z"].get<double>() * mm);
+            rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
+            rmax.push_back(plane["rmax"].get<double>() * mm);
+        }
+    }
+    // Legacy format - check if planes array is directly in the config
+    else if (config.contains("planes")) {
+        for (const auto& plane : config["planes"]) {
+            z_planes.push_back(plane["z"].get<double>() * mm);
+            rmin.push_back(plane.contains("rmin") ? plane["rmin"].get<double>() * mm : 0);
+            rmax.push_back(plane["rmax"].get<double>() * mm);
+        }
+    }
+    
+    // Sort z-planes and corresponding radii if not already sorted
+    if (z_planes.size() >= 2) {
+        // Create a vector of indices
+        std::vector<size_t> indices(z_planes.size());
+        for (size_t i = 0; i < indices.size(); ++i) {
+            indices[i] = i;
+        }
+        
+        // Sort indices based on z values
+        std::sort(indices.begin(), indices.end(),
+                 [&z_planes](size_t a, size_t b) { return z_planes[a] < z_planes[b]; });
+        
+        // Check if already sorted
+        bool isSorted = true;
+        for (size_t i = 0; i < indices.size(); ++i) {
+            if (indices[i] != i) {
+                isSorted = false;
+                break;
+            }
+        }
+        
+        // If not sorted, reorder the vectors
+        if (!isSorted) {
+            G4cout << "Sorting z-planes for polyhedra " << name << G4endl;
+            
+            // Create temporary vectors with sorted values
+            std::vector<G4double> sorted_z(z_planes.size());
+            std::vector<G4double> sorted_rmin(rmin.size());
+            std::vector<G4double> sorted_rmax(rmax.size());
+            
+            for (size_t i = 0; i < indices.size(); ++i) {
+                sorted_z[i] = z_planes[indices[i]];
+                sorted_rmin[i] = rmin[indices[i]];
+                sorted_rmax[i] = rmax[indices[i]];
+            }
+            
+            // Replace original vectors with sorted ones
+            z_planes = sorted_z;
+            rmin = sorted_rmin;
+            rmax = sorted_rmax;
+        }
+    }
+    
+    // Validate that z-planes are in ascending order and rmin < rmax
+    if (z_planes.size() < 2) {
+        G4cerr << "Error in polyhedra " << name << ": need at least 2 z-planes, found " 
+               << z_planes.size() << G4endl;
+        exit(1);
+    }
+    
+    for (size_t i = 1; i < z_planes.size(); i++) {
+        if (z_planes[i] <= z_planes[i-1]) {
+            G4cerr << "Error in polyhedra " << name << ": z-planes must be in ascending order. "
+                   << "Found z[" << i-1 << "] = " << z_planes[i-1]/mm << " mm >= z[" 
+                   << i << "] = " << z_planes[i]/mm << " mm" << G4endl;
+            exit(1);
+        }
+    }
+    
+    for (size_t i = 0; i < z_planes.size(); i++) {
+        if (rmin[i] >= rmax[i]) {
+            G4cerr << "Error in polyhedra " << name << ": rmin must be less than rmax. "
+                   << "Found at z[" << i << "] = " << z_planes[i]/mm << " mm: rmin = " 
+                   << rmin[i]/mm << " mm >= rmax = " << rmax[i]/mm << " mm" << G4endl;
+            exit(1);
+        }
+    }
+    
+    // Create the polyhedra solid
+    try {
+        return new G4Polyhedra(name, sphi, dphi, numSides, z_planes.size(), 
+                              z_planes.data(), rmin.data(), rmax.data());
+    } catch (const std::exception& e) {
+        G4cerr << "Error creating polyhedra " << name << ": " << e.what() << G4endl;
+        G4cerr << "Z planes: ";
+        for (size_t i = 0; i < z_planes.size(); i++) {
+            G4cerr << z_planes[i]/mm << " ";
+        }
+        G4cerr << "\nRmin: ";
+        for (size_t i = 0; i < rmin.size(); i++) {
+            G4cerr << rmin[i]/mm << " ";
+        }
+        G4cerr << "\nRmax: ";
+        for (size_t i = 0; i < rmax.size(); i++) {
+            G4cerr << rmax[i]/mm << " ";
+        }
+        G4cerr << G4endl;
+        exit(1);
     }
 }
