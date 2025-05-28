@@ -66,6 +66,7 @@ private:
     std::map<std::string, G4LogicalVolume*> volumes;    ///< Cache of created volumes
     std::map<std::string, G4LogicalVolume*> logicalVolumeMap;  ///< Map of logical volumes by name
     std::map<std::string, G4VSolid*> solids;           ///< Cache of created solids
+    std::map<std::string, G4AssemblyVolume*> assemblies; ///< Cache of created assemblies
     std::string configPath;                           ///< Path to the configuration files
 
     /**
@@ -197,11 +198,17 @@ private:
     json LoadExternalGeometry(const std::string& filename);
     
     /**
-     * @brief Import an assembled geometry from an external JSON file
-     * @param config JSON configuration for the import
-     * @param parentVolume Parent logical volume to place the imported geometry in
+     * @brief Create an assembly from JSON configuration
+     * @param config JSON configuration for the assembly
      */
-    void ImportAssembledGeometry(const json& config, G4LogicalVolume* parentVolume);
+    void CreateAssembly(const json& config);
+    
+    /**
+     * @brief Import an assembled geometry from an external file
+     * @param config JSON configuration for the import
+     * @param motherVolume Logical volume to place the imported geometry in
+     */
+    void ImportAssembledGeometry(const json& config, G4LogicalVolume* motherVolume);
 
     /**
      * @brief Convert JSON vector to G4ThreeVector with units

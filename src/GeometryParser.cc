@@ -281,6 +281,34 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             ImportAssembledGeometry(volConfig, motherVolume);
             continue;
         }
+        
+        // Check if this is an assembly
+        if (volConfig["type"].get<std::string>() == "assembly") {
+            // Create an assembly
+            CreateAssembly(volConfig);
+            continue;
+        }
+        
+        // Check if this volume is a child of an assembly
+        // If it is, skip it because it will be placed by the assembly
+        if (volConfig.contains("mother_volume")) {
+            std::string motherName = volConfig["mother_volume"].get<std::string>();
+            // Check if the mother volume is an assembly
+            bool isChildOfAssembly = false;
+            for (const auto& asmConfig : geometryConfig["volumes"]) {
+                if (asmConfig["type"].get<std::string>() == "assembly" && 
+                    asmConfig["name"].get<std::string>() == motherName) {
+                    isChildOfAssembly = true;
+                    break;
+                }
+            }
+            
+            if (isChildOfAssembly) {
+                G4cout << "Skipping placement of " << volConfig["name"].get<std::string>() 
+                       << " as it is a child of assembly " << motherName << G4endl;
+                continue;
+            }
+        }
 
         G4LogicalVolume* logicalVolume = CreateVolume(volConfig);
 
@@ -327,6 +355,31 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
         }
     }
 
+    // Place all assemblies
+    for (const auto& volConfig : geometryConfig["volumes"]) {
+        // Skip non-assembly volumes
+        if (volConfig["type"].get<std::string>() != "assembly") {
+            continue;
+        }
+        
+        // Get the assembly name and the mother volume name
+        std::string assemblyName = volConfig["name"].get<std::string>();
+        std::string motherName = volConfig["mother_volume"].get<std::string>();
+        
+        // Get the assembly and mother volume
+        G4AssemblyVolume* assembly = assemblies[assemblyName];
+        G4LogicalVolume* motherVolume = volumes[motherName];
+        
+        // Parse position and rotation
+        G4ThreeVector position;
+        G4RotationMatrix* rotation = nullptr;
+        ParsePlacement(volConfig, position, rotation);
+        
+        // Place the assembly
+        G4cout << "Placing assembly " << assemblyName << " in " << motherName << G4endl;
+        assembly->MakeImprint(motherVolume, position, rotation);
+    }
+    
     // Setup sensitive detectors for active volumes
     SetupSensitiveDetectors();
     
@@ -416,78 +469,81 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
  * @param name Name for the resulting solid
  * @return Pointer to created G4VSolid
  * @throws std::runtime_error if boolean operation fails
- * @details Creates a boolean solid by combining two other solids.
- *          The first solid is the base, and the second is applied to it.
+ * @details Creates a boolean solid by combining two or more solids.
+ *          For unions, supports multiple components in the new format.
  */
 G4VSolid* GeometryParser::CreateBooleanSolid(const json& config, const std::string& name) {
     std::string type = config["type"].get<std::string>();
     
-    // Get the first and second solids
-    G4VSolid* solid1 = nullptr;
-    G4VSolid* solid2 = nullptr;
-    
-    // First solid can be a reference or inline definition
-    if (config["solid1"].is_string()) {
-        std::string solid1Name = config["solid1"].get<std::string>();
-        if (solids.find(solid1Name) == solids.end()) {
-            throw std::runtime_error("Referenced solid not found: " + solid1Name);
-        }
-        solid1 = solids[solid1Name];
-    } else {
-        solid1 = CreateSolid(config["solid1"], name + "_solid1");
-    }
-    
-    // Second solid can be a reference or inline definition
-    if (config["solid2"].is_string()) {
-        std::string solid2Name = config["solid2"].get<std::string>();
-        if (solids.find(solid2Name) == solids.end()) {
-            throw std::runtime_error("Referenced solid not found: " + solid2Name);
-        }
-        solid2 = solids[solid2Name];
-    } else {
-        solid2 = CreateSolid(config["solid2"], name + "_solid2");
-    }
-    
-    // Get transformation for second solid
-    G4ThreeVector position(0, 0, 0);
-    G4RotationMatrix* rotation = nullptr;
-    
-    // Check for placement object first
-    if (config.contains("placement")) {
-        ParsePlacement(config, position, rotation);
-    }
-    // Check for relative_position, then fall back to position for backward compatibility
-    else if (config.contains("relative_position")) {
-        position = ParseVector(config["relative_position"]);
+        // Get the first and second solids
+        G4VSolid* solid1 = nullptr;
+        G4VSolid* solid2 = nullptr;
         
-        if (config.contains("relative_rotation")) {
-            rotation = ParseRotation(config["relative_rotation"]);
+        // First solid can be a reference or inline definition
+        if (config["solid1"].is_string()) {
+            std::string solid1Name = config["solid1"].get<std::string>();
+            if (solids.find(solid1Name) == solids.end()) {
+                throw std::runtime_error("Referenced solid not found: " + solid1Name);
+            }
+            solid1 = solids[solid1Name];
+        } else {
+            solid1 = CreateSolid(config["solid1"], name + "_solid1");
         }
-    } 
-    // Legacy format
-    else if (config.contains("position") && !config.contains("mother_volume")) {
-        // Only use position if this is not a volume placement (no mother_volume)
-        position = ParseVector(config["position"]);
         
-        if (config.contains("rotation") && !config.contains("mother_volume")) {
-            rotation = ParseRotation(config["rotation"]);
+        // Second solid can be a reference or inline definition
+        if (config["solid2"].is_string()) {
+            std::string solid2Name = config["solid2"].get<std::string>();
+            if (solids.find(solid2Name) == solids.end()) {
+                throw std::runtime_error("Referenced solid not found: " + solid2Name);
+            }
+            solid2 = solids[solid2Name];
+        } else {
+            solid2 = CreateSolid(config["solid2"], name + "_solid2");
+        }
+        
+        // Get transformation for second solid
+        G4ThreeVector position(0, 0, 0);
+        G4RotationMatrix* rotation = nullptr;
+        
+        // Check for placement object first
+        if (config.contains("placement")) {
+            ParsePlacement(config, position, rotation);
+        }
+        // Check for relative_position, then fall back to position for backward compatibility
+        else if (config.contains("relative_position")) {
+            position = ParseVector(config["relative_position"]);
+            
+            if (config.contains("relative_rotation")) {
+                rotation = ParseRotation(config["relative_rotation"]);
+            }
+        } 
+        // Legacy format
+        else if (config.contains("position") && !config.contains("mother_volume")) {
+            // Only use position if this is not a volume placement (no mother_volume)
+            position = ParseVector(config["position"]);
+            
+            if (config.contains("rotation") && !config.contains("mother_volume")) {
+                rotation = ParseRotation(config["rotation"]);
+            }
+        }
+        
+        // Create the boolean solid
+        if (type == "union") {
+            booleanSolid = new G4UnionSolid(name, solid1, solid2, rotation, position);
+        }
+        else if (type == "subtraction") {
+            booleanSolid = new G4SubtractionSolid(name, solid1, solid2, rotation, position);
+        }
+        else if (type == "intersection") {
+            booleanSolid = new G4IntersectionSolid(name, solid1, solid2, rotation, position);
+        }
+        else {
+            throw std::runtime_error("Invalid boolean operation: " + type);
         }
     }
     
-    // Create the boolean solid
-    G4VSolid* booleanSolid = nullptr;
-    
-    if (type == "union") {
-        booleanSolid = new G4UnionSolid(name, solid1, solid2, rotation, position);
-    }
-    else if (type == "subtraction") {
-        booleanSolid = new G4SubtractionSolid(name, solid1, solid2, rotation, position);
-    }
-    else if (type == "intersection") {
-        booleanSolid = new G4IntersectionSolid(name, solid1, solid2, rotation, position);
-    }
-    else {
-        throw std::runtime_error("Invalid boolean operation: " + type);
+    if (!booleanSolid) {
+        throw std::runtime_error("Failed to create boolean solid: " + name);
     }
     
     // Cache the boolean solid
@@ -568,6 +624,77 @@ void GeometryParser::SetupSensitiveDetectors() {
  * @param config JSON configuration for the import
  * @param parentVolume Parent logical volume to place the imported geometry in
  * @throws std::runtime_error if import fails
+ * @details Imports a geometry defined in an external JSON file and places it
+ *          in the parent volume with the specified transformation.
+ */
+void GeometryParser::CreateAssembly(const json& config) {
+    // Get the assembly name
+    std::string assemblyName = config["name"].get<std::string>();
+    G4cout << "Creating assembly " << assemblyName << G4endl;
+    
+    // Create a new assembly volume
+    G4AssemblyVolume* assembly = new G4AssemblyVolume();
+    
+    // Store the assembly in the assemblies map
+    assemblies[assemblyName] = assembly;
+    
+    // Create a dummy logical volume for the assembly
+    // This is needed because Geant4 requires a logical volume for placement
+    // We'll use a small box with no material as a placeholder
+    G4Box* dummyBox = new G4Box(assemblyName + "_dummy", 1*mm, 1*mm, 1*mm);
+    G4Material* vacuum = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic");
+    G4LogicalVolume* dummyLV = new G4LogicalVolume(dummyBox, vacuum, assemblyName + "_logical");
+    
+    // Make the dummy volume invisible
+    dummyLV->SetVisAttributes(G4VisAttributes::GetInvisible());
+    
+    // Store the logical volume in the volumes map
+    volumes[assemblyName] = dummyLV;
+    
+    // Find all child objects of this assembly
+    // A child object is any volume that has this assembly as its mother_volume
+    for (const auto& volConfig : geometryConfig["volumes"]) {
+        // Skip if this is not a child of this assembly
+        if (!volConfig.contains("mother_volume") || 
+            volConfig["mother_volume"].get<std::string>() != assemblyName) {
+            continue;
+        }
+        
+        // Skip if this is another assembly (to avoid circular references)
+        if (volConfig["type"].get<std::string>() == "assembly") {
+            G4cout << "Warning: Assembly " << volConfig["name"].get<std::string>() 
+                   << " has parent assembly " << assemblyName 
+                   << ". Nested assemblies are not supported." << G4endl;
+            continue;
+        }
+        
+        // Create the logical volume for this child if it doesn't exist yet
+        std::string childName = volConfig["name"].get<std::string>();
+        G4LogicalVolume* childLV = nullptr;
+        
+        if (volumes.find(childName) == volumes.end()) {
+            childLV = CreateVolume(volConfig);
+        } else {
+            childLV = volumes[childName];
+        }
+        
+        // Parse position and rotation for this child
+        G4ThreeVector position;
+        G4RotationMatrix* rotation = nullptr;
+        ParsePlacement(volConfig, position, rotation);
+        
+        // Add the child to the assembly
+        G4cout << "Adding " << childName << " to assembly " << assemblyName << G4endl;
+        assembly->AddPlacedVolume(childLV, position, rotation);
+    }
+    
+    G4cout << "Created assembly " << assemblyName << G4endl;
+}
+
+/**
+ * @brief Import an assembled geometry from an external JSON file
+ * @param config JSON configuration for the import
+ * @param parentVolume Parent logical volume to place the imported geometry in
  * @details Imports a geometry defined in an external JSON file and places it
  *          in the parent volume with the specified transformation.
  */
