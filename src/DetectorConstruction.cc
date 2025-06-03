@@ -137,10 +137,16 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
     // Get pointer to LXe volume for scoring
     // The LXe volume should be the first daughter of the world volume
-    G4LogicalVolume* worldLV = worldPhys->GetLogicalVolume();
-    if (worldLV->GetNoDaughters() > 0) {
-        G4VPhysicalVolume* lxePhys = worldLV->GetDaughter(0);
-        lXeVolume = lxePhys->GetLogicalVolume();
+    //G4LogicalVolume* worldLV = worldPhys->GetLogicalVolume();
+    //if (worldLV->GetNoDaughters() > 0) {
+    //    G4VPhysicalVolume* lxePhys = worldLV->GetDaughter(0);
+    //    lXeVolume = lxePhys->GetLogicalVolume();
+    //}
+
+    // check if world volume is valid
+    if (worldPhys == nullptr) {
+        G4cerr << "World volume is not valid!" << G4endl;
+        exit(1);
     }
 
     return worldPhys;
