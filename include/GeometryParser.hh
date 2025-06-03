@@ -227,11 +227,10 @@ private:
     
     /**
      * @brief Parse a placement object and extract position and rotation
-     * @param placement JSON object containing position and optional rotation
+     * @param config JSON object containing placement information
      * @param position Reference to G4ThreeVector to store position
      * @param rotation Reference to G4RotationMatrix pointer to store rotation
-     * @details Handles both the new format with a single placement object and
-     *          the legacy format with separate position and rotation objects
+     * @details Handles the geometry-editor format with placements array
      */
     void ParsePlacement(const json& config, G4ThreeVector& position, G4RotationMatrix*& rotation);
 };
