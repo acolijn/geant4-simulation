@@ -1,65 +1,427 @@
 {
-    "world": {
-        "type": "box",
-        "name": "World",
-        "material": "G4_AIR",
-        "size": {
-            "x": 2.0,
-            "y": 2.0,
-            "z": 2.0,
-            "unit": "m"
-        },
-        "position": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0,
-            "unit": "m"
-        },
-        "rotation": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0,
-            "unit": "deg"
-        }
+  "world": {
+    "type": "box",
+    "name": "World",
+    "g4name": "World",
+    "material": "G4_AIR",
+    "visible": true,
+    "wireframe": true,
+    "dimensions": {
+      "x": 2000,
+      "y": 2000,
+      "z": 2000
     },
-    "volumes": [
+    "placements": [
+      {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ]
+  },
+  "volumes": [
+    {
+      "type": "box",
+      "name": "box_1748893087766_7193",
+      "g4name": "Box_10",
+      "material": "G4_AIR",
+      "visible": true,
+      "dimensions": {
+        "x": 100,
+        "y": 100,
+        "z": 100
+      },
+      "placements": [
         {
-            "type": "box",
-            "name": "LXe",
-            "material": "LXe",
-            "size": {
-                "x": 50.0,
-                "y": 50.0,
-                "z": 50.0,
-                "unit": "cm"
-            },
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "unit": "cm"
-            },
-            "rotation": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "unit": "deg"
-            },
-            "mother_volume": "World"
+          "x": -528.1862198986453,
+          "y": 0.14935142702092213,
+          "z": 221.98527446052702,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ]
+    },
+    {
+      "type": "cylinder",
+      "name": "cylinder_1748893094086_3412",
+      "g4name": "Cylinder_4",
+      "material": "G4_AIR",
+      "visible": true,
+      "dimensions": {
+        "radius": 50,
+        "height": 100
+      },
+      "placements": [
+        {
+          "x": -395.83278669962647,
+          "y": 0,
+          "z": 286.05834145510556,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ]
+    },
+    {
+      "type": "sphere",
+      "name": "sphere_1748893624357_7228",
+      "g4name": "Sphere_1",
+      "material": "G4_AIR",
+      "visible": true,
+      "dimensions": {
+        "radius": 50
+      },
+      "placements": [
+        {
+          "x": 276.95943555397946,
+          "y": 0,
+          "z": -286.8341647688333,
+          "rotation": {
+            "x": 0,
+            "y": 0.4363323129985824,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ]
+    },
+    {
+      "type": "trapezoid",
+      "name": "trapezoid_1748893630961_3375",
+      "g4name": "Trapezoid_1",
+      "material": "G4_AIR",
+      "visible": true,
+      "dimensions": {
+        "dx1": 50,
+        "dx2": 50,
+        "dy1": 50,
+        "dy2": 50,
+        "dz": 50
+      },
+      "placements": [
+        {
+          "x": 280.09381639217963,
+          "y": 24.092989387162575,
+          "z": 244.2889362987289,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ]
+    },
+    {
+      "type": "torus",
+      "name": "torus_1748893636765_4971",
+      "g4name": "Torus_1",
+      "material": "G4_AIR",
+      "visible": true,
+      "dimensions": {
+        "major_radius": 5,
+        "minor_radius": 1
+      },
+      "placements": [
+        {
+          "x": 0,
+          "y": 0,
+          "z": 284.6398170524286,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ]
+    },
+    {
+      "type": "ellipsoid",
+      "name": "ellipsoid_1748893642439_7044",
+      "g4name": "Ellipsoid_1",
+      "material": "G4_AIR",
+      "visible": true,
+      "dimensions": {
+        "x_radius": 5,
+        "y_radius": 3,
+        "z_radius": 4
+      },
+      "placements": [
+        {
+          "x": 472.78773553896974,
+          "y": 0,
+          "z": 292.844691153647,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ]
+    },
+    {
+      "type": "polycone",
+      "name": "polycone_1748893648393_914",
+      "g4name": "Polycone_1",
+      "material": "G4_AIR",
+      "visible": true,
+      "dimensions": {
+        "z": [
+          -5,
+          0,
+          5
+        ],
+        "rmin": [
+          0,
+          0,
+          0
+        ],
+        "rmax": [
+          3,
+          5,
+          2
+        ]
+      },
+      "placements": [
+        {
+          "x": 700.1707494329653,
+          "y": 0,
+          "z": 297.1969819342383,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ]
+    },
+    {
+      "type": "cylinder",
+      "name": "cylinder_1748893694611_8853",
+      "g4name": "BigDisk",
+      "material": "G4_AIR",
+      "visible": true,
+      "dimensions": {
+        "radius": 200,
+        "height": 30
+      },
+      "placements": [
+        {
+          "x": -164.073001633775,
+          "y": 1588.3037155638524,
+          "z": 359.8839500718291,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ]
+    },
+    {
+      "type": "compound",
+      "name": "SiDet",
+      "components": [
+        {
+          "type": "box",
+          "name": "box_1748878324900_4839",
+          "g4name": "wafer0",
+          "material": "G4_AIR",
+          "dimensions": {
+            "x": 100,
+            "y": 100,
+            "z": 3
+          },
+          "placements": [
+            {
+              "x": 50,
+              "y": 0,
+              "z": 0,
+              "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "parent": ""
+            }
+          ]
         },
         {
-            "type": "sphere",
-            "name": "Detector",
-            "material": "G4_WATER",
-            "radius": 10.0,
-            "unit": "cm",
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 30.0,
-                "unit": "cm"
-            },
-            "mother_volume": "World"
+          "type": "box",
+          "name": "box_1748878324900_5828",
+          "g4name": "wafer1",
+          "material": "G4_AIR",
+          "dimensions": {
+            "x": 60,
+            "y": 100,
+            "z": 3
+          },
+          "placements": [
+            {
+              "x": -50,
+              "y": 0,
+              "z": 0,
+              "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "parent": ""
+            }
+          ]
+        },
+        {
+          "type": "box",
+          "name": "box_1748878324900_7817",
+          "g4name": "wafer2",
+          "material": "G4_AIR",
+          "dimensions": {
+            "x": 100,
+            "y": 100,
+            "z": 3
+          },
+          "placements": [
+            {
+              "x": -150,
+              "y": 0,
+              "z": 0,
+              "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "parent": ""
+            }
+          ]
         }
-    ]
+      ],
+      "placements": [
+        {
+          "g4name": "SiDet_0",
+          "x": -300.52788281360824,
+          "y": -424.10527372722356,
+          "z": -46.48017023522725,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        },
+        {
+          "g4name": "SiDet_1",
+          "x": 520.985565980121,
+          "y": -424.10527372722356,
+          "z": -39.96662689298114,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ]
+    },
+    {
+      "type": "compound",
+      "name": "PMT",
+      "components": [
+        {
+          "type": "box",
+          "name": "box_1748899413060_9570",
+          "g4name": "topBox",
+          "material": "G4_AIR",
+          "dimensions": {
+            "x": 100,
+            "y": 100,
+            "z": 100
+          },
+          "placements": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "parent": ""
+            }
+          ]
+        },
+        {
+          "type": "cylinder",
+          "name": "cylinder_1748899413060_2195",
+          "g4name": "myCylinder",
+          "material": "G4_AIR",
+          "dimensions": {
+            "radius": 50,
+            "height": 100
+          },
+          "placements": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 100,
+              "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "parent": "box_1748899413060_9570"
+            }
+          ]
+        }
+      ],
+      "placements": [
+        {
+          "g4name": "PMT_0",
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "cylinder_1748893694611_8853"
+        },
+        {
+          "g4name": "PMT_1",
+          "x": -761.7859842275171,
+          "y": 63.41733348551572,
+          "z": -661.628770067998,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ]
+    }
+  ],
+  "hitsCollections": [
+    {
+      "name": "MyHitsCollection",
+      "description": "Default hits collection for energy deposits"
+    }
+  ]
 }

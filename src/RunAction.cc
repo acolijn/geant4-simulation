@@ -60,8 +60,8 @@ RunAction::~RunAction()
 void RunAction::BeginOfRunAction(const G4Run*)
 {
     // Create ROOT file and tree
-    rootFile = new TFile("neutron_data.root", "RECREATE");
-    eventTree = new TTree("neutronTree", "Neutron Transport Data");
+    rootFile = new TFile("GeoTest.root", "RECREATE");
+    eventTree = new TTree("GeoTestTree", "Geometry Test Data");
     
     // Create branches with appropriate types
     eventTree->Branch("EnergyDeposit", &fEnergyDep, "EnergyDeposit/D");

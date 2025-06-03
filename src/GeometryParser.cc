@@ -27,6 +27,7 @@
 #include "G4PVPlacement.hh"
 #include "G4PVParameterised.hh"
 #include "G4AssemblyVolume.hh"
+#include "G4VisAttributes.hh"
 
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
@@ -475,72 +476,73 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
 G4VSolid* GeometryParser::CreateBooleanSolid(const json& config, const std::string& name) {
     std::string type = config["type"].get<std::string>();
     
-        // Get the first and second solids
-        G4VSolid* solid1 = nullptr;
-        G4VSolid* solid2 = nullptr;
+    // Get the first and second solids
+    G4VSolid* solid1 = nullptr;
+    G4VSolid* solid2 = nullptr;
+    
+    // First solid can be a reference or inline definition
+    if (config["solid1"].is_string()) {
+        std::string solid1Name = config["solid1"].get<std::string>();
+        if (solids.find(solid1Name) == solids.end()) {
+            throw std::runtime_error("Referenced solid not found: " + solid1Name);
+        }
+        solid1 = solids[solid1Name];
+    } else {
+        solid1 = CreateSolid(config["solid1"], name + "_solid1");
+    }
+    
+    // Second solid can be a reference or inline definition
+    if (config["solid2"].is_string()) {
+        std::string solid2Name = config["solid2"].get<std::string>();
+        if (solids.find(solid2Name) == solids.end()) {
+            throw std::runtime_error("Referenced solid not found: " + solid2Name);
+        }
+        solid2 = solids[solid2Name];
+    } else {
+        solid2 = CreateSolid(config["solid2"], name + "_solid2");
+    }
+    
+    // Get transformation for second solid
+    G4ThreeVector position(0, 0, 0);
+    G4RotationMatrix* rotation = nullptr;
+    
+    // Check for placement object first
+    if (config.contains("placement")) {
+        ParsePlacement(config, position, rotation);
+    }
+    // Check for relative_position, then fall back to position for backward compatibility
+    else if (config.contains("relative_position")) {
+        position = ParseVector(config["relative_position"]);
         
-        // First solid can be a reference or inline definition
-        if (config["solid1"].is_string()) {
-            std::string solid1Name = config["solid1"].get<std::string>();
-            if (solids.find(solid1Name) == solids.end()) {
-                throw std::runtime_error("Referenced solid not found: " + solid1Name);
-            }
-            solid1 = solids[solid1Name];
-        } else {
-            solid1 = CreateSolid(config["solid1"], name + "_solid1");
+        if (config.contains("relative_rotation")) {
+            rotation = ParseRotation(config["relative_rotation"]);
         }
+    } 
+    // Legacy format
+    else if (config.contains("position") && !config.contains("mother_volume")) {
+        // Only use position if this is not a volume placement (no mother_volume)
+        position = ParseVector(config["position"]);
         
-        // Second solid can be a reference or inline definition
-        if (config["solid2"].is_string()) {
-            std::string solid2Name = config["solid2"].get<std::string>();
-            if (solids.find(solid2Name) == solids.end()) {
-                throw std::runtime_error("Referenced solid not found: " + solid2Name);
-            }
-            solid2 = solids[solid2Name];
-        } else {
-            solid2 = CreateSolid(config["solid2"], name + "_solid2");
-        }
-        
-        // Get transformation for second solid
-        G4ThreeVector position(0, 0, 0);
-        G4RotationMatrix* rotation = nullptr;
-        
-        // Check for placement object first
-        if (config.contains("placement")) {
-            ParsePlacement(config, position, rotation);
-        }
-        // Check for relative_position, then fall back to position for backward compatibility
-        else if (config.contains("relative_position")) {
-            position = ParseVector(config["relative_position"]);
-            
-            if (config.contains("relative_rotation")) {
-                rotation = ParseRotation(config["relative_rotation"]);
-            }
-        } 
-        // Legacy format
-        else if (config.contains("position") && !config.contains("mother_volume")) {
-            // Only use position if this is not a volume placement (no mother_volume)
-            position = ParseVector(config["position"]);
-            
-            if (config.contains("rotation") && !config.contains("mother_volume")) {
-                rotation = ParseRotation(config["rotation"]);
-            }
-        }
-        
-        // Create the boolean solid
-        if (type == "union") {
-            booleanSolid = new G4UnionSolid(name, solid1, solid2, rotation, position);
-        }
-        else if (type == "subtraction") {
-            booleanSolid = new G4SubtractionSolid(name, solid1, solid2, rotation, position);
-        }
-        else if (type == "intersection") {
-            booleanSolid = new G4IntersectionSolid(name, solid1, solid2, rotation, position);
-        }
-        else {
-            throw std::runtime_error("Invalid boolean operation: " + type);
+        if (config.contains("rotation") && !config.contains("mother_volume")) {
+            rotation = ParseRotation(config["rotation"]);
         }
     }
+    
+    G4BooleanSolid* booleanSolid = nullptr;
+    // Create the boolean solid
+    if (type == "union") {
+        booleanSolid = new G4UnionSolid(name, solid1, solid2, rotation, position);
+    }
+    else if (type == "subtraction") {
+        booleanSolid = new G4SubtractionSolid(name, solid1, solid2, rotation, position);
+    }
+    else if (type == "intersection") {
+        booleanSolid = new G4IntersectionSolid(name, solid1, solid2, rotation, position);
+    }
+    else {
+        throw std::runtime_error("Invalid boolean operation: " + type);
+    }
+    
     
     if (!booleanSolid) {
         throw std::runtime_error("Failed to create boolean solid: " + name);

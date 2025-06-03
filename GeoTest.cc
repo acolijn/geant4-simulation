@@ -11,6 +11,8 @@
 #include "G4UIExecutive.hh"
 #include "G4PhysListFactory.hh"
 #include "G4EmLivermorePhysics.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4AssemblyVolume.hh"
 
 #include "Randomize.hh"
 

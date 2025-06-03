@@ -9,6 +9,7 @@
 #include "G4RotationMatrix.hh"
 #include "G4VSolid.hh"
 #include "G4VSensitiveDetector.hh"
+#include "G4AssemblyVolume.hh"
 #include <string>
 #include <map>
 #include <vector>

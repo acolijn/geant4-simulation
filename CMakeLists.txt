@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16...3.21)
 
-project(neutronLXe)
+project(GeoTest)
 
 option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
 if(WITH_GEANT4_UIVIS)
@@ -22,8 +22,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
-add_executable(neutronLXe neutronLXe.cc ${sources} ${headers})
-target_link_libraries(neutronLXe 
+add_executable(GeoTest GeoTest.cc ${sources} ${headers})
+target_link_libraries(GeoTest 
     ${Geant4_LIBRARIES} 
     ${ROOT_LIBRARIES}
     nlohmann_json::nlohmann_json
@@ -34,8 +34,7 @@ file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/config)
 
 # Copy configuration files
 set(CONFIG_FILES
-    config/geometry.json
-    config/materials.json
+
 )
 
 foreach(_config ${CONFIG_FILES})
@@ -47,11 +46,11 @@ foreach(_config ${CONFIG_FILES})
 endforeach()
 
 # Copy visualization macro
-set(NEUTRONLXE_SCRIPTS
-
+set(GEOTEST_SCRIPTS
+    run_batch.mac
 )
 
-foreach(_script ${NEUTRONLXE_SCRIPTS})
+foreach(_script ${GEOTEST_SCRIPTS})
     configure_file(
         ${PROJECT_SOURCE_DIR}/${_script}
         ${PROJECT_BINARY_DIR}/${_script}
