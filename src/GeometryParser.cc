@@ -196,35 +196,27 @@ G4RotationMatrix* GeometryParser::ParseRotation(const json& rot) {
 
 /**
  * @brief Parse a placement object and extract position and rotation
- * @param config JSON object containing placement information
+ * @param placement JSON object containing placement information
  * @param position Reference to G4ThreeVector to store position
  * @param rotation Reference to G4RotationMatrix pointer to store rotation
- * @details Handles the geometry-editor format with placements array
+ * @details Handles the geometry-editor format with placement object
  */
-void GeometryParser::ParsePlacement(const json& config, G4ThreeVector& position, G4RotationMatrix*& rotation) {
+void GeometryParser::ParsePlacement(const json& placement, G4ThreeVector& position, G4RotationMatrix*& rotation) {
     // Initialize with default values
     position = G4ThreeVector(0, 0, 0);
     rotation = nullptr;
-    
-    // Check for the geometry-editor format with placements array
-    if (config.contains("placements") && config["placements"].is_array() && !config["placements"].empty()) {
-        const auto& placement = config["placements"][0]; // Use first placement
-        
-        // Parse position
-        if (placement.contains("x") && placement.contains("y") && placement.contains("z")) {
-            G4double x = placement["x"].get<double>();
-            G4double y = placement["y"].get<double>();
-            G4double z = placement["z"].get<double>();
-            position = G4ThreeVector(x*mm, y*mm, z*mm);
-        }
-        
-        // Parse rotation
-        if (placement.contains("rotation")) {
-            rotation = ParseRotation(placement["rotation"]);
-        }
+
+    // Parse position
+    if (placement.contains("x") && placement.contains("y") && placement.contains("z")) {
+        G4double x = placement["x"].get<double>();
+        G4double y = placement["y"].get<double>();
+        G4double z = placement["z"].get<double>();
+        position = G4ThreeVector(x*mm, y*mm, z*mm);
     }
-    else {
-        G4cout << "Warning: No placements array found in config" << G4endl;
+
+    // Parse rotation
+    if (placement.contains("rotation")) {
+        rotation = ParseRotation(placement["rotation"]);
     }
 }
 
@@ -287,16 +279,25 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
     std::string worldName = geometryConfig["world"]["name"].get<std::string>();
     volumes[worldName] = worldLV;
     
-    // First pass: Create all logical volumes
+    // First pass: Create all logical volumes (skip assemblies)
     for (const auto& volConfig : geometryConfig["volumes"]) {
+        if (volConfig["type"].get<std::string>() == "assembly") continue;
         G4LogicalVolume* logicalVolume = CreateVolume(volConfig);
         std::string name = volConfig["name"].get<std::string>();
         volumes[name] = logicalVolume;
         G4cout << "Created logical volume: " << name << G4endl;
     }
-    
-    // Second pass: Place all volumes
+
+    // Create all assemblies before placement
     for (const auto& volConfig : geometryConfig["volumes"]) {
+        if (volConfig["type"].get<std::string>() == "assembly") {
+            CreateAssembly(volConfig);
+        }
+    }
+    
+    // Second pass: Place all volumes (skip assemblies)
+    for (const auto& volConfig : geometryConfig["volumes"]) {
+        if (volConfig["type"].get<std::string>() == "assembly") continue;
         std::string name = volConfig["name"].get<std::string>();        
         G4LogicalVolume* logicalVolume = volumes[name];
         
@@ -378,6 +379,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
         }
         
         // Process each placement
+        int iCopy = 0;
         for (const auto& placement : volConfig["placements"]) {
             // Get position
             G4double x = placement["x"].get<double>();
@@ -409,7 +411,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             G4cout << "Placing assembly " << assemblyName << " in " << parentName 
                    << " at position " << position << G4endl;
             
-            assembly->MakeImprint(parentVolume, position, rotation);
+            assembly->MakeImprint(parentVolume, position, rotation, iCopy++, true);
         }
     }
     
@@ -665,65 +667,54 @@ void GeometryParser::CreateAssembly(const json& config) {
     // Get the assembly name
     std::string assemblyName = config["name"].get<std::string>();
     G4cout << "Creating assembly " << assemblyName << G4endl;
-    
+
     // Create a new assembly volume
     G4AssemblyVolume* assembly = new G4AssemblyVolume();
-    
+
     // Store the assembly in the assemblies map
     assemblies[assemblyName] = assembly;
-    
-    // Create a dummy logical volume for the assembly
-    // This is needed because Geant4 requires a logical volume for placement
-    // We'll use a small box with no material as a placeholder
-    G4Box* dummyBox = new G4Box(assemblyName + "_dummy", 1*mm, 1*mm, 1*mm);
-    G4Material* vacuum = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic");
-    G4LogicalVolume* dummyLV = new G4LogicalVolume(dummyBox, vacuum, assemblyName + "_logical");
-    
-    // Make the dummy volume invisible
-    dummyLV->SetVisAttributes(G4VisAttributes::GetInvisible());
-    
-    // Store the logical volume in the volumes map
-    volumes[assemblyName] = dummyLV;
-    
-    // Find all child objects of this assembly
-    // A child object is any volume that has this assembly as its mother_volume
-    for (const auto& volConfig : geometryConfig["volumes"]) {
-        // Skip if this is not a child of this assembly
-        if (!volConfig.contains("mother_volume") || 
-            volConfig["mother_volume"].get<std::string>() != assemblyName) {
-            continue;
-        }
-        
+
+    // Loop through all components of this assembly
+    G4cout << "Looping through components of assembly " << assemblyName << G4endl;
+    for (const auto& compConfig : config["components"]) {
+        std::string childName = compConfig["name"].get<std::string>();
+        G4cout << "Processing component " << childName << " of assembly " << assemblyName << G4endl;
+
         // Skip if this is another assembly (to avoid circular references)
-        if (volConfig["type"].get<std::string>() == "assembly") {
-            G4cout << "Warning: Assembly " << volConfig["name"].get<std::string>() 
-                   << " has parent assembly " << assemblyName 
+        if (compConfig["type"].get<std::string>() == "assembly") {
+            G4cout << "Warning: Assembly " << childName
+                   << " is a component of assembly " << assemblyName
                    << ". Nested assemblies are not supported." << G4endl;
             continue;
         }
-        
-        // Create the logical volume for this child if it doesn't exist yet
-        std::string childName = volConfig["name"].get<std::string>();
+
+        // Create the logical volume for this component if it doesn't exist yet
         G4LogicalVolume* childLV = nullptr;
-        
         if (volumes.find(childName) == volumes.end()) {
-            childLV = CreateVolume(volConfig);
+            childLV = CreateVolume(compConfig);
         } else {
             childLV = volumes[childName];
         }
-        
-        // Parse position and rotation for this child
-        G4ThreeVector position;
-        G4RotationMatrix* rotation = nullptr;
-        ParsePlacement(volConfig, position, rotation);
-        
-        // Add the child to the assembly
-        G4cout << "Adding " << childName << " to assembly " << assemblyName << G4endl;
-        assembly->AddPlacedVolume(childLV, position, rotation);
+
+        // Each component can have multiple placements
+        if (!compConfig.contains("placements") || compConfig["placements"].empty()) {
+            G4cout << "Warning: No placements for component " << childName << " in assembly " << assemblyName << G4endl;
+            continue;
+        }
+        for (const auto& placement : compConfig["placements"]) {
+            G4ThreeVector position;
+            G4RotationMatrix* rotation = nullptr;
+            // Use the placement info (relative to assembly)
+            ParsePlacement(placement, position, rotation);
+            G4cout << "Adding " << childName << " to assembly " << assemblyName << " at position " << position << G4endl;
+            assembly->AddPlacedVolume(childLV, position, rotation);
+        }
     }
-    
+
+
     G4cout << "Created assembly " << assemblyName << G4endl;
 }
+
 
 /**
  * @brief Import an assembled geometry from an external JSON file
