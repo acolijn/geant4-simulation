@@ -312,6 +312,9 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
     // Create world volume
     G4cout << "GeometryParser::ConstructGeometry() - Creating world volume" << G4endl;
     G4LogicalVolume* worldLV = CreateVolume(geometryConfig["world"]);    
+    auto worldVis = new G4VisAttributes();
+    worldVis->SetVisibility(false);
+    worldLV->SetVisAttributes(worldVis);
     G4VPhysicalVolume* worldPV = new G4PVPlacement(
         nullptr, G4ThreeVector(), worldLV, "World", nullptr, false, 0);
     G4cout << "GeometryParser::ConstructGeometry() - Created world physical volume" << G4endl;
