@@ -229,8 +229,39 @@ void GeometryParser::ParsePlacement(const json& placement, G4ThreeVector& positi
  *          Supports all Geant4 shapes, boolean operations, and external geometries.
  */
 G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
-    std::cout << "Creating volume: " << config["name"] << std::endl;
+    // Debug output to check config structure
+    G4cout << "GeometryParser::CreateVolume() - Config keys available:";
+    for (auto it = config.begin(); it != config.end(); ++it) {
+        G4cout << " " << it.key();
+    }
+    G4cout << G4endl;
+    
+    // Check if required keys exist
+    std::string g4name;
+    if (config.contains("g4name")) {
+        g4name = config["g4name"].get<std::string>();
+        G4cout << "GeometryParser::CreateVolume() - Creating volume: " << g4name << G4endl;
+    } else {
+        // If g4name is missing, use name if available or generate a default
+        if (config.contains("name")) {
+            g4name = config["name"].get<std::string>() + "_g4";
+            G4cout << "GeometryParser::CreateVolume() - g4name missing, using derived name: " << g4name << G4endl;
+        } else {
+            g4name = "UnnamedVolume_" + std::to_string(volumes.size());
+            G4cout << "GeometryParser::CreateVolume() - Both g4name and name missing, using generated name: " << g4name << G4endl;
+        }
+    }
+    
+    if (!config.contains("name")) {
+        G4cerr << "GeometryParser::CreateVolume() - Error: name key not found in config" << G4endl;
+        throw std::runtime_error("Missing name key in volume config");
+    }
     std::string name = config["name"].get<std::string>();
+    
+    if (!config.contains("type")) {
+        G4cerr << "GeometryParser::CreateVolume() - Error: type key not found in config" << G4endl;
+        throw std::runtime_error("Missing type key in volume config");
+    }
     std::string type = config["type"].get<std::string>();
     
     // Check if volume already exists
@@ -238,52 +269,36 @@ G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
         return volumes[name];
     }
 
-    // Special handling for union volumes with components
-    if (type == "union" && config.contains("components") && !config["components"].empty()) {
-        // For union volumes with components, we'll use the material from the first component
-        // or default to G4_AIR if no components are available
-        G4cout << "Union volume with components detected: " << name << G4endl;
-        
-        // Create solid first (this will recursively create all component solids)
-        G4cout << "Creating union solid: " << name << G4endl;
-        G4VSolid* solid = CreateSolid(config, name);
-        G4cout << "Created union solid: " << solid << G4endl;
-        
-        // Use G4_AIR as default material for union volumes
-        G4NistManager* nistManager = G4NistManager::Instance();
-        G4Material* material = nistManager->FindOrBuildMaterial("G4_AIR");
-        G4cout << "Using default material G4_AIR for union volume" << G4endl;
-        
-        // Create logical volume
-        G4LogicalVolume* logicalVolume = new G4LogicalVolume(solid, material, name);
-        volumes[name] = logicalVolume;
-        
-        std::cout << "Created union volume: " << name << std::endl;
-        return logicalVolume;
-    }
-    
-    // Regular volume handling
     // Get material
-    G4cout << "Material: " << config["material"] << G4endl;
-    std::string mat_name = config["material"].get<std::string>();
     G4Material* material = nullptr;
-    if (materials.find(mat_name) == materials.end()) {
-        material = CreateMaterial(mat_name, materialsConfig["materials"][mat_name]);
+    
+    // Check if material key exists in the config
+    if (config.contains("material")) {
+        G4cout << "GeometryParser::CreateVolume() - Material: " << config["material"] << G4endl;
+        std::string mat_name = config["material"].get<std::string>();
+        
+        if (materials.find(mat_name) == materials.end()) {
+            material = CreateMaterial(mat_name, materialsConfig["materials"][mat_name]);
+        } else {
+            material = materials[mat_name];
+        }
+        G4cout << "GeometryParser::CreateVolume() - Material: " << material << G4endl;
     } else {
-        material = materials[mat_name];
+        // Default to G4_AIR if no material is specified
+        G4cout << "GeometryParser::CreateVolume() - No material specified, using G4_AIR" << G4endl;
+        G4NistManager* nistManager = G4NistManager::Instance();
+        material = nistManager->FindOrBuildMaterial("G4_AIR");
     }
-    G4cout << "Material: " << material << G4endl;
 
-    // Create solid
-    G4cout << "Creating solid: " << name << G4endl;
+    // Special handling for union volumes with components
+    G4cout << "GeometryParser::CreateVolume() - Creating solid: " << name << G4endl;
     G4VSolid* solid = CreateSolid(config, name);
-    G4cout << "Created solid: " << solid << G4endl;
-
+    G4cout << "GeometryParser::CreateVolume() - Created solid: " << solid << G4endl;
     // Create logical volume
     G4LogicalVolume* logicalVolume = new G4LogicalVolume(solid, material, name);
     volumes[name] = logicalVolume;
     
-    std::cout << "Created volume: " << name << std::endl;
+    std::cout << "GeometryParser::CreateVolume() - Created volume: " << name << std::endl;
     return logicalVolume;
 }
 
@@ -295,23 +310,52 @@ G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
  */
 G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
     // Create world volume
-    G4cout << "Creating world volume" << G4endl;
+    G4cout << "GeometryParser::ConstructGeometry() - Creating world volume" << G4endl;
     G4LogicalVolume* worldLV = CreateVolume(geometryConfig["world"]);    
     G4VPhysicalVolume* worldPV = new G4PVPlacement(
         nullptr, G4ThreeVector(), worldLV, "World", nullptr, false, 0);
-    G4cout << "Created world physical volume" << G4endl;
+    G4cout << "GeometryParser::ConstructGeometry() - Created world physical volume" << G4endl;
     
     // Store the world volume in our volumes map for parent references
     std::string worldName = geometryConfig["world"]["name"].get<std::string>();
     volumes[worldName] = worldLV;
     
     // First pass: Create all logical volumes (skip assemblies)
-    for (const auto& volConfig : geometryConfig["volumes"]) {
-        if (volConfig["type"].get<std::string>() == "assembly") continue;
-        G4LogicalVolume* logicalVolume = CreateVolume(volConfig);
-        std::string name = volConfig["name"].get<std::string>();
-        volumes[name] = logicalVolume;
-        G4cout << "Created logical volume: " << name << G4endl;
+    G4LogicalVolume* logicalVolume;
+    G4cout << "GeometryParser::ConstructGeometry() - First pass: Create all logical volumes (skip assemblies)" << G4endl;
+    
+    // Debug the volumes array structure
+    G4cout << "GeometryParser::ConstructGeometry() - Number of volumes in config: " << geometryConfig["volumes"].size() << G4endl;
+    
+    for (size_t i = 0; i < geometryConfig["volumes"].size(); i++) {
+        const auto& volConfig = geometryConfig["volumes"][i];
+        
+        // Check if required keys exist
+        if (!volConfig.contains("type")) {
+            G4cerr << "Error: type key not found in volume " << i << G4endl;
+            continue;
+        }
+        
+        if (volConfig["type"].get<std::string>() == "assembly") {
+            G4cout << "GeometryParser::ConstructGeometry() - Skipping assembly volume" << G4endl;
+            continue;
+        }
+        
+        if (!volConfig.contains("name")) {
+            G4cerr << "Error: name key not found in volume " << i << G4endl;
+            continue;
+        }
+        
+        G4cout << "GeometryParser::ConstructGeometry() - Creating logical volume: " << volConfig["name"].get<std::string>() << G4endl;
+        
+        try {
+            logicalVolume = CreateVolume(volConfig);
+            std::string name = volConfig["name"].get<std::string>();
+            volumes[name] = logicalVolume;
+            G4cout << "GeometryParser::ConstructGeometry() - Created logical volume: " << name << G4endl;
+        } catch (const std::exception& e) {
+            G4cerr << "GeometryParser::ConstructGeometry() - Error creating volume: " << e.what() << G4endl;
+        }
     }
 
     // Create all assemblies before placement
@@ -329,7 +373,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
         
         // Skip if no placements array
         if (!volConfig.contains("placements") || volConfig["placements"].empty()) {
-            G4cout << "Warning: No placements for volume " << name << G4endl;
+            G4cout << "GeometryParser::ConstructGeometry() - Warning: No placements for volume " << name << G4endl;
             continue;
         }
         
@@ -362,7 +406,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             G4LogicalVolume* parentVolume = volumes[parentName];
             
             // Place the volume
-            G4cout << "Placing " << name << " in " << parentName 
+            G4cout << "GeometryParser::ConstructGeometry() - Placing " << name << " in " << parentName 
                    << " at position " << position << G4endl;
             
             // Use g4name if available, otherwise use name
@@ -386,6 +430,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
     for (const auto& volConfig : geometryConfig["volumes"]) {
         // Skip non-assembly volumes
         if (volConfig["type"].get<std::string>() != "assembly") {
+            G4cout << "GeometryParser::ConstructGeometry() - Skipping non-assembly volume" << G4endl;
             continue;
         }
         
@@ -400,7 +445,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
         
         // Skip if no placements array
         if (!volConfig.contains("placements") || volConfig["placements"].empty()) {
-            G4cout << "Warning: No placements for assembly " << assemblyName << G4endl;
+            G4cout << "GeometryParser::ConstructGeometry() - Warning: No placements for assembly " << assemblyName << G4endl;
             continue;
         }
         
@@ -434,7 +479,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             G4LogicalVolume* parentVolume = volumes[parentName];
             
             // Place the assembly
-            G4cout << "Placing assembly " << assemblyName << " in " << parentName 
+            G4cout << "GeometryParser::ConstructGeometry() - Placing assembly " << assemblyName << " in " << parentName 
                    << " at position " << position << G4endl;
             
             assembly->MakeImprint(parentVolume, position, rotation, iCopy++, true);
@@ -501,17 +546,17 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     // Dispatch to appropriate shape creation function based on type
     if (type == "union") {
         // Check if this is a new-style union with components
-        if (config.contains("components") && !config["components"].empty()) {
-            G4cout << "Creating union solid from components: " << name << G4endl;
-            solid = CreateBooleanSolidFromComponents(config, name);
-        } else {
+        //if (config.contains("components") && !config["components"].empty()) {
+        G4cout << "Creating union solid from components: " << name << G4endl;
+        solid = CreateBooleanSolidFromComponents(config, name);
+        //} else {
             // Legacy boolean operation with solid1 and solid2
-            solid = CreateBooleanSolid(config, name);
-        }
+            //solid = CreateBooleanSolid(config, name);
+        //}
     }
-    else if (type == "subtraction" || type == "intersection") {
-        solid = CreateBooleanSolid(config, name);
-    }
+    //else if (type == "subtraction" || type == "intersection") {
+    //    solid = CreateBooleanSolid(config, name);
+    //}
     else if (type == "box") {
         solid = CreateBoxSolid(dims, name);
     }
@@ -623,12 +668,26 @@ G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, c
     
     // Create the first component solid
     const auto& firstComponent = unionComponents[0];
+    
+    // Check if the first component has all required keys
+    if (!firstComponent.contains("name")) {
+        G4cerr << "Error: First component missing 'name' key" << G4endl;
+        throw std::runtime_error("First component missing 'name' key");
+    }
     std::string firstCompName = firstComponent["name"].get<std::string>();
     
     // Debug the first component
     G4cout << "First component details:" << G4endl;
     G4cout << "  Name: " << firstCompName << G4endl;
+    
+    // Check for type key
+    if (!firstComponent.contains("type")) {
+        G4cerr << "Error: First component missing 'type' key" << G4endl;
+        throw std::runtime_error("First component missing 'type' key");
+    }
     G4cout << "  Type: " << firstComponent["type"].get<std::string>() << G4endl;
+    
+    // Check for dimensions
     G4cout << "  Has dimensions: " << (firstComponent.contains("dimensions") ? "yes" : "no") << G4endl;
     if (firstComponent.contains("dimensions")) {
         G4cout << "  Dimensions keys: ";
@@ -646,11 +705,24 @@ G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, c
     // Process remaining union components
     for (size_t i = 1; i < unionComponents.size(); i++) {
         const auto& component = unionComponents[i];
+        
+        // Check if component has required keys
+        if (!component.contains("name")) {
+            G4cerr << "Error: Union component " << i << " missing 'name' key" << G4endl;
+            continue; // Skip this component
+        }
         std::string compName = component["name"].get<std::string>();
         
         // Create the component solid
         G4cout << "Creating union component solid: " << compName << G4endl;
-        G4VSolid* componentSolid = CreateSolid(component, compName);
+        G4VSolid* componentSolid = nullptr;
+        
+        try {
+            componentSolid = CreateSolid(component, compName);
+        } catch (const std::exception& e) {
+            G4cerr << "Error creating component solid: " << e.what() << G4endl;
+            continue; // Skip this component
+        }
         
         // Get the component's position and rotation
         G4ThreeVector position(0, 0, 0);
@@ -659,14 +731,37 @@ G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, c
         // Get position and rotation from the first placement
         if (component.contains("placements") && !component["placements"].empty()) {
             const auto& placement = component["placements"][0];
-            position = G4ThreeVector(
-                placement["x"].get<double>() * mm,
-                placement["y"].get<double>() * mm,
-                placement["z"].get<double>() * mm
-            );
+            
+            // Check for required position keys
+            bool validPosition = true;
+            if (!placement.contains("x")) {
+                G4cerr << "Warning: Missing 'x' in placement for " << compName << G4endl;
+                validPosition = false;
+            }
+            if (!placement.contains("y")) {
+                G4cerr << "Warning: Missing 'y' in placement for " << compName << G4endl;
+                validPosition = false;
+            }
+            if (!placement.contains("z")) {
+                G4cerr << "Warning: Missing 'z' in placement for " << compName << G4endl;
+                validPosition = false;
+            }
+            
+            if (validPosition) {
+                position = G4ThreeVector(
+                    placement["x"].get<double>() * mm,
+                    placement["y"].get<double>() * mm,
+                    placement["z"].get<double>() * mm
+                );
+            }
             
             if (placement.contains("rotation")) {
-                rotation = ParseRotation(placement["rotation"]);
+                try {
+                    rotation = ParseRotation(placement["rotation"]);
+                } catch (const std::exception& e) {
+                    G4cerr << "Error parsing rotation: " << e.what() << G4endl;
+                    // Continue with null rotation
+                }
             }
         }
         
@@ -686,11 +781,24 @@ G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, c
     // Process subtraction components
     for (size_t i = 0; i < subtractionComponents.size(); i++) {
         const auto& component = subtractionComponents[i];
+        
+        // Check if component has required keys
+        if (!component.contains("name")) {
+            G4cerr << "Error: Subtraction component " << i << " missing 'name' key" << G4endl;
+            continue; // Skip this component
+        }
         std::string compName = component["name"].get<std::string>();
         
         // Create the component solid
         G4cout << "Creating subtraction component solid: " << compName << G4endl;
-        G4VSolid* componentSolid = CreateSolid(component, compName);
+        G4VSolid* componentSolid = nullptr;
+        
+        try {
+            componentSolid = CreateSolid(component, compName);
+        } catch (const std::exception& e) {
+            G4cerr << "Error creating subtraction component solid: " << e.what() << G4endl;
+            continue; // Skip this component
+        }
         
         // Get the component's position and rotation
         G4ThreeVector position(0, 0, 0);
@@ -699,14 +807,37 @@ G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, c
         // Get position and rotation from the first placement
         if (component.contains("placements") && !component["placements"].empty()) {
             const auto& placement = component["placements"][0];
-            position = G4ThreeVector(
-                placement["x"].get<double>() * mm,
-                placement["y"].get<double>() * mm,
-                placement["z"].get<double>() * mm
-            );
+            
+            // Check for required position keys
+            bool validPosition = true;
+            if (!placement.contains("x")) {
+                G4cerr << "Warning: Missing 'x' in placement for " << compName << G4endl;
+                validPosition = false;
+            }
+            if (!placement.contains("y")) {
+                G4cerr << "Warning: Missing 'y' in placement for " << compName << G4endl;
+                validPosition = false;
+            }
+            if (!placement.contains("z")) {
+                G4cerr << "Warning: Missing 'z' in placement for " << compName << G4endl;
+                validPosition = false;
+            }
+            
+            if (validPosition) {
+                position = G4ThreeVector(
+                    placement["x"].get<double>() * mm,
+                    placement["y"].get<double>() * mm,
+                    placement["z"].get<double>() * mm
+                );
+            }
             
             if (placement.contains("rotation")) {
-                rotation = ParseRotation(placement["rotation"]);
+                try {
+                    rotation = ParseRotation(placement["rotation"]);
+                } catch (const std::exception& e) {
+                    G4cerr << "Error parsing rotation: " << e.what() << G4endl;
+                    // Continue with null rotation
+                }
             }
         }
         
