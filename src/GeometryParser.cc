@@ -231,12 +231,38 @@ void GeometryParser::ParsePlacement(const json& placement, G4ThreeVector& positi
 G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
     std::cout << "Creating volume: " << config["name"] << std::endl;
     std::string name = config["name"].get<std::string>();
+    std::string type = config["type"].get<std::string>();
     
     // Check if volume already exists
     if (volumes.find(name) != volumes.end()) {
         return volumes[name];
     }
 
+    // Special handling for union volumes with components
+    if (type == "union" && config.contains("components") && !config["components"].empty()) {
+        // For union volumes with components, we'll use the material from the first component
+        // or default to G4_AIR if no components are available
+        G4cout << "Union volume with components detected: " << name << G4endl;
+        
+        // Create solid first (this will recursively create all component solids)
+        G4cout << "Creating union solid: " << name << G4endl;
+        G4VSolid* solid = CreateSolid(config, name);
+        G4cout << "Created union solid: " << solid << G4endl;
+        
+        // Use G4_AIR as default material for union volumes
+        G4NistManager* nistManager = G4NistManager::Instance();
+        G4Material* material = nistManager->FindOrBuildMaterial("G4_AIR");
+        G4cout << "Using default material G4_AIR for union volume" << G4endl;
+        
+        // Create logical volume
+        G4LogicalVolume* logicalVolume = new G4LogicalVolume(solid, material, name);
+        volumes[name] = logicalVolume;
+        
+        std::cout << "Created union volume: " << name << std::endl;
+        return logicalVolume;
+    }
+    
+    // Regular volume handling
     // Get material
     G4cout << "Material: " << config["material"] << G4endl;
     std::string mat_name = config["material"].get<std::string>();
@@ -439,18 +465,38 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     }
     
     G4cout << "Creating solid " << name << G4endl;
+    
+    // Debug output to check config structure
+    G4cout << "Config keys available:";
+    for (auto it = config.begin(); it != config.end(); ++it) {
+        G4cout << " " << it.key();
+    }
+    G4cout << G4endl;
+    
+    // Ensure type exists
+    if (!config.contains("type")) {
+        G4cerr << "Error: No 'type' field in solid config for " << name << G4endl;
+        throw std::runtime_error("Missing 'type' field in solid config");
+    }
+    
     G4VSolid* solid = nullptr;
     std::string type = config["type"].get<std::string>();
+    G4cout << "Solid type: " << type << G4endl;
     
-    // Check for dimensions object
-    if (!config.contains("dimensions") && 
-        type != "union" && type != "subtraction" && type != "intersection") {
+    // Check for dimensions object - only required for basic shapes, not for boolean operations
+    bool needsDimensions = (type != "union" && type != "subtraction" && type != "intersection");
+    
+    if (needsDimensions && !config.contains("dimensions")) {
         G4cerr << "Error: dimensions not found in solid " << name << " of type " << type << G4endl;
         exit(1);
     }
     
     // Get dimensions object for easier access (only for basic shapes)
-    const json& dims = config["dimensions"];
+    const json* dimsPtr = nullptr;
+    if (config.contains("dimensions")) {
+        dimsPtr = &config["dimensions"];
+    }
+    const json& dims = dimsPtr ? *dimsPtr : json::object();
     
     // Dispatch to appropriate shape creation function based on type
     if (type == "union") {
@@ -518,6 +564,13 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
  *          First processes all union operations, then all subtraction operations.
  */
 G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, const std::string& name) {
+    // Debug the entire config structure
+    G4cout << "Boolean solid config keys:";
+    for (auto it = config.begin(); it != config.end(); ++it) {
+        G4cout << " " << it.key();
+    }
+    G4cout << G4endl;
+    
     // Ensure we have components
     if (!config.contains("components") || config["components"].empty()) {
         throw std::runtime_error("No components found for boolean solid: " + name);
@@ -526,14 +579,28 @@ G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, c
     const auto& components = config["components"];
     G4cout << "Creating boolean solid " << name << " with " << components.size() << " components" << G4endl;
     
+    // Debug each component structure
+    for (size_t i = 0; i < components.size(); ++i) {
+        const auto& comp = components[i];
+        G4cout << "Component " << i << " keys:";
+        for (auto it = comp.begin(); it != comp.end(); ++it) {
+            G4cout << " " << it.key();
+        }
+        G4cout << G4endl;
+    }
+    
     // First, separate union and subtraction components
     std::vector<json> unionComponents;
     std::vector<json> subtractionComponents;
     
     for (const auto& component : components) {
+        // Debug output to see component structure
+        G4cout << "Processing component: " << component["name"].get<std::string>() << G4endl;
+        
         std::string operation = "union"; // Default operation is union
         if (component.contains("boolean_operation")) {
             operation = component["boolean_operation"].get<std::string>();
+            G4cout << "  Boolean operation: " << operation << G4endl;
         }
         
         if (operation == "union" || operation == "add") {
@@ -557,9 +624,22 @@ G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, c
     // Create the first component solid
     const auto& firstComponent = unionComponents[0];
     std::string firstCompName = firstComponent["name"].get<std::string>();
-    std::string firstCompType = firstComponent["type"].get<std::string>();
+    
+    // Debug the first component
+    G4cout << "First component details:" << G4endl;
+    G4cout << "  Name: " << firstCompName << G4endl;
+    G4cout << "  Type: " << firstComponent["type"].get<std::string>() << G4endl;
+    G4cout << "  Has dimensions: " << (firstComponent.contains("dimensions") ? "yes" : "no") << G4endl;
+    if (firstComponent.contains("dimensions")) {
+        G4cout << "  Dimensions keys: ";
+        for (auto it = firstComponent["dimensions"].begin(); it != firstComponent["dimensions"].end(); ++it) {
+            G4cout << " " << it.key();
+        }
+        G4cout << G4endl;
+    }
     
     // Create the first solid
+    G4cout << "Creating first component solid: " << firstCompName << G4endl;
     G4VSolid* resultSolid = CreateSolid(firstComponent, firstCompName);
     G4cout << "Created first component solid: " << firstCompName << G4endl;
     
@@ -569,6 +649,7 @@ G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, c
         std::string compName = component["name"].get<std::string>();
         
         // Create the component solid
+        G4cout << "Creating union component solid: " << compName << G4endl;
         G4VSolid* componentSolid = CreateSolid(component, compName);
         
         // Get the component's position and rotation
@@ -591,6 +672,7 @@ G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, c
         
         // Create a union solid
         std::string unionName = name + "_union_" + std::to_string(i);
+        G4cout << "Creating union solid: " << unionName << G4endl;
         G4UnionSolid* unionSolid = new G4UnionSolid(
             unionName, resultSolid, componentSolid, rotation, position);
         
@@ -607,6 +689,7 @@ G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, c
         std::string compName = component["name"].get<std::string>();
         
         // Create the component solid
+        G4cout << "Creating subtraction component solid: " << compName << G4endl;
         G4VSolid* componentSolid = CreateSolid(component, compName);
         
         // Get the component's position and rotation
