@@ -184,6 +184,14 @@ private:
     G4VSolid* CreatePolyhedraSolid(const json& config, const json& dims, const std::string& name);
     
     /**
+     * @brief Create a boolean solid from components in the new format
+     * @param config JSON configuration for the union with components
+     * @param name Name for the resulting solid
+     * @return Pointer to created G4VSolid
+     */
+    G4VSolid* CreateBooleanSolidFromComponents(const json& config, const std::string& name);
+    
+    /**
      * @brief Create a boolean solid (union, subtraction, intersection)
      * @param config JSON configuration for the boolean operation
      * @param name Name for the resulting solid

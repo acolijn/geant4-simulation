@@ -453,7 +453,17 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     const json& dims = config["dimensions"];
     
     // Dispatch to appropriate shape creation function based on type
-    if (type == "union" || type == "subtraction" || type == "intersection") {
+    if (type == "union") {
+        // Check if this is a new-style union with components
+        if (config.contains("components") && !config["components"].empty()) {
+            G4cout << "Creating union solid from components: " << name << G4endl;
+            solid = CreateBooleanSolidFromComponents(config, name);
+        } else {
+            // Legacy boolean operation with solid1 and solid2
+            solid = CreateBooleanSolid(config, name);
+        }
+    }
+    else if (type == "subtraction" || type == "intersection") {
         solid = CreateBooleanSolid(config, name);
     }
     else if (type == "box") {
@@ -496,6 +506,143 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     // Cache the solid
     solids[name] = solid;
     return solid;
+}
+
+/**
+ * @brief Create a boolean solid from components in the new format
+ * @param config JSON configuration for the union with components
+ * @param name Name for the resulting solid
+ * @return Pointer to created G4VSolid
+ * @throws std::runtime_error if boolean operation fails
+ * @details Creates a boolean solid by recursively combining multiple components.
+ *          First processes all union operations, then all subtraction operations.
+ */
+G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, const std::string& name) {
+    // Ensure we have components
+    if (!config.contains("components") || config["components"].empty()) {
+        throw std::runtime_error("No components found for boolean solid: " + name);
+    }
+    
+    const auto& components = config["components"];
+    G4cout << "Creating boolean solid " << name << " with " << components.size() << " components" << G4endl;
+    
+    // First, separate union and subtraction components
+    std::vector<json> unionComponents;
+    std::vector<json> subtractionComponents;
+    
+    for (const auto& component : components) {
+        std::string operation = "union"; // Default operation is union
+        if (component.contains("boolean_operation")) {
+            operation = component["boolean_operation"].get<std::string>();
+        }
+        
+        if (operation == "union" || operation == "add") {
+            unionComponents.push_back(component);
+        } else if (operation == "subtract") {
+            subtractionComponents.push_back(component);
+        } else {
+            G4cout << "Warning: Unknown boolean operation: " << operation << ", treating as union" << G4endl;
+            unionComponents.push_back(component);
+        }
+    }
+    
+    G4cout << "Found " << unionComponents.size() << " union components and " 
+           << subtractionComponents.size() << " subtraction components" << G4endl;
+    
+    // We need at least one union component to start with
+    if (unionComponents.empty()) {
+        throw std::runtime_error("No union components found for boolean solid: " + name);
+    }
+    
+    // Create the first component solid
+    const auto& firstComponent = unionComponents[0];
+    std::string firstCompName = firstComponent["name"].get<std::string>();
+    std::string firstCompType = firstComponent["type"].get<std::string>();
+    
+    // Create the first solid
+    G4VSolid* resultSolid = CreateSolid(firstComponent, firstCompName);
+    G4cout << "Created first component solid: " << firstCompName << G4endl;
+    
+    // Process remaining union components
+    for (size_t i = 1; i < unionComponents.size(); i++) {
+        const auto& component = unionComponents[i];
+        std::string compName = component["name"].get<std::string>();
+        
+        // Create the component solid
+        G4VSolid* componentSolid = CreateSolid(component, compName);
+        
+        // Get the component's position and rotation
+        G4ThreeVector position(0, 0, 0);
+        G4RotationMatrix* rotation = nullptr;
+        
+        // Get position and rotation from the first placement
+        if (component.contains("placements") && !component["placements"].empty()) {
+            const auto& placement = component["placements"][0];
+            position = G4ThreeVector(
+                placement["x"].get<double>() * mm,
+                placement["y"].get<double>() * mm,
+                placement["z"].get<double>() * mm
+            );
+            
+            if (placement.contains("rotation")) {
+                rotation = ParseRotation(placement["rotation"]);
+            }
+        }
+        
+        // Create a union solid
+        std::string unionName = name + "_union_" + std::to_string(i);
+        G4UnionSolid* unionSolid = new G4UnionSolid(
+            unionName, resultSolid, componentSolid, rotation, position);
+        
+        G4cout << "Added union component " << compName << " at position " 
+               << position << G4endl;
+        
+        // Update the result solid
+        resultSolid = unionSolid;
+    }
+    
+    // Process subtraction components
+    for (size_t i = 0; i < subtractionComponents.size(); i++) {
+        const auto& component = subtractionComponents[i];
+        std::string compName = component["name"].get<std::string>();
+        
+        // Create the component solid
+        G4VSolid* componentSolid = CreateSolid(component, compName);
+        
+        // Get the component's position and rotation
+        G4ThreeVector position(0, 0, 0);
+        G4RotationMatrix* rotation = nullptr;
+        
+        // Get position and rotation from the first placement
+        if (component.contains("placements") && !component["placements"].empty()) {
+            const auto& placement = component["placements"][0];
+            position = G4ThreeVector(
+                placement["x"].get<double>() * mm,
+                placement["y"].get<double>() * mm,
+                placement["z"].get<double>() * mm
+            );
+            
+            if (placement.contains("rotation")) {
+                rotation = ParseRotation(placement["rotation"]);
+            }
+        }
+        
+        // Create a subtraction solid
+        std::string subtractName = name + "_subtract_" + std::to_string(i);
+        G4SubtractionSolid* subtractSolid = new G4SubtractionSolid(
+            subtractName, resultSolid, componentSolid, rotation, position);
+        
+        G4cout << "Subtracted component " << compName << " at position " 
+               << position << G4endl;
+        
+        // Update the result solid
+        resultSolid = subtractSolid;
+    }
+    
+    // Cache and return the final solid
+    solids[name] = resultSolid;
+    G4cout << "Created boolean solid: " << name << G4endl;
+    return resultSolid;
 }
 
 /**
