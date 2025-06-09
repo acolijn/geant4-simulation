@@ -299,10 +299,72 @@ G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
     G4cout << "GeometryParser::CreateVolume() - Created solid: " << solid << G4endl;
     // Create logical volume
     G4LogicalVolume* logicalVolume = new G4LogicalVolume(solid, material, name);
+    
+    // Apply visualization attributes
+    ApplyVisualizationAttributes(logicalVolume, config);
+    
     volumes[name] = logicalVolume;
     
     std::cout << "GeometryParser::CreateVolume() - Created volume: " << name << std::endl;
     return logicalVolume;
+}
+
+/**
+ * @brief Apply visualization attributes to a logical volume based on material color
+ * @param logicalVolume The logical volume to apply attributes to
+ * @param config JSON configuration for the volume
+ */
+void GeometryParser::ApplyVisualizationAttributes(G4LogicalVolume* logicalVolume, const json& config) {
+    std::string name = config["name"].get<std::string>();
+    
+    // Set visualization attributes based on material color if available
+    if (config.contains("material")) {
+        std::string mat_name = config["material"].get<std::string>();
+        if (geometryConfig["materials"].contains(mat_name) && 
+            geometryConfig["materials"][mat_name].contains("color")) {
+            
+            const auto& colorArray = geometryConfig["materials"][mat_name]["color"];
+            if (colorArray.size() >= 3) {
+                G4double r = colorArray[0].get<double>();
+                G4double g = colorArray[1].get<double>();
+                G4double b = colorArray[2].get<double>();
+                G4double a = (colorArray.size() >= 4) ? colorArray[3].get<double>() : 1.0;
+                
+                G4VisAttributes* visAttr = new G4VisAttributes(G4Colour(r, g, b, a));
+                
+                // Set wireframe if specified in the volume config
+                if (config.contains("wireframe") && config["wireframe"].get<bool>()) {
+                    visAttr->SetForceWireframe(true);
+                }
+                
+                // Set visibility if specified in the volume config
+                if (config.contains("visible")) {
+                    visAttr->SetVisibility(config["visible"].get<bool>());
+                }
+                
+                logicalVolume->SetVisAttributes(visAttr);
+                G4cout << "GeometryParser::ApplyVisualizationAttributes() - Set color for " << name 
+                       << ": RGB(" << r << ", " << g << ", " << b << ", " << a << ")" << G4endl;
+            }
+        }
+    }
+    
+    // Handle visibility even if no material color is specified
+    if (!logicalVolume->GetVisAttributes()) {
+        G4VisAttributes* defaultVisAttr = new G4VisAttributes(G4Colour(0.5, 0.5, 0.5, 1.0));
+        
+        // Set wireframe if specified in the volume config
+        if (config.contains("wireframe") && config["wireframe"].get<bool>()) {
+            defaultVisAttr->SetForceWireframe(true);
+        }
+        
+        // Set visibility if specified in the volume config
+        if (config.contains("visible")) {
+            defaultVisAttr->SetVisibility(config["visible"].get<bool>());
+        }
+        
+        logicalVolume->SetVisAttributes(defaultVisAttr);
+    }
 }
 
 /**

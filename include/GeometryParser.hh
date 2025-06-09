@@ -94,6 +94,13 @@ private:
     G4VSolid* CreateSolid(const json& config, const std::string& name);
     
     /**
+     * @brief Apply visualization attributes to a logical volume based on material color
+     * @param logicalVolume The logical volume to apply attributes to
+     * @param config JSON configuration for the volume
+     */
+    void ApplyVisualizationAttributes(G4LogicalVolume* logicalVolume, const json& config);
+    
+    /**
      * @brief Create a box solid from JSON configuration
      * @param dims JSON object containing box dimensions
      * @param name Name for the solid
