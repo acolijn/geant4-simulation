@@ -177,11 +177,19 @@ G4ThreeVector GeometryParser::ParseVector(const json& vec) {
  *          Angles are assumed to be in radians
  *          Rotations are applied in the Geant4 sequence: first X, then Y, then Z
  */
-G4RotationMatrix* GeometryParser::ParseRotation(const json& rot) {
-    // Invert the rotation angles to match the geometry-editor convention   
-    G4double rx = -rot["x"].get<double>();
-    G4double ry = -rot["y"].get<double>();
-    G4double rz = -rot["z"].get<double>();
+G4RotationMatrix* GeometryParser::ParseRotation(const json& rot, bool isAssembly) {
+    // Get rotation angles from JSON
+    G4double rx = rot["x"].get<double>();
+    G4double ry = rot["y"].get<double>();
+    G4double rz = rot["z"].get<double>();
+    
+    // For regular volumes, invert the rotation angles to match the geometry-editor convention
+    // Assemblies already have the correct rotation direction due to how MakeImprint works
+    if (!isAssembly) {
+        rx = -rx;
+        ry = -ry;
+        rz = -rz;
+    }
     
     // Create a rotation matrix using individual rotations around each axis
     // This ensures rotations are applied in the correct sequence: X, then Y, then Z
@@ -218,6 +226,8 @@ void GeometryParser::ParsePlacement(const json& placement, G4ThreeVector& positi
 
     // Parse rotation
     if (placement.contains("rotation")) {
+        // This is called from various places, so we don't know if it's for an assembly
+        // The default value (false) will be used, which means regular volume behavior
         rotation = ParseRotation(placement["rotation"]);
     }
 }
@@ -532,7 +542,8 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             // Get rotation if present
             G4RotationMatrix* rotation = nullptr;
             if (placement.contains("rotation")) {
-                rotation = ParseRotation(placement["rotation"]);
+                // This is for an assembly, so pass true for isAssembly parameter
+                rotation = ParseRotation(placement["rotation"], true);
             }
             
             // Get parent volume

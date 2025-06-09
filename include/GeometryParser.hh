@@ -236,9 +236,10 @@ private:
     /**
      * @brief Convert JSON rotation to G4RotationMatrix
      * @param rot JSON object containing rotation angles
+     * @param isAssembly Flag indicating if the rotation is for an assembly (default: false)
      * @return Pointer to new G4RotationMatrix
      */
-    G4RotationMatrix* ParseRotation(const json& rot);
+    G4RotationMatrix* ParseRotation(const json& rot, bool isAssembly = false);
     
     /**
      * @brief Parse a placement object and extract position and rotation
