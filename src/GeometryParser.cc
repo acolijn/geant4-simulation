@@ -371,7 +371,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
     }
     
     // Create a map to track which volumes have been placed
-    std::set<std::string> placedVolumes;
+    std::set<std::string, std::less<std::string>, std::allocator<std::string>> placedVolumes;
     placedVolumes.insert("World"); // World is already placed
     
     // Second pass: First place volumes with World as parent
