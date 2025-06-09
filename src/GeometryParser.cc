@@ -34,6 +34,7 @@
 #include <fstream>
 #include <stdexcept>
 #include <filesystem>
+#include <unordered_set>
 
 namespace fs = std::filesystem;
 
@@ -370,8 +371,8 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
         }
     }
     
-    // Create a map to track which volumes have been placed
-    std::set<std::string, std::less<std::string>, std::allocator<std::string>> placedVolumes;
+    // Create a set to track which volumes have been placed
+    std::unordered_set<std::string> placedVolumes;
     placedVolumes.insert("World"); // World is already placed
     
     // Second pass: First place volumes with World as parent
