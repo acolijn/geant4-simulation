@@ -372,8 +372,8 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
     }
     
     // Create a set to track which volumes have been placed
-    std::unordered_set<std::string> placedVolumes;
-    placedVolumes.insert("World"); // World is already placed
+    //std::unordered_set<std::string> placedVolumes;
+    //placedVolumes.insert("World"); // World is already placed
     
     // Second pass: First place volumes with World as parent
     for (const auto& volConfig : geometryConfig["volumes"]) {
@@ -393,10 +393,12 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             std::string parentName = "World"; // Default to world if no parent specified
             if (placement.contains("parent")) {
                 parentName = placement["parent"].get<std::string>();
+            } else if (volConfig.contains("parent")) {
+                parentName = volConfig["parent"].get<std::string>();
             }
             
             // Only process volumes with World as parent in this pass
-            if (parentName != "World") continue;
+            //if (parentName != "World") continue;
             
             // Get position and rotation
             G4ThreeVector position;
@@ -431,11 +433,11 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             );
             
             // Mark this volume as placed
-            placedVolumes.insert(name);
+            //placedVolumes.insert(name);
         }
     }
     
-    // Now place volumes with non-World parents in a way that respects the hierarchy
+/*     // Now place volumes with non-World parents in a way that respects the hierarchy
     bool placedAny = true;
     while (placedAny) {
         placedAny = false;
@@ -501,16 +503,16 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
                 break; // We've placed this volume, move on to the next one
             }
         }
-    }
+    } */
     
     // Check if any volumes weren't placed (could indicate circular dependencies)
-    for (const auto& volConfig : geometryConfig["volumes"]) {
+/*     for (const auto& volConfig : geometryConfig["volumes"]) {
         if (volConfig["type"].get<std::string>() == "assembly") continue;
         std::string name = volConfig["name"].get<std::string>();
         if (placedVolumes.find(name) == placedVolumes.end()) {
             G4cerr << "Warning: Volume " << name << " could not be placed. Check for circular dependencies." << G4endl;
         }
-    }
+    } */
 
     // Place all assemblies
     for (const auto& volConfig : geometryConfig["volumes"]) {
