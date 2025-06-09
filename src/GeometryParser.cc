@@ -370,8 +370,11 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
         }
     }
     
-    // Second pass: Place all volumes (skip assemblies)
-    // First, place volumes with parent "World"
+    // Create a map to track which volumes have been placed
+    std::set<std::string> placedVolumes;
+    placedVolumes.insert("World"); // World is already placed
+    
+    // Second pass: First place volumes with World as parent
     for (const auto& volConfig : geometryConfig["volumes"]) {
         if (volConfig["type"].get<std::string>() == "assembly") continue;
         std::string name = volConfig["name"].get<std::string>();        
@@ -383,7 +386,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             continue;
         }
         
-        // Process each placement
+        // Process each placement - only those with World as parent in this pass
         for (const auto& placement : volConfig["placements"]) {
             // Get parent volume
             std::string parentName = "World"; // Default to world if no parent specified
@@ -394,17 +397,10 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             // Only process volumes with World as parent in this pass
             if (parentName != "World") continue;
             
-            // Get position
-            G4double x = placement["x"].get<double>();
-            G4double y = placement["y"].get<double>();
-            G4double z = placement["z"].get<double>();
-            G4ThreeVector position(x*mm, y*mm, z*mm);
-            
-            // Get rotation if present
+            // Get position and rotation
+            G4ThreeVector position;
             G4RotationMatrix* rotation = nullptr;
-            if (placement.contains("rotation")) {
-                rotation = ParseRotation(placement["rotation"]);
-            }
+            ParsePlacement(placement, position, rotation);
             
             // Check if parent exists
             if (volumes.find(parentName) == volumes.end()) {
@@ -420,8 +416,8 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             
             // Use g4name if available, otherwise use name
             std::string physicalName = volConfig.contains("g4name") ? 
-                                       volConfig["g4name"].get<std::string>() : 
-                                       name;
+                                      volConfig["g4name"].get<std::string>() : 
+                                      name;
             
             new G4PVPlacement(
                 rotation,           // rotation
@@ -432,19 +428,14 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
                 false,              // no boolean operations
                 0                   // copy number
             );
+            
+            // Mark this volume as placed
+            placedVolumes.insert(name);
         }
     }
     
-    // Create a map to store physical volumes for parent reference
-    std::map<std::string, std::vector<std::pair<G4VPhysicalVolume*, G4Transform3D>>> physicalVolumes;
-    
-    // Now place all child volumes with non-World parents
-    // We need to do this in a way that ensures parents are placed before their children
+    // Now place volumes with non-World parents in a way that respects the hierarchy
     bool placedAny = true;
-    std::set<std::string> placedVolumes;
-    placedVolumes.insert("World"); // World is already placed
-    
-    // Keep iterating until we've placed all volumes or can't place any more
     while (placedAny) {
         placedAny = false;
         
@@ -455,10 +446,10 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             // Skip if already placed
             if (placedVolumes.find(name) != placedVolumes.end()) continue;
             
+            G4LogicalVolume* logicalVolume = volumes[name];
+            
             // Skip if no placements array
             if (!volConfig.contains("placements") || volConfig["placements"].empty()) continue;
-            
-            G4LogicalVolume* logicalVolume = volumes[name];
             
             // Process each placement
             for (const auto& placement : volConfig["placements"]) {
@@ -471,17 +462,10 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
                 // Skip if parent hasn't been placed yet
                 if (placedVolumes.find(parentName) == placedVolumes.end()) continue;
                 
-                // Get position relative to parent
-                G4double x = placement["x"].get<double>();
-                G4double y = placement["y"].get<double>();
-                G4double z = placement["z"].get<double>();
-                G4ThreeVector position(x*mm, y*mm, z*mm);
-                
-                // Get rotation if present
+                // Get position and rotation
+                G4ThreeVector position;
                 G4RotationMatrix* rotation = nullptr;
-                if (placement.contains("rotation")) {
-                    rotation = ParseRotation(placement["rotation"]);
-                }
+                ParsePlacement(placement, position, rotation);
                 
                 // Check if parent exists
                 if (volumes.find(parentName) == volumes.end()) {
@@ -497,10 +481,10 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
                 
                 // Use g4name if available, otherwise use name
                 std::string physicalName = volConfig.contains("g4name") ? 
-                                           volConfig["g4name"].get<std::string>() : 
-                                           name;
+                                          volConfig["g4name"].get<std::string>() : 
+                                          name;
                 
-                G4VPhysicalVolume* physVol = new G4PVPlacement(
+                new G4PVPlacement(
                     rotation,           // rotation
                     position,           // position
                     logicalVolume,      // logical volume
@@ -513,6 +497,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
                 // Mark this volume as placed
                 placedVolumes.insert(name);
                 placedAny = true;
+                break; // We've placed this volume, move on to the next one
             }
         }
     }
@@ -525,11 +510,12 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             G4cerr << "Warning: Volume " << name << " could not be placed. Check for circular dependencies." << G4endl;
         }
     }
-    
-    // Place all assemblies - first those with World as parent
+
+    // Place all assemblies
     for (const auto& volConfig : geometryConfig["volumes"]) {
         // Skip non-assembly volumes
         if (volConfig["type"].get<std::string>() != "assembly") {
+            G4cout << "GeometryParser::ConstructGeometry() - Skipping non-assembly volume" << G4endl;
             continue;
         }
         
@@ -548,18 +534,9 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             continue;
         }
         
-        // Process each placement - only those with World as parent in this pass
+        // Process each placement
         int iCopy = 0;
         for (const auto& placement : volConfig["placements"]) {
-            // Get parent volume
-            std::string parentName = "World"; // Default to world if no parent specified
-            if (placement.contains("parent")) {
-                parentName = placement["parent"].get<std::string>();
-            }
-            
-            // Only process assemblies with World as parent in this pass
-            if (parentName != "World") continue;
-            
             // Get position
             G4double x = placement["x"].get<double>();
             G4double y = placement["y"].get<double>();
@@ -570,6 +547,12 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             G4RotationMatrix* rotation = nullptr;
             if (placement.contains("rotation")) {
                 rotation = ParseRotation(placement["rotation"]);
+            }
+            
+            // Get parent volume
+            std::string parentName = "World"; // Default to world if no parent specified
+            if (placement.contains("parent")) {
+                parentName = placement["parent"].get<std::string>();
             }
             
             // Check if parent exists
@@ -585,92 +568,6 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
                    << " at position " << position << G4endl;
             
             assembly->MakeImprint(parentVolume, position, rotation, iCopy++, true);
-            
-            // Mark this assembly as placed
-            placedVolumes.insert(assemblyName);
-        }
-    }
-    
-    // Now place assemblies with non-World parents
-    bool placedAnyAssembly = true;
-    while (placedAnyAssembly) {
-        placedAnyAssembly = false;
-        
-        for (const auto& volConfig : geometryConfig["volumes"]) {
-            // Skip non-assembly volumes
-            if (volConfig["type"].get<std::string>() != "assembly") {
-                continue;
-            }
-            
-            // Get the assembly name
-            std::string assemblyName = volConfig["name"].get<std::string>();
-            
-            // Skip if already placed
-            if (placedVolumes.find(assemblyName) != placedVolumes.end()) continue;
-            
-            G4AssemblyVolume* assembly = assemblies[assemblyName];
-            
-            if (!assembly) {
-                G4cerr << "Error: Assembly " << assemblyName << " not found" << G4endl;
-                continue;
-            }
-            
-            // Skip if no placements array
-            if (!volConfig.contains("placements") || volConfig["placements"].empty()) {
-                continue;
-            }
-            
-            // Process each placement
-            int iCopy = 0;
-            for (const auto& placement : volConfig["placements"]) {
-                // Get parent volume
-                std::string parentName = "World"; // Default to world if no parent specified
-                if (placement.contains("parent")) {
-                    parentName = placement["parent"].get<std::string>();
-                }
-                
-                // Skip if parent hasn't been placed yet
-                if (placedVolumes.find(parentName) == placedVolumes.end()) continue;
-                
-                // Get position relative to parent
-                G4double x = placement["x"].get<double>();
-                G4double y = placement["y"].get<double>();
-                G4double z = placement["z"].get<double>();
-                G4ThreeVector position(x*mm, y*mm, z*mm);
-                
-                // Get rotation if present
-                G4RotationMatrix* rotation = nullptr;
-                if (placement.contains("rotation")) {
-                    rotation = ParseRotation(placement["rotation"]);
-                }
-                
-                // Check if parent exists
-                if (volumes.find(parentName) == volumes.end()) {
-                    G4cerr << "Error: Parent volume " << parentName << " not found for assembly " << assemblyName << G4endl;
-                    continue;
-                }
-                
-                G4LogicalVolume* parentVolume = volumes[parentName];
-                
-                // Place the assembly
-                G4cout << "GeometryParser::ConstructGeometry() - Placing assembly " << assemblyName << " in " << parentName 
-                       << " at position " << position << G4endl;
-                
-                assembly->MakeImprint(parentVolume, position, rotation, iCopy++, true);
-                
-                // Mark this assembly as placed
-                placedVolumes.insert(assemblyName);
-                placedAnyAssembly = true;
-            }
-        }
-    }
-    
-    // Check if any assemblies weren't placed
-    for (const auto& volConfig : geometryConfig["volumes"]) {
-        if (volConfig["type"].get<std::string>() != "assembly") continue;
-        std::string name = volConfig["name"].get<std::string>();
-        if (placedVolumes.find(name) == placedVolumes.end()) {
-            G4cerr << "Warning: Assembly " << name << " could not be placed. Check for circular dependencies." << G4endl;
         }
     }
     
