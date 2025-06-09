@@ -75,13 +75,13 @@ void GeometryParser::LoadGeometryConfig(const std::string& filename) {
  * @throws std::runtime_error if file cannot be opened or parsed
  * @details Reads and parses the materials configuration file into the materialsConfig member
  */
-void GeometryParser::LoadMaterialsConfig(const std::string& filename) {
+/*void GeometryParser::LoadMaterialsConfig(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         throw std::runtime_error("Could not open materials config file: " + filename);
     }
     file >> materialsConfig;
-}
+} */
 
 /**
  * @brief Create a G4Material from JSON configuration
@@ -278,7 +278,9 @@ G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
         std::string mat_name = config["material"].get<std::string>();
         
         if (materials.find(mat_name) == materials.end()) {
-            material = CreateMaterial(mat_name, materialsConfig["materials"][mat_name]);
+            material = CreateMaterial(mat_name, geometryConfig["materials"][mat_name]);
+//
+//            material = CreateMaterial(mat_name, materialsConfig["materials"][mat_name]);
         } else {
             material = materials[mat_name];
         }

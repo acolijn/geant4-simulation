@@ -44,10 +44,6 @@ DetectorConstruction::DetectorMessenger::DetectorMessenger(DetectorConstruction*
     fGeometryFileCmd->SetGuidance("Set the path to the geometry configuration JSON file");
     fGeometryFileCmd->SetParameterName("GeometryFile", false);
     
-    fMaterialsFileCmd = new G4UIcmdWithAString("/detector/setMaterialsFile", this);
-    fMaterialsFileCmd->SetGuidance("Set the path to the materials configuration JSON file");
-    fMaterialsFileCmd->SetParameterName("MaterialsFile", false);
-    
     fRebuildCmd = new G4UIcommand("/detector/rebuild", this);
     fRebuildCmd->SetGuidance("Rebuild the geometry with the current configuration files");
 }
@@ -73,9 +69,6 @@ void DetectorConstruction::DetectorMessenger::SetNewValue(G4UIcommand* command, 
     if (command == fGeometryFileCmd) {
         fDetector->SetGeometryFile(newValue);
         //fDetector->RebuildGeometry();
-    } else if (command == fMaterialsFileCmd) {
-        fDetector->SetMaterialsFile(newValue);
-        //fDetector->RebuildGeometry();
     } else if (command == fRebuildCmd) {
         fDetector->RebuildGeometry();
     }
@@ -88,13 +81,11 @@ void DetectorConstruction::DetectorMessenger::SetNewValue(G4UIcommand* command, 
  *
  * Initializes the geometry parser with the specified configuration files.
  */
-DetectorConstruction::DetectorConstruction(const std::string& geomFile,
-                                         const std::string& matFile)
+DetectorConstruction::DetectorConstruction(const std::string& geomFile)
 : G4VUserDetectorConstruction(),
   fMessenger(nullptr),
-  geometryFile(geomFile),
-  materialsFile(matFile),
-  lXeVolume(nullptr)
+  geometryFile(geomFile)
+  //lXeVolume(nullptr)
 {
     // Create the messenger for this class
     fMessenger = new DetectorMessenger(this);
@@ -127,21 +118,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     // Load configuration files
     // print the file names:
     G4cout << "Geometry file: " << geometryFile << G4endl;
-    G4cout << "Materials file: " << materialsFile << G4endl;
 
-    parser.LoadMaterialsConfig(materialsFile);
     parser.LoadGeometryConfig(geometryFile);
-
     // Construct the geometry
     G4VPhysicalVolume* worldPhys = parser.ConstructGeometry();
-
-    // Get pointer to LXe volume for scoring
-    // The LXe volume should be the first daughter of the world volume
-    //G4LogicalVolume* worldLV = worldPhys->GetLogicalVolume();
-    //if (worldLV->GetNoDaughters() > 0) {
-    //    G4VPhysicalVolume* lxePhys = worldLV->GetDaughter(0);
-    //    lXeVolume = lxePhys->GetLogicalVolume();
-    //}
 
     // check if world volume is valid
     if (worldPhys == nullptr) {
@@ -166,11 +146,11 @@ void DetectorConstruction::SetGeometryFile(const G4String& path)
  * @brief Set the materials configuration file path
  * @param path Path to the materials JSON file
  */
-void DetectorConstruction::SetMaterialsFile(const G4String& path)
+/* void DetectorConstruction::SetMaterialsFile(const G4String& path)
 {
     materialsFile = path;
     G4cout << "Materials file set to: " << path << G4endl;
-}
+} */
 
 /**
  * @brief Rebuild the geometry with the current configuration files
@@ -180,11 +160,10 @@ G4bool DetectorConstruction::RebuildGeometry()
 {
     G4cout << "Rebuilding geometry with:" << G4endl;
     G4cout << "  Geometry file: " << geometryFile << G4endl;
-    G4cout << "  Materials file: " << materialsFile << G4endl;
     
     // Clear any existing volumes and materials
     parser = GeometryParser();
-    lXeVolume = nullptr;
+    //lXeVolume = nullptr;
     
     // This will trigger Geant4 to call Construct() again
     G4RunManager::GetRunManager()->ReinitializeGeometry();

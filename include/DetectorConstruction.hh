@@ -21,10 +21,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     /**
      * @brief Constructor
      * @param geomFile Path to geometry configuration file
-     * @param matFile Path to materials configuration file
      */
-    DetectorConstruction(const std::string& geomFile="config/dummy1.json",
-                         const std::string& matFile="config/dummy2.json");
+    DetectorConstruction(const std::string& geomFile="config/dummy1.json");
     
     /** @brief Destructor */
     virtual ~DetectorConstruction();
@@ -45,7 +43,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      * @brief Set the materials configuration file path
      * @param path Path to the materials JSON file
      */
-    void SetMaterialsFile(const G4String& path);
+    //void SetMaterialsFile(const G4String& path);
     
     /**
      * @brief Get the current geometry file path
@@ -57,7 +55,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      * @brief Get the current materials file path
      * @return Current materials file path
      */
-    G4String GetMaterialsFile() const { return materialsFile; }
+    //G4String GetMaterialsFile() const { return materialsFile; }
     
     /**
      * @brief Rebuild the geometry with the current configuration files
@@ -71,8 +69,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     
     GeometryParser parser;           ///< Parser for JSON configuration
     std::string geometryFile;        ///< Path to geometry config file
-    std::string materialsFile;       ///< Path to materials config file
-    G4LogicalVolume* lXeVolume;      ///< Pointer to LXe volume for scoring
+    //std::string materialsFile;       ///< Path to materials config file
+    //G4LogicalVolume* lXeVolume;      ///< Pointer to LXe volume for scoring
 };
 
 #endif

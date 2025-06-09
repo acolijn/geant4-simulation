@@ -45,7 +45,7 @@ public:
      * @brief Load materials configuration from JSON file
      * @param filename Path to materials JSON file
      */
-    void LoadMaterialsConfig(const std::string& filename);
+    //void LoadMaterialsConfig(const std::string& filename);
 
     /**
      * @brief Create the world volume from loaded configuration
