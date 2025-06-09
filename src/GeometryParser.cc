@@ -178,9 +178,10 @@ G4ThreeVector GeometryParser::ParseVector(const json& vec) {
  *          Rotations are applied in the Geant4 sequence: first X, then Y, then Z
  */
 G4RotationMatrix* GeometryParser::ParseRotation(const json& rot) {
-    G4double rx = rot["x"].get<double>();
-    G4double ry = rot["y"].get<double>();
-    G4double rz = rot["z"].get<double>();
+    // Invert the rotation angles to match the geometry-editor convention   
+    G4double rx = -rot["x"].get<double>();
+    G4double ry = -rot["y"].get<double>();
+    G4double rz = -rot["z"].get<double>();
     
     // Create a rotation matrix using individual rotations around each axis
     // This ensures rotations are applied in the correct sequence: X, then Y, then Z
