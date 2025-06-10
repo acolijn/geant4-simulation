@@ -26,113 +26,13 @@
   },
   "volumes": [
     {
-      "name": "torus_1749484628815_8864",
-      "g4name": "Cryostat_0",
-      "type": "torus",
+      "name": "Union",
+      "type": "union",
       "material": "G4_AIR",
-      "dimensions": {
-        "major_radius": 50,
-        "minor_radius": 10
-      },
       "placements": [
         {
-          "x": -340.3264342508344,
-          "y": 0,
-          "z": 25.45554806812597,
-          "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          }
-        }
-      ],
-      "visible": true,
-      "parent": "World"
-    },
-    {
-      "name": "cylinder_1749484628816_7884",
-      "g4name": "Cylinder_3",
-      "type": "cylinder",
-      "material": "G4_AIR",
-      "dimensions": {
-        "radius": 50,
-        "height": 100
-      },
-      "placements": [
-        {
-          "x": -1.1640891255440042,
-          "y": 0,
-          "z": -84.47392806860682,
-          "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          }
-        }
-      ],
-      "visible": true,
-      "parent": "torus_1749484628815_8864"
-    },
-    {
-      "name": "sphere_1749484628816_5219",
-      "g4name": "Sphere_1",
-      "type": "sphere",
-      "material": "G4_PLASTIC_SC_VINYLTOLUENE",
-      "dimensions": {
-        "radius": 50
-      },
-      "placements": [
-        {
-          "x": 0.5911912257455239,
-          "y": 0,
-          "z": 88.85798149478572,
-          "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          }
-        }
-      ],
-      "visible": true,
-      "hitsCollectionName": "MyHitsCollection",
-      "parent": "torus_1749484628815_8864"
-    },
-    {
-      "name": "box_1749484628816_6914",
-      "g4name": "Box_3",
-      "type": "box",
-      "material": "G4_AIR",
-      "dimensions": {
-        "x": 100,
-        "y": 100,
-        "z": 100
-      },
-      "placements": [
-        {
-          "x": 120,
-          "y": 0,
-          "z": 0,
-          "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          }
-        }
-      ],
-      "visible": true,
-      "parent": "sphere_1749484628816_5219"
-    },
-    {
-      "name": "torus_1749484636755_4250",
-      "g4name": "Cryostat_1",
-      "type": "torus",
-      "material": "G4_AIR",
-      "dimensions": {
-        "major_radius": 50,
-        "minor_radius": 10
-      },
-      "placements": [
-        {
+          "g4name": "Union_1",
+          "name": "union_1749589235887_3085",
           "x": 0,
           "y": 0,
           "z": 0,
@@ -140,65 +40,73 @@
             "x": 0,
             "y": 0,
             "z": 0
-          }
+          },
+          "parent": "World"
         }
       ],
-      "visible": true,
-      "parent": "World"
-    },
-    {
-      "name": "cylinder_1749484636755_8410",
-      "g4name": "Cylinder_3",
-      "type": "cylinder",
-      "material": "G4_AIR",
-      "dimensions": {
-        "radius": 50,
-        "height": 100
-      },
-      "placements": [
+      "components": [
         {
-          "x": -1.1640891255440042,
-          "y": 0,
-          "z": -84.47392806860682,
-          "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          }
-        }
-      ],
-      "visible": true,
-      "parent": "torus_1749484636755_4250"
-    },
-    {
-      "name": "sphere_1749484636755_4488",
-      "g4name": "Sphere_1",
-      "type": "sphere",
-      "material": "G4_PLASTIC_SC_VINYLTOLUENE",
-      "dimensions": {
-        "radius": 50
-      },
-      "placements": [
+          "name": "box_1749589239534_7816",
+          "g4name": "Box_1",
+          "type": "box",
+          "dimensions": {
+            "x": 100,
+            "y": 100,
+            "z": 100
+          },
+          "placements": [
+            {
+              "x": 0,
+              "y": 0,
+              "z": 0,
+              "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "parent": ""
+            }
+          ],
+          "visible": true,
+          "boolean_operation": "union",
+          "_is_boolean_component": true,
+          "_boolean_parent": "union_1749589235887_3085"
+        },
         {
-          "x": 0.5911912257455239,
-          "y": 0,
-          "z": 88.85798149478572,
-          "rotation": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          }
+          "name": "cylinder_1749589242170_9755",
+          "g4name": "Cylinder_1",
+          "type": "cylinder",
+          "dimensions": {
+            "radius": 50,
+            "height": 100
+          },
+          "placements": [
+            {
+              "x": 40,
+              "y": -50,
+              "z": 20,
+              "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+              },
+              "parent": ""
+            }
+          ],
+          "visible": true,
+          "boolean_operation": "subtract",
+          "_is_boolean_component": true,
+          "_boolean_parent": "union_1749589235887_3085"
         }
       ],
-      "visible": true,
-      "hitsCollectionName": "MyHitsCollection",
-      "parent": "torus_1749484636755_4250"
+      "_compoundId": "union_1749589235887_3085",
+      "_componentId": "component_1749589235887_fhpk7e4l"
     },
     {
-      "name": "box_1749484636755_9351",
-      "g4name": "Box_3",
+      "name": "box_1749589417551_4710",
+      "g4name": "Box_2",
       "type": "box",
-      "material": "G4_AIR",
+      "material": "LXe",
       "dimensions": {
         "x": 100,
         "y": 100,
@@ -206,18 +114,18 @@
       },
       "placements": [
         {
-          "x": 120,
+          "x": 350.36987143699054,
           "y": 0,
-          "z": 0,
+          "z": 26.277283837902274,
           "rotation": {
             "x": 0,
             "y": 0,
             "z": 0
-          }
+          },
+          "parent": "Union"
         }
       ],
-      "visible": true,
-      "parent": "sphere_1749484636755_4488"
+      "visible": true
     }
   ],
   "materials": {
