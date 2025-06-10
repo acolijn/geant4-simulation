@@ -399,10 +399,6 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
     std::string worldName = geometryConfig["world"]["name"].get<std::string>();
     volumes[worldName] = worldLV;
     
-    // First pass: Create all logical volumes (skip assemblies)
-    G4LogicalVolume* logicalVolume;
-    G4cout << "GeometryParser::ConstructGeometry() - First pass: Create all logical volumes (skip assemblies)" << G4endl;
-    
     // Debug the volumes array structure
     G4cout << "GeometryParser::ConstructGeometry() - Number of volumes in config: " << geometryConfig["volumes"].size() << G4endl;
     
@@ -428,7 +424,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
         G4cout << "GeometryParser::ConstructGeometry() - Creating logical volume: " << volConfig["name"].get<std::string>() << G4endl;
         
         try {
-            logicalVolume = CreateVolume(volConfig);
+            G4LogicalVolume* logicalVolume = CreateVolume(volConfig);
             std::string name = volConfig["name"].get<std::string>();
             volumes[name] = logicalVolume;
             G4cout << "GeometryParser::ConstructGeometry() - Created logical volume: " << name << G4endl;
@@ -451,6 +447,9 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
     // Second pass: First place volumes with World as parent
     for (const auto& volConfig : geometryConfig["volumes"]) {
         if (volConfig["type"].get<std::string>() == "assembly") continue;
+
+        G4cout << "GeometryParser::ConstructGeometry() - Placing volume " << volConfig["name"].get<std::string>() << G4endl;
+
         std::string name = volConfig["name"].get<std::string>();        
         G4LogicalVolume* logicalVolume = volumes[name];
         
@@ -460,25 +459,12 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             continue;
         }
         
-        // Process each placement
+        // Process each placement - only those with World as parent in this pass
         for (const auto& placement : volConfig["placements"]) {
             // Get parent volume
             std::string parentName = "World"; // Default to world if no parent specified
             if (placement.contains("parent")) {
                 parentName = placement["parent"].get<std::string>();
-                G4cout << "Volume " << name << " has parent: " << parentName << G4endl;
-                
-                // If the parent is a union, print additional debug info
-                for (const auto& potentialParent : geometryConfig["volumes"]) {
-                    if (potentialParent.contains("name") && 
-                        potentialParent["name"].get<std::string>() == parentName) {
-                        if (potentialParent.contains("type") && 
-                            potentialParent["type"].get<std::string>() == "union") {
-                            G4cout << "IMPORTANT: Parent " << parentName << " is a union object" << G4endl;
-                        }
-                        break;
-                    }
-                }
             } else {
                 G4cerr << "GeometryParser::ConstructGeometry() - Error: No parent specified for volume " << name << G4endl;
                 continue;
@@ -496,25 +482,9 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             
             G4LogicalVolume* parentVolume = volumes[parentName];
             
-            // Debug information about the parent volume
-            G4cout << "Parent volume details for " << name << ":" << G4endl;
-            G4cout << "  Parent name: " << parentName << G4endl;
-            G4cout << "  Parent solid type: " << parentVolume->GetSolid()->GetEntityType() << G4endl;
-            G4cout << "  Parent material: " << parentVolume->GetMaterial()->GetName() << G4endl;
-            
             // Place the volume
             G4cout << "GeometryParser::ConstructGeometry() - Placing " << name << " in " << parentName 
                    << " at position " << position << G4endl;
-            
-            // Check if parent is a union and print additional debug info
-            G4String solidType = parentVolume->GetSolid()->GetEntityType();
-            if (solidType == "G4UnionSolid") {
-                G4cout << "IMPORTANT: Placing volume " << name << " inside union solid " << parentName << G4endl;
-                G4cout << "  Union solid details:" << G4endl;
-                G4cout << "  - Solid type: " << solidType << G4endl;
-                // G4UnionSolid doesn't have GetNumberOfSolids method
-                G4cout << "  - Union solid pointer: " << parentVolume->GetSolid() << G4endl;
-            }
             
             // Use g4name if available, otherwise use name
             std::string physicalName = volConfig.contains("g4name") ? 
@@ -622,13 +592,6 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     
     G4cout << "Creating solid " << name << G4endl;
     
-    // Debug output to check config structure
-    G4cout << "Config keys available:";
-    for (auto it = config.begin(); it != config.end(); ++it) {
-        G4cout << " " << it.key();
-    }
-    G4cout << G4endl;
-    
     // Ensure type exists
     if (!config.contains("type")) {
         G4cerr << "Error: No 'type' field in solid config for " << name << G4endl;
@@ -656,14 +619,8 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     
     // Dispatch to appropriate shape creation function based on type
     if (type == "union") {
-        // Check if this is a new-style union with components
-        //if (config.contains("components") && !config["components"].empty()) {
         G4cout << "Creating union solid from components: " << name << G4endl;
         solid = CreateBooleanSolidFromComponents(config, name);
-        //} else {
-            // Legacy boolean operation with solid1 and solid2
-            //solid = CreateBooleanSolid(config, name);
-        //}
     }
     //else if (type == "subtraction" || type == "intersection") {
     //    solid = CreateBooleanSolid(config, name);
