@@ -2,8 +2,7 @@
 # This macro handles detector configuration and run initialization without visualization
 
 # Set the geometry and materials files
-/detector/setGeometryFile config/geometry.json
-/detector/setMaterialsFile config/materials.json
+/detector/setGeometryFile config/geometry-4.json
 
 # Initialize the run manager
 /run/initialize
@@ -12,10 +11,10 @@
 /vis/disable
 
 # Particle gun settings
-/gun/particle neutron
+/gun/particle gamma
 /gun/energy 1 MeV
-/gun/position 0 0 0 cm
-/gun/direction 0 0 1
+/gun/position -10 0 0 cm
+/gun/direction 1 0 0
 
 # Run settings - adjust the number of events as needed
 /run/beamOn 1000

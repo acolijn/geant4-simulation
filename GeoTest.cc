@@ -16,6 +16,8 @@
 
 #include "Randomize.hh"
 
+#include <cstdlib>
+
 /**
  * @brief The main function of the program.
  *
@@ -33,7 +35,9 @@ int main(int argc,char** argv)
   // Detect interactive mode (if no arguments) and define UI session
   //
   G4UIExecutive* ui = nullptr;
-  if ( argc == 1 ) { ui = new G4UIExecutive(argc, argv); }
+  if ( argc == 1 ) { 
+    ui = new G4UIExecutive(argc, argv); 
+  }
 
   // Optionally: choose a different Random engine...
   // G4Random::setTheEngine(new CLHEP::MTwistEngine);
@@ -77,14 +81,18 @@ int main(int argc,char** argv)
   //
   G4String command = "/control/execute ";
   
-  if ( ! ui ) {
-    // batch mode - use the macro file provided as argument
+  if ( argc > 1 ) {
+    // Execute the macro file provided as argument
     G4String fileName = argv[1];
     UImanager->ApplyCommand(command+fileName);
   }
   else {
-    // interactive mode - execute vis.mac first, then start UI session
-    UImanager->ApplyCommand(command+"vis.mac");
+    // No macro argument - execute default vis.mac
+    UImanager->ApplyCommand(command+"macros/vis.mac");
+  }
+
+  if ( ui ) {
+    // Start interactive session (works with or without a macro argument)
     ui->SessionStart(); 
     delete ui; 
   }
@@ -97,7 +105,9 @@ int main(int argc,char** argv)
   delete visManager;
   delete runManager;
 
-  return 0;
+  // Use quick_exit to avoid spurious mutex warnings from Geant4 HP 
+  // physics static destructors (known Geant4 11.x issue)
+  std::quick_exit(0);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo.....

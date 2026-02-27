@@ -427,6 +427,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             G4LogicalVolume* logicalVolume = CreateVolume(volConfig);
             std::string name = volConfig["name"].get<std::string>();
             volumes[name] = logicalVolume;
+            logicalVolumeMap[name + "_logical"] = logicalVolume;
             G4cout << "GeometryParser::ConstructGeometry() - Created logical volume: " << name << G4endl;
         } catch (const std::exception& e) {
             G4cerr << "GeometryParser::ConstructGeometry() - Error creating volume: " << e.what() << G4endl;
@@ -1054,31 +1055,34 @@ void GeometryParser::SetupSensitiveDetectors() {
     // Get the SD manager
     G4SDManager* sdManager = G4SDManager::GetSDMpointer();
     
-    // Create and register the default sensitive detector
-    MySensitiveDetector* mySD = new MySensitiveDetector("MySD");
-    sdManager->AddNewDetector(mySD);
+    // Map to track already-created sensitive detectors by their hits collection name
+    std::map<std::string, MySensitiveDetector*> sdMap;
     
     // Iterate through all volumes in the JSON configuration
     for (const auto& volConfig : geometryConfig["volumes"]) {
-        // Check if this volume is marked as active
-        if (volConfig.contains("isActive") && volConfig["isActive"].get<bool>()) {
-            // Get the hits collection name (default to "MyHitsCollection" if not specified)
-            std::string hitsCollName = "MyHitsCollection";
-            if (volConfig.contains("hitsCollectionName")) {
-                hitsCollName = volConfig["hitsCollectionName"].get<std::string>();
+        // A volume is active if it has a "hitsCollectionName" field
+        if (volConfig.contains("hitsCollectionName")) {
+            std::string hitsCollName = volConfig["hitsCollectionName"].get<std::string>();
+            
+            // Create a new SD for this collection name if we haven't already
+            if (sdMap.find(hitsCollName) == sdMap.end()) {
+                G4String sdName = hitsCollName + "_SD";
+                MySensitiveDetector* sd = new MySensitiveDetector(sdName, hitsCollName);
+                sdManager->AddNewDetector(sd);
+                sdMap[hitsCollName] = sd;
+                G4cout << "Created sensitive detector \"" << sdName 
+                       << "\" with hits collection \"" << hitsCollName << "\"" << G4endl;
             }
             
-            // Only assign to MyHitsCollection for now
-            if (hitsCollName == "MyHitsCollection") {
-                // Get the logical volume
-                std::string volName = volConfig["name"].get<std::string>();
-                G4LogicalVolume* logicalVol = logicalVolumeMap[volName + "_logical"];
-                
-                if (logicalVol) {
-                    // Assign the sensitive detector to this logical volume
-                    G4cout << "Setting " << volName << " as sensitive detector" << G4endl;
-                    logicalVol->SetSensitiveDetector(mySD);
-                }
+            // Get the logical volume
+            std::string volName = volConfig["name"].get<std::string>();
+            G4LogicalVolume* logicalVol = logicalVolumeMap[volName + "_logical"];
+            
+            if (logicalVol) {
+                G4cout << "Setting " << volName << " as sensitive (collection: " << hitsCollName << ")" << G4endl;
+                logicalVol->SetSensitiveDetector(sdMap[hitsCollName]);
+            } else {
+                G4cerr << "WARNING: Could not find logical volume for " << volName << G4endl;
             }
         }
     }

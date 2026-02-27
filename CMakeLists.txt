@@ -45,15 +45,18 @@ foreach(_config ${CONFIG_FILES})
     )
 endforeach()
 
-# Copy visualization macro
-set(GEOTEST_SCRIPTS
-    run_batch.mac
-)
-
-foreach(_script ${GEOTEST_SCRIPTS})
+# Copy macro files
+file(GLOB MACRO_FILES ${PROJECT_SOURCE_DIR}/macros/*.mac)
+foreach(_macro ${MACRO_FILES})
+    get_filename_component(_macro_name ${_macro} NAME)
     configure_file(
-        ${PROJECT_SOURCE_DIR}/${_script}
-        ${PROJECT_BINARY_DIR}/${_script}
+        ${_macro}
+        ${PROJECT_BINARY_DIR}/macros/${_macro_name}
         COPYONLY
     )
 endforeach()
+
+# Install rules
+install(TARGETS GeoTest DESTINATION bin)
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/macros/ DESTINATION macros FILES_MATCHING PATTERN "*.mac")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/config/ DESTINATION config FILES_MATCHING PATTERN "*.json")

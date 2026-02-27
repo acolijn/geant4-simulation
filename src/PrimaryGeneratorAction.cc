@@ -56,25 +56,10 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
  * @brief Generates primary particles for each event
  * @param anEvent The current G4Event being processed
  *
- * For each event, this method:
- * 1. Generates a random position on the top face of the world volume
- *    - x: Random position within ±15 cm
- *    - y: Random position within ±15 cm
- *    - z: Fixed at top of world volume (-1m)
- * 2. Sets the particle gun position
- * 3. Creates the primary vertex
- *
- * The random distribution ensures good coverage of the liquid xenon target.
+ * Uses the position and direction set by the particle gun
+ * (configurable via macro commands /gun/position and /gun/direction).
  */
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
-    // Generate random position on top face of world volume
-    G4double worldZHalfLength = 1.0*m;
-    G4double x0 = 30.0*cm * (G4UniformRand()-0.5);  // Random x in [-15cm, 15cm]
-    G4double y0 = 30.0*cm * (G4UniformRand()-0.5);  // Random y in [-15cm, 15cm]
-    G4double z0 = -worldZHalfLength;                 // Top of world volume
-
-    // Set position and generate the vertex
-    fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
     fParticleGun->GeneratePrimaryVertex(anEvent);
 }

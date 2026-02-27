@@ -10,12 +10,12 @@
  * @brief Constructor
  * @param name Name of the sensitive detector
  */
-MySensitiveDetector::MySensitiveDetector(const G4String& name)
+MySensitiveDetector::MySensitiveDetector(const G4String& name, const G4String& hitsCollectionName)
 : G4VSensitiveDetector(name),
   fHitsCollection(nullptr),
   fHitsCollectionID(-1)
 {
-  collectionName.insert("MyHitsCollection");
+  collectionName.insert(hitsCollectionName);
 }
 
 /**

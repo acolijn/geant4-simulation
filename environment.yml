@@ -1,0 +1,9 @@
+name: g4
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - geant4
+  - root
+  - cmake
+  - nlohmann_json

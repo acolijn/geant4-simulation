@@ -16,7 +16,7 @@ class G4HCofThisEvent;
  */
 class MySensitiveDetector : public G4VSensitiveDetector {
 public:
-  MySensitiveDetector(const G4String& name);
+  MySensitiveDetector(const G4String& name, const G4String& hitsCollectionName = "MyHitsCollection");
   virtual ~MySensitiveDetector();
   
   // Methods from base class

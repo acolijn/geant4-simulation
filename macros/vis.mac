@@ -2,11 +2,11 @@
 # This macro is executed in interactive mode after detector initialization
 #/detector/setGeometryFile config/super_advanced_geometry.json
 #/detector/setGeometryFile config/geo_test.json
-/detector/setGeometryFile config/geometry.json
+/detector/setGeometryFile config/geometry-4.json
 
 /run/initialize
 
-# Visualization settings
+# Visualizat ion settings
 /vis/open OGL
 /vis/drawVolume
 /vis/viewer/set/viewpointVector 1 1 1
@@ -19,9 +19,10 @@
 /vis/scene/endOfEventAction accumulate
 
 # Particle gun settings
-/gun/particle neutron
+/gun/particle gamma
 /gun/energy 1 MeV
-
+/gun/position -10 0 0 cm
+/gun/direction 1 0 0 
 
 
 # You can add other visualization and interactive settings here

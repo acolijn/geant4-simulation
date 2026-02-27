@@ -13,7 +13,7 @@
  */
 EventAction::EventAction()
 : G4UserEventAction(),
-  fMyHitsCollectionID(-1)
+  fCollectionsInitialized(false)
 {}
 
 /**
@@ -36,33 +36,58 @@ void EventAction::BeginOfEventAction(const G4Event* event)
 }
 
 /**
+ * @brief Discover all registered hits collection IDs
+ */
+void EventAction::InitializeCollectionIDs()
+{
+  G4SDManager* sdManager = G4SDManager::GetSDMpointer();
+  G4HCtable* hcTable = sdManager->GetHCtable();
+  
+  for (G4int i = 0; i < hcTable->entries(); i++) {
+    G4String sdName = hcTable->GetSDname(i);
+    G4String hcName = hcTable->GetHCname(i);
+    G4String fullName = sdName + "/" + hcName;
+    G4int id = sdManager->GetCollectionID(fullName);
+    fHitsCollectionIDs[hcName] = id;
+    G4cout << "Registered hits collection: \"" << hcName 
+           << "\" (SD: " << sdName << ", ID: " << id << ")" << G4endl;
+  }
+  
+  fCollectionsInitialized = true;
+}
+
+/**
  * @brief Actions at the end of each event
  * @param event The current event
  */
 void EventAction::EndOfEventAction(const G4Event* event)
 {
-  // Process hits from the default hits collection
-  ProcessMyHits(event);
+  // Discover collections on first event
+  if (!fCollectionsInitialized) {
+    InitializeCollectionIDs();
+  }
+  
+  // Process all hits collections
+  for (const auto& [name, id] : fHitsCollectionIDs) {
+    ProcessHitsCollection(event, name, id);
+  }
 }
 
 /**
- * @brief Process hits from the default MyHitsCollection
+ * @brief Process a single hits collection
  * @param event The current event
+ * @param name The hits collection name
+ * @param id The hits collection ID
  */
-void EventAction::ProcessMyHits(const G4Event* event)
+void EventAction::ProcessHitsCollection(const G4Event* event, const G4String& name, G4int id)
 {
   // Get hits collections
   G4HCofThisEvent* hce = event->GetHCofThisEvent();
   if (!hce) return;
   
-  // Get the collection ID (do this once and cache it)
-  if (fMyHitsCollectionID < 0) {
-    fMyHitsCollectionID = G4SDManager::GetSDMpointer()->GetCollectionID("MyHitsCollection");
-  }
-  
   // Get the hits collection
   MyHitsCollection* hitsCollection = 
-    static_cast<MyHitsCollection*>(hce->GetHC(fMyHitsCollectionID));
+    static_cast<MyHitsCollection*>(hce->GetHC(id));
   
   if (!hitsCollection) return;
   
@@ -73,7 +98,7 @@ void EventAction::ProcessMyHits(const G4Event* event)
   if (nHits == 0) return;
   
   G4cout << "Event " << event->GetEventID() 
-         << " has " << nHits << " hits in MyHitsCollection" << G4endl;
+         << " has " << nHits << " hits in \"" << name << "\"" << G4endl;
   
   // Calculate total energy deposit
   G4double totalEdep = 0.0;
@@ -100,10 +125,5 @@ void EventAction::ProcessMyHits(const G4Event* event)
            << G4endl;
   }
   
-  G4cout << "  Total energy deposit: " << totalEdep/keV << " keV" << G4endl;
-  
-  // Here you could add code to:
-  // - Write hits to an output file
-  // - Fill histograms
-  // - Perform analysis
+  G4cout << "  Total energy deposit in \"" << name << "\": " << totalEdep/keV << " keV" << G4endl;
 }

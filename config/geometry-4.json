@@ -1,0 +1,181 @@
+{
+  "world": {
+    "name": "World",
+    "g4name": "World",
+    "type": "box",
+    "placements": [
+      {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    ],
+    "material": "G4_AIR",
+    "dimensions": {
+      "x": 2000,
+      "y": 2000,
+      "z": 2000
+    },
+    "visible": false,
+    "wireframe": true
+  },
+  "volumes": [
+    {
+      "name": "box_1772195657295_5921",
+      "g4name": "Box_1",
+      "type": "box",
+      "material": "LXe",
+      "dimensions": {
+        "x": 100,
+        "y": 100,
+        "z": 100
+      },
+      "placements": [
+        {
+          "name": "box_1772195657295_5921",
+          "g4name": "Box_1",
+          "x": 300,
+          "y": 0,
+          "z": 0,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ],
+      "visible": true,
+      "hitsCollectionName": "MySD",
+      "_compoundId": "box_1772195657295_5921",
+      "_componentId": "component_1772195657295_vwscdmz5"
+    },
+    {
+      "name": "cylinder_1772195698296_5084",
+      "g4name": "Cylinder_1",
+      "type": "cylinder",
+      "material": "G4_PLASTIC_SC_VINYLTOLUENE",
+      "dimensions": {
+        "radius": 50,
+        "height": 100
+      },
+      "placements": [
+        {
+          "name": "cylinder_1772195698296_5084",
+          "g4name": "Cylinder_1",
+          "x": 150,
+          "y": 0,
+          "z": 0,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ],
+      "visible": true,
+      "hitsCollectionName": "MyHitsCollection",
+      "_compoundId": "cylinder_1772195698296_5084",
+      "_componentId": "component_1772195698296_ac967v4p"
+    },
+    {
+      "name": "box_1772198158801_1457",
+      "g4name": "Box_2",
+      "type": "box",
+      "material": "LXe",
+      "dimensions": {
+        "x": 100,
+        "y": 100,
+        "z": 100
+      },
+      "placements": [
+        {
+          "name": "box_1772198158801_1457",
+          "g4name": "Box_2",
+          "x": 448.6175578435739,
+          "y": 0,
+          "z": 0,
+          "rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "parent": "World"
+        }
+      ],
+      "visible": true,
+      "hitsCollectionName": "MySD",
+      "_compoundId": "box_1772198158801_1457",
+      "_componentId": "component_1772198158801_dqp1ydhz"
+    }
+  ],
+  "materials": {
+    "LXe": {
+      "type": "element_based",
+      "density": 3.02,
+      "density_unit": "g/cm3",
+      "state": "liquid",
+      "temperature": 165,
+      "temperature_unit": "kelvin",
+      "composition": {
+        "Xe": 1
+      },
+      "color": [
+        0,
+        0.5,
+        1,
+        0.3
+      ]
+    },
+    "G4_AIR": {
+      "type": "nist",
+      "density": 0.00120479,
+      "density_unit": "g/cm3",
+      "color": [
+        0.9,
+        0.9,
+        1,
+        0.1
+      ]
+    },
+    "G4_WATER": {
+      "type": "nist",
+      "density": 1,
+      "density_unit": "g/cm3",
+      "color": [
+        0,
+        0,
+        0.8,
+        0.3
+      ]
+    },
+    "G4_Al": {
+      "type": "nist",
+      "density": 2.699,
+      "density_unit": "g/cm3",
+      "color": [
+        0.8,
+        0.8,
+        0.8,
+        1
+      ]
+    },
+    "G4_PLASTIC_SC_VINYLTOLUENE": {
+      "type": "nist",
+      "density": 1.032,
+      "density_unit": "g/cm3",
+      "color": [
+        0.2,
+        0.8,
+        0.2,
+        1
+      ]
+    }
+  }
+}
