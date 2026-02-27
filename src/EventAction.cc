@@ -1,129 +1,131 @@
 #include "EventAction.hh"
+#include "RunAction.hh"
 #include "MyHit.hh"
 
 #include "G4Event.hh"
 #include "G4EventManager.hh"
 #include "G4HCofThisEvent.hh"
+#include "G4RunManager.hh"
 #include "G4SDManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4ios.hh"
 
-/**
- * @brief Constructor
- */
+#include "TTree.h"
+
+// ----------------------------------------------------------------
 EventAction::EventAction()
 : G4UserEventAction(),
-  fCollectionsInitialized(false)
+  fCollectionsInitialized(false),
+  fTree(nullptr)
 {}
 
-/**
- * @brief Destructor
- */
 EventAction::~EventAction()
 {}
 
-/**
- * @brief Actions at the beginning of each event
- * @param event The current event
- */
+// ----------------------------------------------------------------
+// Called once on the first event: discover every hits collection
+// that was registered by the sensitive detectors and create a
+// matching set of branches in the ROOT TTree.
+// ----------------------------------------------------------------
+void EventAction::InitializeCollections()
+{
+  // Get the TTree from RunAction
+  auto runAction = static_cast<const RunAction*>(
+      G4RunManager::GetRunManager()->GetUserRunAction());
+  fTree = runAction->GetEventTree();
+
+  // Discover all hits collections
+  G4SDManager* sdManager = G4SDManager::GetSDMpointer();
+  G4HCtable*   hcTable   = sdManager->GetHCtable();
+
+  for (G4int i = 0; i < hcTable->entries(); i++) {
+    G4String sdName   = hcTable->GetSDname(i);
+    G4String hcName   = hcTable->GetHCname(i);
+    G4String fullName = sdName + "/" + hcName;
+    G4int    id       = sdManager->GetCollectionID(fullName);
+
+    // Use the hits-collection name as the detector key
+    std::string det = std::string(hcName);
+
+    fHitsCollectionIDs[hcName] = id;
+
+    // Initialise data maps for this detector
+    fNHits[det] = 0;
+    fX[det]     = {};
+    fY[det]     = {};
+    fZ[det]     = {};
+    fE[det]     = {};
+    fVolName[det] = {};
+
+    // Create ROOT branches
+    fTree->Branch((det + "_nHits").c_str(), &fNHits[det], (det + "_nHits/I").c_str());
+    fTree->Branch((det + "_x").c_str(),     &fX[det]);
+    fTree->Branch((det + "_y").c_str(),     &fY[det]);
+    fTree->Branch((det + "_z").c_str(),     &fZ[det]);
+    fTree->Branch((det + "_E").c_str(),     &fE[det]);
+    fTree->Branch((det + "_volName").c_str(), &fVolName[det]);
+
+    G4cout << "Created ROOT branches for detector \"" << det
+           << "\" (SD: " << sdName << ", ID: " << id << ")" << G4endl;
+  }
+
+  fCollectionsInitialized = true;
+}
+
+// ----------------------------------------------------------------
 void EventAction::BeginOfEventAction(const G4Event* event)
 {
-  // Print event number for every 100 events
   G4int eventID = event->GetEventID();
-  if (eventID % 100 == 0) {
+  if (eventID % 1000 == 0) {
     G4cout << ">>> Event: " << eventID << G4endl;
   }
 }
 
-/**
- * @brief Discover all registered hits collection IDs
- */
-void EventAction::InitializeCollectionIDs()
-{
-  G4SDManager* sdManager = G4SDManager::GetSDMpointer();
-  G4HCtable* hcTable = sdManager->GetHCtable();
-  
-  for (G4int i = 0; i < hcTable->entries(); i++) {
-    G4String sdName = hcTable->GetSDname(i);
-    G4String hcName = hcTable->GetHCname(i);
-    G4String fullName = sdName + "/" + hcName;
-    G4int id = sdManager->GetCollectionID(fullName);
-    fHitsCollectionIDs[hcName] = id;
-    G4cout << "Registered hits collection: \"" << hcName 
-           << "\" (SD: " << sdName << ", ID: " << id << ")" << G4endl;
-  }
-  
-  fCollectionsInitialized = true;
-}
-
-/**
- * @brief Actions at the end of each event
- * @param event The current event
- */
+// ----------------------------------------------------------------
 void EventAction::EndOfEventAction(const G4Event* event)
 {
-  // Discover collections on first event
+  // Lazy initialisation of branch bookkeeping
   if (!fCollectionsInitialized) {
-    InitializeCollectionIDs();
+    InitializeCollections();
   }
-  
-  // Process all hits collections
-  for (const auto& [name, id] : fHitsCollectionIDs) {
-    ProcessHitsCollection(event, name, id);
-  }
-}
 
-/**
- * @brief Process a single hits collection
- * @param event The current event
- * @param name The hits collection name
- * @param id The hits collection ID
- */
-void EventAction::ProcessHitsCollection(const G4Event* event, const G4String& name, G4int id)
-{
-  // Get hits collections
-  G4HCofThisEvent* hce = event->GetHCofThisEvent();
-  if (!hce) return;
-  
-  // Get the hits collection
-  MyHitsCollection* hitsCollection = 
-    static_cast<MyHitsCollection*>(hce->GetHC(id));
-  
-  if (!hitsCollection) return;
-  
-  // Process hits
-  G4int nHits = hitsCollection->entries();
-  
-  // Skip processing if no hits
-  if (nHits == 0) return;
-  
-  G4cout << "Event " << event->GetEventID() 
-         << " has " << nHits << " hits in \"" << name << "\"" << G4endl;
-  
-  // Calculate total energy deposit
-  G4double totalEdep = 0.0;
-  
-  // Process each hit
-  for (G4int i = 0; i < nHits; i++) {
-    MyHit* hit = (*hitsCollection)[i];
-    
-    // Get hit data
-    G4double edep = hit->GetEnergy();
-    G4ThreeVector pos = hit->GetPosition();
-    G4String volName = hit->GetVolumeName();
-    G4double time = hit->GetTime();
-    
-    // Accumulate energy deposit
-    totalEdep += edep;
-    
-    // Print hit details (can be commented out for production runs)
-    G4cout << "  Hit " << i 
-           << " in volume " << volName
-           << " at position " << pos/mm << " mm"
-           << " with energy " << edep/keV << " keV"
-           << " at time " << time/ns << " ns"
-           << G4endl;
+  // Clear all vectors before filling
+  for (auto& [det, _] : fNHits) {
+    fNHits[det] = 0;
+    fX[det].clear();
+    fY[det].clear();
+    fZ[det].clear();
+    fE[det].clear();
+    fVolName[det].clear();
   }
-  
-  G4cout << "  Total energy deposit in \"" << name << "\": " << totalEdep/keV << " keV" << G4endl;
+
+  G4HCofThisEvent* hce = event->GetHCofThisEvent();
+  if (!hce) {
+    fTree->Fill();
+    return;
+  }
+
+  // Loop over every registered detector and fill vectors
+  for (const auto& [hcName, id] : fHitsCollectionIDs) {
+    auto* hc = static_cast<MyHitsCollection*>(hce->GetHC(id));
+    if (!hc) continue;
+
+    std::string det  = std::string(hcName);
+    G4int       nHits = hc->entries();
+    fNHits[det] = nHits;
+
+    for (G4int i = 0; i < nHits; i++) {
+      MyHit* hit = (*hc)[i];
+      G4ThreeVector pos = hit->GetPosition();
+
+      fX[det].push_back(pos.x() / mm);
+      fY[det].push_back(pos.y() / mm);
+      fZ[det].push_back(pos.z() / mm);
+      fE[det].push_back(hit->GetEnergy() / MeV);
+      fVolName[det].push_back(std::string(hit->GetVolumeName()));
+    }
+  }
+
+  // Fill the tree once per event
+  fTree->Fill();
 }

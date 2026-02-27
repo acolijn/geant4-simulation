@@ -17,4 +17,4 @@
 /gun/direction 1 0 0
 
 # Run settings - adjust the number of events as needed
-/run/beamOn 1000
+/run/beamOn 100000

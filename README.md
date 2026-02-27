@@ -1,106 +1,233 @@
 # Geant4 Simulation — Neutron Transport
 
-A Geant4 application for simulating neutron transport using high-precision neutron physics (FTFP_BERT_HP). The detector geometry is defined via JSON configuration files, making it easy to modify without recompiling.
+A Geant4 application for simulating neutron transport using high-precision neutron physics (`FTFP_BERT_HP`). The detector geometry is defined via JSON configuration files, making it easy to modify without recompiling.
 
 [![Documentation Status](https://readthedocs.org/projects/geant4-simulation/badge/?version=latest)](https://geant4-simulation.readthedocs.io/en/latest/?badge=latest)
 
-## Requirements
+---
 
-- Geant4 11.x (with HP neutron data files)
-- ROOT 6.x
-- CMake 3.16+
-- nlohmann_json
+## Table of Contents
 
-All dependencies are available via conda (recommended).
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+  - [1. Install Conda](#1-install-conda)
+  - [2. Create the Environment](#2-create-the-environment)
+  - [3. Activate the Environment](#3-activate-the-environment)
+  - [4. Build the Project](#4-build-the-project)
+- [Running the Simulation](#running-the-simulation)
+  - [Interactive Mode (with Visualization)](#interactive-mode-with-visualization)
+  - [Batch Mode (no Visualization)](#batch-mode-no-visualization)
+- [Project Structure](#project-structure)
+- [Configuration](#configuration)
+  - [Geometry Files](#geometry-files)
+  - [Macro Commands](#macro-commands)
+  - [Particle Gun](#particle-gun)
+- [Output](#output)
+- [Troubleshooting](#troubleshooting)
+- [Documentation](#documentation)
 
-## Quick Start with Conda
+---
+
+## Prerequisites
+
+| Dependency | Version | Notes |
+|---|---|---|
+| **Conda** | Miniconda or Anaconda | Package manager for all other dependencies |
+| **Geant4** | 11.x | Includes HP neutron data files |
+| **ROOT** | 6.x | For output histograms and trees |
+| **CMake** | 3.16+ | Build system |
+| **nlohmann_json** | — | JSON parsing library |
+
+> All C++ dependencies (Geant4, ROOT, CMake, nlohmann_json) are installed automatically via the provided Conda environment file. You only need to have Conda itself installed.
+
+---
+
+## Installation
+
+### 1. Install Conda
+
+If you don't already have Conda, install **Miniconda** (lightweight) or **Anaconda**:
+
+- **Miniconda** (recommended): <https://docs.conda.io/en/latest/miniconda.html>
+- **Anaconda**: <https://www.anaconda.com/download>
+
+Verify the installation:
 
 ```bash
-# 1. Create the environment
+conda --version
+```
+
+### 2. Create the Environment
+
+Clone the repository and create the Conda environment from the included `environment.yml`:
+
+```bash
+git clone https://github.com/acolijn/geant4-simulation.git
+cd geant4-simulation
+
 conda env create -f environment.yml
+```
 
-# 2. Activate it
+This creates a Conda environment named **`g4`** with Geant4, ROOT, CMake, and nlohmann_json.
+
+> **Note:** The initial environment creation can take several minutes as it downloads and installs Geant4 and ROOT.
+
+### 3. Activate the Environment
+
+```bash
 conda activate g4
+```
 
-# 3. Build
-mkdir build && cd build
+You need to activate this environment every time you open a new terminal session.
+
+### 4. Build the Project
+
+```bash
+mkdir -p build && cd build
 cmake ..
 make -j$(nproc)
 ```
 
-## Running the Simulation
-
-From the project root directory:
+On macOS, if `nproc` is not available, use:
 
 ```bash
-# Interactive mode with visualization (Qt)
+make -j$(sysctl -n hw.ncpu)
+```
+
+After a successful build the executable is located at `build/GeoTest`.
+
+---
+
+## Running the Simulation
+
+All commands below assume you are in the **project root directory** (not inside `build/`).
+
+### Interactive Mode (with Visualization)
+
+Launch without arguments to open the Qt-based visualization GUI:
+
+```bash
 build/GeoTest
+```
 
-# Batch mode — no visualization, 1000 neutron events
-build/GeoTest macros/novis.mac
+This executes the default macro `macros/vis.mac`, which sets up the geometry, visualization, and particle gun. You can then interact with the detector in the 3D viewer and fire events from the GUI.
 
-# Batch mode — 100 neutron events
-build/GeoTest macros/run_batch.mac
+### Batch Mode (no Visualization)
 
-# Batch mode — with materials file
+Run with a macro file to execute in batch mode:
+
+```bash
 build/GeoTest macros/batch.mac
 ```
+
+The `batch.mac` macro disables visualization and runs 100 000 events by default. Edit the macro to adjust the number of events (`/run/beamOn`), particle type, energy, or position.
+
+---
 
 ## Project Structure
 
 ```
-├── GeoTest.cc              # Main application
-├── CMakeLists.txt          # Build configuration
-├── environment.yml         # Conda environment specification
-├── include/                # Header files
-├── src/                    # Source files
-├── macros/                 # Geant4 macro files
-│   ├── vis.mac             # Interactive visualization
-│   ├── novis.mac           # Batch mode (no visualization)
-│   ├── batch.mac           # Batch mode with materials config
-│   ├── run_batch.mac       # Batch mode (100 events)
-│   └── pre_init.mac        # Pre-initialization commands
-├── config/                 # Detector configuration (JSON)
-│   ├── geometry.json       # Default geometry definition
-│   ├── geometry_all.json   # Extended geometry
-│   ├── geometry_union.json # Union solid geometry
-│   └── materials.json      # Material definitions
-├── Dockerfile              # Docker image build
-└── docker-compose.yml      # Docker Compose configuration
+geant4-simulation/
+├── GeoTest.cc                 # Main application entry point
+├── CMakeLists.txt             # CMake build configuration
+├── environment.yml            # Conda environment specification
+├── include/                   # C++ header files
+│   ├── DetectorConstruction.hh
+│   ├── ActionInitialization.hh
+│   ├── EventAction.hh
+│   ├── RunAction.hh
+│   ├── PrimaryGeneratorAction.hh
+│   ├── GeometryParser.hh
+│   ├── MySensitiveDetector.hh
+│   ├── MyHit.hh
+│   └── json.hpp
+├── src/                       # C++ source files
+│   ├── DetectorConstruction.cc
+│   ├── ActionInitialization.cc
+│   ├── EventAction.cc
+│   ├── RunAction.cc
+│   ├── PrimaryGeneratorAction.cc
+│   ├── GeometryParser.cc
+│   ├── MySensitiveDetector.cc
+│   └── MyHit.cc
+├── macros/                    # Geant4 macro files
+│   ├── vis.mac                # Interactive mode with visualization
+│   └── batch.mac              # Batch mode (no visualization)
+└── config/                    # Detector geometry (JSON)
+    ├── geometry.json
+    ├── geometry-4.json
+    ├── geometry_all.json
+    └── materials.json
 ```
+
+---
 
 ## Configuration
 
-The detector geometry is defined in JSON files under `config/`. Select which geometry to use in your macro:
+### Geometry Files
+
+The detector geometry is defined in JSON files under `config/`. These files describe volumes, materials, positions, and rotations — and can be created or edited with the companion [Geant4 Geometry Editor](https://github.com/acolijn/geant4-geometry-editor).
+
+### Macro Commands
+
+Select the geometry file in your Geant4 macro with:
 
 ```
 /detector/setGeometryFile config/geometry.json
-/detector/setMaterialsFile config/materials.json
 ```
+
+This command must appear **before** `/run/initialize`.
+
+### Particle Gun
+
+The default primary particle is a neutron at 1 MeV. Override it in your macro:
+
+```
+/gun/particle gamma
+/gun/energy 1 MeV
+/gun/position -10 0 0 cm
+/gun/direction 1 0 0
+```
+
+---
 
 ## Output
 
-The simulation produces a ROOT file `GeoTest.root` containing a TTree `GeoTestTree` with the following branches:
+The simulation writes a ROOT file **`GeoTest.root`** (in the current working directory) containing a TTree named **`events`**.
+
+Branches are created dynamically for each sensitive detector defined in the geometry. For a detector named `<det>`, the following branches are created:
 
 | Branch | Type | Description |
 |---|---|---|
-| `EnergyDeposit` | `Double_t` | Total energy deposit (MeV) |
-| `TrackLength` | `Double_t` | Track length (mm) |
-| `NeutronCount` | `Int_t` | Number of neutrons |
+| `<det>_nHits` | `Int_t` | Number of hits in this detector |
+| `<det>_x` | `vector<double>` | Hit x-positions (mm) |
+| `<det>_y` | `vector<double>` | Hit y-positions (mm) |
+| `<det>_z` | `vector<double>` | Hit z-positions (mm) |
+| `<det>_E` | `vector<double>` | Energy deposits per hit (MeV) |
+| `<det>_volName` | `vector<string>` | Volume name for each hit |
 
-Hit-level information (position, volume, time, energy per step) is printed to stdout during the run.
-
-## Docker
-
-You can also build and run via Docker:
+You can inspect the output with ROOT:
 
 ```bash
-# Build and run with default macro
-docker compose up --build
-
-# Run with a specific macro
-docker compose run --rm geant4-sim macros/batch.mac
+root -l GeoTest.root
+root [0] events->Print()
+root [1] events->Draw("<det>_E")
 ```
+
+---
+
+## Troubleshooting
+
+| Problem | Solution |
+|---|---|
+| `conda: command not found` | Install Miniconda/Anaconda and restart your terminal |
+| `conda env create` is very slow | Try `conda config --set solver libmamba` for the faster solver |
+| `cmake` can't find Geant4 or ROOT | Make sure the `g4` environment is activated: `conda activate g4` |
+| `nproc: command not found` (macOS) | Use `make -j$(sysctl -n hw.ncpu)` instead |
+| Segfault on exit | This is a known Geant4 11.x issue with HP physics static destructors; the application uses `std::quick_exit(0)` to work around it |
+| Visualization window doesn't open | Ensure Qt is available; try running from a graphical terminal (not SSH without X-forwarding) |
+
+---
 
 ## Documentation
 
