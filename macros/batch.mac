@@ -3,6 +3,7 @@
 
 # Set the geometry and materials files
 /detector/setGeometryFile config/geometry-4.json
+/output/setFileName G4sim.root
 
 # Initialize the run manager
 /run/initialize

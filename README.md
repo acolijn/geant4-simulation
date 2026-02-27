@@ -94,7 +94,7 @@ On macOS, if `nproc` is not available, use:
 make -j$(sysctl -n hw.ncpu)
 ```
 
-After a successful build the executable is located at `build/GeoTest`.
+After a successful build the executable is located at `build/G4sim`.
 
 ---
 
@@ -107,7 +107,7 @@ All commands below assume you are in the **project root directory** (not inside 
 Launch without arguments to open the Qt-based visualization GUI:
 
 ```bash
-build/GeoTest
+build/G4sim
 ```
 
 This executes the default macro `macros/vis.mac`, which sets up the geometry, visualization, and particle gun. You can then interact with the detector in the 3D viewer and fire events from the GUI.
@@ -117,7 +117,7 @@ This executes the default macro `macros/vis.mac`, which sets up the geometry, vi
 Run with a macro file to execute in batch mode:
 
 ```bash
-build/GeoTest macros/batch.mac
+build/G4sim macros/batch.mac
 ```
 
 The `batch.mac` macro disables visualization and runs 100 000 events by default. Edit the macro to adjust the number of events (`/run/beamOn`), particle type, energy, or position.
@@ -128,7 +128,7 @@ The `batch.mac` macro disables visualization and runs 100 000 events by default.
 
 ```
 geant4-simulation/
-├── GeoTest.cc                 # Main application entry point
+├── G4sim.cc                   # Main application entry point
 ├── CMakeLists.txt             # CMake build configuration
 ├── environment.yml            # Conda environment specification
 ├── include/                   # C++ header files
@@ -176,7 +176,13 @@ Select the geometry file in your Geant4 macro with:
 /detector/setGeometryFile config/geometry.json
 ```
 
-This command must appear **before** `/run/initialize`.
+Optionally set the ROOT output file name (default is `G4sim.root`):
+
+```
+/output/setFileName myrun.root
+```
+
+Both commands must appear **before** `/run/initialize`.
 
 ### Particle Gun
 
@@ -193,7 +199,7 @@ The default primary particle is a neutron at 1 MeV. Override it in your macro:
 
 ## Output
 
-The simulation writes a ROOT file **`GeoTest.root`** (in the current working directory) containing a TTree named **`events`**.
+The simulation writes a ROOT file (default **`G4sim.root`**) in the current working directory, containing a TTree named **`events`**. The file name can be changed with `/output/setFileName` in your macro.
 
 Branches are created dynamically for each sensitive detector defined in the geometry. For a detector named `<det>`, the following branches are created:
 
@@ -209,7 +215,7 @@ Branches are created dynamically for each sensitive detector defined in the geom
 You can inspect the output with ROOT:
 
 ```bash
-root -l GeoTest.root
+root -l G4sim.root
 root [0] events->Print()
 root [1] events->Draw("<det>_E")
 ```

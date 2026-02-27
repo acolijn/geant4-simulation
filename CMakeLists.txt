@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16...3.21)
 
-project(GeoTest)
+project(G4sim)
 
 option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
 if(WITH_GEANT4_UIVIS)
@@ -22,8 +22,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
-add_executable(GeoTest GeoTest.cc ${sources} ${headers})
-target_link_libraries(GeoTest 
+add_executable(G4sim G4sim.cc ${sources} ${headers})
+target_link_libraries(G4sim 
     ${Geant4_LIBRARIES} 
     ${ROOT_LIBRARIES}
     nlohmann_json::nlohmann_json
@@ -57,6 +57,6 @@ foreach(_macro ${MACRO_FILES})
 endforeach()
 
 # Install rules
-install(TARGETS GeoTest DESTINATION bin)
+install(TARGETS G4sim DESTINATION bin)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/macros/ DESTINATION macros FILES_MATCHING PATTERN "*.mac")
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/config/ DESTINATION config FILES_MATCHING PATTERN "*.json")
