@@ -166,4 +166,4 @@ tbody tr:hover { background: var(--bg); }
 #result-files a:hover { text-decoration: underline; }
 
 /* ── Plot container ─────────────────────────────────────── */
-#plot-container { min-height: 100px; }
+#plot-container { min-height: 500px; width: 100%; }

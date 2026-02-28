@@ -336,7 +336,8 @@ async def plot_branch(run_id: str, branch: str):
         xaxis_title=branch,
         yaxis_title="Counts",
         template="plotly_white",
-        margin=dict(l=50, r=20, t=50, b=40),
+        height=500,
+        margin=dict(l=60, r=30, t=50, b=50),
     )
     return {"plotJSON": fig.to_json()}
 
@@ -389,6 +390,7 @@ async def plot_3d(run_id: str):
         title="Hit positions (3D)",
         scene=dict(xaxis_title="x [mm]", yaxis_title="y [mm]", zaxis_title="z [mm]"),
         template="plotly_white",
+        height=600,
         margin=dict(l=0, r=0, t=40, b=0),
     )
     return {"plotJSON": fig.to_json()}
