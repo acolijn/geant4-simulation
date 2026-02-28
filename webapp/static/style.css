@@ -1,0 +1,169 @@
+/* ── G4sim Dashboard styles ─────────────────────────────── */
+:root {
+  --bg:       #f4f5f7;
+  --surface:  #ffffff;
+  --primary:  #1a73e8;
+  --danger:   #d93025;
+  --text:     #202124;
+  --text2:    #5f6368;
+  --border:   #dadce0;
+  --radius:   8px;
+  --shadow:   0 1px 3px rgba(0,0,0,.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  padding: 0 1rem 2rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  gap: .8rem;
+  padding: 1.2rem 0 .6rem;
+}
+header h1 { font-size: 1.4rem; }
+.subtitle  { color: var(--text2); font-size: .9rem; }
+
+/* ── Tabs ───────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 2px;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 1rem;
+}
+.tab {
+  background: none;
+  border: none;
+  padding: .6rem 1.4rem;
+  font-size: .95rem;
+  cursor: pointer;
+  color: var(--text2);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: .15s;
+}
+.tab:hover { color: var(--primary); }
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  font-weight: 600;
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ── Cards ──────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+}
+.card h2 {
+  font-size: 1rem;
+  margin-bottom: .8rem;
+  color: var(--text);
+}
+
+/* ── Forms ──────────────────────────────────────────────── */
+label {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  font-size: .85rem;
+  color: var(--text2);
+}
+input, select {
+  padding: .45rem .6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: .9rem;
+  color: var(--text);
+}
+input:focus, select:focus { outline: 2px solid var(--primary); border-color: transparent; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-bottom: .8rem; }
+.form-grid.triple { grid-template-columns: 1fr 1fr 1fr; }
+.narrow { max-width: 180px; margin-bottom: .8rem; }
+
+.input-unit { display: flex; gap: .3rem; }
+.input-unit input { flex: 1; min-width: 0; }
+.input-unit select { width: 80px; }
+
+.upload-row { display: flex; align-items: center; gap: .8rem; margin-top: .6rem; font-size: .85rem; color: var(--text2); }
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn-row { display: flex; gap: .6rem; align-items: end; flex-wrap: wrap; margin-bottom: .8rem; }
+
+.btn {
+  padding: .5rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  font-size: .9rem;
+  cursor: pointer;
+  transition: .15s;
+}
+.btn:hover { background: var(--bg); }
+.btn:disabled { opacity: .4; cursor: default; }
+
+.btn.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+.btn.primary:hover { background: #1765cc; }
+.btn.danger  { background: var(--danger);  color: #fff; border-color: var(--danger); }
+.btn.danger:hover  { background: #c5221f; }
+
+/* ── Progress bar ───────────────────────────────────────── */
+.progress-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: .4rem;
+}
+#progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  transition: width .3s;
+}
+#progress-text { font-size: .8rem; color: var(--text2); }
+.hidden { display: none; }
+
+/* ── Log output ─────────────────────────────────────────── */
+pre {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  padding: 1rem;
+  border-radius: var(--radius);
+  font-size: .8rem;
+  line-height: 1.4;
+  max-height: 400px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ── Tables ─────────────────────────────────────────────── */
+table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--border); }
+th { color: var(--text2); font-weight: 600; }
+tbody tr:hover { background: var(--bg); }
+
+/* ── Result file list ───────────────────────────────────── */
+#result-files { list-style: none; }
+#result-files li { padding: .3rem 0; }
+#result-files a { color: var(--primary); text-decoration: none; }
+#result-files a:hover { text-decoration: underline; }
+
+/* ── Plot container ─────────────────────────────────────── */
+#plot-container { min-height: 100px; }

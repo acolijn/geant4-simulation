@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G4sim Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>G4sim Dashboard</h1>
+  <span class="subtitle">Geant4 Simulation Control</span>
+</header>
+
+<!-- ─── Tab bar ─────────────────────────────────────────── -->
+<nav class="tabs">
+  <button class="tab active" data-tab="config">Config</button>
+  <button class="tab" data-tab="run">Run</button>
+  <button class="tab" data-tab="results">Results</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CONFIG TAB                                             -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="tab-config" class="tab-content active">
+  <div class="card">
+    <h2>Geometry</h2>
+    <label>Geometry file
+      <select id="geometry-select"><option>loading…</option></select>
+    </label>
+    <div class="upload-row">
+      <span>Or upload JSON:</span>
+      <input type="file" id="geometry-upload" accept=".json" />
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Particle Gun</h2>
+    <div class="form-grid">
+      <label>Particle
+        <select id="particle">
+          <option value="gamma">gamma</option>
+          <option value="neutron">neutron</option>
+          <option value="e-">e-</option>
+          <option value="e+">e+</option>
+          <option value="proton">proton</option>
+          <option value="mu-">mu-</option>
+        </select>
+      </label>
+      <label>Energy
+        <div class="input-unit">
+          <input type="number" id="energy" value="1" step="any" />
+          <select id="energy-unit">
+            <option value="MeV" selected>MeV</option>
+            <option value="keV">keV</option>
+            <option value="GeV">GeV</option>
+          </select>
+        </div>
+      </label>
+    </div>
+    <div class="form-grid triple">
+      <label>Position X <input type="number" id="posX" value="-10" step="any" /></label>
+      <label>Position Y <input type="number" id="posY" value="0" step="any" /></label>
+      <label>Position Z <input type="number" id="posZ" value="0" step="any" /></label>
+    </div>
+    <label class="narrow">Position unit
+      <select id="pos-unit">
+        <option value="cm" selected>cm</option>
+        <option value="mm">mm</option>
+        <option value="m">m</option>
+      </select>
+    </label>
+    <div class="form-grid triple">
+      <label>Direction X <input type="number" id="dirX" value="1" step="any" /></label>
+      <label>Direction Y <input type="number" id="dirY" value="0" step="any" /></label>
+      <label>Direction Z <input type="number" id="dirZ" value="0" step="any" /></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Run Settings</h2>
+    <div class="form-grid">
+      <label>Number of events
+        <input type="number" id="nEvents" value="10000" min="1" />
+      </label>
+      <label>Output file name
+        <input type="text" id="outputFile" value="G4sim.root" />
+      </label>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RUN TAB                                                -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="tab-run" class="tab-content">
+  <div class="card">
+    <h2>Controls</h2>
+    <div class="btn-row">
+      <button id="btn-start" class="btn primary">▶ Start Simulation</button>
+      <button id="btn-stop" class="btn danger" disabled>■ Stop</button>
+    </div>
+    <div id="progress-area" class="hidden">
+      <div class="progress-bar"><div id="progress-fill"></div></div>
+      <span id="progress-text"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Live Log</h2>
+    <pre id="log-output"></pre>
+  </div>
+
+  <div class="card">
+    <h2>Run History</h2>
+    <table id="run-history">
+      <thead><tr>
+        <th>Run ID</th><th>Geometry</th><th>Particle</th><th>Events</th><th>Status</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RESULTS TAB                                            -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section id="tab-results" class="tab-content">
+  <div class="card">
+    <h2>Select Run</h2>
+    <select id="result-run-select"><option value="">— select a run —</option></select>
+  </div>
+
+  <div class="card">
+    <h2>Files</h2>
+    <ul id="result-files"></ul>
+  </div>
+
+  <div class="card">
+    <h2>Plots</h2>
+    <div class="btn-row">
+      <label>Branch
+        <select id="branch-select"><option value="">—</option></select>
+      </label>
+      <button id="btn-plot" class="btn">Plot histogram</button>
+      <button id="btn-plot3d" class="btn">3D hit map</button>
+    </div>
+    <div id="plot-container"></div>
+  </div>
+
+  <div class="card">
+    <h2>Run Log</h2>
+    <pre id="result-log"></pre>
+  </div>
+</section>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
