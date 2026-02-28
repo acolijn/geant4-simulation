@@ -23,10 +23,20 @@ public:
   virtual void Initialize(G4HCofThisEvent* hitCollection);
   virtual G4bool ProcessHits(G4Step* step, G4TouchableHistory* history);
   virtual void EndOfEvent(G4HCofThisEvent* hitCollection);
+
+  /// Set verbosity: 0 = silent, 1 = summary per event, 2 = every hit
+  static void   SetVerboseLevel(G4int level) { fVerboseLevel = level; }
+  static G4int  GetVerboseLevel()            { return fVerboseLevel; }
   
 private:
   MyHitsCollection* fHitsCollection;
   G4int fHitsCollectionID;
+
+  static G4int fVerboseLevel;           ///< Shared print level (default 0)
+  static bool  fMessengerCreated;       ///< Ensures messenger is created once
+
+  class HitsMessenger;
+  static HitsMessenger* fMessenger;
 };
 
 #endif

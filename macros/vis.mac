@@ -19,8 +19,8 @@
 /vis/scene/endOfEventAction accumulate
 
 # Particle gun settings
-/gun/particle gamma
-/gun/energy 1 MeV
+/gun/particle proton
+/gun/energy 10 GeV
 /gun/position -10 0 0 cm
 /gun/direction 1 0 0 
 

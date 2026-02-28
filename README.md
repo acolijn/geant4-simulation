@@ -18,6 +18,7 @@ A Geant4 application for simulating neutron transport using high-precision neutr
   - [Interactive Mode (with Visualization)](#interactive-mode-with-visualization)
   - [Batch Mode (no Visualization)](#batch-mode-no-visualization)
 - [Project Structure](#project-structure)
+- [Web Dashboard](#web-dashboard)
 - [Configuration](#configuration)
   - [Geometry Files](#geometry-files)
   - [Macro Commands](#macro-commands)
@@ -153,12 +154,48 @@ geant4-simulation/
 ├── macros/                    # Geant4 macro files
 │   ├── vis.mac                # Interactive mode with visualization
 │   └── batch.mac              # Batch mode (no visualization)
-└── config/                    # Detector geometry (JSON)
-    ├── geometry.json
-    ├── geometry-4.json
-    ├── geometry_all.json
-    └── materials.json
+├── config/                    # Detector geometry (JSON)
+│   ├── geometry.json
+│   ├── geometry-4.json
+│   ├── geometry_all.json
+│   └── materials.json
+└── webapp/                    # Local web dashboard (FastAPI)
+    ├── app.py                 # Backend server
+    ├── requirements.txt       # Python dependencies
+    ├── templates/             # HTML pages
+    ├── static/                # CSS & JavaScript
+    └── runs/                  # Auto-created output per run (gitignored)
 ```
+
+---
+
+## Web Dashboard
+
+A local web interface for configuring, running, and inspecting simulations — no need to edit `.mac` files by hand.
+
+### Starting the Dashboard
+
+```bash
+conda activate g4
+cd webapp
+uvicorn app:app --host 127.0.0.1 --port 8000
+```
+
+Then open **http://127.0.0.1:8000** in your browser.
+
+### Tabs
+
+| Tab | Description |
+|---|---|
+| **Config** | Select geometry file (or upload a new JSON), set particle type, energy, position, direction, number of events, and output file name |
+| **Run** | Start / stop simulation, live progress bar, streaming log, and run history |
+| **Results** | Browse completed runs, download ROOT / log files, plot histograms, or view a 3D hit map |
+
+Each run is saved in `webapp/runs/<timestamp>/` with the generated macro, metadata, ROOT output, and log.
+
+> **Note:** The dashboard is for local use only. It spawns `G4sim` as a subprocess on your machine.
+
+The command-line workflow (`build/G4sim macros/batch.mac`) continues to work exactly as before.
 
 ---
 

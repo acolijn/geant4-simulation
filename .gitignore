@@ -1,6 +1,13 @@
 # Build directory
 /build/
 
+# Runs and logs directories also in webapp subdirectory
+runs/
+logs/
+
+# also __pycache__ directories
+__pycache__/
+
 # Compiled Object files
 *.o
 *.obj

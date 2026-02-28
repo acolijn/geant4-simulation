@@ -7,3 +7,12 @@ dependencies:
   - root
   - cmake
   - nlohmann_json
+  - pip
+  - pip:
+    - fastapi
+    - uvicorn[standard]
+    - jinja2
+    - uproot
+    - awkward
+    - plotly
+    - python-multipart
