@@ -271,20 +271,73 @@ loadRunHistory();
 
 // ─── RESULTS TAB ────────────────────────────────────────
 
+let _runsCache = [];   // cached run meta for the results tab
+
 async function loadRunsForResults() {
-  const runs = await fetch('/api/runs').then(json);
+  _runsCache = await fetch('/api/runs').then(json);
   const sel = $('result-run-select');
   sel.innerHTML = '<option value="">— select a run —</option>' +
-    runs.map(r => {
+    _runsCache.map(r => {
       const id = r.runId || r.started;
       return `<option value="${esc(id)}">${esc(id)}  (${esc(r.geometry)}, ${esc(r.particle)}, ${(r.nEvents||0).toLocaleString()} evts, ${esc(r.status)})</option>`;
     }).join('');
 }
 loadRunsForResults();
 
+/** Build attractive meta-info display from a run's metadata. */
+function renderRunInfo(meta) {
+  const infoCard = $('run-info-card');
+  if (!meta) { infoCard.classList.add('hidden'); return; }
+  infoCard.classList.remove('hidden');
+
+  // Format timing
+  function fmtTs(ts) {
+    if (!ts) return '—';
+    // "20260301_213730" → "2026-03-01 21:37:30"
+    const m = ts.match(/(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})/);
+    return m ? `${m[1]}-${m[2]}-${m[3]}  ${m[4]}:${m[5]}:${m[6]}` : ts;
+  }
+  function duration(start, end) {
+    if (!start || !end) return null;
+    const p = s => { const m = s.match(/(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})/); return m ? new Date(`${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}`) : null; };
+    const a = p(start), b = p(end);
+    if (!a || !b) return null;
+    const sec = Math.round((b - a) / 1000);
+    if (sec < 60) return `${sec}s`;
+    const min = Math.floor(sec / 60);
+    return `${min}m ${sec % 60}s`;
+  }
+
+  const statusClass = 'status-' + (meta.status || 'unknown');
+  const dur = duration(meta.started, meta.finished);
+
+  const items = [
+    { label: 'Status',      value: meta.status || '—',                  cls: statusClass },
+    { label: 'Geometry',    value: meta.geometry || '—' },
+    { label: 'Particle',    value: meta.particle || '—' },
+    { label: 'Energy',      value: meta.energy || '—' },
+    { label: 'Source',      value: meta.sourceType || '—' },
+    { label: 'Angular',     value: meta.angularType || '—' },
+    { label: 'Events',      value: (meta.nEvents || 0).toLocaleString() },
+    { label: 'Summarised',  value: meta.summarizeHits === '1' ? 'Yes' : 'No' },
+    { label: 'Started',     value: fmtTs(meta.started) },
+    { label: 'Finished',    value: fmtTs(meta.finished) },
+  ];
+  if (dur) items.push({ label: 'Duration', value: dur });
+  if (meta.outputFile) items.push({ label: 'Output', value: meta.outputFile });
+
+  $('meta-grid').innerHTML = items.map(it =>
+    `<div class="meta-item"><div class="meta-label">${esc(it.label)}</div><div class="meta-value ${it.cls || ''}">${esc(it.value)}</div></div>`
+  ).join('');
+}
+
 $('result-run-select').addEventListener('change', async () => {
   const runId = $('result-run-select').value;
-  if (!runId) return;
+  if (!runId) { renderRunInfo(null); return; }
+
+  // Show meta info from cache
+  const meta = _runsCache.find(r => (r.runId || r.started) === runId);
+  renderRunInfo(meta);
 
   // Load files
   const files = await fetch(`/api/results/${runId}/files`).then(json);

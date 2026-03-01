@@ -159,11 +159,51 @@ th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--
 th { color: var(--text2); font-weight: 600; }
 tbody tr:hover { background: var(--bg); }
 
-/* ── Result file list ───────────────────────────────────── */
-#result-files { list-style: none; }
-#result-files li { padding: .3rem 0; }
-#result-files a { color: var(--primary); text-decoration: none; }
-#result-files a:hover { text-decoration: underline; }
+/* ── Meta info grid ─────────────────────────────────────── */
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: .6rem;
+  margin-bottom: 1rem;
+}
+.meta-item {
+  background: var(--bg);
+  border-radius: 6px;
+  padding: .6rem .8rem;
+}
+.meta-item .meta-label {
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--text2);
+  margin-bottom: .15rem;
+}
+.meta-item .meta-value {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.meta-item .meta-value.status-completed { color: #1e8e3e; }
+.meta-item .meta-value.status-running   { color: var(--primary); }
+.meta-item .meta-value.status-failed    { color: var(--danger); }
+.meta-item .meta-value.status-stopped   { color: #e8710a; }
+
+/* ── File download details (de-emphasised) ─────────────── */
+.file-details {
+  margin-top: .4rem;
+}
+.file-details summary {
+  font-size: .8rem;
+  color: var(--text2);
+  cursor: pointer;
+  user-select: none;
+  padding: .3rem 0;
+}
+.file-details summary:hover { color: var(--primary); }
+#result-files { list-style: none; margin-top: .4rem; padding-left: .2rem; }
+#result-files li { padding: .2rem 0; font-size: .82rem; }
+#result-files a { color: var(--text2); text-decoration: none; }
+#result-files a:hover { color: var(--primary); text-decoration: underline; }
 
 /* ── Plot container ─────────────────────────────────────── */
 #plot-container { min-height: 500px; width: 100%; }

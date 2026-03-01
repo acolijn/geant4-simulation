@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>G4sim Dashboard</title>
-  <link rel="stylesheet" href="/static/style.css?v=7" />
+  <link rel="stylesheet" href="/static/style.css?v=8" />
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
@@ -320,9 +320,14 @@
     <select id="result-run-select"><option value="">— select a run —</option></select>
   </div>
 
-  <div class="card">
-    <h2>Files</h2>
-    <ul id="result-files"></ul>
+  <!-- Run info panel — populated from meta.json -->
+  <div id="run-info-card" class="card hidden">
+    <h2>Run Summary</h2>
+    <div class="meta-grid" id="meta-grid"></div>
+    <details class="file-details">
+      <summary>Download files</summary>
+      <ul id="result-files"></ul>
+    </details>
   </div>
 
   <div class="card">
@@ -343,6 +348,6 @@
   </div>
 </section>
 
-<script src="/static/app.js?v=7"></script>
+<script src="/static/app.js?v=8"></script>
 </body>
 </html>
