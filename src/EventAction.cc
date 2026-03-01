@@ -9,15 +9,50 @@
 #include "G4SDManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4ios.hh"
+#include "G4UIdirectory.hh"
+#include "G4UIcmdWithAnInteger.hh"
+#include "G4UImessenger.hh"
 
 #include "TTree.h"
+
+// ── Static members ──────────────────────────────────────
+G4int EventAction::fSummarize = 0;
+bool  EventAction::fSumMessengerCreated = false;
+EventAction::SummarizeMessenger* EventAction::fSumMessenger = nullptr;
+
+// ── Nested messenger for /output/setSummarize ───────────
+class EventAction::SummarizeMessenger : public G4UImessenger
+{
+public:
+  SummarizeMessenger() {
+    // /output/ directory already exists (created by RunAction)
+    fCmd = new G4UIcmdWithAnInteger("/output/setSummarize", this);
+    fCmd->SetGuidance("0 = per-hit output (default), 1 = summarise per volume");
+    fCmd->SetParameterName("flag", false);
+    fCmd->SetRange("flag>=0 && flag<=1");
+  }
+  ~SummarizeMessenger() override { delete fCmd; }
+
+  void SetNewValue(G4UIcommand* cmd, G4String val) override {
+    if (cmd == fCmd)
+      EventAction::SetSummarize(fCmd->GetNewIntValue(val));
+  }
+private:
+  G4UIcmdWithAnInteger* fCmd;
+};
 
 // ----------------------------------------------------------------
 EventAction::EventAction()
 : G4UserEventAction(),
   fCollectionsInitialized(false),
   fTree(nullptr)
-{}
+{
+  // Create the summarise messenger once
+  if (!fSumMessengerCreated) {
+    fSumMessenger = new SummarizeMessenger();
+    fSumMessengerCreated = true;
+  }
+}
 
 EventAction::~EventAction()
 {}
@@ -56,6 +91,7 @@ void EventAction::InitializeCollections()
     fZ[det]     = {};
     fE[det]     = {};
     fVolName[det] = {};
+    fNHitsPerVol[det] = {};
 
     // Create ROOT branches
     fTree->Branch((det + "_nHits").c_str(), &fNHits[det], (det + "_nHits/I").c_str());
@@ -64,6 +100,7 @@ void EventAction::InitializeCollections()
     fTree->Branch((det + "_z").c_str(),     &fZ[det]);
     fTree->Branch((det + "_E").c_str(),     &fE[det]);
     fTree->Branch((det + "_volName").c_str(), &fVolName[det]);
+    fTree->Branch((det + "_nHitsPerVol").c_str(), &fNHitsPerVol[det]);
 
     G4cout << "Created ROOT branches for detector \"" << det
            << "\" (SD: " << sdName << ", ID: " << id << ")" << G4endl;
@@ -97,6 +134,7 @@ void EventAction::EndOfEventAction(const G4Event* event)
     fZ[det].clear();
     fE[det].clear();
     fVolName[det].clear();
+    fNHitsPerVol[det].clear();
   }
 
   G4HCofThisEvent* hce = event->GetHCofThisEvent();
@@ -112,17 +150,64 @@ void EventAction::EndOfEventAction(const G4Event* event)
 
     std::string det  = std::string(hcName);
     G4int       nHits = hc->entries();
-    fNHits[det] = nHits;
 
-    for (G4int i = 0; i < nHits; i++) {
-      MyHit* hit = (*hc)[i];
-      G4ThreeVector pos = hit->GetPosition();
+    if (fSummarize == 0) {
+      // ── Detailed mode: one entry per hit ──
+      fNHits[det] = nHits;
 
-      fX[det].push_back(pos.x() / mm);
-      fY[det].push_back(pos.y() / mm);
-      fZ[det].push_back(pos.z() / mm);
-      fE[det].push_back(hit->GetEnergy() / MeV);
-      fVolName[det].push_back(std::string(hit->GetVolumeName()));
+      for (G4int i = 0; i < nHits; i++) {
+        MyHit* hit = (*hc)[i];
+        G4ThreeVector pos = hit->GetPosition();
+
+        fX[det].push_back(pos.x() / mm);
+        fY[det].push_back(pos.y() / mm);
+        fZ[det].push_back(pos.z() / mm);
+        fE[det].push_back(hit->GetEnergy() / MeV);
+        fVolName[det].push_back(std::string(hit->GetVolumeName()));
+        fNHitsPerVol[det].push_back(1);
+      }
+    } else {
+      // ── Summary mode: aggregate by volume name ──
+      // Use ordered map to keep volume names deterministic
+      struct VolAccum {
+        double sumE  = 0.0;
+        double sumWX = 0.0;
+        double sumWY = 0.0;
+        double sumWZ = 0.0;
+        int    count = 0;
+      };
+      std::map<std::string, VolAccum> accum;
+
+      for (G4int i = 0; i < nHits; i++) {
+        MyHit* hit = (*hc)[i];
+        G4ThreeVector pos = hit->GetPosition();
+        double e = hit->GetEnergy() / MeV;
+        std::string vn = std::string(hit->GetVolumeName());
+
+        auto& a = accum[vn];
+        a.sumE  += e;
+        a.sumWX += e * (pos.x() / mm);
+        a.sumWY += e * (pos.y() / mm);
+        a.sumWZ += e * (pos.z() / mm);
+        a.count++;
+      }
+
+      fNHits[det] = static_cast<Int_t>(accum.size());
+
+      for (const auto& [vn, a] : accum) {
+        fE[det].push_back(a.sumE);
+        if (a.sumE > 0.0) {
+          fX[det].push_back(a.sumWX / a.sumE);
+          fY[det].push_back(a.sumWY / a.sumE);
+          fZ[det].push_back(a.sumWZ / a.sumE);
+        } else {
+          fX[det].push_back(0.0);
+          fY[det].push_back(0.0);
+          fZ[det].push_back(0.0);
+        }
+        fVolName[det].push_back(vn);
+        fNHitsPerVol[det].push_back(a.count);
+      }
     }
   }
 

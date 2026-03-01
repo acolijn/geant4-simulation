@@ -11,6 +11,9 @@
 #include "G4RunManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4UIdirectory.hh"
+#include "G4RadioactiveDecay.hh"
+#include "G4GenericIon.hh"
+#include "G4ProcessManager.hh"
 
 #include "TFile.h"
 #include "TTree.h"
@@ -77,6 +80,23 @@ RunAction::~RunAction()
 
 void RunAction::BeginOfRunAction(const G4Run*)
 {
+    // Force long-lived isotopes (Na-22, Co-60, …) to decay within the event
+    auto* ion = G4GenericIon::GenericIon();
+    if (ion) {
+      G4ProcessManager* pm = ion->GetProcessManager();
+      if (pm) {
+        auto* pv = pm->GetProcessList();
+        for (std::size_t i = 0; i < (std::size_t)pv->size(); ++i) {
+          auto* rdm = dynamic_cast<G4RadioactiveDecay*>((*pv)[i]);
+          if (rdm) {
+            rdm->SetThresholdForVeryLongDecayTime(1.0e+60 * year);
+            G4cout << "RadioactiveDecay: very-long-decay threshold raised to 1e60 y" << G4endl;
+            break;
+          }
+        }
+      }
+    }
+
     // Create ROOT file and tree — branches are added by EventAction
     G4cout << "RunAction: writing output to " << fOutputFileName << G4endl;
     fRootFile = new TFile(fOutputFileName.c_str(), "RECREATE");

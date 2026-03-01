@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>G4sim Dashboard</title>
-  <link rel="stylesheet" href="/static/style.css?v=5" />
+  <link rel="stylesheet" href="/static/style.css?v=7" />
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
@@ -42,7 +42,7 @@
     <!-- ── Particle & Energy ── -->
     <div class="form-grid">
       <label>Particle
-        <select id="particle">
+        <select id="particle" onchange="toggleGpsFields()">
           <option value="gamma">gamma</option>
           <option value="e-">e-</option>
           <option value="e+">e+</option>
@@ -52,9 +52,10 @@
           <option value="mu+">mu+</option>
           <option value="alpha">alpha</option>
           <option value="opticalphoton">opticalphoton</option>
+          <option value="ion">ion</option>
         </select>
       </label>
-      <label>Energy type
+      <label id="ene-type-group">Energy type
         <select id="ene-type" onchange="toggleGpsFields()">
           <option value="Mono" selected>Mono</option>
           <option value="Lin">Linear</option>
@@ -62,7 +63,7 @@
           <option value="Gauss">Gaussian</option>
         </select>
       </label>
-      <label>Energy
+      <label id="ene-value-group">Energy
         <div class="input-unit">
           <input type="number" id="energy" value="1" step="any" />
           <select id="energy-unit">
@@ -89,6 +90,64 @@
           <option value="beam1d">Beam 1D</option>
           <option value="beam2d">Beam 2D</option>
         </select>
+      </label>
+    </div>
+
+    <!-- Ion selection (shown when particle == ion) -->
+    <div id="ion-select-group" class="form-grid gps-hidden">
+      <label>Ion
+        <select id="ion-select">
+          <option value="1 1">H-1 (proton)</option>
+          <option value="1 2">H-2 (deuteron)</option>
+          <option value="1 3">H-3 (tritium)</option>
+          <option value="2 3">He-3</option>
+          <option value="2 4">He-4 (alpha)</option>
+          <option value="3 6">Li-6</option>
+          <option value="3 7">Li-7</option>
+          <option value="4 9">Be-9</option>
+          <option value="5 10">B-10</option>
+          <option value="5 11">B-11</option>
+          <option value="6 12">C-12</option>
+          <option value="6 14">C-14</option>
+          <option value="7 14">N-14</option>
+          <option value="8 16">O-16</option>
+          <option value="9 18">F-18</option>
+          <option value="9 19">F-19</option>
+          <option value="11 22">Na-22</option>
+          <option value="11 23">Na-23</option>
+          <option value="14 28">Si-28</option>
+          <option value="15 31">P-31</option>
+          <option value="16 32">S-32</option>
+          <option value="17 35">Cl-35</option>
+          <option value="18 40">Ar-40</option>
+          <option value="19 39">K-39</option>
+          <option value="20 40">Ca-40</option>
+          <option value="26 56">Fe-56</option>
+          <option value="27 59">Co-59</option>
+          <option value="27 60">Co-60</option>
+          <option value="29 63">Cu-63</option>
+          <option value="47 107">Ag-107</option>
+          <option value="53 127">I-127</option>
+          <option value="54 131">Xe-131</option>
+          <option value="55 133">Cs-133</option>
+          <option value="55 137">Cs-137</option>
+          <option value="74 184">W-184</option>
+          <option value="79 197">Au-197</option>
+          <option value="82 208">Pb-208</option>
+          <option value="86 222">Rn-222</option>
+          <option value="88 226">Ra-226</option>
+          <option value="90 232">Th-232</option>
+          <option value="92 235">U-235</option>
+          <option value="92 238">U-238</option>
+          <option value="94 239">Pu-239</option>
+          <option value="95 241">Am-241</option>
+        </select>
+      </label>
+      <label>Charge state (Q)
+        <input type="number" id="ion-charge" value="0" step="1" />
+      </label>
+      <label>Excitation energy (keV)
+        <input type="number" id="ion-excitation" value="0" step="any" />
       </label>
     </div>
 
@@ -209,6 +268,13 @@
       <label>Output file name
         <input type="text" id="outputFile" value="G4sim.root" />
       </label>
+      <label class="toggle-label">Summarise hits per volume
+        <div class="toggle-switch">
+          <input type="checkbox" id="summarizeHits" />
+          <span class="toggle-track"></span>
+        </div>
+        <span class="toggle-hint">Sum energy &amp; average position per volume per event</span>
+      </label>
     </div>
   </div>
 </section>
@@ -277,6 +343,6 @@
   </div>
 </section>
 
-<script src="/static/app.js?v=5"></script>
+<script src="/static/app.js?v=7"></script>
 </body>
 </html>

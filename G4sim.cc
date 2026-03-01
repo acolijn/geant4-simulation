@@ -11,6 +11,12 @@
 #include "G4UIExecutive.hh"
 #include "G4PhysListFactory.hh"
 #include "G4EmLivermorePhysics.hh"
+#include "G4RadioactiveDecayPhysics.hh"
+#include "G4RadioactiveDecay.hh"
+#include "G4NuclideTable.hh"
+#include "G4ProcessManager.hh"
+#include "G4ParticleTable.hh"
+#include "G4GenericIon.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4AssemblyVolume.hh"
 
@@ -59,11 +65,16 @@ int main(int argc,char** argv)
 
   runManager->SetUserInitialization(new DetectorConstruction());
 
-  // Physics list with high-precision neutron transport
+  // Physics list with high-precision neutron transport + radioactive decay
   G4PhysListFactory factory;
   G4VModularPhysicsList* physicsList = factory.GetReferencePhysList("FTFP_BERT_HP");
+  physicsList->RegisterPhysics(new G4RadioactiveDecayPhysics());
   physicsList->SetVerboseLevel(1);
   runManager->SetUserInitialization(physicsList);
+
+  // Allow all radioactive isotopes to appear in the nuclide table.
+  G4NuclideTable::GetInstance()->SetThresholdOfHalfLife(0.);
+
   // User action initialization
   runManager->SetUserInitialization(new ActionInitialization());
 

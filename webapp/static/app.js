@@ -33,12 +33,19 @@ function toggleGpsFields() {
   const posType = $('pos-type').value;
   const posShape = $('pos-shape') ? $('pos-shape').value : '';
   const angType = $('ang-type').value;
+  const particle = $('particle').value;
 
-  // Energy — only show fields relevant to the selected type
-  const isGauss = (eneType === 'Gauss');
-  const isRange = (eneType === 'Lin' || eneType === 'Pow');
-  const isPow   = (eneType === 'Pow');
-  const isLin   = (eneType === 'Lin');
+  // Ion — show ion dropdown when particle == 'ion', hide energy fields
+  const isIon = (particle === 'ion');
+  toggleVis('ion-select-group', isIon);
+  toggleVis('ene-type-group',  !isIon);
+  toggleVis('ene-value-group', !isIon);
+
+  // Energy — only show sub-fields when relevant (and not ion)
+  const isGauss = (!isIon && eneType === 'Gauss');
+  const isRange = (!isIon && (eneType === 'Lin' || eneType === 'Pow'));
+  const isPow   = (!isIon && eneType === 'Pow');
+  const isLin   = (!isIon && eneType === 'Lin');
 
   toggleVis('ene-sigma-group', isGauss);
   toggleVis('ene-range-group', isRange);
@@ -176,6 +183,10 @@ $('btn-start').addEventListener('click', async () => {
     dirZ:        $('dirZ') ? $('dirZ').value : '0',
     nEvents:     $('nEvents').value,
     outputFile:  $('outputFile').value,
+    ionZA:       $('ion-select') ? $('ion-select').value : '',
+    ionCharge:   $('ion-charge') ? $('ion-charge').value : '0',
+    ionExcitation: $('ion-excitation') ? $('ion-excitation').value : '0',
+    summarizeHits: $('summarizeHits').checked ? '1' : '0',
   };
 
   const res = await fetch('/api/run', {

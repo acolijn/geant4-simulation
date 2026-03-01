@@ -172,3 +172,23 @@ tbody tr:hover { background: var(--bg); }
 .gps-hidden { display: none !important; }
 .card-sep { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
 .card-sub { font-size: .9rem; font-weight: 600; margin-bottom: .6rem; color: var(--text2); }
+
+/* ── Toggle switch ─────────────────────────────────────── */
+.toggle-label { gap: .35rem; }
+.toggle-switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0;
+  background: var(--border); border-radius: 11px;
+  cursor: pointer; transition: .2s;
+}
+.toggle-track::before {
+  content: '';
+  position: absolute; left: 3px; top: 3px;
+  width: 16px; height: 16px;
+  background: #fff; border-radius: 50%;
+  transition: .2s;
+}
+.toggle-switch input:checked + .toggle-track { background: var(--primary); }
+.toggle-switch input:checked + .toggle-track::before { transform: translateX(18px); }
+.toggle-hint { font-size: .75rem; color: var(--text2); }
