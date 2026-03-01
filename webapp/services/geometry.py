@@ -110,6 +110,116 @@ def sphere_mesh(radius, n_lat=12, n_lon=24):
 
 
 # ---------------------------------------------------------------------------
+#  Mesh generation for a given shape type
+# ---------------------------------------------------------------------------
+
+def _generate_mesh(vtype, dims):
+    """Return (vertices, i, j, k) for a primitive shape, or None."""
+    if vtype == "box":
+        return box_mesh(
+            dims.get("x", 0) / 2.0,
+            dims.get("y", 0) / 2.0,
+            dims.get("z", 0) / 2.0,
+        )
+    elif vtype == "cylinder":
+        return cylinder_mesh(
+            dims.get("radius", 0),
+            dims.get("height", 0) / 2.0,
+        )
+    elif vtype == "sphere":
+        return sphere_mesh(dims.get("radius", 0))
+    return None
+
+
+def _add_mesh_trace(fig, verts, ti, tj, tk, R_total, t_total, color, vol_name):
+    """Apply a composed rotation + translation and add a Mesh3d trace."""
+    placed = (R_total @ verts.T).T + t_total
+    fig.add_trace(go.Mesh3d(
+        x=placed[:, 0].tolist(),
+        y=placed[:, 1].tolist(),
+        z=placed[:, 2].tolist(),
+        i=ti, j=tj, k=tk,
+        color=rgba_str(color, 0.15),
+        opacity=0.20,
+        flatshading=True,
+        name=f"geom: {vol_name}",
+        showlegend=True,
+        hoverinfo="name",
+    ))
+
+
+# ---------------------------------------------------------------------------
+#  Assembly handling
+# ---------------------------------------------------------------------------
+
+def _add_assembly_traces(fig, assembly_vol, materials):
+    """Draw every visible component of an assembly volume."""
+    components = assembly_vol.get("components", [])
+    if not components:
+        return
+
+    # Lookup from component name → component dict
+    comp_map = {comp["name"]: comp for comp in components}
+
+    for asm_pl in assembly_vol.get("placements", []):
+        # Assembly-level placement transform
+        asm_rot = asm_pl.get("rotation", {})
+        asm_rx = asm_rot.get("x", 0)
+        asm_ry = asm_rot.get("y", 0)
+        asm_rz = asm_rot.get("z", 0)
+        asm_R = rotation_matrix(asm_rx, asm_ry, asm_rz) if (asm_rx or asm_ry or asm_rz) else np.eye(3)
+        asm_t = np.array([asm_pl.get("x", 0), asm_pl.get("y", 0), asm_pl.get("z", 0)])
+
+        for comp in components:
+            if not comp.get("visible", True):
+                continue
+
+            comp_type = comp.get("type", "")
+            mesh = _generate_mesh(comp_type, comp.get("dimensions", {}))
+            if mesh is None:
+                continue
+            verts, ti, tj, tk = mesh
+
+            mat_name = comp.get("material", "")
+            mat = materials.get(mat_name, {})
+            color = mat.get("color", [0.6, 0.6, 0.6, 0.3])
+            vol_name = comp.get("g4name") or comp.get("name", comp_type)
+
+            for comp_pl in comp.get("placements", []):
+                # Walk the parent chain from this component up to the
+                # assembly root to collect all intermediate transforms.
+                chain = []  # from component → parent → … → root
+                current_pl = comp_pl
+                while True:
+                    chain.append(current_pl)
+                    parent_name = current_pl.get("parent", "")
+                    if not parent_name or parent_name not in comp_map:
+                        break
+                    parent_comp = comp_map[parent_name]
+                    current_pl = parent_comp.get("placements", [{}])[0]
+
+                # Compose transforms from outermost (assembly) to innermost
+                # (component).  Update rule: given accumulated (R_acc, t_acc)
+                # and next inner level (R_loc, t_loc), the new composed
+                # transform that maps local vertices to world coords is:
+                #   t_acc' = R_acc @ t_loc + t_acc
+                #   R_acc' = R_acc @ R_loc
+                R_acc = asm_R.copy()
+                t_acc = asm_t.copy()
+                for pl in reversed(chain):
+                    rot = pl.get("rotation", {})
+                    rx = rot.get("x", 0)
+                    ry = rot.get("y", 0)
+                    rz = rot.get("z", 0)
+                    R_loc = rotation_matrix(rx, ry, rz) if (rx or ry or rz) else np.eye(3)
+                    t_loc = np.array([pl.get("x", 0), pl.get("y", 0), pl.get("z", 0)])
+                    t_acc = R_acc @ t_loc + t_acc
+                    R_acc = R_acc @ R_loc
+
+                _add_mesh_trace(fig, verts, ti, tj, tk, R_acc, t_acc, color, vol_name)
+
+
+# ---------------------------------------------------------------------------
 #  High-level helper — add geometry traces to a Plotly figure
 # ---------------------------------------------------------------------------
 
@@ -121,29 +231,24 @@ def add_geometry_traces(fig, geom: dict, materials: dict) -> None:
         if not vol.get("visible", True):
             continue
 
-        vtype    = vol.get("type", "")
+        vtype = vol.get("type", "")
+
+        # ── Assembly / compound volumes ──────────────────────
+        if vtype == "assembly":
+            _add_assembly_traces(fig, vol, materials)
+            continue
+
+        # ── Primitive shapes ─────────────────────────────────
         dims     = vol.get("dimensions", {})
         mat_name = vol.get("material", "")
         mat      = materials.get(mat_name, {})
         color    = mat.get("color", [0.6, 0.6, 0.6, 0.3])
 
-        # Generate mesh vertices for the shape
-        if vtype == "box":
-            verts, ti, tj, tk = box_mesh(
-                dims.get("x", 0) / 2.0,
-                dims.get("y", 0) / 2.0,
-                dims.get("z", 0) / 2.0,
-            )
-        elif vtype == "cylinder":
-            verts, ti, tj, tk = cylinder_mesh(
-                dims.get("radius", 0),
-                dims.get("height", 0) / 2.0,
-            )
-        elif vtype == "sphere":
-            verts, ti, tj, tk = sphere_mesh(dims.get("radius", 0))
-        else:
+        mesh = _generate_mesh(vtype, dims)
+        if mesh is None:
             # Skip unsupported types (union, subtraction, etc.)
             continue
+        verts, ti, tj, tk = mesh
 
         # Place each copy of the volume
         for pl in vol.get("placements", []):
@@ -155,24 +260,7 @@ def add_geometry_traces(fig, geom: dict, materials: dict) -> None:
             ry  = rot.get("y", 0)
             rz  = rot.get("z", 0)
 
-            placed = verts.copy()
-            if rx != 0 or ry != 0 or rz != 0:
-                R = rotation_matrix(rx, ry, rz)
-                placed = (R @ placed.T).T
-            placed[:, 0] += px
-            placed[:, 1] += py
-            placed[:, 2] += pz
-
-            vol_name = vol.get("g4name") or vol.get("name", vtype)
-            fig.add_trace(go.Mesh3d(
-                x=placed[:, 0].tolist(),
-                y=placed[:, 1].tolist(),
-                z=placed[:, 2].tolist(),
-                i=ti, j=tj, k=tk,
-                color=rgba_str(color, 0.15),
-                opacity=0.20,
-                flatshading=True,
-                name=f"geom: {vol_name}",
-                showlegend=True,
-                hoverinfo="name",
-            ))
+            R = rotation_matrix(rx, ry, rz) if (rx or ry or rz) else np.eye(3)
+            t = np.array([px, py, pz])
+            _add_mesh_trace(fig, verts, ti, tj, tk, R, t, color,
+                            vol.get("g4name") or vol.get("name", vtype))

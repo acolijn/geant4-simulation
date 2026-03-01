@@ -315,6 +315,7 @@ G4LogicalVolume* GeometryParser::CreateVolume(const json& config) {
     ApplyVisualizationAttributes(logicalVolume, config);
     
     volumes[name] = logicalVolume;
+    logicalVolumeMap[name + "_logical"] = logicalVolume;
     
     std::cout << "GeometryParser::CreateVolume() - Created volume: " << name << std::endl;
     return logicalVolume;
@@ -1058,31 +1059,50 @@ void GeometryParser::SetupSensitiveDetectors() {
     // Map to track already-created sensitive detectors by their hits collection name
     std::map<std::string, MySensitiveDetector*> sdMap;
     
+    // Helper lambda to assign a sensitive detector to a single volume config entry
+    auto processVolConfig = [&](const json& volConfig) {
+        if (!volConfig.contains("hitsCollectionName")) return;
+        std::string hitsCollName = volConfig["hitsCollectionName"].get<std::string>();
+
+        // Create a new SD for this collection name if we haven't already
+        if (sdMap.find(hitsCollName) == sdMap.end()) {
+            G4String sdName = hitsCollName + "_SD";
+            MySensitiveDetector* sd = new MySensitiveDetector(sdName, hitsCollName);
+            sdManager->AddNewDetector(sd);
+            sdMap[hitsCollName] = sd;
+            G4cout << "Created sensitive detector \"" << sdName
+                   << "\" with hits collection \"" << hitsCollName << "\"" << G4endl;
+        }
+
+        // Get the logical volume (try logicalVolumeMap first, fall back to volumes)
+        std::string volName = volConfig["name"].get<std::string>();
+        G4LogicalVolume* logicalVol = nullptr;
+        auto it = logicalVolumeMap.find(volName + "_logical");
+        if (it != logicalVolumeMap.end()) {
+            logicalVol = it->second;
+        } else {
+            auto it2 = volumes.find(volName);
+            if (it2 != volumes.end()) logicalVol = it2->second;
+        }
+
+        if (logicalVol) {
+            G4cout << "Setting " << volName << " as sensitive (collection: " << hitsCollName << ")" << G4endl;
+            logicalVol->SetSensitiveDetector(sdMap[hitsCollName]);
+        } else {
+            G4cerr << "WARNING: Could not find logical volume for " << volName << G4endl;
+        }
+    };
+
     // Iterate through all volumes in the JSON configuration
     for (const auto& volConfig : geometryConfig["volumes"]) {
-        // A volume is active if it has a "hitsCollectionName" field
-        if (volConfig.contains("hitsCollectionName")) {
-            std::string hitsCollName = volConfig["hitsCollectionName"].get<std::string>();
-            
-            // Create a new SD for this collection name if we haven't already
-            if (sdMap.find(hitsCollName) == sdMap.end()) {
-                G4String sdName = hitsCollName + "_SD";
-                MySensitiveDetector* sd = new MySensitiveDetector(sdName, hitsCollName);
-                sdManager->AddNewDetector(sd);
-                sdMap[hitsCollName] = sd;
-                G4cout << "Created sensitive detector \"" << sdName 
-                       << "\" with hits collection \"" << hitsCollName << "\"" << G4endl;
-            }
-            
-            // Get the logical volume
-            std::string volName = volConfig["name"].get<std::string>();
-            G4LogicalVolume* logicalVol = logicalVolumeMap[volName + "_logical"];
-            
-            if (logicalVol) {
-                G4cout << "Setting " << volName << " as sensitive (collection: " << hitsCollName << ")" << G4endl;
-                logicalVol->SetSensitiveDetector(sdMap[hitsCollName]);
-            } else {
-                G4cerr << "WARNING: Could not find logical volume for " << volName << G4endl;
+        // Process the volume itself
+        processVolConfig(volConfig);
+
+        // Also process components inside assembly volumes
+        if (volConfig.contains("type") && volConfig["type"].get<std::string>() == "assembly"
+            && volConfig.contains("components")) {
+            for (const auto& compConfig : volConfig["components"]) {
+                processVolConfig(compConfig);
             }
         }
     }
