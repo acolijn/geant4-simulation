@@ -26,6 +26,56 @@ function esc(s) {
   return d.innerHTML;
 }
 
+// ─── GPS dynamic form visibility ────────────────────────
+
+function toggleGpsFields() {
+  const eneType = $('ene-type').value;
+  const posType = $('pos-type').value;
+  const posShape = $('pos-shape') ? $('pos-shape').value : '';
+  const angType = $('ang-type').value;
+
+  // Energy fields
+  const isMono  = (eneType === 'Mono');
+  const isGauss = (eneType === 'Gauss');
+  const isRange = (eneType === 'Lin' || eneType === 'Pow');
+  const isPow   = (eneType === 'Pow');
+  const isLin   = (eneType === 'Lin');
+
+  toggleVis('ene-mono-group',  isMono || isGauss);
+  toggleVis('ene-sigma-group', isGauss);
+  toggleVis('ene-range-group', isRange);
+  toggleVis('ene-alpha-group', isPow);
+  toggleVis('ene-lin-group',   isLin);
+
+  // Position / shape fields
+  const hasShape = (posType === 'Volume' || posType === 'Surface');
+  toggleVis('pos-shape-group', hasShape);
+
+  const shCyl    = hasShape && (posShape === 'Cylinder');
+  const shSphere = hasShape && (posShape === 'Sphere' || posShape === 'Circle' || posShape === 'Ellipsoid');
+  const shBox    = hasShape && (posShape === 'Box');
+
+  toggleVis('pos-radius-group',  shCyl || shSphere);
+  toggleVis('pos-halfz-group',   shCyl);
+  toggleVis('pos-box-group',     shBox);
+  toggleVis('pos-confine-group', posType === 'Volume');
+
+  // Angular fields
+  toggleVis('ang-theta-group', angType === 'iso' || angType === 'cos');
+  toggleVis('ang-focus-group', angType === 'focused');
+  toggleVis('ang-dir-group',   angType === 'beam1d' || angType === 'beam2d');
+}
+
+function toggleVis(id, show) {
+  const el = $(id);
+  if (!el) return;
+  if (show) el.classList.remove('gps-hidden');
+  else      el.classList.add('gps-hidden');
+}
+
+// Initialise GPS form on load
+toggleGpsFields();
+
 // ─── CONFIG TAB ─────────────────────────────────────────
 
 // Load geometry list
@@ -58,19 +108,42 @@ let ws = null;
 
 $('btn-start').addEventListener('click', async () => {
   const body = {
-    geometry:   $('geometry-select').value,
-    particle:   $('particle').value,
-    energy:     $('energy').value,
-    energyUnit: $('energy-unit').value,
-    posX:       $('posX').value,
-    posY:       $('posY').value,
-    posZ:       $('posZ').value,
-    posUnit:    $('pos-unit').value,
-    dirX:       $('dirX').value,
-    dirY:       $('dirY').value,
-    dirZ:       $('dirZ').value,
-    nEvents:    $('nEvents').value,
-    outputFile: $('outputFile').value,
+    geometry:    $('geometry-select').value,
+    particle:    $('particle').value,
+    eneType:     $('ene-type').value,
+    energy:      $('energy').value,
+    energyUnit:  $('energy-unit').value,
+    eneMin:      $('ene-min').value,
+    eneMax:      $('ene-max').value,
+    eneSigma:    $('ene-sigma').value,
+    eneAlpha:    $('ene-alpha').value,
+    eneGradient: $('ene-gradient').value,
+    eneIntercept:$('ene-intercept').value,
+    posType:     $('pos-type').value,
+    posShape:    $('pos-shape') ? $('pos-shape').value : '',
+    posX:        $('posX').value,
+    posY:        $('posY').value,
+    posZ:        $('posZ').value,
+    posUnit:     $('pos-unit').value,
+    posRadius:   $('pos-radius').value,
+    posHalfz:    $('pos-halfz').value,
+    posHalfx:    $('pos-halfx').value,
+    posHalfy:    $('pos-halfy').value,
+    posHalfzBox: $('pos-halfz-box').value,
+    posConfine:  $('pos-confine') ? $('pos-confine').value : '',
+    angType:     $('ang-type').value,
+    angMintheta: $('ang-mintheta').value,
+    angMaxtheta: $('ang-maxtheta').value,
+    angMinphi:   $('ang-minphi').value,
+    angMaxphi:   $('ang-maxphi').value,
+    angFx:       $('ang-fx').value,
+    angFy:       $('ang-fy').value,
+    angFz:       $('ang-fz').value,
+    dirX:        $('dirX') ? $('dirX').value : '1',
+    dirY:        $('dirY') ? $('dirY').value : '0',
+    dirZ:        $('dirZ') ? $('dirZ').value : '0',
+    nEvents:     $('nEvents').value,
+    outputFile:  $('outputFile').value,
   };
 
   const res = await fetch('/api/run', {
@@ -145,7 +218,7 @@ async function loadRunHistory() {
     <tr>
       <td>${esc(r.runId || r.started)}</td>
       <td>${esc(r.geometry)}</td>
-      <td>${esc(r.particle)} ${esc(r.energy)}</td>
+      <td>${esc(r.particle)} ${esc(r.energy)}${r.sourceType ? ' (' + esc(r.sourceType) + ')' : ''}</td>
       <td>${(r.nEvents || 0).toLocaleString()}</td>
       <td>${esc(r.status)}</td>
     </tr>

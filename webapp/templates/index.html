@@ -37,42 +37,161 @@
   </div>
 
   <div class="card">
-    <h2>Particle Gun</h2>
+    <h2>General Particle Source (GPS)</h2>
+
+    <!-- ── Particle & Energy ── -->
     <div class="form-grid">
       <label>Particle
         <select id="particle">
           <option value="gamma">gamma</option>
-          <option value="neutron">neutron</option>
           <option value="e-">e-</option>
           <option value="e+">e+</option>
           <option value="proton">proton</option>
+          <option value="neutron">neutron</option>
           <option value="mu-">mu-</option>
+          <option value="mu+">mu+</option>
+          <option value="alpha">alpha</option>
+          <option value="opticalphoton">opticalphoton</option>
         </select>
       </label>
+      <label>Energy type
+        <select id="ene-type" onchange="toggleGpsFields()">
+          <option value="Mono" selected>Mono</option>
+          <option value="Lin">Linear</option>
+          <option value="Pow">Power-law</option>
+          <option value="Gauss">Gaussian</option>
+        </select>
+      </label>
+    </div>
+
+    <!-- Mono / Gauss energy -->
+    <div id="ene-mono-group" class="form-grid">
       <label>Energy
         <div class="input-unit">
           <input type="number" id="energy" value="1" step="any" />
           <select id="energy-unit">
-            <option value="MeV" selected>MeV</option>
+            <option value="eV">eV</option>
             <option value="keV">keV</option>
+            <option value="MeV" selected>MeV</option>
             <option value="GeV">GeV</option>
           </select>
         </div>
       </label>
     </div>
+    <div id="ene-sigma-group" class="form-grid gps-hidden">
+      <label>Sigma
+        <div class="input-unit">
+          <input type="number" id="ene-sigma" value="10" step="any" />
+          <span class="unit-echo"></span>
+        </div>
+      </label>
+    </div>
+
+    <!-- Lin / Pow energy range -->
+    <div id="ene-range-group" class="form-grid gps-hidden">
+      <label>Min energy
+        <input type="number" id="ene-min" value="0" step="any" />
+      </label>
+      <label>Max energy
+        <input type="number" id="ene-max" value="1000" step="any" />
+      </label>
+    </div>
+    <div id="ene-alpha-group" class="form-grid gps-hidden">
+      <label>Alpha (power index)
+        <input type="number" id="ene-alpha" value="-1" step="any" />
+      </label>
+    </div>
+    <div id="ene-lin-group" class="form-grid gps-hidden">
+      <label>Gradient
+        <input type="number" id="ene-gradient" value="0" step="any" />
+      </label>
+      <label>Intercept
+        <input type="number" id="ene-intercept" value="1" step="any" />
+      </label>
+    </div>
+
+    <hr class="card-sep" />
+
+    <!-- ── Source position / shape ── -->
+    <h3 class="card-sub">Source Position</h3>
+    <div class="form-grid">
+      <label>Position type
+        <select id="pos-type" onchange="toggleGpsFields()">
+          <option value="Point" selected>Point</option>
+          <option value="Volume">Volume</option>
+          <option value="Surface">Surface</option>
+          <option value="Beam">Beam</option>
+        </select>
+      </label>
+      <label id="pos-shape-group" class="gps-hidden">Shape
+        <select id="pos-shape" onchange="toggleGpsFields()">
+          <option value="Cylinder">Cylinder</option>
+          <option value="Sphere">Sphere</option>
+          <option value="Box">Box</option>
+          <option value="Circle">Circle</option>
+          <option value="Ellipsoid">Ellipsoid</option>
+        </select>
+      </label>
+    </div>
+
     <div class="form-grid triple">
-      <label>Position X <input type="number" id="posX" value="-10" step="any" /></label>
-      <label>Position Y <input type="number" id="posY" value="0" step="any" /></label>
-      <label>Position Z <input type="number" id="posZ" value="0" step="any" /></label>
+      <label>Centre X <input type="number" id="posX" value="0" step="any" /></label>
+      <label>Centre Y <input type="number" id="posY" value="0" step="any" /></label>
+      <label>Centre Z <input type="number" id="posZ" value="0" step="any" /></label>
     </div>
     <label class="narrow">Position unit
       <select id="pos-unit">
-        <option value="cm" selected>cm</option>
         <option value="mm">mm</option>
+        <option value="cm" selected>cm</option>
         <option value="m">m</option>
       </select>
     </label>
-    <div class="form-grid triple">
+
+    <!-- shape dimensions (Volume / Surface) -->
+    <div id="pos-radius-group" class="form-grid gps-hidden">
+      <label>Radius <input type="number" id="pos-radius" value="1" step="any" /></label>
+    </div>
+    <div id="pos-halfz-group" class="form-grid gps-hidden">
+      <label>Half Z <input type="number" id="pos-halfz" value="1" step="any" /></label>
+    </div>
+    <div id="pos-box-group" class="form-grid triple gps-hidden">
+      <label>Half X <input type="number" id="pos-halfx" value="1" step="any" /></label>
+      <label>Half Y <input type="number" id="pos-halfy" value="1" step="any" /></label>
+      <label>Half Z (box) <input type="number" id="pos-halfz-box" value="1" step="any" /></label>
+    </div>
+    <div id="pos-confine-group" class="form-grid gps-hidden">
+      <label>Confine to physical volume
+        <input type="text" id="pos-confine" placeholder="e.g. SourcePhysical" />
+      </label>
+    </div>
+
+    <hr class="card-sep" />
+
+    <!-- ── Angular distribution ── -->
+    <h3 class="card-sub">Angular Distribution</h3>
+    <div class="form-grid">
+      <label>Type
+        <select id="ang-type" onchange="toggleGpsFields()">
+          <option value="iso" selected>Isotropic</option>
+          <option value="cos">Cosine-law</option>
+          <option value="focused">Focused</option>
+          <option value="beam1d">Beam 1D</option>
+          <option value="beam2d">Beam 2D</option>
+        </select>
+      </label>
+    </div>
+    <div id="ang-theta-group" class="form-grid gps-hidden">
+      <label>Min θ (deg) <input type="number" id="ang-mintheta" value="0" step="any" /></label>
+      <label>Max θ (deg) <input type="number" id="ang-maxtheta" value="180" step="any" /></label>
+      <label>Min φ (deg) <input type="number" id="ang-minphi" value="0" step="any" /></label>
+      <label>Max φ (deg) <input type="number" id="ang-maxphi" value="360" step="any" /></label>
+    </div>
+    <div id="ang-focus-group" class="form-grid triple gps-hidden">
+      <label>Focus X <input type="number" id="ang-fx" value="0" step="any" /></label>
+      <label>Focus Y <input type="number" id="ang-fy" value="0" step="any" /></label>
+      <label>Focus Z <input type="number" id="ang-fz" value="0" step="any" /></label>
+    </div>
+    <div id="ang-dir-group" class="form-grid triple gps-hidden">
       <label>Direction X <input type="number" id="dirX" value="1" step="any" /></label>
       <label>Direction Y <input type="number" id="dirY" value="0" step="any" /></label>
       <label>Direction Z <input type="number" id="dirZ" value="0" step="any" /></label>

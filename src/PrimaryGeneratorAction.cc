@@ -2,64 +2,43 @@
  * @file PrimaryGeneratorAction.cc
  * @brief Implementation of the PrimaryGeneratorAction class
  *
- * Handles the generation of primary neutrons for the simulation,
- * including their initial position, energy, and direction.
+ * Uses the G4GeneralParticleSource (GPS) for maximum flexibility.
+ * All source parameters (particle, energy, position, angular distribution)
+ * are configured via /gps/ macro commands at run-time.
  */
 
 #include "PrimaryGeneratorAction.hh"
 
-#include "G4LogicalVolumeStore.hh"
-#include "G4LogicalVolume.hh"
-#include "G4Box.hh"
+#include "G4GeneralParticleSource.hh"
 #include "G4Event.hh"
-#include "G4ParticleGun.hh"
-#include "G4ParticleTable.hh"
-#include "G4ParticleDefinition.hh"
 #include "G4SystemOfUnits.hh"
-#include "Randomize.hh"
 
 /**
- * @brief Constructor implementation
+ * @brief Constructor – creates the GPS instance
  *
- * Sets up the particle gun with default neutron properties:
- * - Particle type: neutron
- * - Energy: 1 MeV
- * - Direction: Along positive Z axis (0,0,1)
- * - Number of particles per event: 1
+ * GPS defaults to a 1 MeV geantino at the origin with isotropic
+ * angular distribution.  Override everything through /gps/ macros.
  */
 PrimaryGeneratorAction::PrimaryGeneratorAction()
 : G4VUserPrimaryGeneratorAction(),
-  fParticleGun(nullptr)
+  fGPS(new G4GeneralParticleSource())
 {
-    G4int n_particle = 1;
-    fParticleGun = new G4ParticleGun(n_particle);
-
-    // Configure the particle gun for neutrons
-    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-    G4ParticleDefinition* particle = particleTable->FindParticle("neutron");
-    fParticleGun->SetParticleDefinition(particle);
-    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0.,0.,1.));
-    fParticleGun->SetParticleEnergy(1.0*MeV);  // Initial neutron energy
+    // No hard-coded defaults – GPS is fully configured via macro commands.
 }
 
 /**
- * @brief Destructor implementation
- *
- * Cleans up the particle gun object to prevent memory leaks.
+ * @brief Destructor
  */
 PrimaryGeneratorAction::~PrimaryGeneratorAction()
 {
-    delete fParticleGun;
+    delete fGPS;
 }
 
 /**
  * @brief Generates primary particles for each event
  * @param anEvent The current G4Event being processed
- *
- * Uses the position and direction set by the particle gun
- * (configurable via macro commands /gun/position and /gun/direction).
  */
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
-    fParticleGun->GeneratePrimaryVertex(anEvent);
+    fGPS->GeneratePrimaryVertex(anEvent);
 }

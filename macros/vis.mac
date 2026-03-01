@@ -18,11 +18,13 @@
 /vis/scene/add/trajectories smooth
 /vis/scene/endOfEventAction accumulate
 
-# Particle gun settings
-/gun/particle proton
-/gun/energy 10 GeV
-/gun/position -10 0 0 cm
-/gun/direction 1 0 0 
+# --- General Particle Source ---
+/gps/particle proton
+/gps/ene/type Mono
+/gps/ene/mono 10 GeV
+/gps/pos/type Point
+/gps/pos/centre -10 0 0 cm
+/gps/ang/type iso
 
 
 # You can add other visualization and interactive settings here

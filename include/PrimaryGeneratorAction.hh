@@ -2,48 +2,45 @@
 #define PrimaryGeneratorAction_h 1
 
 #include "G4VUserPrimaryGeneratorAction.hh"
-#include "G4ParticleGun.hh"
 #include "globals.hh"
 
-class G4ParticleGun;
+class G4GeneralParticleSource;
 class G4Event;
 
 /**
  * @class PrimaryGeneratorAction
- * @brief Handles the generation of primary neutrons for the simulation
+ * @brief Handles the generation of primary particles using GPS
  *
- * This class configures and manages the particle gun that generates
- * primary neutrons. The neutrons are generated with:
- * - Energy: 1 MeV (configurable through macro)
- * - Position: Random points on top face of world volume
- * - Direction: Downward along Z-axis
+ * This class uses the G4GeneralParticleSource (GPS) instead of the
+ * simple particle gun.  GPS supports:
+ * - Point, volume, and surface sources
+ * - Arbitrary energy spectra (mono, linear, power-law, Gaussian, …)
+ * - Flexible angular distributions (isotropic, cosine, focused, …)
+ * - Confinement to a named physical volume
+ * - Multiple overlapping sources with individual intensities
+ *
+ * All configuration is done at run-time via /gps/ macro commands.
  */
 class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
   public:
-    /** 
-     * @brief Constructor
-     * 
-     * Initializes the particle gun and sets default neutron properties
-     */
-    PrimaryGeneratorAction();    
+    /** @brief Constructor – creates the GPS instance */
+    PrimaryGeneratorAction();
 
     /** @brief Destructor */
-    virtual ~PrimaryGeneratorAction();
+    ~PrimaryGeneratorAction() override;
 
     /**
      * @brief Generates primary particles for each event
      * @param anEvent Pointer to the current G4Event
-     *
-     * For each event, this method:
-     * 1. Generates a random position on the top face
-     * 2. Sets the particle gun position
-     * 3. Creates the primary vertex
      */
-    virtual void GeneratePrimaries(G4Event* anEvent);         
+    void GeneratePrimaries(G4Event* anEvent) override;
+
+    /** @brief Accessor for the GPS object */
+    const G4GeneralParticleSource* GetGPS() const { return fGPS; }
 
   private:
-    G4ParticleGun* fParticleGun;  ///< Pointer to the particle gun
+    G4GeneralParticleSource* fGPS;  ///< Pointer to the General Particle Source
 };
 
 #endif
