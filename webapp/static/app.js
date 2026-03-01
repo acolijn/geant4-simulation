@@ -104,6 +104,8 @@ async function loadGeometries() {
   sel.innerHTML = files.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
   // Load volumes for the initially selected geometry
   await loadVolumes();
+  // Show geometry preview
+  await loadGeometryPreview();
 }
 
 // Fetch physical volume names for the selected geometry
@@ -123,7 +125,28 @@ async function loadVolumes() {
 loadGeometries();
 
 // Refresh volumes when geometry changes
-$('geometry-select').addEventListener('change', loadVolumes);
+$('geometry-select').addEventListener('change', () => {
+  loadVolumes();
+  loadGeometryPreview();
+});
+
+// Mini 3-D geometry preview
+async function loadGeometryPreview() {
+  const geo = $('geometry-select').value;
+  const container = $('geometry-preview');
+  if (!geo) { container.innerHTML = ''; return; }
+  try {
+    const res = await fetch(`/api/geometries/${encodeURIComponent(geo)}/preview`).then(json);
+    if (res.error) { container.innerHTML = ''; return; }
+    const fig = JSON.parse(res.plotJSON);
+    Plotly.newPlot(container, fig.data, fig.layout, {
+      responsive: true,
+      displayModeBar: false,
+    });
+  } catch (e) {
+    container.innerHTML = '';
+  }
+}
 
 // Upload geometry
 $('geometry-upload').addEventListener('change', async (e) => {

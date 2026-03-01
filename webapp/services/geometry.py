@@ -26,16 +26,41 @@ def rgba_str(color, alpha_override=None):
 #  Rotation
 # ---------------------------------------------------------------------------
 
-def rotation_matrix(rx, ry, rz):
-    """Build a 3x3 rotation matrix from Euler angles in degrees (XYZ order)."""
-    rx, ry, rz = np.radians(rx), np.radians(ry), np.radians(rz)
-    cx, sx = np.cos(rx), np.sin(rx)
-    cy, sy = np.cos(ry), np.sin(ry)
-    cz, sz = np.cos(rz), np.sin(rz)
-    Rx = np.array([[1, 0, 0], [0, cx, -sx], [0, sx, cx]])
-    Ry = np.array([[cy, 0, sy], [0, 1, 0], [-sy, 0, cy]])
-    Rz = np.array([[cz, -sz, 0], [sz, cz, 0], [0, 0, 1]])
-    return Rz @ Ry @ Rx
+def _Rx(a):
+    c, s = np.cos(a), np.sin(a)
+    return np.array([[1, 0, 0], [0, c, -s], [0, s, c]])
+
+def _Ry(a):
+    c, s = np.cos(a), np.sin(a)
+    return np.array([[c, 0, s], [0, 1, 0], [-s, 0, c]])
+
+def _Rz(a):
+    c, s = np.cos(a), np.sin(a)
+    return np.array([[c, -s, 0], [s, c, 0], [0, 0, 1]])
+
+
+def rotation_matrix_placement(rx, ry, rz):
+    """Rotation for regular G4PVPlacement volumes.
+
+    Angles are in **radians** (as stored in the JSON).
+
+    Geant4's GeometryParser negates the angles and builds
+    ``M = Rz(-rz) @ Ry(-ry) @ Rx(-rx)`` which is passed to
+    G4PVPlacement as a *frame* (passive) rotation.  The physical
+    daughter-to-mother transform is ``M^{-1} = Rx(rx) @ Ry(ry) @ Rz(rz)``.
+    """
+    return _Rx(rx) @ _Ry(ry) @ _Rz(rz)
+
+
+def rotation_matrix_assembly(rx, ry, rz):
+    """Rotation for assembly / MakeImprint placements.
+
+    Angles are in **radians**.  MakeImprint applies the rotation matrix
+    as an active transform without negation, so the matrix is
+    ``Rz @ Ry @ Rx`` (same composition order as rotateX→Y→Z with
+    pre-multiplication).
+    """
+    return _Rz(rz) @ _Ry(ry) @ _Rx(rx)
 
 
 # ---------------------------------------------------------------------------
@@ -162,12 +187,12 @@ def _add_assembly_traces(fig, assembly_vol, materials):
     comp_map = {comp["name"]: comp for comp in components}
 
     for asm_pl in assembly_vol.get("placements", []):
-        # Assembly-level placement transform
+        # Assembly-level placement transform (MakeImprint convention)
         asm_rot = asm_pl.get("rotation", {})
         asm_rx = asm_rot.get("x", 0)
         asm_ry = asm_rot.get("y", 0)
         asm_rz = asm_rot.get("z", 0)
-        asm_R = rotation_matrix(asm_rx, asm_ry, asm_rz) if (asm_rx or asm_ry or asm_rz) else np.eye(3)
+        asm_R = rotation_matrix_assembly(asm_rx, asm_ry, asm_rz) if (asm_rx or asm_ry or asm_rz) else np.eye(3)
         asm_t = np.array([asm_pl.get("x", 0), asm_pl.get("y", 0), asm_pl.get("z", 0)])
 
         for comp in components:
@@ -211,7 +236,9 @@ def _add_assembly_traces(fig, assembly_vol, materials):
                     rx = rot.get("x", 0)
                     ry = rot.get("y", 0)
                     rz = rot.get("z", 0)
-                    R_loc = rotation_matrix(rx, ry, rz) if (rx or ry or rz) else np.eye(3)
+                    # Assembly component placements use the same active
+                    # convention as the assembly itself (MakeImprint).
+                    R_loc = rotation_matrix_assembly(rx, ry, rz) if (rx or ry or rz) else np.eye(3)
                     t_loc = np.array([pl.get("x", 0), pl.get("y", 0), pl.get("z", 0)])
                     t_acc = R_acc @ t_loc + t_acc
                     R_acc = R_acc @ R_loc
@@ -260,7 +287,7 @@ def add_geometry_traces(fig, geom: dict, materials: dict) -> None:
             ry  = rot.get("y", 0)
             rz  = rot.get("z", 0)
 
-            R = rotation_matrix(rx, ry, rz) if (rx or ry or rz) else np.eye(3)
+            R = rotation_matrix_placement(rx, ry, rz) if (rx or ry or rz) else np.eye(3)
             t = np.array([px, py, pz])
             _add_mesh_trace(fig, verts, ti, tj, tk, R, t, color,
                             vol.get("g4name") or vol.get("name", vtype))

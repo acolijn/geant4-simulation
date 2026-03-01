@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>G4sim Dashboard</title>
-  <link rel="stylesheet" href="/static/style.css?v=8" />
+  <link rel="stylesheet" href="/static/style.css?v=10" />
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
@@ -27,12 +27,17 @@
 <section id="tab-config" class="tab-content active">
   <div class="card">
     <h2>Geometry</h2>
-    <label>Geometry file
-      <select id="geometry-select"><option>loading…</option></select>
-    </label>
-    <div class="upload-row">
-      <span>Or upload JSON:</span>
-      <input type="file" id="geometry-upload" accept=".json" />
+    <div class="geom-row">
+      <div class="geom-controls">
+        <label>Geometry file
+          <select id="geometry-select"><option>loading…</option></select>
+        </label>
+        <div class="upload-row">
+          <span>Or upload JSON:</span>
+          <input type="file" id="geometry-upload" accept=".json" />
+        </div>
+      </div>
+      <div id="geometry-preview"></div>
     </div>
   </div>
 
@@ -348,6 +353,6 @@
   </div>
 </section>
 
-<script src="/static/app.js?v=8"></script>
+<script src="/static/app.js?v=9"></script>
 </body>
 </html>

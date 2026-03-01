@@ -1,13 +1,15 @@
 """
-Configuration API — geometry file listing, upload, and volume introspection.
+Configuration API — geometry file listing, upload, volume introspection, and 3-D preview.
 """
 
 import json
 
+import plotly.graph_objects as go
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 
 from config import CONFIG_DIR
+from services.geometry import add_geometry_traces
 
 router = APIRouter(prefix="/api", tags=["config"])
 
@@ -73,3 +75,63 @@ async def upload_geometry(request: Request):
     with open(dest, "w") as f:
         json.dump(data, f, indent=2)
     return {"status": "ok", "file": name}
+
+
+@router.get("/geometries/{filename}/preview")
+async def geometry_preview(filename: str):
+    """Return Plotly JSON with geometry-only 3-D wireframes for a mini preview."""
+    path = (CONFIG_DIR / filename).resolve()
+    if not str(path).startswith(str(CONFIG_DIR.resolve())) or not path.is_file():
+        return JSONResponse({"error": "Geometry file not found"}, status_code=404)
+
+    with open(path) as f:
+        geom = json.load(f)
+
+    materials = geom.get("materials", {})
+    fig = go.Figure()
+    add_geometry_traces(fig, geom, materials)
+
+    # Boost visibility for the small preview (default traces are very faint)
+    for trace in fig.data:
+        trace.opacity = 0.75
+
+    # Determine axis extent from the world volume
+    world = geom.get("world", {})
+    w_dims = world.get("dimensions", {})
+    half = max(w_dims.get("x", 200), w_dims.get("y", 200), w_dims.get("z", 200)) / 2.0
+    axis_len = half * 0.5
+
+    # Add thin axis lines (x=red, y=green, z=blue)
+    for vec, color, label in [
+        ([1, 0, 0], "rgba(220,40,40,0.6)", "x"),
+        ([0, 1, 0], "rgba(40,160,40,0.6)", "y"),
+        ([0, 0, 1], "rgba(40,80,220,0.6)", "z"),
+    ]:
+        fig.add_trace(go.Scatter3d(
+            x=[0, vec[0] * axis_len],
+            y=[0, vec[1] * axis_len],
+            z=[0, vec[2] * axis_len],
+            mode="lines+text",
+            line=dict(color=color, width=3),
+            text=["", label],
+            textposition="top center",
+            textfont=dict(size=10, color=color),
+            showlegend=False,
+            hoverinfo="skip",
+        ))
+
+    fig.update_layout(
+        scene=dict(
+            xaxis=dict(visible=False),
+            yaxis=dict(visible=False),
+            zaxis=dict(visible=False),
+            aspectmode="data",
+            bgcolor="rgba(0,0,0,0)",
+        ),
+        margin=dict(l=0, r=0, t=0, b=0),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        showlegend=False,
+        height=280,
+    )
+    return {"plotJSON": fig.to_json()}

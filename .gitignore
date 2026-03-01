@@ -8,6 +8,10 @@ logs/
 # also __pycache__ directories
 __pycache__/
 
+# also the configs directory
+configs/
+
+
 # Compiled Object files
 *.o
 *.obj

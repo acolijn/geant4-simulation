@@ -232,3 +232,23 @@ tbody tr:hover { background: var(--bg); }
 .toggle-switch input:checked + .toggle-track { background: var(--primary); }
 .toggle-switch input:checked + .toggle-track::before { transform: translateX(18px); }
 .toggle-hint { font-size: .75rem; color: var(--text2); }
+
+/* ── Geometry card layout ──────────────────────────────── */
+.geom-row {
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+}
+.geom-controls {
+  flex: 0 0 auto;
+  min-width: 220px;
+}
+
+/* ── Geometry preview ───────────────────────────────────── */
+#geometry-preview {
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+#geometry-preview .plotly { border-radius: var(--radius); }
