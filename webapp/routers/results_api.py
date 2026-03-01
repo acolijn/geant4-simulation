@@ -16,10 +16,20 @@ from services.geometry import add_geometry_traces
 router = APIRouter(prefix="/api/results", tags=["results"])
 
 
+def _safe_run_path(*parts: str) -> "Path | None":
+    """Resolve a path under RUNS_DIR and reject traversal attempts."""
+    target = (RUNS_DIR.joinpath(*parts)).resolve()
+    if not str(target).startswith(str(RUNS_DIR.resolve())):
+        return None
+    return target
+
+
 @router.get("/{run_id}/files")
 async def result_files(run_id: str):
     """List output files for a run."""
-    run_dir = RUNS_DIR / run_id
+    run_dir = _safe_run_path(run_id)
+    if run_dir is None:
+        return JSONResponse({"error": "Invalid run id"}, status_code=400)
     if not run_dir.exists():
         return JSONResponse({"error": "Run not found"}, status_code=404)
     files = [f.name for f in run_dir.iterdir() if f.suffix in (".root", ".mac", ".json", ".txt")]
@@ -29,7 +39,9 @@ async def result_files(run_id: str):
 @router.get("/{run_id}/download/{filename}")
 async def download_file(run_id: str, filename: str):
     """Download a result file."""
-    fpath = RUNS_DIR / run_id / filename
+    fpath = _safe_run_path(run_id, filename)
+    if fpath is None:
+        return JSONResponse({"error": "Invalid path"}, status_code=400)
     if not fpath.exists():
         return JSONResponse({"error": "File not found"}, status_code=404)
     return FileResponse(fpath, filename=filename)
@@ -38,7 +50,9 @@ async def download_file(run_id: str, filename: str):
 @router.get("/{run_id}/log")
 async def get_log(run_id: str):
     """Return the log file for a completed run."""
-    log_path = RUNS_DIR / run_id / "log.txt"
+    log_path = _safe_run_path(run_id, "log.txt")
+    if log_path is None:
+        return JSONResponse({"error": "Invalid run id"}, status_code=400)
     if not log_path.exists():
         return JSONResponse({"error": "Log not found"}, status_code=404)
     return {"log": log_path.read_text()}
@@ -47,7 +61,9 @@ async def get_log(run_id: str):
 @router.get("/{run_id}/branches")
 async def list_branches(run_id: str):
     """List TTree branches in the ROOT output."""
-    run_dir = RUNS_DIR / run_id
+    run_dir = _safe_run_path(run_id)
+    if run_dir is None:
+        return JSONResponse({"error": "Invalid run id"}, status_code=400)
     root_files = list(run_dir.glob("*.root"))
     if not root_files:
         return JSONResponse({"error": "No ROOT file found"}, status_code=404)
@@ -60,7 +76,9 @@ async def list_branches(run_id: str):
 @router.get("/{run_id}/plot/{branch}")
 async def plot_branch(run_id: str, branch: str):
     """Return a Plotly JSON histogram for a given branch."""
-    run_dir = RUNS_DIR / run_id
+    run_dir = _safe_run_path(run_id)
+    if run_dir is None:
+        return JSONResponse({"error": "Invalid run id"}, status_code=400)
     root_files = list(run_dir.glob("*.root"))
     if not root_files:
         return JSONResponse({"error": "No ROOT file found"}, status_code=404)
@@ -101,7 +119,9 @@ async def plot_branch(run_id: str, branch: str):
 @router.get("/{run_id}/plot3d")
 async def plot_3d(run_id: str):
     """Return Plotly JSON for a 3D scatter of hit positions overlaid with geometry wireframes."""
-    run_dir = RUNS_DIR / run_id
+    run_dir = _safe_run_path(run_id)
+    if run_dir is None:
+        return JSONResponse({"error": "Invalid run id"}, status_code=400)
     root_files = list(run_dir.glob("*.root"))
     if not root_files:
         return JSONResponse({"error": "No ROOT file found"}, status_code=404)

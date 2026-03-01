@@ -18,13 +18,21 @@ document.querySelectorAll('.tab').forEach(btn => {
 const $ = id => document.getElementById(id);
 const json = r => r.json();
 
+/** Escape HTML special characters to prevent XSS. */
+function esc(s) {
+  if (s == null) return '';
+  const d = document.createElement('div');
+  d.appendChild(document.createTextNode(String(s)));
+  return d.innerHTML;
+}
+
 // ─── CONFIG TAB ─────────────────────────────────────────
 
 // Load geometry list
 async function loadGeometries() {
   const files = await fetch('/api/geometries').then(json);
   const sel = $('geometry-select');
-  sel.innerHTML = files.map(f => `<option value="${f}">${f}</option>`).join('');
+  sel.innerHTML = files.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
 }
 loadGeometries();
 
@@ -135,11 +143,11 @@ async function loadRunHistory() {
   const tbody = $('run-history').querySelector('tbody');
   tbody.innerHTML = runs.map(r => `
     <tr>
-      <td>${r.runId || r.started}</td>
-      <td>${r.geometry}</td>
-      <td>${r.particle} ${r.energy}</td>
+      <td>${esc(r.runId || r.started)}</td>
+      <td>${esc(r.geometry)}</td>
+      <td>${esc(r.particle)} ${esc(r.energy)}</td>
       <td>${(r.nEvents || 0).toLocaleString()}</td>
-      <td>${r.status}</td>
+      <td>${esc(r.status)}</td>
     </tr>
   `).join('');
 }
@@ -153,7 +161,7 @@ async function loadRunsForResults() {
   sel.innerHTML = '<option value="">— select a run —</option>' +
     runs.map(r => {
       const id = r.runId || r.started;
-      return `<option value="${id}">${id}  (${r.geometry}, ${r.particle}, ${(r.nEvents||0).toLocaleString()} evts, ${r.status})</option>`;
+      return `<option value="${esc(id)}">${esc(id)}  (${esc(r.geometry)}, ${esc(r.particle)}, ${(r.nEvents||0).toLocaleString()} evts, ${esc(r.status)})</option>`;
     }).join('');
 }
 loadRunsForResults();
@@ -165,7 +173,7 @@ $('result-run-select').addEventListener('change', async () => {
   // Load files
   const files = await fetch(`/api/results/${runId}/files`).then(json);
   $('result-files').innerHTML = files.map(f =>
-    `<li><a href="/api/results/${runId}/download/${f}" download>${f}</a></li>`
+    `<li><a href="/api/results/${encodeURIComponent(runId)}/download/${encodeURIComponent(f)}" download>${esc(f)}</a></li>`
   ).join('');
 
   // Load branches
@@ -196,7 +204,7 @@ $('btn-plot').addEventListener('click', async () => {
   $('plot-container').innerHTML = '<p>Loading…</p>';
   const res = await fetch(`/api/results/${runId}/plot/${branch}`).then(json);
   if (res.error) {
-    $('plot-container').innerHTML = `<p>Error: ${res.error}</p>`;
+    $('plot-container').innerHTML = `<p>Error: ${esc(res.error)}</p>`;
     return;
   }
   const fig = JSON.parse(res.plotJSON);
@@ -211,7 +219,7 @@ $('btn-plot3d').addEventListener('click', async () => {
   $('plot-container').innerHTML = '<p>Loading 3D hit map…</p>';
   const res = await fetch(`/api/results/${runId}/plot3d`).then(json);
   if (res.error) {
-    $('plot-container').innerHTML = `<p>Error: ${res.error}</p>`;
+    $('plot-container').innerHTML = `<p>Error: ${esc(res.error)}</p>`;
     return;
   }
   const fig = JSON.parse(res.plotJSON);

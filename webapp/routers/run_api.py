@@ -4,13 +4,19 @@ Run API — start / stop / status, live log streaming, and run history.
 
 import asyncio
 import json
+import re
 from datetime import datetime
 
 from fastapi import APIRouter, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse
 
 from config import CONFIG_DIR, PROJECT_DIR, RUNS_DIR, G4SIM_BIN
+
 from services.simulation import current_process, start_simulation, stop_simulation, get_status
+
+# Regex for values safe to interpolate into Geant4 macro commands.
+# Allows word chars (letters, digits, underscore), hyphens, dots, plus/minus.
+_SAFE_MACRO_VALUE = re.compile(r"^[\w.+\-]+$")
 
 router = APIRouter(tags=["run"])
 
@@ -36,6 +42,26 @@ async def start_run(request: Request):
     n_events    = body.get("nEvents", "10000")
     output      = body.get("outputFile", "G4sim.root")
     verbose     = body.get("verboseHits", "0")
+
+    # ── Input sanitisation ────────────────────────────────
+    # Reject values that could inject extra lines or Geant4 commands.
+    macro_fields = {
+        "particle": particle, "energy": energy, "energyUnit": energy_unit,
+        "posX": pos_x, "posY": pos_y, "posZ": pos_z, "posUnit": pos_unit,
+        "dirX": dir_x, "dirY": dir_y, "dirZ": dir_z,
+        "nEvents": n_events, "outputFile": output, "verbose": verbose,
+    }
+    for field_name, value in macro_fields.items():
+        if not _SAFE_MACRO_VALUE.match(str(value)):
+            return JSONResponse(
+                {"error": f"Invalid characters in '{field_name}'"},
+                status_code=400,
+            )
+
+    # Validate geometry filename stays inside config/
+    geom_path = (CONFIG_DIR / geometry).resolve()
+    if not str(geom_path).startswith(str(CONFIG_DIR.resolve())):
+        return JSONResponse({"error": "Invalid geometry filename"}, status_code=400)
 
     # Create a unique run directory
     stamp   = datetime.now().strftime("%Y%m%d_%H%M%S")

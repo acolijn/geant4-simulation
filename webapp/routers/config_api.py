@@ -5,6 +5,7 @@ Configuration API — geometry file listing and upload.
 import json
 
 from fastapi import APIRouter, Request
+from fastapi.responses import JSONResponse
 
 from config import CONFIG_DIR
 
@@ -26,7 +27,13 @@ async def upload_geometry(request: Request):
     if not name.endswith(".json"):
         name += ".json"
     data = body.get("data")
-    dest = CONFIG_DIR / name
+
+    # ── Path-traversal guard ──────────────────────────────
+    # Resolve the destination and ensure it stays inside CONFIG_DIR.
+    dest = (CONFIG_DIR / name).resolve()
+    if not str(dest).startswith(str(CONFIG_DIR.resolve())):
+        return JSONResponse({"error": "Invalid filename"}, status_code=400)
+
     with open(dest, "w") as f:
         json.dump(data, f, indent=2)
     return {"status": "ok", "file": name}
