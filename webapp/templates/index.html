@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>G4sim Dashboard</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="/static/style.css?v=5" />
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
@@ -62,10 +62,6 @@
           <option value="Gauss">Gaussian</option>
         </select>
       </label>
-    </div>
-
-    <!-- Mono / Gauss energy -->
-    <div id="ene-mono-group" class="form-grid">
       <label>Energy
         <div class="input-unit">
           <input type="number" id="energy" value="1" step="any" />
@@ -77,7 +73,26 @@
           </select>
         </div>
       </label>
+      <label>Source
+        <select id="pos-type" onchange="toggleGpsFields()">
+          <option value="Point" selected>Point</option>
+          <option value="Volume">Volume</option>
+          <option value="Surface">Surface</option>
+          <option value="Beam">Beam</option>
+        </select>
+      </label>
+      <label>Angular
+        <select id="ang-type" onchange="toggleGpsFields()">
+          <option value="iso" selected>Isotropic</option>
+          <option value="cos">Cosine-law</option>
+          <option value="focused">Focused</option>
+          <option value="beam1d">Beam 1D</option>
+          <option value="beam2d">Beam 2D</option>
+        </select>
+      </label>
     </div>
+
+    <!-- Gauss: sigma -->
     <div id="ene-sigma-group" class="form-grid gps-hidden">
       <label>Sigma
         <div class="input-unit">
@@ -87,7 +102,7 @@
       </label>
     </div>
 
-    <!-- Lin / Pow energy range -->
+    <!-- Lin / Pow: energy range -->
     <div id="ene-range-group" class="form-grid gps-hidden">
       <label>Min energy
         <input type="number" id="ene-min" value="0" step="any" />
@@ -96,11 +111,13 @@
         <input type="number" id="ene-max" value="1000" step="any" />
       </label>
     </div>
+    <!-- Pow: alpha -->
     <div id="ene-alpha-group" class="form-grid gps-hidden">
       <label>Alpha (power index)
         <input type="number" id="ene-alpha" value="-1" step="any" />
       </label>
     </div>
+    <!-- Lin: gradient + intercept -->
     <div id="ene-lin-group" class="form-grid gps-hidden">
       <label>Gradient
         <input type="number" id="ene-gradient" value="0" step="any" />
@@ -110,19 +127,11 @@
       </label>
     </div>
 
-    <hr class="card-sep" />
+    <hr id="sep-position" class="card-sep gps-hidden" />
 
     <!-- ── Source position / shape ── -->
-    <h3 class="card-sub">Source Position</h3>
-    <div class="form-grid">
-      <label>Position type
-        <select id="pos-type" onchange="toggleGpsFields()">
-          <option value="Point" selected>Point</option>
-          <option value="Volume">Volume</option>
-          <option value="Surface">Surface</option>
-          <option value="Beam">Beam</option>
-        </select>
-      </label>
+    <h3 id="hdr-position" class="card-sub gps-hidden">Source Position</h3>
+    <div id="pos-type-row" class="form-grid gps-hidden">
       <label id="pos-shape-group" class="gps-hidden">Shape
         <select id="pos-shape" onchange="toggleGpsFields()">
           <option value="Cylinder">Cylinder</option>
@@ -134,18 +143,20 @@
       </label>
     </div>
 
-    <div class="form-grid triple">
+    <div id="pos-centre-group" class="form-grid triple gps-hidden">
       <label>Centre X <input type="number" id="posX" value="0" step="any" /></label>
       <label>Centre Y <input type="number" id="posY" value="0" step="any" /></label>
       <label>Centre Z <input type="number" id="posZ" value="0" step="any" /></label>
     </div>
-    <label class="narrow">Position unit
-      <select id="pos-unit">
-        <option value="mm">mm</option>
-        <option value="cm" selected>cm</option>
-        <option value="m">m</option>
-      </select>
-    </label>
+    <div id="pos-unit-group" class="gps-hidden">
+      <label class="narrow">Position unit
+        <select id="pos-unit">
+          <option value="mm">mm</option>
+          <option value="cm" selected>cm</option>
+          <option value="m">m</option>
+        </select>
+      </label>
+    </div>
 
     <!-- shape dimensions (Volume / Surface) -->
     <div id="pos-radius-group" class="form-grid gps-hidden">
@@ -161,25 +172,16 @@
     </div>
     <div id="pos-confine-group" class="form-grid gps-hidden">
       <label>Confine to physical volume
-        <input type="text" id="pos-confine" placeholder="e.g. SourcePhysical" />
-      </label>
-    </div>
-
-    <hr class="card-sep" />
-
-    <!-- ── Angular distribution ── -->
-    <h3 class="card-sub">Angular Distribution</h3>
-    <div class="form-grid">
-      <label>Type
-        <select id="ang-type" onchange="toggleGpsFields()">
-          <option value="iso" selected>Isotropic</option>
-          <option value="cos">Cosine-law</option>
-          <option value="focused">Focused</option>
-          <option value="beam1d">Beam 1D</option>
-          <option value="beam2d">Beam 2D</option>
+        <select id="pos-confine">
+          <option value="">— none (whole volume) —</option>
         </select>
       </label>
     </div>
+
+    <hr id="sep-angular" class="card-sep gps-hidden" />
+
+    <!-- ── Angular distribution ── -->
+    <h3 id="hdr-angular" class="card-sub gps-hidden">Angular Distribution</h3>
     <div id="ang-theta-group" class="form-grid gps-hidden">
       <label>Min θ (deg) <input type="number" id="ang-mintheta" value="0" step="any" /></label>
       <label>Max θ (deg) <input type="number" id="ang-maxtheta" value="180" step="any" /></label>
@@ -275,6 +277,6 @@
   </div>
 </section>
 
-<script src="/static/app.js"></script>
+<script src="/static/app.js?v=5"></script>
 </body>
 </html>

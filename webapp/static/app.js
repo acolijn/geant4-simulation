@@ -34,22 +34,27 @@ function toggleGpsFields() {
   const posShape = $('pos-shape') ? $('pos-shape').value : '';
   const angType = $('ang-type').value;
 
-  // Energy fields
-  const isMono  = (eneType === 'Mono');
+  // Energy — only show fields relevant to the selected type
   const isGauss = (eneType === 'Gauss');
   const isRange = (eneType === 'Lin' || eneType === 'Pow');
   const isPow   = (eneType === 'Pow');
   const isLin   = (eneType === 'Lin');
 
-  toggleVis('ene-mono-group',  isMono || isGauss);
   toggleVis('ene-sigma-group', isGauss);
   toggleVis('ene-range-group', isRange);
   toggleVis('ene-alpha-group', isPow);
   toggleVis('ene-lin-group',   isLin);
 
-  // Position / shape fields
+  // Position — show centre/unit always; shape/dimensions only for Volume/Surface
   const hasShape = (posType === 'Volume' || posType === 'Surface');
-  toggleVis('pos-shape-group', hasShape);
+  const needsPos = true;  // all source types need a position
+
+  toggleVis('sep-position',     true);
+  toggleVis('hdr-position',     true);
+  toggleVis('pos-centre-group', needsPos);
+  toggleVis('pos-unit-group',   needsPos);
+  toggleVis('pos-type-row',     hasShape);
+  toggleVis('pos-shape-group',  hasShape);
 
   const shCyl    = hasShape && (posShape === 'Cylinder');
   const shSphere = hasShape && (posShape === 'Sphere' || posShape === 'Circle' || posShape === 'Ellipsoid');
@@ -60,10 +65,17 @@ function toggleGpsFields() {
   toggleVis('pos-box-group',     shBox);
   toggleVis('pos-confine-group', posType === 'Volume');
 
-  // Angular fields
-  toggleVis('ang-theta-group', angType === 'iso' || angType === 'cos');
+  // Angular — only show extra fields when restricting angles or focusing
+  const angHasExtra = (angType === 'cos' || angType === 'focused' || angType === 'beam1d' || angType === 'beam2d');
+  toggleVis('ang-theta-group', angType === 'cos');
   toggleVis('ang-focus-group', angType === 'focused');
   toggleVis('ang-dir-group',   angType === 'beam1d' || angType === 'beam2d');
+
+  // Hide section headers & separators when nothing extra is shown
+  toggleVis('sep-position', needsPos);
+  toggleVis('hdr-position', needsPos);
+  toggleVis('sep-angular',  angHasExtra);
+  toggleVis('hdr-angular',  angHasExtra);
 }
 
 function toggleVis(id, show) {
@@ -83,8 +95,28 @@ async function loadGeometries() {
   const files = await fetch('/api/geometries').then(json);
   const sel = $('geometry-select');
   sel.innerHTML = files.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
+  // Load volumes for the initially selected geometry
+  await loadVolumes();
 }
+
+// Fetch physical volume names for the selected geometry
+async function loadVolumes() {
+  const geo = $('geometry-select').value;
+  if (!geo) return;
+  try {
+    const volumes = await fetch(`/api/geometries/${encodeURIComponent(geo)}/volumes`).then(json);
+    const sel = $('pos-confine');
+    sel.innerHTML = '<option value="">— none (whole geometry) —</option>' +
+      volumes.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join('');
+  } catch (e) {
+    $('pos-confine').innerHTML = '<option value="">— error loading volumes —</option>';
+  }
+}
+
 loadGeometries();
+
+// Refresh volumes when geometry changes
+$('geometry-select').addEventListener('change', loadVolumes);
 
 // Upload geometry
 $('geometry-upload').addEventListener('change', async (e) => {

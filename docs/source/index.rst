@@ -1,7 +1,7 @@
 Geant4-Simulation Documentation
 ==============================
 
-Geant4-Simulation is a Geant4-based neutron detector simulation framework.
+Geant4-Simulation is a Geant4-based particle transport simulation framework.
 
 Contents
 --------
@@ -13,6 +13,7 @@ Contents
    geometry
    simulation
    HitsCollections
+   webapp
 
 .. toctree::
    :maxdepth: 2

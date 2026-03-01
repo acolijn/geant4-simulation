@@ -6,7 +6,7 @@ Geant4 simulation to demonstrate geometry editor integration.
 Geometry Editor Integration
 -------------------------
 
-Get4 now integrates with a web-based geometry editor that allows you to:
+The simulation integrates with a web-based geometry editor that allows you to:
 
 - Create and edit detector geometries visually
 - Export geometry configurations as JSON files
@@ -22,7 +22,7 @@ The geometry editor ensures consistent coordinate systems with Geant4:
 Unit Handling
 ------------
 
-The simulation now properly handles units for all geometry dimensions:
+The simulation properly handles units for all geometry dimensions:
 
 - Length units: "mm", "cm", "m" (default is "mm" if not specified)
 - Angle units: "deg", "rad" (default is "deg" if not specified)
@@ -43,23 +43,63 @@ Rotations are applied in the Geant4 sequence:
 
 This sequential rotation system ensures consistent behavior between the geometry editor and the Geant4 simulation.
 
-Primary Generator
-----------------
+General Particle Source (GPS)
+----------------------------
 
-The simulation uses a particle gun to generate primary neutrons:
+The simulation uses the Geant4 **General Particle Source** (GPS) instead of
+the simple particle gun.  GPS is configured entirely at run-time via ``/gps/``
+macro commands and supports:
 
-- Default energy: 1 MeV
-- Direction: Along positive Z axis
-- Starting position: Random on top face of world volume
+* **Point, volume, and surface sources** — generate particles from a single
+  point, randomly inside a volume, or on a surface.
+* **Volume confinement** — restrict the random positions to a specific
+  physical volume (``/gps/pos/confine <name>``).
+* **Energy spectra** — mono-energetic, Gaussian, linear, power-law, or
+  user-defined histograms.
+* **Angular distributions** — isotropic, cosine-law, focused toward a point,
+  or pencil-beam.
+* **Multiple sources** — overlay several independent sources with individual
+  intensities.
+
+Quick example — mono-energetic gamma point source:
+
+.. code-block:: text
+
+   /gps/particle gamma
+   /gps/ene/type Mono
+   /gps/ene/mono 1 MeV
+   /gps/pos/type Point
+   /gps/pos/centre -10 0 0 cm
+   /gps/ang/type iso
+
+Quick example — volume source confined to a detector:
+
+.. code-block:: text
+
+   /gps/particle gamma
+   /gps/ene/type Mono
+   /gps/ene/mono 662 keV
+   /gps/pos/type Volume
+   /gps/pos/shape Cylinder
+   /gps/pos/centre 0 0 0 cm
+   /gps/pos/radius 5 cm
+   /gps/pos/halfz 10 cm
+   /gps/pos/confine Box_1
+   /gps/ang/type iso
+
+.. tip::
+
+   The **web dashboard** generates these macro commands automatically — just
+   fill in the form on the *Config* tab.
 
 Data Collection
 --------------
 
 For each event, the following data is collected and stored in a ROOT file:
 
-- Energy deposits in the liquid xenon
-- Track lengths
-- Neutron counts
+- Energy deposits in sensitive detector volumes
+- Hit positions (x, y, z)
+- Volume names for each hit
 
 The data is saved in a TTree format for easy analysis.
 

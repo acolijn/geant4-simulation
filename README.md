@@ -1,6 +1,6 @@
-# Geant4 Simulation — Neutron Transport
+# Geant4 Simulation — Particle Transport
 
-A Geant4 application for simulating neutron transport using high-precision neutron physics (`FTFP_BERT_HP`). The detector geometry is defined via JSON configuration files, making it easy to modify without recompiling.
+A Geant4 application for simulating particle transport using high-precision physics (`FTFP_BERT_HP`). The detector geometry is defined via JSON configuration files, making it easy to modify without recompiling. A local web dashboard is included for configuring, launching, and analysing simulation runs.
 
 [![Documentation Status](https://readthedocs.org/projects/geant4-simulation/badge/?version=latest)](https://geant4-simulation.readthedocs.io/en/latest/?badge=latest)
 
@@ -22,7 +22,7 @@ A Geant4 application for simulating neutron transport using high-precision neutr
 - [Configuration](#configuration)
   - [Geometry Files](#geometry-files)
   - [Macro Commands](#macro-commands)
-  - [Particle Gun](#particle-gun)
+  - [General Particle Source (GPS)](#general-particle-source-gps)
 - [Output](#output)
 - [Troubleshooting](#troubleshooting)
 - [Documentation](#documentation)
@@ -187,9 +187,40 @@ Then open **http://127.0.0.1:8000** in your browser.
 
 | Tab | Description |
 |---|---|
-| **Config** | Select geometry file (or upload a new JSON), set particle type, energy, position, direction, number of events, and output file name |
+| **Config** | Select geometry file (or upload a new JSON), configure the General Particle Source, set run parameters |
 | **Run** | Start / stop simulation, live progress bar, streaming log, and run history |
 | **Results** | Browse completed runs, download ROOT / log files, plot histograms, or view a 3D hit map |
+
+### Config Tab — General Particle Source
+
+The Config tab exposes the full power of the Geant4 General Particle Source (GPS) through a clean, dynamic form. Only the fields relevant to your current selections are shown.
+
+**Top-level controls** (always visible):
+
+| Field | Options |
+|---|---|
+| Particle | gamma, e-, e+, proton, neutron, mu-, mu+, alpha, opticalphoton |
+| Energy type | Mono, Linear, Power-law, Gaussian |
+| Energy | Value + unit (eV, keV, MeV, GeV) |
+| Source | Point, Volume, Surface, Beam |
+| Angular | Isotropic, Cosine-law, Focused, Beam 1D, Beam 2D |
+
+**Conditionally shown fields:**
+
+| Selection | Additional fields shown |
+|---|---|
+| Energy type = **Gaussian** | Sigma |
+| Energy type = **Linear** | Min/Max energy, Gradient, Intercept |
+| Energy type = **Power-law** | Min/Max energy, Alpha (power index) |
+| Source = **Point** | Centre X/Y/Z, Position unit |
+| Source = **Volume** | + Shape (Cylinder/Sphere/Box/…), dimensions, **Confine to volume** dropdown |
+| Source = **Surface** | + Shape, dimensions |
+| Source = **Beam** | Centre X/Y/Z, Position unit |
+| Angular = **Cosine-law** | Min/Max θ, Min/Max φ |
+| Angular = **Focused** | Focus point X/Y/Z |
+| Angular = **Beam 1D/2D** | Direction X/Y/Z |
+
+The **Confine to volume** dropdown (visible when Source = Volume) is automatically populated with the physical volume names from the selected geometry file. This lets you confine random source positions to a specific detector volume.
 
 Each run is saved in `webapp/runs/<timestamp>/` with the generated macro, metadata, ROOT output, and log.
 
@@ -221,16 +252,75 @@ Optionally set the ROOT output file name (default is `G4sim.root`):
 
 Both commands must appear **before** `/run/initialize`.
 
-### Particle Gun
+### General Particle Source (GPS)
 
-The default primary particle is a neutron at 1 MeV. Override it in your macro:
+The simulation uses the Geant4 **General Particle Source** (GPS). GPS is far more flexible than the simple particle gun and supports point, volume, and surface sources, arbitrary energy spectra, and configurable angular distributions — all via `/gps/` macro commands at run-time.
+
+#### Quick examples
+
+**Mono-energetic point source** (equivalent to the old particle gun):
 
 ```
-/gun/particle gamma
-/gun/energy 1 MeV
-/gun/position -10 0 0 cm
-/gun/direction 1 0 0
+/gps/particle gamma
+/gps/ene/type Mono
+/gps/ene/mono 1 MeV
+/gps/pos/type Point
+/gps/pos/centre -10 0 0 cm
+/gps/ang/type iso
 ```
+
+**Volume source confined to a detector volume:**
+
+```
+/gps/particle gamma
+/gps/ene/type Mono
+/gps/ene/mono 662 keV
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 0 0 0 cm
+/gps/pos/radius 5 cm
+/gps/pos/halfz 10 cm
+/gps/pos/confine Box_1
+/gps/ang/type iso
+```
+
+**Gaussian energy spectrum:**
+
+```
+/gps/particle e-
+/gps/ene/type Gauss
+/gps/ene/mono 1 MeV
+/gps/ene/sigma 50 keV
+/gps/pos/type Point
+/gps/pos/centre 0 0 0 cm
+/gps/ang/type iso
+```
+
+#### GPS command reference
+
+| Category | Command | Description |
+|---|---|---|
+| Particle | `/gps/particle <name>` | Particle type (gamma, e-, proton, …) |
+| Energy | `/gps/ene/type Mono` | Mono-energetic |
+| | `/gps/ene/mono <E> <unit>` | Energy value |
+| | `/gps/ene/type Gauss` | Gaussian distribution |
+| | `/gps/ene/sigma <σ> <unit>` | Standard deviation |
+| | `/gps/ene/type Lin` | Linear spectrum |
+| | `/gps/ene/type Pow` | Power-law spectrum |
+| | `/gps/ene/min` / `max` | Energy range (Lin, Pow) |
+| Position | `/gps/pos/type Point` | Point source |
+| | `/gps/pos/type Volume` | Volume source |
+| | `/gps/pos/type Surface` | Surface source |
+| | `/gps/pos/shape <shape>` | Cylinder, Sphere, Box, … |
+| | `/gps/pos/centre <x y z> <unit>` | Source centre |
+| | `/gps/pos/radius`, `halfz`, … | Shape dimensions |
+| | `/gps/pos/confine <physVol>` | Restrict to a physical volume |
+| Angular | `/gps/ang/type iso` | Isotropic |
+| | `/gps/ang/type cos` | Cosine-law |
+| | `/gps/ang/type focused` | Focused on a point |
+| | `/gps/ang/mintheta`, `maxtheta` | Restrict polar angle |
+
+> **Tip:** The web dashboard generates these macro commands for you — just pick the options in the form.
 
 ---
 
