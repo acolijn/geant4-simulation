@@ -26,7 +26,6 @@ class DetectorConstruction::DetectorMessenger : public G4UImessenger
     
     G4UIdirectory*        fDetectorDir;
     G4UIcmdWithAString*   fGeometryFileCmd;
-    G4UIcmdWithAString*   fMaterialsFileCmd;
     G4UIcommand*          fRebuildCmd;
 };
 
@@ -54,7 +53,6 @@ DetectorConstruction::DetectorMessenger::DetectorMessenger(DetectorConstruction*
 DetectorConstruction::DetectorMessenger::~DetectorMessenger()
 {
     delete fGeometryFileCmd;
-    delete fMaterialsFileCmd;
     delete fRebuildCmd;
     delete fDetectorDir;
 }

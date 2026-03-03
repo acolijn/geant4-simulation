@@ -180,6 +180,14 @@ async def start_run(request: Request):
     # ── Input sanitisation ────────────────────────────────
     # Collect all fields that will appear in the macro.
     # Fields that need special validation are handled separately.
+    # Validate geometry and outputFile (these are interpolated into the macro)
+    for fld_name, fld_val in (("geometry", geometry), ("outputFile", output)):
+        if not _SAFE_MACRO_VALUE.match(fld_val):
+            return JSONResponse(
+                {"error": f"Invalid characters in '{fld_name}'"},
+                status_code=400,
+            )
+
     _SKIP_FIELDS = {"geometry", "outputFile", "ionZA", "ionCharge", "ionExcitation"}
     macro_fields = {}
     for key, val in body.items():
