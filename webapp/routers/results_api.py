@@ -3,6 +3,7 @@ Results API — browse output files, download, plot histograms, and 3D hit maps.
 """
 
 import json
+from pathlib import Path
 
 import numpy as np
 import plotly.graph_objects as go
