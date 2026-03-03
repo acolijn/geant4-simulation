@@ -33,8 +33,8 @@ else:
 
 # Project information
 project = 'Geant4-Simulation'
-copyright = '2025, Windsurf Team'
-author = 'Windsurf Team'
+copyright = '2025-2026, A. Colijn'
+author = 'A. Colijn'
 release = '1.0'
 
 # Add any Sphinx extension module names here

@@ -37,6 +37,7 @@ Architecture
    ├── services/
    │   ├── simulation.py   # Process management (start, monitor, kill)
    │   └── geometry.py     # Geometry mesh helpers for Plotly visualisation
+   │                       # (incl. true CSG booleans via trimesh + manifold3d)
    ├── templates/
    │   └── index.html      # Single-page HTML with Config / Run / Results tabs
    ├── static/
@@ -138,7 +139,9 @@ The **Results** tab lets you:
 * **Download** the ROOT output, macro, log, or metadata files.
 * **Plot histograms** — select a branch from the ROOT file and visualise it
   with Plotly.
-* **3D hit map** — render all hit positions as a 3D scatter plot.
+* **3D hit map** — render all hit positions as a 3D scatter plot, overlaid
+  with the detector geometry (including true CSG boolean solids rendered via
+  ``trimesh`` + ``manifold3d``).
 
 
 REST API

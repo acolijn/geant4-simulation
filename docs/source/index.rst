@@ -24,11 +24,13 @@ Contents
 Features
 --------
 
-* JSON-based geometry definition
-* Flexible detector construction
-* Customizable physics processes
-* Hits collection system for data analysis
-* Integration with the Geant4-Geometry-Editor
+* JSON-based geometry definition (box, cylinder, sphere, ellipsoid, torus, trapezoid, polycone)
+* Assembly volumes with multiple placements
+* Boolean solids (union, subtraction) with true CSG mesh rendering in the dashboard
+* Flexible detector construction with sensitive volumes and hit collections
+* Customizable physics processes (FTFP_BERT_HP)
+* Web dashboard for configuring, running, and analysing simulations
+* Integration with the `Geant4-Geometry-Editor <https://github.com/acolijn/geant4-geometry-editor>`_
 
 Indices and tables
 ==================

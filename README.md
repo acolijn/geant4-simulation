@@ -2,6 +2,13 @@
 
 A Geant4 application for simulating particle transport using high-precision physics (`FTFP_BERT_HP`). The detector geometry is defined via JSON configuration files, making it easy to modify without recompiling. A local web dashboard is included for configuring, launching, and analysing simulation runs.
 
+Key features:
+
+- **JSON-based geometry** — box, cylinder, sphere, ellipsoid, torus, trapezoid, polycone, assemblies, and boolean (union/subtraction) solids
+- **Web dashboard** — configure GPS, launch runs, view live progress, plot histograms and 3D hit maps
+- **True CSG rendering** — boolean solids displayed as real union/subtraction meshes (via `trimesh` + `manifold3d`)
+- **Sensitive detectors** — per-volume hit collections with automatic ROOT TTree creation
+
 [![Documentation Status](https://readthedocs.org/projects/geant4-simulation/badge/?version=latest)](https://geant4-simulation.readthedocs.io/en/latest/?badge=latest)
 
 ---
@@ -155,7 +162,10 @@ geant4-simulation/
 │   ├── vis.mac                # Interactive mode with visualization
 │   └── batch.mac              # Batch mode (no visualization)
 ├── config/                    # Detector geometry (JSON)
-│   ├── geometry.json
+│   ├── geometry.json          # Default geometry
+│   ├── geometry_v2.json       # Version 2
+│   ├── geometry_v3.json       # Version 3
+│   ├── geometry_v4.json       # Version 4 (includes boolean/union solids)
 │   ├── geometry-4.json
 │   ├── geometry_all.json
 │   └── materials.json
@@ -164,6 +174,8 @@ geant4-simulation/
     ├── requirements.txt       # Python dependencies
     ├── templates/             # HTML pages
     ├── static/                # CSS & JavaScript
+    ├── services/              # Geometry mesh helpers (incl. CSG booleans)
+    ├── routers/               # REST API endpoints
     └── runs/                  # Auto-created output per run (gitignored)
 ```
 
@@ -189,7 +201,7 @@ Then open **http://127.0.0.1:8000** in your browser.
 |---|---|
 | **Config** | Select geometry file (or upload a new JSON), configure the General Particle Source, set run parameters |
 | **Run** | Start / stop simulation, live progress bar, streaming log, and run history |
-| **Results** | Browse completed runs, download ROOT / log files, plot histograms, or view a 3D hit map |
+| **Results** | Browse completed runs, download ROOT / log files, plot histograms, or view a 3D hit map overlaid with geometry (boolean solids rendered as true CSG meshes) |
 
 ### Config Tab — General Particle Source
 
@@ -235,6 +247,12 @@ The command-line workflow (`build/G4sim macros/batch.mac`) continues to work exa
 ### Geometry Files
 
 The detector geometry is defined in JSON files under `config/`. These files describe volumes, materials, positions, and rotations — and can be created or edited with the companion [Geant4 Geometry Editor](https://github.com/acolijn/geant4-geometry-editor).
+
+Supported volume types:
+
+- **Primitive shapes** — box, cylinder, sphere, ellipsoid, torus, trapezoid, polycone
+- **Assemblies** — groups of volumes placed together via `G4AssemblyVolume`, with multiple placements and nested hierarchies
+- **Boolean solids** — union and subtraction of primitives via `G4UnionSolid` / `G4SubtractionSolid`; components listed in a `components` array with `boolean_operation` per component
 
 ### Macro Commands
 
