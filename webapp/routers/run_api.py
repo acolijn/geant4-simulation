@@ -138,21 +138,22 @@ def _build_gps_macro(body: dict, run_dir, output: str) -> str:
         lines.append(f"/gps/pos/confine {pos_confine}")
     lines.append("")
 
-    # Angular distribution
-    lines.append(f"/gps/ang/type {ang_type}")
-    if ang_type in ("iso", "cos"):
-        if ang_mintheta:
-            lines.append(f"/gps/ang/mintheta {ang_mintheta} deg")
-        if ang_maxtheta:
-            lines.append(f"/gps/ang/maxtheta {ang_maxtheta} deg")
-        if ang_minphi:
-            lines.append(f"/gps/ang/minphi {ang_minphi} deg")
-        if ang_maxphi:
-            lines.append(f"/gps/ang/maxphi {ang_maxphi} deg")
-    elif ang_type == "focused":
-        lines.append(f"/gps/ang/focuspoint {ang_fx} {ang_fy} {ang_fz} {pos_unit}")
-    elif ang_type in ("beam1d", "beam2d"):
-        lines.append(f"/gps/direction {dir_x} {dir_y} {dir_z}")
+    # Angular distribution (skip for ions — decay is isotropic by physics)
+    if particle != "ion":
+        lines.append(f"/gps/ang/type {ang_type}")
+        if ang_type in ("iso", "cos"):
+            if ang_mintheta:
+                lines.append(f"/gps/ang/mintheta {ang_mintheta} deg")
+            if ang_maxtheta:
+                lines.append(f"/gps/ang/maxtheta {ang_maxtheta} deg")
+            if ang_minphi:
+                lines.append(f"/gps/ang/minphi {ang_minphi} deg")
+            if ang_maxphi:
+                lines.append(f"/gps/ang/maxphi {ang_maxphi} deg")
+        elif ang_type == "focused":
+            lines.append(f"/gps/ang/focuspoint {ang_fx} {ang_fy} {ang_fz} {pos_unit}")
+        elif ang_type in ("beam1d", "beam2d"):
+            lines.append(f"/gps/direction {dir_x} {dir_y} {dir_z}")
 
     lines.append("")
     # Hit summarisation mode (sum energy & average position per volume)
@@ -219,14 +220,15 @@ async def start_run(request: Request):
     macro_path.write_text(macro_content)
 
     # Save run metadata
+    is_ion = body.get("particle", "gamma") == "ion"
     meta = {
         "started": stamp,
         "geometry": geometry,
-        "particle": body.get("particle", "gamma"),
+        "particle": (body.get("ionName", "") or "ion") if is_ion else body.get("particle", "gamma"),
         "ionZA": body.get("ionZA", ""),
-        "energy": f"{body.get('energy', '1')} {body.get('energyUnit', 'MeV')}",
+        "energy": "0 eV (decay)" if is_ion else f"{body.get('energy', '1')} {body.get('energyUnit', 'MeV')}",
         "sourceType": body.get("posType", "Point"),
-        "angularType": body.get("angType", "iso"),
+        "angularType": "— (decay)" if is_ion else body.get("angType", "iso"),
         "summarizeHits": body.get("summarizeHits", "0"),
         "nEvents": int(n_events),
         "outputFile": output,

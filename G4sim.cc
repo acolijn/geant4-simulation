@@ -66,9 +66,9 @@ int main(int argc,char** argv)
   runManager->SetUserInitialization(new DetectorConstruction());
 
   // Physics list with high-precision neutron transport + radioactive decay
+  // Note: FTFP_BERT_HP already includes G4RadioactiveDecayPhysics
   G4PhysListFactory factory;
   G4VModularPhysicsList* physicsList = factory.GetReferencePhysList("FTFP_BERT_HP");
-  physicsList->RegisterPhysics(new G4RadioactiveDecayPhysics());
   physicsList->SetVerboseLevel(1);
   runManager->SetUserInitialization(physicsList);
 

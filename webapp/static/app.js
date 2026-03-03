@@ -59,7 +59,6 @@ function toggleGpsFields() {
   toggleVis('sep-position',     true);
   toggleVis('hdr-position',     true);
   toggleVis('pos-centre-group', needsPos);
-  toggleVis('pos-unit-group',   needsPos);
   toggleVis('pos-type-row',     hasShape);
   toggleVis('pos-shape-group',  hasShape);
 
@@ -72,11 +71,12 @@ function toggleGpsFields() {
   toggleVis('pos-box-group',     shBox);
   toggleVis('pos-confine-group', posType === 'Volume');
 
-  // Angular — only show extra fields when restricting angles or focusing
-  const angHasExtra = (angType === 'cos' || angType === 'focused' || angType === 'beam1d' || angType === 'beam2d');
-  toggleVis('ang-theta-group', angType === 'cos');
-  toggleVis('ang-focus-group', angType === 'focused');
-  toggleVis('ang-dir-group',   angType === 'beam1d' || angType === 'beam2d');
+  // Angular — hide entirely for ions (decay is always isotropic)
+  toggleVis('ang-type-group', !isIon);
+  const angHasExtra = !isIon && (angType === 'cos' || angType === 'focused' || angType === 'beam1d' || angType === 'beam2d');
+  toggleVis('ang-theta-group', !isIon && angType === 'cos');
+  toggleVis('ang-focus-group', !isIon && angType === 'focused');
+  toggleVis('ang-dir-group',   !isIon && (angType === 'beam1d' || angType === 'beam2d'));
 
   // Hide section headers & separators when nothing extra is shown
   toggleVis('sep-position', needsPos);
@@ -207,6 +207,7 @@ $('btn-start').addEventListener('click', async () => {
     nEvents:     $('nEvents').value,
     outputFile:  $('outputFile').value,
     ionZA:       $('ion-select') ? $('ion-select').value : '',
+    ionName:     $('ion-select') ? $('ion-select').options[$('ion-select').selectedIndex].text : '',
     ionCharge:   $('ion-charge') ? $('ion-charge').value : '0',
     ionExcitation: $('ion-excitation') ? $('ion-excitation').value : '0',
     summarizeHits: $('summarizeHits').checked ? '1' : '0',
@@ -298,9 +299,34 @@ let _runsCache = [];   // cached run meta for the results tab
 
 async function loadRunsForResults() {
   _runsCache = await fetch('/api/runs').then(json);
+  populateFilterDropdowns();
+  filterRuns();
+}
+
+/** Build unique-value lists for geometry & particle filter dropdowns. */
+function populateFilterDropdowns() {
+  const geoms = [...new Set(_runsCache.map(r => r.geometry).filter(Boolean))].sort();
+  const parts = [...new Set(_runsCache.map(r => r.particle).filter(Boolean))].sort();
+  const selGeom = $('filter-geometry');
+  const selPart = $('filter-particle');
+  selGeom.innerHTML = '<option value="">All</option>' + geoms.map(g => `<option value="${esc(g)}">${esc(g)}</option>`).join('');
+  selPart.innerHTML = '<option value="">All</option>' + parts.map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('');
+}
+
+/** Apply filters and rebuild the run dropdown. */
+function filterRuns() {
+  const fGeom   = $('filter-geometry').value;
+  const fPart   = $('filter-particle').value;
+
+  const filtered = _runsCache.filter(r => {
+    if (fGeom && r.geometry !== fGeom) return false;
+    if (fPart && r.particle !== fPart) return false;
+    return true;
+  });
+
   const sel = $('result-run-select');
   sel.innerHTML = '<option value="">— select a run —</option>' +
-    _runsCache.map(r => {
+    filtered.map(r => {
       const id = r.runId || r.started;
       return `<option value="${esc(id)}">${esc(id)}  (${esc(r.geometry)}, ${esc(r.particle)}, ${(r.nEvents||0).toLocaleString()} evts, ${esc(r.status)})</option>`;
     }).join('');

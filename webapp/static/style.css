@@ -94,6 +94,7 @@ input:focus, select:focus { outline: 2px solid var(--primary); border-color: tra
 
 .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .8rem; margin-bottom: .8rem; }
 .form-grid.triple { grid-template-columns: 1fr 1fr 1fr; }
+.form-grid.quad   { grid-template-columns: 1fr 1fr 1fr auto; }
 .narrow { max-width: 180px; margin-bottom: .8rem; }
 
 .input-unit { display: flex; gap: .3rem; }

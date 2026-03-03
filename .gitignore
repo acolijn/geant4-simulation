@@ -9,8 +9,7 @@ logs/
 __pycache__/
 
 # also the configs directory
-configs/
-
+config/
 
 # Compiled Object files
 *.o
