@@ -16,3 +16,5 @@ dependencies:
     - awkward
     - plotly
     - python-multipart
+    - trimesh
+    - manifold3d

@@ -1,5 +1,8 @@
 """
 Geometry mesh helpers — generate Plotly Mesh3d traces from JSON geometry definitions.
+
+Uses trimesh + manifold3d for true CSG boolean operations (union, subtraction,
+intersection) so that boolean solids render as a single watertight mesh.
 """
 
 import json
@@ -7,6 +10,7 @@ from pathlib import Path
 
 import numpy as np
 import plotly.graph_objects as go
+import trimesh
 
 
 # ---------------------------------------------------------------------------
@@ -138,6 +142,119 @@ def sphere_mesh(radius, n_lat=12, n_lon=24):
 #  Mesh generation for a given shape type
 # ---------------------------------------------------------------------------
 
+def ellipsoid_mesh(rx, ry, rz, n_lat=12, n_lon=24):
+    """Return (vertices, i, j, k) for an ellipsoid with semi-axes rx, ry, rz."""
+    verts = []
+    for lat in range(n_lat + 1):
+        theta = np.pi * lat / n_lat
+        for lon in range(n_lon):
+            phi = 2 * np.pi * lon / n_lon
+            x = rx * np.sin(theta) * np.cos(phi)
+            y = ry * np.sin(theta) * np.sin(phi)
+            z = rz * np.cos(theta)
+            verts.append([x, y, z])
+    verts = np.array(verts, dtype=float)
+    ii, jj, kk = [], [], []
+    for lat in range(n_lat):
+        for lon in range(n_lon):
+            nlon = (lon + 1) % n_lon
+            v0 = lat * n_lon + lon
+            v1 = lat * n_lon + nlon
+            v2 = (lat + 1) * n_lon + lon
+            v3 = (lat + 1) * n_lon + nlon
+            ii += [v0, v1]; jj += [v1, v3]; kk += [v2, v2]
+    return verts, ii, jj, kk
+
+
+def torus_mesh(r_major, r_minor, n_major=32, n_minor=16):
+    """Return (vertices, i, j, k) for a torus with given radii."""
+    verts = []
+    for i in range(n_major):
+        phi = 2 * np.pi * i / n_major
+        for j in range(n_minor):
+            theta = 2 * np.pi * j / n_minor
+            x = (r_major + r_minor * np.cos(theta)) * np.cos(phi)
+            y = (r_major + r_minor * np.cos(theta)) * np.sin(phi)
+            z = r_minor * np.sin(theta)
+            verts.append([x, y, z])
+    verts = np.array(verts, dtype=float)
+    ii, jj, kk = [], [], []
+    for i in range(n_major):
+        ni = (i + 1) % n_major
+        for j in range(n_minor):
+            nj = (j + 1) % n_minor
+            v0 = i * n_minor + j
+            v1 = i * n_minor + nj
+            v2 = ni * n_minor + j
+            v3 = ni * n_minor + nj
+            ii += [v0, v1]; jj += [v1, v3]; kk += [v2, v2]
+    return verts, ii, jj, kk
+
+
+def polycone_mesh(z_vals, rmin_vals, rmax_vals, n_seg=24):
+    """Return (vertices, i, j, k) for a polycone along Z axis."""
+    n_planes = len(z_vals)
+    if n_planes < 2:
+        return None
+    angles = np.linspace(0, 2 * np.pi, n_seg, endpoint=False)
+    cos_a = np.cos(angles)
+    sin_a = np.sin(angles)
+
+    verts = []
+    # Outer surface vertices, then inner surface vertices
+    for surface_radii in [rmax_vals, rmin_vals]:
+        for plane_idx in range(n_planes):
+            r = surface_radii[plane_idx] if surface_radii else 0
+            z = z_vals[plane_idx]
+            for c, s in zip(cos_a, sin_a):
+                verts.append([r * c, r * s, z])
+    verts = np.array(verts, dtype=float)
+
+    ii, jj, kk = [], [], []
+    # Outer surface quads
+    for plane_idx in range(n_planes - 1):
+        for seg in range(n_seg):
+            nxt = (seg + 1) % n_seg
+            b0 = plane_idx * n_seg + seg
+            b1 = plane_idx * n_seg + nxt
+            t0 = (plane_idx + 1) * n_seg + seg
+            t1 = (plane_idx + 1) * n_seg + nxt
+            ii += [b0, b1]; jj += [b1, t1]; kk += [t0, t0]
+
+    has_inner = rmin_vals and any(r > 0 for r in rmin_vals)
+    inner_offset = n_planes * n_seg
+
+    if has_inner:
+        # Inner surface quads
+        for plane_idx in range(n_planes - 1):
+            for seg in range(n_seg):
+                nxt = (seg + 1) % n_seg
+                b0 = inner_offset + plane_idx * n_seg + seg
+                b1 = inner_offset + plane_idx * n_seg + nxt
+                t0 = inner_offset + (plane_idx + 1) * n_seg + seg
+                t1 = inner_offset + (plane_idx + 1) * n_seg + nxt
+                ii += [b0, b1]; jj += [b1, t1]; kk += [t0, t0]
+
+    # End caps (connect outer to inner at first and last plane)
+    for plane_idx in [0, n_planes - 1]:
+        for seg in range(n_seg):
+            nxt = (seg + 1) % n_seg
+            o0 = plane_idx * n_seg + seg
+            o1 = plane_idx * n_seg + nxt
+            if has_inner:
+                i0 = inner_offset + plane_idx * n_seg + seg
+                i1 = inner_offset + plane_idx * n_seg + nxt
+                ii += [o0, o1]; jj += [o1, i1]; kk += [i0, i0]
+            else:
+                # Solid endcap — fan from first vertex
+                if seg >= 2:
+                    ii.append(plane_idx * n_seg)
+                    jj.append(plane_idx * n_seg + seg - 1)
+                    kk.append(plane_idx * n_seg + seg)
+
+    return verts, ii, jj, kk
+
+
 def _generate_mesh(vtype, dims):
     """Return (vertices, i, j, k) for a primitive shape, or None."""
     if vtype == "box":
@@ -153,6 +270,24 @@ def _generate_mesh(vtype, dims):
         )
     elif vtype == "sphere":
         return sphere_mesh(dims.get("radius", 0))
+    elif vtype == "ellipsoid":
+        return ellipsoid_mesh(
+            dims.get("x_radius", 0),
+            dims.get("y_radius", 0),
+            dims.get("z_radius", 0),
+        )
+    elif vtype == "torus":
+        return torus_mesh(
+            dims.get("radius", 0),
+            dims.get("tube_radius", 0),
+        )
+    elif vtype == "polycone":
+        z_vals = dims.get("z", [])
+        rmin_vals = dims.get("rmin", [])
+        rmax_vals = dims.get("rmax", [])
+        if z_vals and rmax_vals:
+            return polycone_mesh(z_vals, rmin_vals, rmax_vals)
+        return None
     return None
 
 
@@ -247,6 +382,197 @@ def _add_assembly_traces(fig, assembly_vol, materials):
 
 
 # ---------------------------------------------------------------------------
+#  Boolean solid handling (union / subtraction / intersection)
+#  Uses trimesh + manifold3d for true CSG mesh operations.
+# ---------------------------------------------------------------------------
+
+def _generate_trimesh(vtype, dims):
+    """Create a watertight trimesh.Trimesh for a primitive shape type."""
+    if vtype == "box":
+        dx = dims.get("x", 0)
+        dy = dims.get("y", 0)
+        dz = dims.get("z", 0)
+        return trimesh.creation.box(extents=[dx, dy, dz])
+    elif vtype == "cylinder":
+        radius = dims.get("radius", 0)
+        height = dims.get("height", 0)
+        # trimesh cylinder along Z by default
+        return trimesh.creation.cylinder(radius=radius, height=height, sections=48)
+    elif vtype == "sphere":
+        radius = dims.get("radius", 0)
+        return trimesh.creation.icosphere(subdivisions=3, radius=radius)
+    elif vtype == "ellipsoid":
+        # Create a unit sphere and scale
+        rx = dims.get("x_radius", 1)
+        ry = dims.get("y_radius", 1)
+        rz = dims.get("z_radius", 1)
+        m = trimesh.creation.icosphere(subdivisions=3, radius=1.0)
+        m.vertices *= np.array([rx, ry, rz])
+        return m
+    elif vtype == "torus":
+        r_major = dims.get("radius", 0)
+        r_minor = dims.get("tube_radius", 0)
+        # trimesh doesn't have a torus primitive; build from revolution
+        # Use a circle revolved around the Z axis
+        angles = np.linspace(0, 2 * np.pi, 32, endpoint=False)
+        section = np.column_stack([
+            r_minor * np.cos(angles) + r_major,
+            r_minor * np.sin(angles),
+        ])
+        path = trimesh.path.Path2D(
+            entities=[trimesh.path.entities.Line(list(range(len(section))) + [0])],
+            vertices=section,
+        )
+        return trimesh.creation.revolve(path, sections=48)
+    return None
+
+
+def _compose_transform(R, t):
+    """Build a 4×4 homogeneous transform from a 3×3 rotation and 3-vector."""
+    T = np.eye(4)
+    T[:3, :3] = R
+    T[:3, 3] = t
+    return T
+
+
+def _add_boolean_traces(fig, bool_vol, materials):
+    """Compute true CSG boolean of components and render the result mesh.
+
+    Uses trimesh + manifold3d to perform real union / subtraction /
+    intersection operations, producing a single clean mesh per placement.
+    Falls back to drawing individual components if CSG fails.
+    """
+    components = bool_vol.get("components", [])
+    if not components:
+        return
+
+    mat_name = bool_vol.get("material", "")
+    mat = materials.get(mat_name, {})
+    default_color = mat.get("color", [0.6, 0.6, 0.6, 0.3])
+    vol_name = bool_vol.get("g4name") or bool_vol.get("name", "boolean")
+
+    # ── Build the CSG result in the boolean solid's local frame ──────
+    # Separate union and subtraction components (matching Geant4 order:
+    # unions first, then subtractions).
+    union_meshes = []
+    subtract_meshes = []
+
+    for comp in components:
+        comp_type = comp.get("type", "")
+        tm = _generate_trimesh(comp_type, comp.get("dimensions", {}))
+        if tm is None:
+            continue
+
+        # Apply placement transform (relative to boolean solid origin)
+        for comp_pl in comp.get("placements", [{}]):
+            crot = comp_pl.get("rotation", {})
+            crx = crot.get("x", 0)
+            cry = crot.get("y", 0)
+            crz = crot.get("z", 0)
+            R_comp = rotation_matrix_placement(crx, cry, crz) if (crx or cry or crz) else np.eye(3)
+            t_comp = np.array([comp_pl.get("x", 0), comp_pl.get("y", 0), comp_pl.get("z", 0)])
+            placed = tm.copy()
+            placed.apply_transform(_compose_transform(R_comp, t_comp))
+
+            bool_op = comp.get("boolean_operation", "union")
+            if bool_op == "subtract":
+                subtract_meshes.append(placed)
+            else:
+                union_meshes.append(placed)
+
+    if not union_meshes:
+        return
+
+    # ── Perform CSG ──────────────────────────────────────────────────
+    try:
+        # Union all "add" components
+        if len(union_meshes) == 1:
+            result = union_meshes[0]
+        else:
+            result = trimesh.boolean.union(union_meshes, engine="manifold")
+
+        # Subtract each "subtract" component
+        for sub in subtract_meshes:
+            result = trimesh.boolean.difference([result, sub], engine="manifold")
+    except Exception:
+        # Fallback: draw components individually (old behaviour)
+        _add_boolean_traces_fallback(fig, bool_vol, materials)
+        return
+
+    if result is None or len(result.vertices) == 0:
+        return
+
+    # ── Convert to Plotly and place in world ─────────────────────────
+    verts = np.array(result.vertices)
+    faces = np.array(result.faces)
+    ti = faces[:, 0].tolist()
+    tj = faces[:, 1].tolist()
+    tk = faces[:, 2].tolist()
+
+    # Determine colour from the first union component's material
+    first_mat = components[0].get("material", mat_name)
+    first_mat_info = materials.get(first_mat, mat)
+    color = first_mat_info.get("color", default_color)
+
+    for vol_pl in bool_vol.get("placements", []):
+        vol_rot = vol_pl.get("rotation", {})
+        vrx = vol_rot.get("x", 0)
+        vry = vol_rot.get("y", 0)
+        vrz = vol_rot.get("z", 0)
+        R_vol = rotation_matrix_placement(vrx, vry, vrz) if (vrx or vry or vrz) else np.eye(3)
+        t_vol = np.array([vol_pl.get("x", 0), vol_pl.get("y", 0), vol_pl.get("z", 0)])
+
+        _add_mesh_trace(fig, verts, ti, tj, tk, R_vol, t_vol, color, vol_name)
+
+
+def _add_boolean_traces_fallback(fig, bool_vol, materials):
+    """Fallback: draw each component separately when CSG fails."""
+    components = bool_vol.get("components", [])
+    mat_name = bool_vol.get("material", "")
+    mat = materials.get(mat_name, {})
+    default_color = mat.get("color", [0.6, 0.6, 0.6, 0.3])
+
+    for vol_pl in bool_vol.get("placements", []):
+        vol_rot = vol_pl.get("rotation", {})
+        vrx = vol_rot.get("x", 0)
+        vry = vol_rot.get("y", 0)
+        vrz = vol_rot.get("z", 0)
+        R_vol = rotation_matrix_placement(vrx, vry, vrz) if (vrx or vry or vrz) else np.eye(3)
+        t_vol = np.array([vol_pl.get("x", 0), vol_pl.get("y", 0), vol_pl.get("z", 0)])
+
+        for comp in components:
+            if not comp.get("visible", True):
+                continue
+            comp_type = comp.get("type", "")
+            mesh = _generate_mesh(comp_type, comp.get("dimensions", {}))
+            if mesh is None:
+                continue
+            verts, ti, tj, tk = mesh
+
+            bool_op = comp.get("boolean_operation", "union")
+            if bool_op == "subtract":
+                color = [0.9, 0.2, 0.2, 0.25]
+            else:
+                comp_mat = comp.get("material", mat_name)
+                comp_mat_info = materials.get(comp_mat, mat)
+                color = comp_mat_info.get("color", default_color)
+
+            name = comp.get("g4name") or comp.get("name", comp_type)
+
+            for comp_pl in comp.get("placements", []):
+                crot = comp_pl.get("rotation", {})
+                crx = crot.get("x", 0)
+                cry = crot.get("y", 0)
+                crz = crot.get("z", 0)
+                R_comp = rotation_matrix_placement(crx, cry, crz) if (crx or cry or crz) else np.eye(3)
+                t_comp = np.array([comp_pl.get("x", 0), comp_pl.get("y", 0), comp_pl.get("z", 0)])
+                R_total = R_vol @ R_comp
+                t_total = R_vol @ t_comp + t_vol
+                _add_mesh_trace(fig, verts, ti, tj, tk, R_total, t_total, color,
+                                name + (" [subtract]" if bool_op == "subtract" else ""))
+
+
+# ---------------------------------------------------------------------------
 #  High-level helper — add geometry traces to a Plotly figure
 # ---------------------------------------------------------------------------
 
@@ -265,6 +591,11 @@ def add_geometry_traces(fig, geom: dict, materials: dict) -> None:
             _add_assembly_traces(fig, vol, materials)
             continue
 
+        # ── Boolean solids (union, subtraction, intersection) ─
+        if vtype in ("union", "subtraction", "intersection"):
+            _add_boolean_traces(fig, vol, materials)
+            continue
+
         # ── Primitive shapes ─────────────────────────────────
         dims     = vol.get("dimensions", {})
         mat_name = vol.get("material", "")
@@ -273,7 +604,6 @@ def add_geometry_traces(fig, geom: dict, materials: dict) -> None:
 
         mesh = _generate_mesh(vtype, dims)
         if mesh is None:
-            # Skip unsupported types (union, subtraction, etc.)
             continue
         verts, ti, tj, tk = mesh
 
