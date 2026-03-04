@@ -79,6 +79,7 @@ async def condor_submit(request: Request):
         "outputFile": output,
         "n_jobs": n_jobs,
         "runMode": "condor",
+        "autoMerge": body.get("autoMerge", False),
         "status": "submitting",
     }
     (run_dir / "meta.json").write_text(json.dumps(meta, indent=2))

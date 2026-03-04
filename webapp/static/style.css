@@ -197,10 +197,18 @@ tbody tr:hover { background: var(--bg); }
   font-weight: 600;
   color: var(--text);
 }
-.meta-item .meta-value.status-completed { color: #1e8e3e; }
-.meta-item .meta-value.status-running   { color: var(--primary); }
-.meta-item .meta-value.status-failed    { color: var(--danger); }
-.meta-item .meta-value.status-stopped   { color: #e8710a; }
+.meta-item .meta-value.status-completed,
+.meta-item .meta-value.status-merged,
+.meta-item .meta-value.status-condor_done { color: #1e8e3e; }
+.meta-item .meta-value.status-running,
+.meta-item .meta-value.status-condor_running { color: var(--primary); }
+.meta-item .meta-value.status-failed,
+.meta-item .meta-value.status-submit_error { color: var(--danger); }
+.meta-item .meta-value.status-stopped,
+.meta-item .meta-value.status-cancelled { color: #e8710a; }
+.meta-item .meta-value.status-condor_submitted,
+.meta-item .meta-value.status-submitting { color: #3949ab; }
+.meta-item .meta-value.status-condor_held { color: #bf360c; }
 
 /* ── File download details (de-emphasised) ─────────────── */
 .file-details {
@@ -218,6 +226,18 @@ tbody tr:hover { background: var(--bg); }
 #result-files li { padding: .2rem 0; font-size: .82rem; }
 #result-files a { color: var(--text2); text-decoration: none; }
 #result-files a:hover { color: var(--primary); text-decoration: underline; }
+
+/* ── ROOT file list in run summary ──────────────────────── */
+.root-file-list { list-style: none; padding-left: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+.root-file-list li {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: .2rem .6rem;
+  font-size: .8rem;
+}
+.root-file-list a { color: var(--text); text-decoration: none; }
+.root-file-list a:hover { color: var(--primary); text-decoration: underline; }
 
 /* ── Plot container ─────────────────────────────────────── */
 #plot-container { min-height: 500px; width: 100%; }
@@ -320,10 +340,44 @@ tbody tr:hover { background: var(--bg); }
 }
 #condor-queue-badge:empty { display: none; }
 #condor-queue-summary { margin: .3rem 0 .5rem; }
-#condor-queue-table { margin-top: 0; }
-#condor-queue-table td:first-child,
-#condor-queue-table td:nth-child(2) { font-variant-numeric: tabular-nums; }
-.condor-queue-empty { color: var(--text2); font-size: .85rem; padding: .3rem 0; }
+
+/* ── Collapsible cluster groups ─────────────────────────── */
+.cluster-group {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: .4rem;
+  overflow: hidden;
+}
+.cluster-group[open] { background: var(--bg); }
+.cluster-summary {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .4rem .8rem;
+  font-size: .85rem;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  flex-wrap: wrap;
+}
+.cluster-summary::-webkit-details-marker { display: none; }
+.cluster-summary::before {
+  content: '▸';
+  font-size: .7rem;
+  transition: transform .15s;
+}
+.cluster-group[open] > .cluster-summary::before { transform: rotate(90deg); }
+.cluster-id { font-weight: 600; }
+.cluster-count { color: var(--text2); font-size: .8rem; }
+.cluster-summary .btn-sm { margin-left: auto; }
+.cluster-jobs-table {
+  font-size: .8rem;
+  margin: 0;
+  border-top: 1px solid var(--border);
+}
+.cluster-jobs-table th,
+.cluster-jobs-table td { padding: .25rem .6rem; }
+.cluster-jobs-table th { font-size: .75rem; }
 .btn-sm {
   padding: .15rem .45rem;
   font-size: .75rem;
@@ -336,3 +390,18 @@ tbody tr:hover { background: var(--bg); }
 .btn-sm:hover { background: #fce4ec; border-color: var(--danger); }
 .text-muted { color: var(--text2); font-size: .85rem; }
 .text-danger { color: var(--danger); }
+
+/* ── Run status badges (run history table) ─────────────── */
+.run-status { font-weight: 600; }
+.run-status.status-completed,
+.run-status.status-merged,
+.run-status.status-condor_done { color: #1e8e3e; }
+.run-status.status-running,
+.run-status.status-condor_running { color: var(--primary); }
+.run-status.status-failed,
+.run-status.status-submit_error { color: var(--danger); }
+.run-status.status-stopped,
+.run-status.status-cancelled { color: #e8710a; }
+.run-status.status-condor_submitted,
+.run-status.status-submitting { color: #3949ab; }
+.run-status.status-condor_held { color: #bf360c; }

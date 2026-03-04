@@ -107,17 +107,20 @@ async def submit_condor_jobs(
     {"error": ...} on failure.
     """
     run_dir.mkdir(parents=True, exist_ok=True)
+    (run_dir / "mac").mkdir(exist_ok=True)
+    (run_dir / "root").mkdir(exist_ok=True)
+    (run_dir / "log").mkdir(exist_ok=True)
 
     base_output = body.get("outputFile", "G4sim.root").replace(".root", "")
 
-    # ── Per-job macro files ────────────────────────────────
+    # ── Per-job macro files ────────────────────────
     for j in range(n_jobs):
         job_output = f"{base_output}_{j:03d}.root"
         macro_text = macro_builder(body, run_dir, job_output)
         # Insert a unique random seed right after /run/initialize
         seed = _make_seed(j)
         macro_text = _inject_seed(macro_text, seed)
-        (run_dir / f"run_{j:03d}.mac").write_text(macro_text)
+        (run_dir / "mac" / f"run_{j:03d}.mac").write_text(macro_text)
 
     # ── Condor submit description ──────────────────────────
     sub_text = _build_submit_file(run_dir, n_jobs)
@@ -233,7 +236,7 @@ async def get_condor_status(run_id: str) -> dict:
         status_code = cq.get("JobStatus", None)
         status_str = _job_status_str(status_code)
         # If not in queue, check if output exists → completed
-        output_file = run_dir / f"{base_output}_{j:03d}.root"
+        output_file = run_dir / "root" / f"{base_output}_{j:03d}.root"
         if status_code is None and output_file.exists():
             status_str = "completed"
         elif status_code is None:
@@ -327,14 +330,14 @@ async def merge_output(run_id: str) -> dict:
     # Collect existing per-job ROOT files
     parts = []
     for j in range(n_jobs):
-        f = run_dir / f"{base_output}_{j:03d}.root"
+        f = run_dir / "root" / f"{base_output}_{j:03d}.root"
         if f.exists():
             parts.append(str(f))
 
     if not parts:
         return {"error": "No output files to merge"}
 
-    merged_path = run_dir / meta.get("outputFile", "G4sim.root")
+    merged_path = run_dir / "root" / meta.get("outputFile", "G4sim.root")
 
     # Find hadd (could be in ROOT's bin or on PATH)
     hadd = shutil.which("hadd")
@@ -389,7 +392,7 @@ def _build_submit_file(run_dir: Path, n_jobs: int) -> str:
     lines = [
         f"universe   = vanilla",
         f"executable = {G4SIM_BIN}",
-        f"arguments  = {run_dir}/run_$INT(Process,%03d).mac",
+        f"arguments  = {run_dir}/mac/run_$INT(Process,%03d).mac",
         f"initialdir = {PROJECT_DIR}",
         f"getenv     = True",
         f"",
@@ -403,9 +406,9 @@ def _build_submit_file(run_dir: Path, n_jobs: int) -> str:
     if CONDOR_OS or CONDOR_JOB_CATEGORY:
         lines.append("")
     lines += [
-        f"output = {run_dir}/condor_$INT(Process,%03d).out",
-        f"error  = {run_dir}/condor_$INT(Process,%03d).err",
-        f"log    = {run_dir}/condor.log",
+        f"output = {run_dir}/log/condor_$INT(Process,%03d).out",
+        f"error  = {run_dir}/log/condor_$INT(Process,%03d).err",
+        f"log    = {run_dir}/log/condor.log",
         f"",
         f"should_transfer_files = NO",
         f"",
@@ -496,18 +499,19 @@ async def _poll_until_done(run_id: str, interval: float = 10.0) -> None:
             # Verify all output files are present
             base_output = meta.get("outputFile", "G4sim.root").replace(".root", "")
             all_done = all(
-                (run_dir / f"{base_output}_{j:03d}.root").exists()
+                (run_dir / "root" / f"{base_output}_{j:03d}.root").exists()
                 for j in range(n_jobs)
             )
             if all_done:
                 meta["status"] = "condor_done"
                 (run_dir / "meta.json").write_text(json.dumps(meta, indent=2))
-                # Auto-merge
-                result = await merge_output(run_id)
-                logger.info("Auto-merge for %s: %s", run_id, result)
+                # Auto-merge only if requested
+                if meta.get("autoMerge"):
+                    result = await merge_output(run_id)
+                    logger.info("Auto-merge for %s: %s", run_id, result)
             else:
                 meta["status"] = "condor_done"
-                meta["merge_note"] = "Some output files missing — manual merge needed"
+                meta["merge_note"] = "Some output files missing"
                 (run_dir / "meta.json").write_text(json.dumps(meta, indent=2))
             return
 

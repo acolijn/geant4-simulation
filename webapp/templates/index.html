@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>G4sim Dashboard</title>
-  <link rel="stylesheet" href="/static/style.css?v=19" />
+  <link rel="stylesheet" href="/static/style.css?v=20" />
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
@@ -280,6 +280,13 @@
       <label id="condor-njobs-group" class="gps-hidden">Number of Condor jobs
         <input type="number" id="nCondorJobs" value="10" min="1" max="10000" />
       </label>
+      <label id="condor-merge-group" class="toggle-label gps-hidden">Auto-merge ROOT files
+        <div class="toggle-switch">
+          <input type="checkbox" id="autoMerge" />
+          <span class="toggle-track"></span>
+        </div>
+        <span class="toggle-hint">hadd per-job ROOT files when all jobs complete</span>
+      </label>
       <label class="toggle-label">Summarise hits per volume
         <div class="toggle-switch">
           <input type="checkbox" id="summarizeHits" />
@@ -313,12 +320,7 @@
       <span id="condor-queue-badge" class="condor-queue-badge"></span>
     </h2>
     <div id="condor-queue-summary" class="condor-counts" style="margin-bottom:.6rem"></div>
-    <table id="condor-queue-table">
-      <thead><tr>
-        <th>Cluster</th><th>Job</th><th>Status</th><th>Run</th><th>Actions</th>
-      </tr></thead>
-      <tbody></tbody>
-    </table>
+    <div id="condor-queue-clusters"></div>
     <p id="condor-queue-empty" class="text-muted hidden">No jobs in queue</p>
   </div>
 
@@ -365,8 +367,12 @@
   <div id="run-info-card" class="card hidden">
     <h2>Run Summary</h2>
     <div class="meta-grid" id="meta-grid"></div>
+    <div id="root-files-info" class="hidden" style="margin-bottom:.8rem">
+      <h3 style="font-size:.9rem;color:var(--text2);margin-bottom:.4rem">ROOT Files</h3>
+      <ul id="root-files-list" class="root-file-list"></ul>
+    </div>
     <details class="file-details">
-      <summary>Download files</summary>
+      <summary>Download all files</summary>
       <ul id="result-files"></ul>
     </details>
   </div>
@@ -374,6 +380,9 @@
   <div class="card">
     <h2>Plots</h2>
     <div class="btn-row">
+      <label>ROOT file
+        <select id="root-file-select"><option value="">— auto —</option></select>
+      </label>
       <label>Branch
         <select id="branch-select"><option value="">—</option></select>
       </label>
@@ -389,6 +398,6 @@
   </div>
 </section>
 
-<script src="/static/app.js?v=15"></script>
+<script src="/static/app.js?v=16"></script>
 </body>
 </html>

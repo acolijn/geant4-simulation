@@ -31,6 +31,7 @@ function esc(s) {
 function toggleRunMode() {
   const mode = $('run-mode').value;
   toggleVis('condor-njobs-group', mode === 'condor');
+  toggleVis('condor-merge-group', mode === 'condor');
 }
 toggleRunMode();
 
@@ -325,6 +326,7 @@ async function startCondorRun() {
   const body = collectRunBody();
   body.nCondorJobs = $('nCondorJobs').value;
   body.runMode = 'condor';
+  body.autoMerge = $('autoMerge').checked;
 
   $('btn-start').disabled = true;
   const res = await fetch('/api/condor/submit', {
@@ -384,14 +386,15 @@ function renderCondorQueue(q) {
   if (c.completed) parts.push(`<span class="cc-done">Done: ${c.completed}</span>`);
   $('condor-queue-summary').innerHTML = parts.join('');
 
+  const container = $('condor-queue-clusters');
+
   if (total === 0) {
     $('condor-queue-empty').classList.remove('hidden');
-    $('condor-queue-table').classList.add('hidden');
+    container.innerHTML = '';
     return;
   }
 
   $('condor-queue-empty').classList.add('hidden');
-  $('condor-queue-table').classList.remove('hidden');
 
   // Group by cluster
   const clusters = {};
@@ -401,70 +404,71 @@ function renderCondorQueue(q) {
     clusters[cid].push(j);
   }
 
-  const tbody = $('condor-queue-table').querySelector('tbody');
-  let rows = '';
+  // Build collapsible sections per cluster
+  let html = '';
   for (const [cid, jobs] of Object.entries(clusters)) {
-    // Find run_id for this cluster from meta
-    const runInfo = _findRunByCluster(cid);
-    const runLabel = runInfo ? runInfo : '';
-    for (const j of jobs) {
-      rows += `<tr>
-        <td>${cid}</td>
-        <td>${j.proc_id}</td>
-        <td><span class="condor-badge condor-${j.status}">${esc(j.status)}</span></td>
-        <td>${esc(runLabel)}</td>
-        <td><button class="btn-sm btn-cancel-cluster" data-cluster="${cid}" title="Cancel cluster ${cid}">✕</button></td>
-      </tr>`;
-    }
+    // Count statuses within this cluster
+    const cc = {};
+    for (const j of jobs) { cc[j.status] = (cc[j.status] || 0) + 1; }
+    const nJobs = jobs.length;
+
+    // Build compact status summary
+    let badges = [];
+    if (cc.idle)    badges.push(`<span class="condor-badge condor-idle">${cc.idle} idle</span>`);
+    if (cc.running) badges.push(`<span class="condor-badge condor-running">${cc.running} run</span>`);
+    if (cc.completed) badges.push(`<span class="condor-badge condor-completed">${cc.completed} done</span>`);
+    if (cc.held)    badges.push(`<span class="condor-badge condor-held">${cc.held} held</span>`);
+
+    html += `<details class="cluster-group">
+      <summary class="cluster-summary">
+        <span class="cluster-id">Cluster ${cid}</span>
+        <span class="cluster-count">${nJobs} jobs</span>
+        ${badges.join(' ')}
+        <button class="btn-sm btn-cancel-cluster" data-cluster="${cid}" title="Cancel">✕</button>
+      </summary>
+      <table class="cluster-jobs-table">
+        <thead><tr><th>Job</th><th>Status</th></tr></thead>
+        <tbody>
+          ${jobs.map(j => `<tr>
+            <td>${cid}.${j.proc_id}</td>
+            <td><span class="condor-badge condor-${j.status}">${esc(j.status)}</span></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </details>`;
   }
-  tbody.innerHTML = rows;
+  container.innerHTML = html;
 
   // Attach cancel handlers
-  tbody.querySelectorAll('.btn-cancel-cluster').forEach(btn => {
-    btn.addEventListener('click', async () => {
+  container.querySelectorAll('.btn-cancel-cluster').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       const cid = btn.dataset.cluster;
       if (!confirm(`Cancel all jobs in cluster ${cid}?`)) return;
-      // Find run_id for this cluster and cancel it
-      const runId = _findRunIdByCluster(cid);
-      if (runId) {
-        await fetch(`/api/condor/cancel/${runId}`, { method: 'POST' });
-      } else {
-        // Direct condor_rm via a generic endpoint — fall back
-        await fetch(`/api/condor/cancel-cluster/${cid}`, { method: 'POST' });
-      }
+      await fetch(`/api/condor/cancel-cluster/${cid}`, { method: 'POST' });
       pollCondorQueue();
       loadRunHistory();
     });
   });
 }
 
-/** Look up a run ID from the run history cache that matches a cluster. */
-function _findRunByCluster(clusterId) {
-  // Use the run history data if available
-  const tbody = $('run-history').querySelector('tbody');
-  // Best effort — we'll also try meta
-  return '';   // We could enhance this with a lookup; for now cluster ID is shown
-}
-
-function _findRunIdByCluster(clusterId) {
-  // Placeholder — could be enhanced with a server-side lookup
-  return null;
-}
-
 // Run history
 async function loadRunHistory() {
   const runs = await fetch('/api/runs').then(json);
   const tbody = $('run-history').querySelector('tbody');
-  tbody.innerHTML = runs.map(r => `
+  tbody.innerHTML = runs.map(r => {
+    const sc = 'status-' + (r.status || 'unknown');
+    return `
     <tr>
       <td>${esc(r.runId || r.started)}</td>
       <td>${esc(r.geometry)}</td>
       <td>${esc(r.particle)} ${esc(r.energy)}${r.sourceType ? ' (' + esc(r.sourceType) + ')' : ''}</td>
       <td>${(r.nEvents || 0).toLocaleString()}</td>
       <td>${esc(r.runMode === 'condor' ? 'Condor' : 'Local')}</td>
-      <td>${esc(r.status)}</td>
+      <td><span class="run-status ${sc}">${esc(r.status)}</span></td>
     </tr>
-  `).join('');
+  `}).join('');
 }
 loadRunHistory();
 
@@ -563,20 +567,39 @@ $('result-run-select').addEventListener('change', async () => {
   const meta = _runsCache.find(r => (r.runId || r.started) === runId);
   renderRunInfo(meta);
 
-  // Load files
+  // Load ROOT files for the file selector and the summary
+  try {
+    const rf = await fetch(`/api/results/${runId}/root-files`).then(json);
+    const rootFiles = rf.files || [];
+    const sel = $('root-file-select');
+    sel.innerHTML = '<option value="">— auto (first) —</option>' +
+      rootFiles.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
+
+    // Show ROOT files section in run summary
+    const infoDiv = $('root-files-info');
+    const ul = $('root-files-list');
+    if (rootFiles.length > 0) {
+      infoDiv.classList.remove('hidden');
+      ul.innerHTML = rootFiles.map(f =>
+        `<li><a href="/api/results/${encodeURIComponent(runId)}/download/root/${encodeURIComponent(f)}" download>${esc(f)}</a></li>`
+      ).join('');
+    } else {
+      infoDiv.classList.add('hidden');
+      ul.innerHTML = '';
+    }
+  } catch(e) {
+    $('root-file-select').innerHTML = '<option value="">— no ROOT files —</option>';
+    $('root-files-info').classList.add('hidden');
+  }
+
+  // Load all files for download section
   const files = await fetch(`/api/results/${runId}/files`).then(json);
   $('result-files').innerHTML = files.map(f =>
     `<li><a href="/api/results/${encodeURIComponent(runId)}/download/${encodeURIComponent(f)}" download>${esc(f)}</a></li>`
   ).join('');
 
-  // Load branches
-  try {
-    const br = await fetch(`/api/results/${runId}/branches`).then(json);
-    const sel = $('branch-select');
-    sel.innerHTML = (br.branches || []).map(b => `<option value="${b}">${b}</option>`).join('');
-  } catch (e) {
-    $('branch-select').innerHTML = '<option>no ROOT file</option>';
-  }
+  // Load branches for the initially selected ROOT file
+  await loadBranches(runId);
 
   // Load log
   try {
@@ -589,13 +612,39 @@ $('result-run-select').addEventListener('change', async () => {
   $('plot-container').innerHTML = '';
 });
 
+// Reload branches when ROOT file selection changes
+$('root-file-select').addEventListener('change', async () => {
+  const runId = $('result-run-select').value;
+  if (runId) await loadBranches(runId);
+});
+
+async function loadBranches(runId) {
+  const rootFile = $('root-file-select').value;
+  const qs = rootFile ? `?file=${encodeURIComponent(rootFile)}` : '';
+  try {
+    const br = await fetch(`/api/results/${runId}/branches${qs}`).then(json);
+    const sel = $('branch-select');
+    sel.innerHTML = (br.branches || []).map(b => `<option value="${b}">${b}</option>`).join('');
+  } catch (e) {
+    $('branch-select').innerHTML = '<option>no ROOT file</option>';
+  }
+}
+
+function _selectedFileQS() {
+  const f = $('root-file-select').value;
+  return f ? `?file=${encodeURIComponent(f)}` : '';
+}
+
 $('btn-plot').addEventListener('click', async () => {
   const runId = $('result-run-select').value;
   const branch = $('branch-select').value;
   if (!runId || !branch) return;
 
   $('plot-container').innerHTML = '<p>Loading…</p>';
-  const res = await fetch(`/api/results/${runId}/plot/${branch}`).then(json);
+  const qs = _selectedFileQS();
+  const sep = qs ? '&' : '?';
+  const url = `/api/results/${runId}/plot/${branch}${qs}`;
+  const res = await fetch(url).then(json);
   if (res.error) {
     $('plot-container').innerHTML = `<p>Error: ${esc(res.error)}</p>`;
     return;
@@ -610,7 +659,8 @@ $('btn-plot3d').addEventListener('click', async () => {
   if (!runId) return;
 
   $('plot-container').innerHTML = '<p>Loading 3D hit map…</p>';
-  const res = await fetch(`/api/results/${runId}/plot3d`).then(json);
+  const qs = _selectedFileQS();
+  const res = await fetch(`/api/results/${runId}/plot3d${qs}`).then(json);
   if (res.error) {
     $('plot-container').innerHTML = `<p>Error: ${esc(res.error)}</p>`;
     return;

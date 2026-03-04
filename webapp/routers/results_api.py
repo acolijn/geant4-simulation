@@ -25,33 +25,61 @@ def _safe_run_path(*parts: str) -> "Path | None":
     return target
 
 
+def _find_root_files(run_dir: Path) -> list[Path]:
+    """Find ROOT files — check root/ subdir first, then top-level (legacy)."""
+    root_sub = run_dir / "root"
+    if root_sub.is_dir():
+        files = sorted(root_sub.glob("*.root"))
+        if files:
+            return files
+    return sorted(run_dir.glob("*.root"))
+
+
 @router.get("/{run_id}/files")
 async def result_files(run_id: str):
-    """List output files for a run."""
+    """List output files for a run, including files in subdirectories."""
     run_dir = _safe_run_path(run_id)
     if run_dir is None:
         return JSONResponse({"error": "Invalid run id"}, status_code=400)
     if not run_dir.exists():
         return JSONResponse({"error": "Run not found"}, status_code=404)
-    files = [f.name for f in run_dir.iterdir() if f.suffix in (".root", ".mac", ".json", ".txt")]
-    return sorted(files)
+    result = []
+    for f in run_dir.rglob("*"):
+        if f.is_file() and f.suffix in (".root", ".mac", ".json", ".txt", ".out", ".err", ".log", ".sub"):
+            result.append(str(f.relative_to(run_dir)))
+    return sorted(result)
 
 
-@router.get("/{run_id}/download/{filename}")
+@router.get("/{run_id}/root-files")
+async def root_files_list(run_id: str):
+    """List ROOT files for a run (for the file selector dropdown)."""
+    run_dir = _safe_run_path(run_id)
+    if run_dir is None:
+        return JSONResponse({"error": "Invalid run id"}, status_code=400)
+    if not run_dir.exists():
+        return JSONResponse({"error": "Run not found"}, status_code=404)
+    files = _find_root_files(run_dir)
+    return {"files": [f.name for f in files]}
+
+
+@router.get("/{run_id}/download/{filename:path}")
 async def download_file(run_id: str, filename: str):
-    """Download a result file."""
+    """Download a result file (supports subdir paths like root/G4sim.root)."""
     fpath = _safe_run_path(run_id, filename)
     if fpath is None:
         return JSONResponse({"error": "Invalid path"}, status_code=400)
     if not fpath.exists():
         return JSONResponse({"error": "File not found"}, status_code=404)
-    return FileResponse(fpath, filename=filename)
+    return FileResponse(fpath, filename=Path(filename).name)
 
 
 @router.get("/{run_id}/log")
 async def get_log(run_id: str):
     """Return the log file for a completed run."""
-    log_path = _safe_run_path(run_id, "log.txt")
+    # Try new structure first (log/log.txt), then legacy (log.txt)
+    log_path = _safe_run_path(run_id, "log", "log.txt")
+    if log_path is None or not log_path.exists():
+        log_path = _safe_run_path(run_id, "log.txt")
     if log_path is None:
         return JSONResponse({"error": "Invalid run id"}, status_code=400)
     if not log_path.exists():
@@ -60,12 +88,26 @@ async def get_log(run_id: str):
 
 
 @router.get("/{run_id}/branches")
-async def list_branches(run_id: str):
-    """List TTree branches in the ROOT output."""
+async def list_branches(run_id: str, file: str = ""):
+    """List TTree branches in a ROOT output file.
+    
+    Query param 'file' selects a specific ROOT file; otherwise uses the first found.
+    """
     run_dir = _safe_run_path(run_id)
     if run_dir is None:
         return JSONResponse({"error": "Invalid run id"}, status_code=400)
-    root_files = list(run_dir.glob("*.root"))
+    
+    if file:
+        # Specific file requested
+        root_path = (run_dir / "root" / file)
+        if not root_path.exists():
+            root_path = run_dir / file
+        if not root_path.exists():
+            return JSONResponse({"error": f"File {file} not found"}, status_code=404)
+        root_files = [root_path]
+    else:
+        root_files = _find_root_files(run_dir)
+    
     if not root_files:
         return JSONResponse({"error": "No ROOT file found"}, status_code=404)
     f = uproot.open(root_files[0])
@@ -75,12 +117,21 @@ async def list_branches(run_id: str):
 
 
 @router.get("/{run_id}/plot/{branch}")
-async def plot_branch(run_id: str, branch: str):
+async def plot_branch(run_id: str, branch: str, file: str = ""):
     """Return a Plotly JSON histogram for a given branch."""
     run_dir = _safe_run_path(run_id)
     if run_dir is None:
         return JSONResponse({"error": "Invalid run id"}, status_code=400)
-    root_files = list(run_dir.glob("*.root"))
+    
+    if file:
+        root_path = (run_dir / "root" / file)
+        if not root_path.exists():
+            root_path = run_dir / file
+        if not root_path.exists():
+            return JSONResponse({"error": f"File {file} not found"}, status_code=404)
+        root_files = [root_path]
+    else:
+        root_files = _find_root_files(run_dir)
     if not root_files:
         return JSONResponse({"error": "No ROOT file found"}, status_code=404)
 
@@ -118,12 +169,21 @@ async def plot_branch(run_id: str, branch: str):
 
 
 @router.get("/{run_id}/plot3d")
-async def plot_3d(run_id: str):
+async def plot_3d(run_id: str, file: str = ""):
     """Return Plotly JSON for a 3D scatter of hit positions overlaid with geometry wireframes."""
     run_dir = _safe_run_path(run_id)
     if run_dir is None:
         return JSONResponse({"error": "Invalid run id"}, status_code=400)
-    root_files = list(run_dir.glob("*.root"))
+    
+    if file:
+        root_path = (run_dir / "root" / file)
+        if not root_path.exists():
+            root_path = run_dir / file
+        if not root_path.exists():
+            return JSONResponse({"error": f"File {file} not found"}, status_code=404)
+        root_files = [root_path]
+    else:
+        root_files = _find_root_files(run_dir)
     if not root_files:
         return JSONResponse({"error": "No ROOT file found"}, status_code=404)
 

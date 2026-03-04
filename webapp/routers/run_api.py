@@ -23,7 +23,7 @@ _SAFE_MACRO_VALUE = re.compile(r"^[\w.+\-]+$")
 router = APIRouter(tags=["run"])
 
 # Fields that are not directly interpolated as macro values
-SKIP_FIELDS = {"geometry", "outputFile", "ionZA", "ionCharge", "ionExcitation", "ionName", "runMode", "nCondorJobs"}
+SKIP_FIELDS = {"geometry", "outputFile", "ionZA", "ionCharge", "ionExcitation", "ionName", "runMode", "nCondorJobs", "autoMerge"}
 
 
 def validate_run_body(body: dict) -> str | None:
@@ -111,7 +111,7 @@ def build_gps_macro(body: dict, run_dir, output: str) -> str:
 
     lines = []
     lines.append(f"/detector/setGeometryFile config/{geometry}")
-    lines.append(f"/output/setFileName {run_dir}/{output}")
+    lines.append(f"/output/setFileName {run_dir}/root/{output}")
 
     lines.append("/run/initialize")
     lines.append("/vis/disable")
@@ -224,9 +224,12 @@ async def start_run(request: Request):
     stamp   = datetime.now().strftime("%Y%m%d_%H%M%S")
     run_dir = RUNS_DIR / stamp
     run_dir.mkdir(parents=True, exist_ok=True)
+    (run_dir / "mac").mkdir(exist_ok=True)
+    (run_dir / "root").mkdir(exist_ok=True)
+    (run_dir / "log").mkdir(exist_ok=True)
 
     # Generate the GPS macro
-    macro_path = run_dir / "run.mac"
+    macro_path = run_dir / "mac" / "run.mac"
     macro_content = build_gps_macro(body, run_dir, output)
     macro_path.write_text(macro_content)
 

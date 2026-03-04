@@ -52,7 +52,9 @@ async def _monitor_process(proc, run_dir: Path, meta: dict) -> None:
     (run_dir / "meta.json").write_text(json.dumps(meta, indent=2))
 
     if current_process["info"]:
-        (run_dir / "log.txt").write_text(
+        log_dir = run_dir / "log"
+        log_dir.mkdir(exist_ok=True)
+        (log_dir / "log.txt").write_text(
             "\n".join(current_process["info"]["log_lines"])
         )
 
