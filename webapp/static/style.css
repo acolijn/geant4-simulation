@@ -227,18 +227,6 @@ tbody tr:hover { background: var(--bg); }
 #result-files a { color: var(--text2); text-decoration: none; }
 #result-files a:hover { color: var(--primary); text-decoration: underline; }
 
-/* ── ROOT file list in run summary ──────────────────────── */
-.root-file-list { list-style: none; padding-left: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
-.root-file-list li {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: .2rem .6rem;
-  font-size: .8rem;
-}
-.root-file-list a { color: var(--text); text-decoration: none; }
-.root-file-list a:hover { color: var(--primary); text-decoration: underline; }
-
 /* ── Plot container ─────────────────────────────────────── */
 #plot-container { min-height: 500px; width: 100%; }
 
@@ -369,7 +357,7 @@ tbody tr:hover { background: var(--bg); }
 .cluster-group[open] > .cluster-summary::before { transform: rotate(90deg); }
 .cluster-id { font-weight: 600; }
 .cluster-count { color: var(--text2); font-size: .8rem; }
-.cluster-summary .btn-sm { margin-left: auto; }
+.cluster-summary .btn-sm { margin-left: .5rem; flex-shrink: 0; }
 .cluster-jobs-table {
   font-size: .8rem;
   margin: 0;
@@ -378,6 +366,18 @@ tbody tr:hover { background: var(--bg); }
 .cluster-jobs-table th,
 .cluster-jobs-table td { padding: .25rem .6rem; }
 .cluster-jobs-table th { font-size: .75rem; }
+
+/* Retained (completed) clusters — faded appearance */
+.cluster-group.cluster-faded {
+  opacity: .55;
+  border-style: dashed;
+}
+.cluster-ago {
+  font-size: .75rem;
+  color: var(--text2);
+  font-style: italic;
+  margin-left: auto;
+}
 .btn-sm {
   padding: .15rem .45rem;
   font-size: .75rem;

@@ -305,6 +305,8 @@ $('btn-stop').addEventListener('click', async () => {
 
 let _queuePollTimer = null;    // persistent queue polling
 let _condorAvailable = false;
+let _clusterCache = {};        // cid → { jobs, lastSeen, disappeared }
+const CLUSTER_RETAIN_MS = 30 * 60 * 1000;  // keep completed clusters 30 min
 
 /** Check if Condor is available and show/hide the queue panel. */
 async function initCondorPanel() {
@@ -372,11 +374,48 @@ async function pollCondorQueue() {
 }
 
 function renderCondorQueue(q) {
-  const total = q.total || 0;
-  const c = q.counts || {};
+  const now = Date.now();
+  const liveClusters = {};
+
+  // Group live jobs by cluster
+  for (const j of (q.jobs || [])) {
+    const cid = j.cluster_id;
+    if (!liveClusters[cid]) liveClusters[cid] = [];
+    liveClusters[cid].push(j);
+  }
+
+  // Update cache: mark live clusters, detect disappeared ones
+  for (const [cid, jobs] of Object.entries(liveClusters)) {
+    _clusterCache[cid] = { jobs, lastSeen: now, disappeared: null };
+  }
+  for (const [cid, entry] of Object.entries(_clusterCache)) {
+    if (!liveClusters[cid] && !entry.disappeared) {
+      // Just disappeared from queue — mark all jobs as completed
+      entry.disappeared = now;
+      entry.jobs = entry.jobs.map(j => ({ ...j, status: 'completed' }));
+    }
+    // Purge if disappeared more than 30 min ago
+    if (entry.disappeared && (now - entry.disappeared) > CLUSTER_RETAIN_MS) {
+      delete _clusterCache[cid];
+    }
+  }
+
+  // Merge live + cached clusters for display
+  const allClusters = { ...liveClusters };
+  for (const [cid, entry] of Object.entries(_clusterCache)) {
+    if (!allClusters[cid]) allClusters[cid] = entry.jobs;
+  }
+
+  const totalDisplay = Object.values(allClusters).reduce((s, jobs) => s + jobs.length, 0);
+
+  // Recount across all displayed jobs
+  const c = {};
+  for (const jobs of Object.values(allClusters)) {
+    for (const j of jobs) { c[j.status] = (c[j.status] || 0) + 1; }
+  }
 
   // Badge in header
-  $('condor-queue-badge').textContent = total > 0 ? total : '';
+  $('condor-queue-badge').textContent = totalDisplay > 0 ? totalDisplay : '';
 
   // Summary counts
   let parts = [];
@@ -388,7 +427,7 @@ function renderCondorQueue(q) {
 
   const container = $('condor-queue-clusters');
 
-  if (total === 0) {
+  if (totalDisplay === 0) {
     $('condor-queue-empty').classList.remove('hidden');
     container.innerHTML = '';
     return;
@@ -396,35 +435,36 @@ function renderCondorQueue(q) {
 
   $('condor-queue-empty').classList.add('hidden');
 
-  // Group by cluster
-  const clusters = {};
-  for (const j of q.jobs) {
-    const cid = j.cluster_id;
-    if (!clusters[cid]) clusters[cid] = [];
-    clusters[cid].push(j);
-  }
-
   // Build collapsible sections per cluster
   let html = '';
-  for (const [cid, jobs] of Object.entries(clusters)) {
-    // Count statuses within this cluster
+  for (const [cid, jobs] of Object.entries(allClusters)) {
     const cc = {};
     for (const j of jobs) { cc[j.status] = (cc[j.status] || 0) + 1; }
     const nJobs = jobs.length;
+    const isRetained = _clusterCache[cid]?.disappeared;
 
-    // Build compact status summary
     let badges = [];
     if (cc.idle)    badges.push(`<span class="condor-badge condor-idle">${cc.idle} idle</span>`);
     if (cc.running) badges.push(`<span class="condor-badge condor-running">${cc.running} run</span>`);
     if (cc.completed) badges.push(`<span class="condor-badge condor-completed">${cc.completed} done</span>`);
     if (cc.held)    badges.push(`<span class="condor-badge condor-held">${cc.held} held</span>`);
 
-    html += `<details class="cluster-group">
+    // Show time-ago for retained clusters
+    let timeNote = '';
+    if (isRetained) {
+      const ago = Math.round((now - isRetained) / 60000);
+      timeNote = `<span class="cluster-ago">${ago}m ago</span>`;
+    }
+
+    const fadeCls = isRetained ? ' cluster-faded' : '';
+
+    html += `<details class="cluster-group${fadeCls}">
       <summary class="cluster-summary">
         <span class="cluster-id">Cluster ${cid}</span>
         <span class="cluster-count">${nJobs} jobs</span>
         ${badges.join(' ')}
-        <button class="btn-sm btn-cancel-cluster" data-cluster="${cid}" title="Cancel">✕</button>
+        ${timeNote}
+        ${isRetained ? '' : `<button class="btn-sm btn-cancel-cluster" data-cluster="${cid}" title="Cancel">✕</button>`}
       </summary>
       <table class="cluster-jobs-table">
         <thead><tr><th>Job</th><th>Status</th></tr></thead>
@@ -552,7 +592,17 @@ function renderRunInfo(meta) {
     { label: 'Finished',    value: fmtTs(meta.finished) },
   ];
   if (dur) items.push({ label: 'Duration', value: dur });
-  if (meta.outputFile) items.push({ label: 'Output', value: meta.outputFile });
+  if (meta.outputFile) {
+    // Build compact output description: e.g. "G4sim<000:009>.root"
+    const nj = meta.n_jobs || 0;
+    const base = meta.outputFile.replace('.root', '');
+    if (nj > 1) {
+      const last = String(nj - 1).padStart(3, '0');
+      items.push({ label: 'Output', value: `${base}<000:${last}>.root` });
+    } else {
+      items.push({ label: 'Output', value: meta.outputFile });
+    }
+  }
 
   $('meta-grid').innerHTML = items.map(it =>
     `<div class="meta-item"><div class="meta-label">${esc(it.label)}</div><div class="meta-value ${it.cls || ''}">${esc(it.value)}</div></div>`
@@ -567,29 +617,15 @@ $('result-run-select').addEventListener('change', async () => {
   const meta = _runsCache.find(r => (r.runId || r.started) === runId);
   renderRunInfo(meta);
 
-  // Load ROOT files for the file selector and the summary
+  // Load ROOT files for the file selector
   try {
     const rf = await fetch(`/api/results/${runId}/root-files`).then(json);
     const rootFiles = rf.files || [];
     const sel = $('root-file-select');
     sel.innerHTML = '<option value="">— auto (first) —</option>' +
       rootFiles.map(f => `<option value="${esc(f)}">${esc(f)}</option>`).join('');
-
-    // Show ROOT files section in run summary
-    const infoDiv = $('root-files-info');
-    const ul = $('root-files-list');
-    if (rootFiles.length > 0) {
-      infoDiv.classList.remove('hidden');
-      ul.innerHTML = rootFiles.map(f =>
-        `<li><a href="/api/results/${encodeURIComponent(runId)}/download/root/${encodeURIComponent(f)}" download>${esc(f)}</a></li>`
-      ).join('');
-    } else {
-      infoDiv.classList.add('hidden');
-      ul.innerHTML = '';
-    }
   } catch(e) {
     $('root-file-select').innerHTML = '<option value="">— no ROOT files —</option>';
-    $('root-files-info').classList.add('hidden');
   }
 
   // Load all files for download section
