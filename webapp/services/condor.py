@@ -17,7 +17,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from config import BUILD_DIR, CONDOR_OS, G4SIM_BIN, PROJECT_DIR, RUNS_DIR
+from config import BUILD_DIR, CONDOR_JOB_CATEGORY, CONDOR_OS, G4SIM_BIN, PROJECT_DIR, RUNS_DIR
 
 logger = logging.getLogger("condor")
 
@@ -334,6 +334,10 @@ def _build_submit_file(run_dir: Path, n_jobs: int) -> str:
     # Cluster OS requirement (e.g. el7, el8, el9)
     if CONDOR_OS:
         lines.append(f'+UseOS = "{CONDOR_OS}"')
+    # Job category required by some clusters
+    if CONDOR_JOB_CATEGORY:
+        lines.append(f'+JobCategory = "{CONDOR_JOB_CATEGORY}"')
+    if CONDOR_OS or CONDOR_JOB_CATEGORY:
         lines.append("")
     lines += [
         f"output = {run_dir}/condor_$INT(Process,%03d).out",
