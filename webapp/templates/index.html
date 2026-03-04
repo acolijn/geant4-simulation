@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>G4sim Dashboard</title>
-  <link rel="stylesheet" href="/static/style.css?v=17" />
+  <link rel="stylesheet" href="/static/style.css?v=19" />
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
@@ -307,20 +307,19 @@
     </div>
   </div>
 
-  <!-- Condor status panel (hidden when mode == local) -->
-  <div id="condor-status-card" class="card hidden">
-    <h2>Condor Jobs</h2>
-    <div class="condor-summary" id="condor-summary"></div>
-    <div class="btn-row" style="margin-top:.6rem">
-      <button id="btn-condor-cancel" class="btn danger" disabled>Cancel Jobs</button>
-      <button id="btn-condor-merge" class="btn" disabled>Merge Output</button>
-    </div>
-    <table id="condor-job-table" class="hidden">
+  <!-- Condor queue panel — shown when HTCondor is available -->
+  <div id="condor-queue-card" class="card hidden">
+    <h2>Condor Queue
+      <span id="condor-queue-badge" class="condor-queue-badge"></span>
+    </h2>
+    <div id="condor-queue-summary" class="condor-counts" style="margin-bottom:.6rem"></div>
+    <table id="condor-queue-table">
       <thead><tr>
-        <th>Job</th><th>Status</th><th>Output</th>
+        <th>Cluster</th><th>Job</th><th>Status</th><th>Run</th><th>Actions</th>
       </tr></thead>
       <tbody></tbody>
     </table>
+    <p id="condor-queue-empty" class="text-muted hidden">No jobs in queue</p>
   </div>
 
   <div class="card" id="local-log-card">
@@ -390,6 +389,6 @@
   </div>
 </section>
 
-<script src="/static/app.js?v=14"></script>
+<script src="/static/app.js?v=15"></script>
 </body>
 </html>

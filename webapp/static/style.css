@@ -268,8 +268,7 @@ tbody tr:hover { background: var(--bg); }
 }
 #geometry-preview .plotly { border-radius: var(--radius); }
 
-/* ── Condor status panel ───────────────────────────────── */
-.condor-summary p { margin-bottom: .4rem; font-size: .9rem; }
+/* ── Condor queue panel ─────────────────────────────────── */
 .condor-counts {
   display: flex;
   gap: 1rem;
@@ -295,16 +294,45 @@ tbody tr:hover { background: var(--bg); }
 .condor-condor_running,
 .condor-running   { background: #e3f2fd; color: #1565c0; }
 .condor-condor_done,
+.condor-merged,
 .condor-completed { background: #e8f5e9; color: #2e7d32; }
-.condor-merged    { background: #e8f5e9; color: #1b5e20; }
 .condor-cancelled { background: #fff3e0; color: #e65100; }
 .condor-condor_held,
 .condor-held      { background: #fbe9e7; color: #bf360c; }
 .condor-submit_error,
+.condor-removed,
 .condor-unknown   { background: #fce4ec; color: #c62828; }
+.condor-transferring,
+.condor-suspended { background: #fff8e1; color: #f57f17; }
 
 .progress-pct { font-size: .8rem; color: var(--text2); }
 
-#condor-job-table { margin-top: .6rem; }
-#condor-job-table td:first-child { font-variant-numeric: tabular-nums; }
+#condor-queue-card { border-left: 3px solid var(--primary); }
+#condor-queue-card h3 { display: flex; align-items: center; gap: .5rem; }
+#condor-queue-badge {
+  background: var(--primary);
+  color: #fff;
+  font-size: .7rem;
+  padding: .1rem .5rem;
+  border-radius: 10px;
+  min-width: 1.3rem;
+  text-align: center;
+}
+#condor-queue-badge:empty { display: none; }
+#condor-queue-summary { margin: .3rem 0 .5rem; }
+#condor-queue-table { margin-top: 0; }
+#condor-queue-table td:first-child,
+#condor-queue-table td:nth-child(2) { font-variant-numeric: tabular-nums; }
+.condor-queue-empty { color: var(--text2); font-size: .85rem; padding: .3rem 0; }
+.btn-sm {
+  padding: .15rem .45rem;
+  font-size: .75rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  cursor: pointer;
+  transition: .15s;
+}
+.btn-sm:hover { background: #fce4ec; border-color: var(--danger); }
+.text-muted { color: var(--text2); font-size: .85rem; }
 .text-danger { color: var(--danger); }

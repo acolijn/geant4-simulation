@@ -25,6 +25,69 @@ logger = logging.getLogger("condor")
 # runId  →  { cluster_id, n_jobs, run_dir, meta, ... }
 condor_runs: dict[str, dict] = {}
 
+# ── Cached condor availability ─────────────────────────────
+_condor_available: bool | None = None
+
+
+# ---------------------------------------------------------------------------
+#  Availability check
+# ---------------------------------------------------------------------------
+
+async def check_condor_available() -> bool:
+    """Return True if condor_q is on PATH and responds."""
+    global _condor_available
+    if _condor_available is not None:
+        return _condor_available
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            "condor_q", "--version",
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        await proc.communicate()
+        _condor_available = (proc.returncode == 0)
+    except FileNotFoundError:
+        _condor_available = False
+    except Exception:
+        _condor_available = False
+    return _condor_available
+
+
+async def get_full_queue() -> list[dict]:
+    """
+    Query condor_q -json (all user jobs) and return a summary list.
+    Each item: {cluster_id, proc_id, job_id, status, cmd, ...}
+    """
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            "condor_q", "-json",
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        stdout, stderr = await proc.communicate()
+        if proc.returncode != 0:
+            return []
+        text = stdout.decode().strip()
+        if not text or text == "[]":
+            return []
+        items = json.loads(text)
+        result = []
+        for item in items:
+            cid = item.get("ClusterId", "")
+            pid = item.get("ProcId", "")
+            result.append({
+                "cluster_id": cid,
+                "proc_id": pid,
+                "job_id": f"{cid}.{pid}",
+                "status": _job_status_str(item.get("JobStatus")),
+                "cmd": Path(item.get("Cmd", "")).name,
+                "args": item.get("Args", ""),
+            })
+        return result
+    except Exception as e:
+        logger.warning("condor_q (full) failed: %s", e)
+        return []
+
 
 # ---------------------------------------------------------------------------
 #  Submit

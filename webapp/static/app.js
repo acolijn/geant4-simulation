@@ -173,8 +173,6 @@ $('geometry-upload').addEventListener('change', async (e) => {
 // ─── RUN TAB ────────────────────────────────────────────
 
 let ws = null;
-let _condorPollTimer = null;   // interval ID for condor polling
-let _condorRunId = null;       // active condor run being tracked
 
 /** Collect the GPS form fields into a request body. */
 function collectRunBody() {
@@ -257,7 +255,6 @@ async function startLocalRun() {
   $('progress-area').classList.remove('hidden');
   $('progress-fill').style.width = '0%';
   $('progress-text').textContent = 'Starting…';
-  $('condor-status-card').classList.add('hidden');
   $('local-log-card').classList.remove('hidden');
 
   const nEvents = parseInt(body.nEvents);
@@ -305,16 +302,37 @@ $('btn-stop').addEventListener('click', async () => {
 
 // ─── Condor run ─────────────────────────────────────────
 
+let _queuePollTimer = null;    // persistent queue polling
+let _condorAvailable = false;
+
+/** Check if Condor is available and show/hide the queue panel. */
+async function initCondorPanel() {
+  try {
+    const r = await fetch('/api/condor/available').then(json);
+    _condorAvailable = r.available;
+  } catch { _condorAvailable = false; }
+
+  if (_condorAvailable) {
+    $('condor-queue-card').classList.remove('hidden');
+    startQueuePolling();
+  } else {
+    $('condor-queue-card').classList.add('hidden');
+  }
+}
+initCondorPanel();
+
 async function startCondorRun() {
   const body = collectRunBody();
   body.nCondorJobs = $('nCondorJobs').value;
   body.runMode = 'condor';
 
+  $('btn-start').disabled = true;
   const res = await fetch('/api/condor/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   }).then(json);
+  $('btn-start').disabled = false;   // re-enable immediately
 
   if (res.error) {
     alert(res.error);
@@ -324,116 +342,114 @@ async function startCondorRun() {
   // Switch to Run tab
   document.querySelector('[data-tab="run"]').click();
 
-  _condorRunId = res.runId;
-  $('btn-start').disabled = true;
-  $('btn-stop').disabled = true;
-  $('progress-area').classList.add('hidden');
-  $('local-log-card').classList.add('hidden');
-  $('condor-status-card').classList.remove('hidden');
-  $('btn-condor-cancel').disabled = false;
-  $('btn-condor-merge').disabled = true;
-
-  $('condor-summary').innerHTML = `<p>Submitted <strong>${res.n_jobs}</strong> jobs — cluster <strong>${res.cluster_id}</strong></p>`;
-
-  // Start polling
-  startCondorPolling(res.runId);
+  // Immediate queue refresh
+  pollCondorQueue();
+  loadRunHistory();
 }
 
-function startCondorPolling(runId) {
-  stopCondorPolling();
-  _condorRunId = runId;
-  pollCondorStatus();   // immediate first poll
-  _condorPollTimer = setInterval(pollCondorStatus, 5000);
+// ─── Persistent queue polling ───────────────────────────
+
+function startQueuePolling() {
+  stopQueuePolling();
+  pollCondorQueue();   // first poll immediately
+  _queuePollTimer = setInterval(pollCondorQueue, 8000);
 }
 
-function stopCondorPolling() {
-  if (_condorPollTimer) { clearInterval(_condorPollTimer); _condorPollTimer = null; }
+function stopQueuePolling() {
+  if (_queuePollTimer) { clearInterval(_queuePollTimer); _queuePollTimer = null; }
 }
 
-async function pollCondorStatus() {
-  if (!_condorRunId) return;
+async function pollCondorQueue() {
+  if (!_condorAvailable) return;
   try {
-    const s = await fetch(`/api/condor/status/${_condorRunId}`).then(json);
-    renderCondorStatus(s);
-
-    // If done or merged or cancelled, stop polling
-    if (['condor_done', 'merged', 'cancelled', 'submit_error'].includes(s.status)) {
-      stopCondorPolling();
-      $('btn-start').disabled = false;
-      $('btn-condor-cancel').disabled = true;
-      $('btn-condor-merge').disabled = (s.status === 'merged');
-      loadRunHistory();
-    }
+    const q = await fetch('/api/condor/queue').then(json);
+    renderCondorQueue(q);
   } catch (e) {
-    console.warn('Condor poll error:', e);
+    console.warn('Queue poll error:', e);
   }
 }
 
-function renderCondorStatus(s) {
-  if (!s || s.error) {
-    $('condor-summary').innerHTML = `<p class="text-danger">${esc(s?.error || 'Unknown error')}</p>`;
+function renderCondorQueue(q) {
+  const total = q.total || 0;
+  const c = q.counts || {};
+
+  // Badge in header
+  $('condor-queue-badge').textContent = total > 0 ? total : '';
+
+  // Summary counts
+  let parts = [];
+  if (c.idle)    parts.push(`<span class="cc-idle">Idle: ${c.idle}</span>`);
+  if (c.running) parts.push(`<span class="cc-run">Running: ${c.running}</span>`);
+  if (c.held)    parts.push(`<span class="cc-held">Held: ${c.held}</span>`);
+  if (c.completed) parts.push(`<span class="cc-done">Done: ${c.completed}</span>`);
+  $('condor-queue-summary').innerHTML = parts.join('');
+
+  if (total === 0) {
+    $('condor-queue-empty').classList.remove('hidden');
+    $('condor-queue-table').classList.add('hidden');
     return;
   }
 
-  const c = s.counts || {};
-  const total = s.n_jobs || 0;
-  const done = c.done || 0;
-  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  $('condor-queue-empty').classList.add('hidden');
+  $('condor-queue-table').classList.remove('hidden');
 
-  const statusBadge = `<span class="condor-badge condor-${s.status}">${esc(s.status)}</span>`;
-  let html = `<p>${statusBadge} Cluster <strong>${s.cluster_id}</strong> — ${total} jobs</p>`;
-  html += `<div class="condor-counts">`;
-  html += `<span class="cc-done">Done: ${done}</span>`;
-  html += `<span class="cc-run">Running: ${c.running || 0}</span>`;
-  html += `<span class="cc-idle">Idle: ${c.idle || 0}</span>`;
-  if (c.held) html += `<span class="cc-held">Held: ${c.held}</span>`;
-  html += `</div>`;
-  html += `<div class="progress-bar" style="margin-top:.4rem"><div id="condor-progress-fill" style="width:${pct}%"></div></div>`;
-  html += `<span class="progress-pct">${pct}%</span>`;
-  $('condor-summary').innerHTML = html;
-
-  // Merge button enabled when all done but not yet merged
-  if (s.status === 'condor_done' && !s.merged) {
-    $('btn-condor-merge').disabled = false;
+  // Group by cluster
+  const clusters = {};
+  for (const j of q.jobs) {
+    const cid = j.cluster_id;
+    if (!clusters[cid]) clusters[cid] = [];
+    clusters[cid].push(j);
   }
 
-  // Job table
-  if (s.jobs && s.jobs.length) {
-    const tbl = $('condor-job-table');
-    tbl.classList.remove('hidden');
-    const tbody = tbl.querySelector('tbody');
-    tbody.innerHTML = s.jobs.map(j =>
-      `<tr>
-        <td>${j.process}</td>
+  const tbody = $('condor-queue-table').querySelector('tbody');
+  let rows = '';
+  for (const [cid, jobs] of Object.entries(clusters)) {
+    // Find run_id for this cluster from meta
+    const runInfo = _findRunByCluster(cid);
+    const runLabel = runInfo ? runInfo : '';
+    for (const j of jobs) {
+      rows += `<tr>
+        <td>${cid}</td>
+        <td>${j.proc_id}</td>
         <td><span class="condor-badge condor-${j.status}">${esc(j.status)}</span></td>
-        <td>${j.output_exists ? '✓' : '—'}</td>
-      </tr>`
-    ).join('');
+        <td>${esc(runLabel)}</td>
+        <td><button class="btn-sm btn-cancel-cluster" data-cluster="${cid}" title="Cancel cluster ${cid}">✕</button></td>
+      </tr>`;
+    }
   }
+  tbody.innerHTML = rows;
+
+  // Attach cancel handlers
+  tbody.querySelectorAll('.btn-cancel-cluster').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const cid = btn.dataset.cluster;
+      if (!confirm(`Cancel all jobs in cluster ${cid}?`)) return;
+      // Find run_id for this cluster and cancel it
+      const runId = _findRunIdByCluster(cid);
+      if (runId) {
+        await fetch(`/api/condor/cancel/${runId}`, { method: 'POST' });
+      } else {
+        // Direct condor_rm via a generic endpoint — fall back
+        await fetch(`/api/condor/cancel-cluster/${cid}`, { method: 'POST' });
+      }
+      pollCondorQueue();
+      loadRunHistory();
+    });
+  });
 }
 
-$('btn-condor-cancel').addEventListener('click', async () => {
-  if (!_condorRunId) return;
-  await fetch(`/api/condor/cancel/${_condorRunId}`, { method: 'POST' });
-  stopCondorPolling();
-  $('btn-start').disabled = false;
-  $('btn-condor-cancel').disabled = true;
-  $('condor-summary').innerHTML += '<p>Cancelled.</p>';
-  loadRunHistory();
-});
+/** Look up a run ID from the run history cache that matches a cluster. */
+function _findRunByCluster(clusterId) {
+  // Use the run history data if available
+  const tbody = $('run-history').querySelector('tbody');
+  // Best effort — we'll also try meta
+  return '';   // We could enhance this with a lookup; for now cluster ID is shown
+}
 
-$('btn-condor-merge').addEventListener('click', async () => {
-  if (!_condorRunId) return;
-  $('btn-condor-merge').disabled = true;
-  const res = await fetch(`/api/condor/merge/${_condorRunId}`, { method: 'POST' }).then(json);
-  if (res.error) {
-    alert('Merge error: ' + res.error);
-    $('btn-condor-merge').disabled = false;
-    return;
-  }
-  $('condor-summary').innerHTML += '<p>Merged successfully.</p>';
-  loadRunHistory();
-});
+function _findRunIdByCluster(clusterId) {
+  // Placeholder — could be enhanced with a server-side lookup
+  return null;
+}
 
 // Run history
 async function loadRunHistory() {

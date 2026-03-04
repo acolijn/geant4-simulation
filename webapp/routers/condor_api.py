@@ -12,12 +12,33 @@ from config import RUNS_DIR
 from routers.run_api import build_gps_macro, validate_run_body
 from services.condor import (
     cancel_condor_jobs,
+    check_condor_available,
     get_condor_status,
+    get_full_queue,
     merge_output,
     submit_condor_jobs,
 )
 
 router = APIRouter(tags=["condor"])
+
+
+@router.get("/api/condor/available")
+async def condor_available():
+    """Check if HTCondor is available on this machine."""
+    ok = await check_condor_available()
+    return {"available": ok}
+
+
+@router.get("/api/condor/queue")
+async def condor_queue():
+    """Return all user's jobs currently in the Condor queue."""
+    jobs = await get_full_queue()
+    # Summarise
+    counts = {}
+    for j in jobs:
+        s = j["status"]
+        counts[s] = counts.get(s, 0) + 1
+    return {"jobs": jobs, "total": len(jobs), "counts": counts}
 
 
 @router.post("/api/condor/submit")
@@ -91,6 +112,26 @@ async def condor_status(run_id: str):
 async def condor_cancel(run_id: str):
     """Cancel all Condor jobs for a run."""
     return await cancel_condor_jobs(run_id)
+
+
+@router.post("/api/condor/cancel-cluster/{cluster_id}")
+async def condor_cancel_cluster(cluster_id: str):
+    """Cancel all jobs in a Condor cluster by cluster ID (direct condor_rm)."""
+    import asyncio
+    try:
+        proc = await asyncio.create_subprocess_exec(
+            "condor_rm", cluster_id,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        stdout, stderr = await proc.communicate()
+        if proc.returncode != 0:
+            return {"error": stderr.decode().strip() or "condor_rm failed"}
+        return {"status": "cancelled", "cluster_id": cluster_id}
+    except FileNotFoundError:
+        return {"error": "condor_rm not found"}
+    except Exception as e:
+        return {"error": str(e)}
 
 
 @router.post("/api/condor/merge/{run_id}")
