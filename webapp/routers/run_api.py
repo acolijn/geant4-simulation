@@ -22,8 +22,46 @@ _SAFE_MACRO_VALUE = re.compile(r"^[\w.+\-]+$")
 
 router = APIRouter(tags=["run"])
 
+# Fields that are not directly interpolated as macro values
+SKIP_FIELDS = {"geometry", "outputFile", "ionZA", "ionCharge", "ionExcitation", "ionName", "runMode", "nCondorJobs"}
 
-def _build_gps_macro(body: dict, run_dir, output: str) -> str:
+
+def validate_run_body(body: dict) -> str | None:
+    """
+    Validate all fields in a run request body.
+    Returns an error string if validation fails, or None if OK.
+    """
+    geometry = body.get("geometry", "geometry.json")
+    output   = body.get("outputFile", "G4sim.root")
+
+    for fld_name, fld_val in (("geometry", geometry), ("outputFile", output)):
+        if not _SAFE_MACRO_VALUE.match(fld_val):
+            return f"Invalid characters in '{fld_name}'"
+
+    for key, val in body.items():
+        if key in SKIP_FIELDS:
+            continue
+        v = str(val)
+        if v and not _SAFE_MACRO_VALUE.match(v):
+            return f"Invalid characters in '{key}'"
+
+    if body.get("particle") == "ion":
+        ion_za = str(body.get("ionZA", ""))
+        if ion_za and not re.match(r"^\d+\s+\d+$", ion_za):
+            return "Invalid ion Z A specification"
+        for fld in ("ionCharge", "ionExcitation"):
+            v = str(body.get(fld, "0"))
+            if v and not _SAFE_MACRO_VALUE.match(v):
+                return f"Invalid characters in '{fld}'"
+
+    geom_path = (CONFIG_DIR / geometry).resolve()
+    if not str(geom_path).startswith(str(CONFIG_DIR.resolve())):
+        return "Invalid geometry filename"
+
+    return None
+
+
+def build_gps_macro(body: dict, run_dir, output: str) -> str:
     """Build a Geant4 macro string using GPS commands from the request body."""
     geometry    = body.get("geometry", "geometry.json")
     verbose     = body.get("verboseHits", "0")
@@ -178,44 +216,9 @@ async def start_run(request: Request):
     output      = body.get("outputFile", "G4sim.root")
 
     # ── Input sanitisation ────────────────────────────────
-    # Collect all fields that will appear in the macro.
-    # Fields that need special validation are handled separately.
-    # Validate geometry and outputFile (these are interpolated into the macro)
-    for fld_name, fld_val in (("geometry", geometry), ("outputFile", output)):
-        if not _SAFE_MACRO_VALUE.match(fld_val):
-            return JSONResponse(
-                {"error": f"Invalid characters in '{fld_name}'"},
-                status_code=400,
-            )
-
-    _SKIP_FIELDS = {"geometry", "outputFile", "ionZA", "ionCharge", "ionExcitation", "ionName"}
-    macro_fields = {}
-    for key, val in body.items():
-        if key in _SKIP_FIELDS:
-            continue
-        macro_fields[key] = str(val)
-
-    for field_name, value in macro_fields.items():
-        if value and not _SAFE_MACRO_VALUE.match(value):
-            return JSONResponse(
-                {"error": f"Invalid characters in '{field_name}'"},
-                status_code=400,
-            )
-
-    # Validate ion fields only when particle == ion
-    if body.get("particle") == "ion":
-        ion_za = str(body.get("ionZA", ""))
-        if ion_za and not re.match(r"^\d+\s+\d+$", ion_za):
-            return JSONResponse({"error": "Invalid ion Z A specification"}, status_code=400)
-        for fld in ("ionCharge", "ionExcitation"):
-            v = str(body.get(fld, "0"))
-            if v and not _SAFE_MACRO_VALUE.match(v):
-                return JSONResponse({"error": f"Invalid characters in '{fld}'"}, status_code=400)
-
-    # Validate geometry filename stays inside config/
-    geom_path = (CONFIG_DIR / geometry).resolve()
-    if not str(geom_path).startswith(str(CONFIG_DIR.resolve())):
-        return JSONResponse({"error": "Invalid geometry filename"}, status_code=400)
+    err = validate_run_body(body)
+    if err:
+        return JSONResponse({"error": err}, status_code=400)
 
     # Create a unique run directory
     stamp   = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -224,7 +227,7 @@ async def start_run(request: Request):
 
     # Generate the GPS macro
     macro_path = run_dir / "run.mac"
-    macro_content = _build_gps_macro(body, run_dir, output)
+    macro_content = build_gps_macro(body, run_dir, output)
     macro_path.write_text(macro_content)
 
     # Save run metadata

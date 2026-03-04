@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>G4sim Dashboard</title>
-  <link rel="stylesheet" href="/static/style.css?v=16" />
+  <link rel="stylesheet" href="/static/style.css?v=17" />
   <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 </head>
 <body>
@@ -265,11 +265,20 @@
   <div class="card">
     <h2>Run Settings</h2>
     <div class="form-grid">
+      <label>Run mode
+        <select id="run-mode" onchange="toggleRunMode()">
+          <option value="local" selected>Local</option>
+          <option value="condor">HTCondor</option>
+        </select>
+      </label>
       <label>Number of events
         <input type="number" id="nEvents" value="10000" min="1" />
       </label>
       <label>Output file name
         <input type="text" id="outputFile" value="G4sim.root" />
+      </label>
+      <label id="condor-njobs-group" class="gps-hidden">Number of Condor jobs
+        <input type="number" id="nCondorJobs" value="10" min="1" max="10000" />
       </label>
       <label class="toggle-label">Summarise hits per volume
         <div class="toggle-switch">
@@ -298,7 +307,23 @@
     </div>
   </div>
 
-  <div class="card">
+  <!-- Condor status panel (hidden when mode == local) -->
+  <div id="condor-status-card" class="card hidden">
+    <h2>Condor Jobs</h2>
+    <div class="condor-summary" id="condor-summary"></div>
+    <div class="btn-row" style="margin-top:.6rem">
+      <button id="btn-condor-cancel" class="btn danger" disabled>Cancel Jobs</button>
+      <button id="btn-condor-merge" class="btn" disabled>Merge Output</button>
+    </div>
+    <table id="condor-job-table" class="hidden">
+      <thead><tr>
+        <th>Job</th><th>Status</th><th>Output</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card" id="local-log-card">
     <h2>Live Log</h2>
     <pre id="log-output"></pre>
   </div>
@@ -307,7 +332,7 @@
     <h2>Run History</h2>
     <table id="run-history">
       <thead><tr>
-        <th>Run ID</th><th>Geometry</th><th>Particle</th><th>Events</th><th>Status</th>
+        <th>Run ID</th><th>Geometry</th><th>Particle</th><th>Events</th><th>Mode</th><th>Status</th>
       </tr></thead>
       <tbody></tbody>
     </table>
@@ -365,6 +390,6 @@
   </div>
 </section>
 
-<script src="/static/app.js?v=13"></script>
+<script src="/static/app.js?v=14"></script>
 </body>
 </html>

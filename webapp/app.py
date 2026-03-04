@@ -15,6 +15,7 @@ from config import WEBAPP_DIR
 from routers.config_api import router as config_router
 from routers.run_api import router as run_router
 from routers.results_api import router as results_router
+from routers.condor_api import router as condor_router
 
 # ---------------------------------------------------------------------------
 #  App setup
@@ -27,6 +28,7 @@ templates = Jinja2Templates(directory=WEBAPP_DIR / "templates")
 app.include_router(config_router)
 app.include_router(run_router)
 app.include_router(results_router)
+app.include_router(condor_router)
 
 
 # ---------------------------------------------------------------------------

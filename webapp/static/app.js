@@ -28,6 +28,12 @@ function esc(s) {
 
 // ─── GPS dynamic form visibility ────────────────────────
 
+function toggleRunMode() {
+  const mode = $('run-mode').value;
+  toggleVis('condor-njobs-group', mode === 'condor');
+}
+toggleRunMode();
+
 function toggleGpsFields() {
   const eneType = $('ene-type').value;
   const posType = $('pos-type').value;
@@ -167,9 +173,12 @@ $('geometry-upload').addEventListener('change', async (e) => {
 // ─── RUN TAB ────────────────────────────────────────────
 
 let ws = null;
+let _condorPollTimer = null;   // interval ID for condor polling
+let _condorRunId = null;       // active condor run being tracked
 
-$('btn-start').addEventListener('click', async () => {
-  const body = {
+/** Collect the GPS form fields into a request body. */
+function collectRunBody() {
+  return {
     geometry:    $('geometry-select').value,
     particle:    $('particle').value,
     eneType:     $('ene-type').value,
@@ -212,6 +221,21 @@ $('btn-start').addEventListener('click', async () => {
     ionExcitation: $('ion-excitation') ? $('ion-excitation').value : '0',
     summarizeHits: $('summarizeHits').checked ? '1' : '0',
   };
+}
+
+$('btn-start').addEventListener('click', async () => {
+  const mode = $('run-mode').value;
+  if (mode === 'condor') {
+    await startCondorRun();
+  } else {
+    await startLocalRun();
+  }
+});
+
+// ─── Local run ──────────────────────────────────────────
+
+async function startLocalRun() {
+  const body = collectRunBody();
 
   const res = await fetch('/api/run', {
     method: 'POST',
@@ -233,6 +257,8 @@ $('btn-start').addEventListener('click', async () => {
   $('progress-area').classList.remove('hidden');
   $('progress-fill').style.width = '0%';
   $('progress-text').textContent = 'Starting…';
+  $('condor-status-card').classList.add('hidden');
+  $('local-log-card').classList.remove('hidden');
 
   const nEvents = parseInt(body.nEvents);
 
@@ -266,7 +292,7 @@ $('btn-start').addEventListener('click', async () => {
     $('btn-start').disabled = false;
     $('btn-stop').disabled = true;
   };
-});
+}
 
 $('btn-stop').addEventListener('click', async () => {
   await fetch('/api/stop', { method: 'POST' });
@@ -274,6 +300,138 @@ $('btn-stop').addEventListener('click', async () => {
   $('btn-start').disabled = false;
   $('btn-stop').disabled = true;
   $('progress-text').textContent = 'Stopped';
+  loadRunHistory();
+});
+
+// ─── Condor run ─────────────────────────────────────────
+
+async function startCondorRun() {
+  const body = collectRunBody();
+  body.nCondorJobs = $('nCondorJobs').value;
+  body.runMode = 'condor';
+
+  const res = await fetch('/api/condor/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  }).then(json);
+
+  if (res.error) {
+    alert(res.error);
+    return;
+  }
+
+  // Switch to Run tab
+  document.querySelector('[data-tab="run"]').click();
+
+  _condorRunId = res.runId;
+  $('btn-start').disabled = true;
+  $('btn-stop').disabled = true;
+  $('progress-area').classList.add('hidden');
+  $('local-log-card').classList.add('hidden');
+  $('condor-status-card').classList.remove('hidden');
+  $('btn-condor-cancel').disabled = false;
+  $('btn-condor-merge').disabled = true;
+
+  $('condor-summary').innerHTML = `<p>Submitted <strong>${res.n_jobs}</strong> jobs — cluster <strong>${res.cluster_id}</strong></p>`;
+
+  // Start polling
+  startCondorPolling(res.runId);
+}
+
+function startCondorPolling(runId) {
+  stopCondorPolling();
+  _condorRunId = runId;
+  pollCondorStatus();   // immediate first poll
+  _condorPollTimer = setInterval(pollCondorStatus, 5000);
+}
+
+function stopCondorPolling() {
+  if (_condorPollTimer) { clearInterval(_condorPollTimer); _condorPollTimer = null; }
+}
+
+async function pollCondorStatus() {
+  if (!_condorRunId) return;
+  try {
+    const s = await fetch(`/api/condor/status/${_condorRunId}`).then(json);
+    renderCondorStatus(s);
+
+    // If done or merged or cancelled, stop polling
+    if (['condor_done', 'merged', 'cancelled', 'submit_error'].includes(s.status)) {
+      stopCondorPolling();
+      $('btn-start').disabled = false;
+      $('btn-condor-cancel').disabled = true;
+      $('btn-condor-merge').disabled = (s.status === 'merged');
+      loadRunHistory();
+    }
+  } catch (e) {
+    console.warn('Condor poll error:', e);
+  }
+}
+
+function renderCondorStatus(s) {
+  if (!s || s.error) {
+    $('condor-summary').innerHTML = `<p class="text-danger">${esc(s?.error || 'Unknown error')}</p>`;
+    return;
+  }
+
+  const c = s.counts || {};
+  const total = s.n_jobs || 0;
+  const done = c.done || 0;
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+  const statusBadge = `<span class="condor-badge condor-${s.status}">${esc(s.status)}</span>`;
+  let html = `<p>${statusBadge} Cluster <strong>${s.cluster_id}</strong> — ${total} jobs</p>`;
+  html += `<div class="condor-counts">`;
+  html += `<span class="cc-done">Done: ${done}</span>`;
+  html += `<span class="cc-run">Running: ${c.running || 0}</span>`;
+  html += `<span class="cc-idle">Idle: ${c.idle || 0}</span>`;
+  if (c.held) html += `<span class="cc-held">Held: ${c.held}</span>`;
+  html += `</div>`;
+  html += `<div class="progress-bar" style="margin-top:.4rem"><div id="condor-progress-fill" style="width:${pct}%"></div></div>`;
+  html += `<span class="progress-pct">${pct}%</span>`;
+  $('condor-summary').innerHTML = html;
+
+  // Merge button enabled when all done but not yet merged
+  if (s.status === 'condor_done' && !s.merged) {
+    $('btn-condor-merge').disabled = false;
+  }
+
+  // Job table
+  if (s.jobs && s.jobs.length) {
+    const tbl = $('condor-job-table');
+    tbl.classList.remove('hidden');
+    const tbody = tbl.querySelector('tbody');
+    tbody.innerHTML = s.jobs.map(j =>
+      `<tr>
+        <td>${j.process}</td>
+        <td><span class="condor-badge condor-${j.status}">${esc(j.status)}</span></td>
+        <td>${j.output_exists ? '✓' : '—'}</td>
+      </tr>`
+    ).join('');
+  }
+}
+
+$('btn-condor-cancel').addEventListener('click', async () => {
+  if (!_condorRunId) return;
+  await fetch(`/api/condor/cancel/${_condorRunId}`, { method: 'POST' });
+  stopCondorPolling();
+  $('btn-start').disabled = false;
+  $('btn-condor-cancel').disabled = true;
+  $('condor-summary').innerHTML += '<p>Cancelled.</p>';
+  loadRunHistory();
+});
+
+$('btn-condor-merge').addEventListener('click', async () => {
+  if (!_condorRunId) return;
+  $('btn-condor-merge').disabled = true;
+  const res = await fetch(`/api/condor/merge/${_condorRunId}`, { method: 'POST' }).then(json);
+  if (res.error) {
+    alert('Merge error: ' + res.error);
+    $('btn-condor-merge').disabled = false;
+    return;
+  }
+  $('condor-summary').innerHTML += '<p>Merged successfully.</p>';
   loadRunHistory();
 });
 
@@ -287,6 +445,7 @@ async function loadRunHistory() {
       <td>${esc(r.geometry)}</td>
       <td>${esc(r.particle)} ${esc(r.energy)}${r.sourceType ? ' (' + esc(r.sourceType) + ')' : ''}</td>
       <td>${(r.nEvents || 0).toLocaleString()}</td>
+      <td>${esc(r.runMode === 'condor' ? 'Condor' : 'Local')}</td>
       <td>${esc(r.status)}</td>
     </tr>
   `).join('');

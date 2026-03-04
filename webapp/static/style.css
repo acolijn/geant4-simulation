@@ -267,3 +267,44 @@ tbody tr:hover { background: var(--bg); }
   overflow: hidden;
 }
 #geometry-preview .plotly { border-radius: var(--radius); }
+
+/* ── Condor status panel ───────────────────────────────── */
+.condor-summary p { margin-bottom: .4rem; font-size: .9rem; }
+.condor-counts {
+  display: flex;
+  gap: 1rem;
+  font-size: .85rem;
+  font-weight: 600;
+}
+.cc-done { color: #1e8e3e; }
+.cc-run  { color: var(--primary); }
+.cc-idle { color: var(--text2); }
+.cc-held { color: #e8710a; }
+
+.condor-badge {
+  display: inline-block;
+  padding: .1rem .5rem;
+  border-radius: 10px;
+  font-size: .75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+.condor-condor_submitted,
+.condor-idle      { background: #e8eaf6; color: #3949ab; }
+.condor-condor_running,
+.condor-running   { background: #e3f2fd; color: #1565c0; }
+.condor-condor_done,
+.condor-completed { background: #e8f5e9; color: #2e7d32; }
+.condor-merged    { background: #e8f5e9; color: #1b5e20; }
+.condor-cancelled { background: #fff3e0; color: #e65100; }
+.condor-condor_held,
+.condor-held      { background: #fbe9e7; color: #bf360c; }
+.condor-submit_error,
+.condor-unknown   { background: #fce4ec; color: #c62828; }
+
+.progress-pct { font-size: .8rem; color: var(--text2); }
+
+#condor-job-table { margin-top: .6rem; }
+#condor-job-table td:first-child { font-variant-numeric: tabular-nums; }
+.text-danger { color: var(--danger); }
