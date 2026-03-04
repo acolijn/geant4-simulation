@@ -188,7 +188,7 @@ async def start_run(request: Request):
                 status_code=400,
             )
 
-    _SKIP_FIELDS = {"geometry", "outputFile", "ionZA", "ionCharge", "ionExcitation"}
+    _SKIP_FIELDS = {"geometry", "outputFile", "ionZA", "ionCharge", "ionExcitation", "ionName"}
     macro_fields = {}
     for key, val in body.items():
         if key in _SKIP_FIELDS:

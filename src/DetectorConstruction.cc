@@ -7,6 +7,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4UIdirectory.hh"
 #include "G4RunManager.hh"
+#include <stdexcept>
 
 /**
  * @brief Nested messenger class for DetectorConstruction
@@ -123,8 +124,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
     // check if world volume is valid
     if (worldPhys == nullptr) {
-        G4cerr << "World volume is not valid!" << G4endl;
-        exit(1);
+        throw std::runtime_error("World volume is not valid!");
     }
 
     return worldPhys;

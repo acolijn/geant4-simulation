@@ -75,7 +75,13 @@ RunAction::RunAction()
 RunAction::~RunAction()
 {
     delete fMessenger;
-    delete fRootFile;
+    // fRootFile is closed and deleted in EndOfRunAction; guard against
+    // destruction without a run having been started/ended.
+    if (fRootFile) {
+        fRootFile->Close();
+        delete fRootFile;
+        fRootFile = nullptr;
+    }
 }
 
 void RunAction::BeginOfRunAction(const G4Run*)
@@ -108,5 +114,8 @@ void RunAction::EndOfRunAction(const G4Run*)
     if (fRootFile) {
         fRootFile->Write();
         fRootFile->Close();
+        delete fRootFile;
+        fRootFile = nullptr;
+        fEventTree = nullptr;  // owned by the TFile, now gone
     }
 }

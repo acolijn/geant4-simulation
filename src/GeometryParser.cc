@@ -608,8 +608,7 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     bool needsDimensions = (type != "union" && type != "subtraction" && type != "intersection");
     
     if (needsDimensions && !config.contains("dimensions")) {
-        G4cerr << "Error: dimensions not found in solid " << name << " of type " << type << G4endl;
-        exit(1);
+        throw std::runtime_error("Error: dimensions not found in solid " + name + " of type " + type);
     }
     
     // Get dimensions object for easier access (only for basic shapes)
@@ -1199,9 +1198,10 @@ void GeometryParser::ImportAssembledGeometry(const json& config, G4LogicalVolume
             name = config["name_prefix"].get<std::string>() + "_" + name;
         }
         
-        // Create the volume
+        // Create the volume and store in both the class-level and local maps
         G4LogicalVolume* logicalVolume = CreateVolume(volConfig);
         volumes[volConfig["name"].get<std::string>()] = logicalVolume;
+        externalVolumes[name] = logicalVolume;
         
         // Store in logical volume map with _logical suffix for sensitive detector setup
         logicalVolumeMap[volConfig["name"].get<std::string>() + "_logical"] = logicalVolume;
@@ -1492,26 +1492,18 @@ G4VSolid* GeometryParser::CreatePolyconeSolid(const json& config, const json& di
     
     // Validate that z-planes are in ascending order and rmin < rmax
     if (z_planes.size() < 2) {
-        G4cerr << "Error in polycone " << name << ": need at least 2 z-planes, found " 
-               << z_planes.size() << G4endl;
-        exit(1);
+        throw std::runtime_error("Error in polycone " + name + ": need at least 2 z-planes, found " + std::to_string(z_planes.size()));
     }
     
     for (size_t i = 1; i < z_planes.size(); i++) {
         if (z_planes[i] <= z_planes[i-1]) {
-            G4cerr << "Error in polycone " << name << ": z-planes must be in ascending order. "
-                   << "Found z[" << i-1 << "] = " << z_planes[i-1]/mm << " mm >= z[" 
-                   << i << "] = " << z_planes[i]/mm << " mm" << G4endl;
-            exit(1);
+            throw std::runtime_error("Error in polycone " + name + ": z-planes must be in ascending order at index " + std::to_string(i));
         }
     }
     
     for (size_t i = 0; i < z_planes.size(); i++) {
         if (rmin[i] >= rmax[i]) {
-            G4cerr << "Error in polycone " << name << ": rmin must be less than rmax. "
-                   << "Found at z[" << i << "] = " << z_planes[i]/mm << " mm: rmin = " 
-                   << rmin[i]/mm << " mm >= rmax = " << rmax[i]/mm << " mm" << G4endl;
-            exit(1);
+            throw std::runtime_error("Error in polycone " + name + ": rmin must be less than rmax at z-plane " + std::to_string(i));
         }
     }
     
@@ -1520,21 +1512,7 @@ G4VSolid* GeometryParser::CreatePolyconeSolid(const json& config, const json& di
         return new G4Polycone(name, sphi, dphi, z_planes.size(), 
                             z_planes.data(), rmin.data(), rmax.data());
     } catch (const std::exception& e) {
-        G4cerr << "Error creating polycone " << name << ": " << e.what() << G4endl;
-        G4cerr << "Z planes: ";
-        for (size_t i = 0; i < z_planes.size(); i++) {
-            G4cerr << z_planes[i]/mm << " ";
-        }
-        G4cerr << "\nRmin: ";
-        for (size_t i = 0; i < rmin.size(); i++) {
-            G4cerr << rmin[i]/mm << " ";
-        }
-        G4cerr << "\nRmax: ";
-        for (size_t i = 0; i < rmax.size(); i++) {
-            G4cerr << rmax[i]/mm << " ";
-        }
-        G4cerr << G4endl;
-        exit(1);
+        throw std::runtime_error("Error creating polycone " + name + ": " + e.what());
     }
 }
 
@@ -1629,26 +1607,18 @@ G4VSolid* GeometryParser::CreatePolyhedraSolid(const json& config, const json& d
     
     // Validate that z-planes are in ascending order and rmin < rmax
     if (z_planes.size() < 2) {
-        G4cerr << "Error in polyhedra " << name << ": need at least 2 z-planes, found " 
-               << z_planes.size() << G4endl;
-        exit(1);
+        throw std::runtime_error("Error in polyhedra " + name + ": need at least 2 z-planes, found " + std::to_string(z_planes.size()));
     }
     
     for (size_t i = 1; i < z_planes.size(); i++) {
         if (z_planes[i] <= z_planes[i-1]) {
-            G4cerr << "Error in polyhedra " << name << ": z-planes must be in ascending order. "
-                   << "Found z[" << i-1 << "] = " << z_planes[i-1]/mm << " mm >= z[" 
-                   << i << "] = " << z_planes[i]/mm << " mm" << G4endl;
-            exit(1);
+            throw std::runtime_error("Error in polyhedra " + name + ": z-planes must be in ascending order at index " + std::to_string(i));
         }
     }
     
     for (size_t i = 0; i < z_planes.size(); i++) {
         if (rmin[i] >= rmax[i]) {
-            G4cerr << "Error in polyhedra " << name << ": rmin must be less than rmax. "
-                   << "Found at z[" << i << "] = " << z_planes[i]/mm << " mm: rmin = " 
-                   << rmin[i]/mm << " mm >= rmax = " << rmax[i]/mm << " mm" << G4endl;
-            exit(1);
+            throw std::runtime_error("Error in polyhedra " + name + ": rmin must be less than rmax at z-plane " + std::to_string(i));
         }
     }
     
@@ -1657,20 +1627,6 @@ G4VSolid* GeometryParser::CreatePolyhedraSolid(const json& config, const json& d
         return new G4Polyhedra(name, sphi, dphi, numSides, z_planes.size(), 
                               z_planes.data(), rmin.data(), rmax.data());
     } catch (const std::exception& e) {
-        G4cerr << "Error creating polyhedra " << name << ": " << e.what() << G4endl;
-        G4cerr << "Z planes: ";
-        for (size_t i = 0; i < z_planes.size(); i++) {
-            G4cerr << z_planes[i]/mm << " ";
-        }
-        G4cerr << "\nRmin: ";
-        for (size_t i = 0; i < rmin.size(); i++) {
-            G4cerr << rmin[i]/mm << " ";
-        }
-        G4cerr << "\nRmax: ";
-        for (size_t i = 0; i < rmax.size(); i++) {
-            G4cerr << rmax[i]/mm << " ";
-        }
-        G4cerr << G4endl;
-        exit(1);
+        throw std::runtime_error("Error creating polyhedra " + name + ": " + e.what());
     }
 }
