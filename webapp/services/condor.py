@@ -17,7 +17,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from config import BUILD_DIR, G4SIM_BIN, PROJECT_DIR, RUNS_DIR
+from config import BUILD_DIR, CONDOR_OS, G4SIM_BIN, PROJECT_DIR, RUNS_DIR
 
 logger = logging.getLogger("condor")
 
@@ -323,21 +323,28 @@ def _inject_seed(macro_text: str, seed: int) -> str:
 
 def _build_submit_file(run_dir: Path, n_jobs: int) -> str:
     """Generate a Condor submit description."""
-    return (
-        f"universe   = vanilla\n"
-        f"executable = {G4SIM_BIN}\n"
-        f"arguments  = {run_dir}/run_$INT(Process,%03d).mac\n"
-        f"initialdir = {PROJECT_DIR}\n"
-        f"getenv     = True\n"
-        f"\n"
-        f"output = {run_dir}/condor_$INT(Process,%03d).out\n"
-        f"error  = {run_dir}/condor_$INT(Process,%03d).err\n"
-        f"log    = {run_dir}/condor.log\n"
-        f"\n"
-        f"should_transfer_files = NO\n"
-        f"\n"
-        f"queue {n_jobs}\n"
-    )
+    lines = [
+        f"universe   = vanilla",
+        f"executable = {G4SIM_BIN}",
+        f"arguments  = {run_dir}/run_$INT(Process,%03d).mac",
+        f"initialdir = {PROJECT_DIR}",
+        f"getenv     = True",
+        f"",
+    ]
+    # Cluster OS requirement (e.g. el7, el8, el9)
+    if CONDOR_OS:
+        lines.append(f'+UseOS = "{CONDOR_OS}"')
+        lines.append("")
+    lines += [
+        f"output = {run_dir}/condor_$INT(Process,%03d).out",
+        f"error  = {run_dir}/condor_$INT(Process,%03d).err",
+        f"log    = {run_dir}/condor.log",
+        f"",
+        f"should_transfer_files = NO",
+        f"",
+        f"queue {n_jobs}",
+    ]
+    return "\n".join(lines) + "\n"
 
 
 def _parse_cluster_id(output: str) -> Optional[int]:

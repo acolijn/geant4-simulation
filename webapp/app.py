@@ -6,6 +6,15 @@ inspecting Geant4 simulations.  Keeps the CLI workflow intact;
 this is just a convenience layer on top of the same build/G4sim binary.
 """
 
+import sys
+from pathlib import Path
+
+# Ensure the webapp directory is on sys.path so that sibling imports
+# (config, routers.*, services.*) work regardless of the cwd.
+_webapp_dir = str(Path(__file__).resolve().parent)
+if _webapp_dir not in sys.path:
+    sys.path.insert(0, _webapp_dir)
+
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
