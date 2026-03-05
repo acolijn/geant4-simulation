@@ -315,11 +315,23 @@ async function initCondorPanel() {
     _condorAvailable = r.available;
   } catch { _condorAvailable = false; }
 
+  // Enable/disable the HTCondor option in the run-mode dropdown
+  const condorOpt = document.querySelector('#run-mode option[value="condor"]');
+  if (condorOpt) {
+    condorOpt.disabled = !_condorAvailable;
+    if (!_condorAvailable) condorOpt.textContent = 'HTCondor (not available)';
+  }
+
   if (_condorAvailable) {
     $('condor-queue-card').classList.remove('hidden');
     startQueuePolling();
   } else {
     $('condor-queue-card').classList.add('hidden');
+    // Reset to local if condor was somehow selected
+    if ($('run-mode').value === 'condor') {
+      $('run-mode').value = 'local';
+      toggleRunMode();
+    }
   }
 }
 initCondorPanel();
