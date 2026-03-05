@@ -191,6 +191,31 @@ def torus_mesh(r_major, r_minor, n_major=32, n_minor=16):
     return verts, ii, jj, kk
 
 
+def trapezoid_mesh(dx1, dx2, dy1, dy2, dz):
+    """Return (vertices, i, j, k) for a G4Trd trapezoid.
+
+    dx1, dx2 are half-lengths in X at -dz and +dz.
+    dy1, dy2 are half-lengths in Y at -dz and +dz.
+    dz is the half-length in Z.
+    """
+    # 8 vertices: bottom face at z=-dz, top face at z=+dz
+    verts = np.array([
+        [-dx1, -dy1, -dz],  # 0  bottom
+        [ dx1, -dy1, -dz],  # 1
+        [ dx1,  dy1, -dz],  # 2
+        [-dx1,  dy1, -dz],  # 3
+        [-dx2, -dy2,  dz],  # 4  top
+        [ dx2, -dy2,  dz],  # 5
+        [ dx2,  dy2,  dz],  # 6
+        [-dx2,  dy2,  dz],  # 7
+    ], dtype=float)
+    # 12 triangles (2 per face, 6 faces)
+    ii = [0, 0, 4, 4, 0, 0, 1, 1, 0, 0, 2, 2]
+    jj = [1, 2, 5, 6, 1, 4, 2, 5, 3, 4, 3, 6]
+    kk = [2, 3, 6, 7, 4, 5, 5, 6, 4, 7, 7, 7]
+    return verts, ii, jj, kk
+
+
 def polycone_mesh(z_vals, rmin_vals, rmax_vals, n_seg=24):
     """Return (vertices, i, j, k) for a polycone along Z axis."""
     n_planes = len(z_vals)
@@ -278,8 +303,16 @@ def _generate_mesh(vtype, dims):
         )
     elif vtype == "torus":
         return torus_mesh(
-            dims.get("radius", 0),
-            dims.get("tube_radius", 0),
+            dims.get("major_radius", dims.get("radius", 0)),
+            dims.get("minor_radius", dims.get("tube_radius", 0)),
+        )
+    elif vtype == "trapezoid" or vtype == "trd":
+        return trapezoid_mesh(
+            dims.get("dx1", 0) / 2.0,
+            dims.get("dx2", 0) / 2.0,
+            dims.get("dy1", 0) / 2.0,
+            dims.get("dy2", 0) / 2.0,
+            dims.get("dz", 0),
         )
     elif vtype == "polycone":
         z_vals = dims.get("z", [])
@@ -410,8 +443,8 @@ def _generate_trimesh(vtype, dims):
         m.vertices *= np.array([rx, ry, rz])
         return m
     elif vtype == "torus":
-        r_major = dims.get("radius", 0)
-        r_minor = dims.get("tube_radius", 0)
+        r_major = dims.get("major_radius", dims.get("radius", 0))
+        r_minor = dims.get("minor_radius", dims.get("tube_radius", 0))
         # trimesh doesn't have a torus primitive; build from revolution
         # Use a circle revolved around the Z axis
         angles = np.linspace(0, 2 * np.pi, 32, endpoint=False)
@@ -424,6 +457,31 @@ def _generate_trimesh(vtype, dims):
             vertices=section,
         )
         return trimesh.creation.revolve(path, sections=48)
+    elif vtype == "trapezoid" or vtype == "trd":
+        dx1 = dims.get("dx1", 0) / 2.0
+        dx2 = dims.get("dx2", 0) / 2.0
+        dy1 = dims.get("dy1", 0) / 2.0
+        dy2 = dims.get("dy2", 0) / 2.0
+        dz  = dims.get("dz", 0)
+        verts_arr = np.array([
+            [-dx1, -dy1, -dz],
+            [ dx1, -dy1, -dz],
+            [ dx1,  dy1, -dz],
+            [-dx1,  dy1, -dz],
+            [-dx2, -dy2,  dz],
+            [ dx2, -dy2,  dz],
+            [ dx2,  dy2,  dz],
+            [-dx2,  dy2,  dz],
+        ])
+        faces = np.array([
+            [0, 1, 2], [0, 2, 3],  # bottom
+            [4, 6, 5], [4, 7, 6],  # top
+            [0, 4, 5], [0, 5, 1],  # front
+            [1, 5, 6], [1, 6, 2],  # right
+            [2, 6, 7], [2, 7, 3],  # back
+            [3, 7, 4], [3, 4, 0],  # left
+        ])
+        return trimesh.Trimesh(vertices=verts_arr, faces=faces)
     return None
 
 
