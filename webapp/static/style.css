@@ -405,3 +405,12 @@ tbody tr:hover { background: var(--bg); }
 .run-status.status-condor_submitted,
 .run-status.status-submitting { color: #3949ab; }
 .run-status.status-condor_held { color: #bf360c; }
+
+/* Keep the run selector from overflowing its card */
+#result-run-select {
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

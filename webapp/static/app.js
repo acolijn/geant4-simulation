@@ -30,6 +30,11 @@ function esc(s) {
 
 function toggleRunMode() {
   const mode = $('run-mode').value;
+  // Safari doesn't honour disabled <option>: revert if condor picked while unavailable
+  if (mode === 'condor' && !_condorAvailable) {
+    $('run-mode').value = 'local';
+    return toggleRunMode();
+  }
   toggleVis('condor-njobs-group', mode === 'condor');
   toggleVis('condor-merge-group', mode === 'condor');
 }
@@ -315,11 +320,12 @@ async function initCondorPanel() {
     _condorAvailable = r.available;
   } catch { _condorAvailable = false; }
 
-  // Enable/disable the HTCondor option in the run-mode dropdown
+  // Grey-out and block selection of HTCondor when unavailable
   const condorOpt = document.querySelector('#run-mode option[value="condor"]');
   if (condorOpt) {
     condorOpt.disabled = !_condorAvailable;
-    if (!_condorAvailable) condorOpt.textContent = 'HTCondor (not available)';
+    condorOpt.textContent = _condorAvailable ? 'HTCondor' : 'HTCondor (not available)';
+    condorOpt.style.color = _condorAvailable ? '' : '#999';
   }
 
   if (_condorAvailable) {
@@ -327,11 +333,6 @@ async function initCondorPanel() {
     startQueuePolling();
   } else {
     $('condor-queue-card').classList.add('hidden');
-    // Reset to local if condor was somehow selected
-    if ($('run-mode').value === 'condor') {
-      $('run-mode').value = 'local';
-      toggleRunMode();
-    }
   }
 }
 initCondorPanel();
