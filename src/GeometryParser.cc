@@ -1496,8 +1496,8 @@ G4VSolid* GeometryParser::CreatePolyconeSolid(const json& config, const json& di
     }
     
     for (size_t i = 1; i < z_planes.size(); i++) {
-        if (z_planes[i] <= z_planes[i-1]) {
-            throw std::runtime_error("Error in polycone " + name + ": z-planes must be in ascending order at index " + std::to_string(i));
+        if (z_planes[i] < z_planes[i-1]) {
+            throw std::runtime_error("Error in polycone " + name + ": z-planes must be in non-decreasing order at index " + std::to_string(i));
         }
     }
     
@@ -1611,8 +1611,8 @@ G4VSolid* GeometryParser::CreatePolyhedraSolid(const json& config, const json& d
     }
     
     for (size_t i = 1; i < z_planes.size(); i++) {
-        if (z_planes[i] <= z_planes[i-1]) {
-            throw std::runtime_error("Error in polyhedra " + name + ": z-planes must be in ascending order at index " + std::to_string(i));
+        if (z_planes[i] < z_planes[i-1]) {
+            throw std::runtime_error("Error in polyhedra " + name + ": z-planes must be in non-decreasing order at index " + std::to_string(i));
         }
     }
     
