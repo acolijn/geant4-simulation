@@ -1,8 +1,6 @@
 # Visualization settings
 # This macro is executed in interactive mode after detector initialization
-#/detector/setGeometryFile config/super_advanced_geometry.json
-#/detector/setGeometryFile config/geo_test.json
-/detector/setGeometryFile config/geometry-4.json
+/detector/setGeometryFile config/xenonnt_geometry.json
 
 /run/initialize
 

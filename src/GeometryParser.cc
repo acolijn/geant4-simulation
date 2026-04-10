@@ -32,6 +32,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 #include <fstream>
+#include <map>
 #include <stdexcept>
 #include <filesystem>
 #include <unordered_set>
@@ -493,14 +494,25 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
                                       volConfig["g4name"].get<std::string>() : 
                                       name;
             
+            // Use placement name if available, otherwise volume name
+            std::string placementName = physicalName;
+            if (placement.contains("name")) {
+                placementName = placement["name"].get<std::string>();
+            }
+            
+            // Track copy number per logical volume per mother
+            static std::map<std::pair<std::string,std::string>, int> copyCounter;
+            auto key = std::make_pair(name, parentName);
+            int copyNo = copyCounter[key]++;
+            
             new G4PVPlacement(
                 rotation,           // rotation
                 position,           // position
                 logicalVolume,      // logical volume
-                physicalName,       // name
+                placementName,      // name
                 parentVolume,       // mother volume
                 false,              // no boolean operations
-                0                   // copy number
+                copyNo              // copy number
             );
             
             // Mark this volume as placed
@@ -565,7 +577,7 @@ G4VPhysicalVolume* GeometryParser::ConstructGeometry() {
             G4cout << "GeometryParser::ConstructGeometry() - Placing assembly " << assemblyName << " in " << parentName 
                    << " at position " << position << G4endl;
             
-            assembly->MakeImprint(parentVolume, position, rotation, iCopy++, true);
+            assembly->MakeImprint(parentVolume, position, rotation, iCopy++, false);
         }
     }
     
@@ -619,13 +631,10 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     const json& dims = dimsPtr ? *dimsPtr : json::object();
     
     // Dispatch to appropriate shape creation function based on type
-    if (type == "union") {
-        G4cout << "Creating union solid from components: " << name << G4endl;
+    if (type == "union" || type == "subtraction" || type == "intersection") {
+        G4cout << "Creating boolean solid from components: " << name << G4endl;
         solid = CreateBooleanSolidFromComponents(config, name);
     }
-    //else if (type == "subtraction" || type == "intersection") {
-    //    solid = CreateBooleanSolid(config, name);
-    //}
     else if (type == "box") {
         solid = CreateBoxSolid(dims, name);
     }
