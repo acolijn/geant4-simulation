@@ -31,16 +31,26 @@ async def start_simulation(run_dir: Path, macro_path: Path, meta: dict) -> None:
     asyncio.create_task(_monitor_process(proc, run_dir, meta))
 
 
+LOG_BUFFER_MAX = 50_000  # keep last N lines in memory
+
+
 async def _monitor_process(proc, run_dir: Path, meta: dict) -> None:
     """Read stdout until the process exits, then finalise metadata."""
+    log_file = run_dir / "log" / "log.txt"
+    log_file.parent.mkdir(exist_ok=True)
     try:
-        while True:
-            line = await proc.stdout.readline()
-            if not line:
-                break
-            text = line.decode(errors="replace").rstrip()
-            if current_process["info"]:
-                current_process["info"]["log_lines"].append(text)
+        with open(log_file, "w") as flog:
+            while True:
+                data = await proc.stdout.read(8192)
+                if not data:
+                    break
+                for text in data.decode(errors="replace").splitlines():
+                    flog.write(text + "\n")
+                    if current_process["info"]:
+                        buf = current_process["info"]["log_lines"]
+                        buf.append(text)
+                        if len(buf) > LOG_BUFFER_MAX:
+                            del buf[: len(buf) - LOG_BUFFER_MAX]
     except Exception:
         pass
 
@@ -50,13 +60,6 @@ async def _monitor_process(proc, run_dir: Path, meta: dict) -> None:
     )
     meta["finished"] = datetime.now().strftime("%Y%m%d_%H%M%S")
     (run_dir / "meta.json").write_text(json.dumps(meta, indent=2))
-
-    if current_process["info"]:
-        log_dir = run_dir / "log"
-        log_dir.mkdir(exist_ok=True)
-        (log_dir / "log.txt").write_text(
-            "\n".join(current_process["info"]["log_lines"])
-        )
 
     current_process["proc"] = None
     current_process["info"] = None

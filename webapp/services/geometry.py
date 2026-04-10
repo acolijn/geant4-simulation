@@ -68,6 +68,39 @@ def rotation_matrix_assembly(rx, ry, rz):
 
 
 # ---------------------------------------------------------------------------
+#  Parent-chain world transform
+# ---------------------------------------------------------------------------
+
+def _get_world_transform(vol_name, volumes_by_name, cache):
+    """Return (R_world, t_world) for *vol_name* by walking the parent chain.
+
+    Uses ``rotation_matrix_placement`` because regular volumes are placed via
+    G4PVPlacement.  Results are memoised in *cache*.
+    """
+    if vol_name in cache:
+        return cache[vol_name]
+    if vol_name == "World" or vol_name not in volumes_by_name:
+        cache[vol_name] = (np.eye(3), np.zeros(3))
+        return cache[vol_name]
+    vol = volumes_by_name[vol_name]
+    pls = vol.get("placements", [])
+    if not pls:
+        cache[vol_name] = (np.eye(3), np.zeros(3))
+        return cache[vol_name]
+    pl = pls[0]
+    rot = pl.get("rotation", {})
+    rx, ry, rz = rot.get("x", 0), rot.get("y", 0), rot.get("z", 0)
+    R_loc = rotation_matrix_placement(rx, ry, rz) if (rx or ry or rz) else np.eye(3)
+    t_loc = np.array([pl.get("x", 0), pl.get("y", 0), pl.get("z", 0)])
+    parent_name = pl.get("parent", "World")
+    R_parent, t_parent = _get_world_transform(parent_name, volumes_by_name, cache)
+    R_world = R_parent @ R_loc
+    t_world = R_parent @ t_loc + t_parent
+    cache[vol_name] = (R_world, t_world)
+    return cache[vol_name]
+
+
+# ---------------------------------------------------------------------------
 #  Mesh generators
 # ---------------------------------------------------------------------------
 
@@ -345,8 +378,14 @@ def _add_mesh_trace(fig, verts, ti, tj, tk, R_total, t_total, color, vol_name):
 #  Assembly handling
 # ---------------------------------------------------------------------------
 
-def _add_assembly_traces(fig, assembly_vol, materials):
+def _add_assembly_traces(fig, assembly_vol, materials,
+                         R_parent=None, t_parent=None):
     """Draw every visible component of an assembly volume."""
+    if R_parent is None:
+        R_parent = np.eye(3)
+    if t_parent is None:
+        t_parent = np.zeros(3)
+
     components = assembly_vol.get("components", [])
     if not components:
         return
@@ -360,8 +399,11 @@ def _add_assembly_traces(fig, assembly_vol, materials):
         asm_rx = asm_rot.get("x", 0)
         asm_ry = asm_rot.get("y", 0)
         asm_rz = asm_rot.get("z", 0)
-        asm_R = rotation_matrix_assembly(asm_rx, asm_ry, asm_rz) if (asm_rx or asm_ry or asm_rz) else np.eye(3)
-        asm_t = np.array([asm_pl.get("x", 0), asm_pl.get("y", 0), asm_pl.get("z", 0)])
+        asm_R_loc = rotation_matrix_assembly(asm_rx, asm_ry, asm_rz) if (asm_rx or asm_ry or asm_rz) else np.eye(3)
+        asm_t_loc = np.array([asm_pl.get("x", 0), asm_pl.get("y", 0), asm_pl.get("z", 0)])
+        # Compose with parent world transform
+        asm_R = R_parent @ asm_R_loc
+        asm_t = R_parent @ asm_t_loc + t_parent
 
         for comp in components:
             if not comp.get("visible", True):
@@ -493,13 +535,18 @@ def _compose_transform(R, t):
     return T
 
 
-def _add_boolean_traces(fig, bool_vol, materials):
+def _add_boolean_traces(fig, bool_vol, materials,
+                        volumes_by_name=None, transform_cache=None):
     """Compute true CSG boolean of components and render the result mesh.
 
     Uses trimesh + manifold3d to perform real union / subtraction /
     intersection operations, producing a single clean mesh per placement.
     Falls back to drawing individual components if CSG fails.
     """
+    if volumes_by_name is None:
+        volumes_by_name = {}
+    if transform_cache is None:
+        transform_cache = {}
     components = bool_vol.get("components", [])
     if not components:
         return
@@ -554,7 +601,8 @@ def _add_boolean_traces(fig, bool_vol, materials):
             result = trimesh.boolean.difference([result, sub], engine="manifold")
     except Exception:
         # Fallback: draw components individually (old behaviour)
-        _add_boolean_traces_fallback(fig, bool_vol, materials)
+        _add_boolean_traces_fallback(fig, bool_vol, materials,
+                                         volumes_by_name, transform_cache)
         return
 
     if result is None or len(result.vertices) == 0:
@@ -577,14 +625,25 @@ def _add_boolean_traces(fig, bool_vol, materials):
         vrx = vol_rot.get("x", 0)
         vry = vol_rot.get("y", 0)
         vrz = vol_rot.get("z", 0)
-        R_vol = rotation_matrix_placement(vrx, vry, vrz) if (vrx or vry or vrz) else np.eye(3)
-        t_vol = np.array([vol_pl.get("x", 0), vol_pl.get("y", 0), vol_pl.get("z", 0)])
+        R_loc = rotation_matrix_placement(vrx, vry, vrz) if (vrx or vry or vrz) else np.eye(3)
+        t_loc = np.array([vol_pl.get("x", 0), vol_pl.get("y", 0), vol_pl.get("z", 0)])
+
+        parent_name = vol_pl.get("parent", "World")
+        R_par, t_par = _get_world_transform(
+            parent_name, volumes_by_name, transform_cache)
+        R_vol = R_par @ R_loc
+        t_vol = R_par @ t_loc + t_par
 
         _add_mesh_trace(fig, verts, ti, tj, tk, R_vol, t_vol, color, vol_name)
 
 
-def _add_boolean_traces_fallback(fig, bool_vol, materials):
+def _add_boolean_traces_fallback(fig, bool_vol, materials,
+                                 volumes_by_name=None, transform_cache=None):
     """Fallback: draw each component separately when CSG fails."""
+    if volumes_by_name is None:
+        volumes_by_name = {}
+    if transform_cache is None:
+        transform_cache = {}
     components = bool_vol.get("components", [])
     mat_name = bool_vol.get("material", "")
     mat = materials.get(mat_name, {})
@@ -595,8 +654,14 @@ def _add_boolean_traces_fallback(fig, bool_vol, materials):
         vrx = vol_rot.get("x", 0)
         vry = vol_rot.get("y", 0)
         vrz = vol_rot.get("z", 0)
-        R_vol = rotation_matrix_placement(vrx, vry, vrz) if (vrx or vry or vrz) else np.eye(3)
-        t_vol = np.array([vol_pl.get("x", 0), vol_pl.get("y", 0), vol_pl.get("z", 0)])
+        R_loc = rotation_matrix_placement(vrx, vry, vrz) if (vrx or vry or vrz) else np.eye(3)
+        t_loc = np.array([vol_pl.get("x", 0), vol_pl.get("y", 0), vol_pl.get("z", 0)])
+
+        parent_name = vol_pl.get("parent", "World")
+        R_par, t_par = _get_world_transform(
+            parent_name, volumes_by_name, transform_cache)
+        R_vol = R_par @ R_loc
+        t_vol = R_par @ t_loc + t_par
 
         for comp in components:
             if not comp.get("visible", True):
@@ -638,6 +703,10 @@ def add_geometry_traces(fig, geom: dict, materials: dict) -> None:
     """Add semi-transparent Mesh3d traces for each visible volume in *geom*."""
     volumes = geom.get("volumes", [])
 
+    # Build name → volume lookup for parent-chain resolution
+    volumes_by_name = {v["name"]: v for v in volumes if "name" in v}
+    transform_cache = {}                # vol_name → (R_world, t_world)
+
     for vol in volumes:
         if not vol.get("visible", True):
             continue
@@ -646,12 +715,18 @@ def add_geometry_traces(fig, geom: dict, materials: dict) -> None:
 
         # ── Assembly / compound volumes ──────────────────────
         if vtype == "assembly":
-            _add_assembly_traces(fig, vol, materials)
+            # Determine parent world transform from the first placement
+            pls = vol.get("placements", [])
+            parent_name = pls[0].get("parent", "World") if pls else "World"
+            R_par, t_par = _get_world_transform(
+                parent_name, volumes_by_name, transform_cache)
+            _add_assembly_traces(fig, vol, materials, R_par, t_par)
             continue
 
         # ── Boolean solids (union, subtraction, intersection) ─
         if vtype in ("union", "subtraction", "intersection"):
-            _add_boolean_traces(fig, vol, materials)
+            _add_boolean_traces(fig, vol, materials,
+                                volumes_by_name, transform_cache)
             continue
 
         # ── Primitive shapes ─────────────────────────────────
@@ -675,7 +750,15 @@ def add_geometry_traces(fig, geom: dict, materials: dict) -> None:
             ry  = rot.get("y", 0)
             rz  = rot.get("z", 0)
 
-            R = rotation_matrix_placement(rx, ry, rz) if (rx or ry or rz) else np.eye(3)
-            t = np.array([px, py, pz])
+            R_loc = rotation_matrix_placement(rx, ry, rz) if (rx or ry or rz) else np.eye(3)
+            t_loc = np.array([px, py, pz])
+
+            # Compose with parent world transform
+            parent_name = pl.get("parent", "World")
+            R_par, t_par = _get_world_transform(
+                parent_name, volumes_by_name, transform_cache)
+            R = R_par @ R_loc
+            t = R_par @ t_loc + t_par
+
             _add_mesh_trace(fig, verts, ti, tj, tk, R, t, color,
                             vol.get("g4name") or vol.get("name", vtype))

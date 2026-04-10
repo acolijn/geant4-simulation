@@ -281,15 +281,15 @@ async def websocket_log(ws: WebSocket):
             if current_process["info"]:
                 lines = current_process["info"]["log_lines"]
                 if len(lines) > sent:
-                    for line in lines[sent:]:
-                        await ws.send_text(line)
+                    batch = "\n".join(lines[sent:])
+                    await ws.send_text(batch)
                     sent = len(lines)
             else:
                 # No process running — check if we should close
                 if sent > 0:
                     await ws.send_text("__DONE__")
                     break
-            await asyncio.sleep(0.2)
+            await asyncio.sleep(0.3)
     except WebSocketDisconnect:
         pass
 

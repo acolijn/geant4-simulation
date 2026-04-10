@@ -268,6 +268,10 @@ async function startLocalRun() {
   // Open WebSocket for live log
   const proto = location.protocol === 'https:' ? 'wss' : 'ws';
   ws = new WebSocket(`${proto}://${location.host}/ws/log`);
+  let logBuf = '';
+  let rafPending = false;
+  const LOG_MAX_CHARS = 200_000;
+
   ws.onmessage = (e) => {
     if (e.data === '__DONE__') {
       $('btn-start').disabled = false;
@@ -279,8 +283,7 @@ async function startLocalRun() {
       loadRunHistory();
       return;
     }
-    $('log-output').textContent += e.data + '\n';
-    $('log-output').scrollTop = $('log-output').scrollHeight;
+    logBuf += e.data + '\n';
 
     // Parse progress from ">>> Event: NNN"
     const m = e.data.match(/>>> Event:\s*(\d+)/);
@@ -289,6 +292,21 @@ async function startLocalRun() {
       const pct = Math.min(100, (evtNum / nEvents) * 100);
       $('progress-fill').style.width = pct.toFixed(1) + '%';
       $('progress-text').textContent = `Event ${evtNum.toLocaleString()} / ${nEvents.toLocaleString()} (${pct.toFixed(0)}%)`;
+    }
+
+    if (!rafPending) {
+      rafPending = true;
+      requestAnimationFrame(() => {
+        const el = $('log-output');
+        let txt = el.textContent + logBuf;
+        if (txt.length > LOG_MAX_CHARS) {
+          txt = txt.slice(txt.length - LOG_MAX_CHARS);
+        }
+        el.textContent = txt;
+        logBuf = '';
+        el.scrollTop = el.scrollHeight;
+        rafPending = false;
+      });
     }
   };
   ws.onclose = () => {
