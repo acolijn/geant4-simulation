@@ -178,19 +178,19 @@ G4ThreeVector GeometryParser::ParseVector(const json& vec) {
  *          Angles are assumed to be in radians
  *          Rotations are applied in the Geant4 sequence: first X, then Y, then Z
  */
-G4RotationMatrix* GeometryParser::ParseRotation(const json& rot, bool isAssembly) {
+G4RotationMatrix* GeometryParser::ParseRotation(const json& rot, bool /*isAssembly*/) {
     // Get rotation angles from JSON
     G4double rx = rot["x"].get<double>();
     G4double ry = rot["y"].get<double>();
     G4double rz = rot["z"].get<double>();
     
-    // For regular volumes, invert the rotation angles to match the geometry-editor convention
-    // Assemblies already have the correct rotation direction due to how MakeImprint works
-    if (!isAssembly) {
-        rx = -rx;
-        ry = -ry;
-        rz = -rz;
-    }
+    // Invert the rotation angles to match the geometry-editor convention.
+    // The JSON stores angles for THREE.js active XYZ Euler (M = Rx*Ry*Rz).
+    // Geant4 CLHEP rotateX/Y/Z builds M = Rz*Ry*Rx (passive).
+    // Inverting angles makes both systems produce the same physical rotation.
+    rx = -rx;
+    ry = -ry;
+    rz = -rz;
     
     // Create a rotation matrix using individual rotations around each axis
     // This ensures rotations are applied in the correct sequence: X, then Y, then Z
