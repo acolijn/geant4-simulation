@@ -59,12 +59,12 @@ def rotation_matrix_placement(rx, ry, rz):
 def rotation_matrix_assembly(rx, ry, rz):
     """Rotation for assembly / MakeImprint placements.
 
-    Angles are in **radians**.  MakeImprint applies the rotation matrix
-    as an active transform without negation, so the matrix is
-    ``Rz @ Ry @ Rx`` (same composition order as rotateX→Y→Z with
-    pre-multiplication).
+    Angles are in **radians**.  With the ``isAssembly`` fix in
+    GeometryParser::ParseRotation (which inverts the rotation before
+    passing to MakeImprint), the physical daughter-to-mother transform
+    is the same as for regular volumes: ``Rx(rx) @ Ry(ry) @ Rz(rz)``.
     """
-    return _Rz(rz) @ _Ry(ry) @ _Rx(rx)
+    return _Rx(rx) @ _Ry(ry) @ _Rz(rz)
 
 
 # ---------------------------------------------------------------------------

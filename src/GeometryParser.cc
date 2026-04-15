@@ -178,7 +178,7 @@ G4ThreeVector GeometryParser::ParseVector(const json& vec) {
  *          Angles are assumed to be in radians
  *          Rotations are applied in the Geant4 sequence: first X, then Y, then Z
  */
-G4RotationMatrix* GeometryParser::ParseRotation(const json& rot, bool /*isAssembly*/) {
+G4RotationMatrix* GeometryParser::ParseRotation(const json& rot, bool isAssembly) {
     // Get rotation angles from JSON
     G4double rx = rot["x"].get<double>();
     G4double ry = rot["y"].get<double>();
@@ -201,6 +201,15 @@ G4RotationMatrix* GeometryParser::ParseRotation(const json& rot, bool /*isAssemb
     rotMatrix->rotateX(rx*rad);
     rotMatrix->rotateY(ry*rad);
     rotMatrix->rotateZ(rz*rad);
+    
+    // For assembly placements, MakeImprint wraps the rotation in a G4Transform3D
+    // (active rotation convention) and passes it to G4PVPlacement(G4Transform3D),
+    // which stores rotation.inverse() as the frame rotation.  Regular volumes use
+    // G4PVPlacement(G4RotationMatrix*, ...) which stores the matrix as-is.
+    // Inverting here compensates for the extra inversion in the Transform3D path.
+    if (isAssembly) {
+        *rotMatrix = rotMatrix->inverse();
+    }
     
     return rotMatrix;
 }
