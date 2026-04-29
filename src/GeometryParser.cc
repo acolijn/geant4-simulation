@@ -626,7 +626,7 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     G4cout << "Solid type: " << type << G4endl;
     
     // Check for dimensions object - only required for basic shapes, not for boolean operations
-    bool needsDimensions = (type != "union" && type != "subtraction" && type != "intersection");
+    bool needsDimensions = (type != "union" && type != "intersection");
     
     if (needsDimensions && !config.contains("dimensions")) {
         throw std::runtime_error("Error: dimensions not found in solid " + name + " of type " + type);
@@ -640,7 +640,7 @@ G4VSolid* GeometryParser::CreateSolid(const json& config, const std::string& nam
     const json& dims = dimsPtr ? *dimsPtr : json::object();
     
     // Dispatch to appropriate shape creation function based on type
-    if (type == "union" || type == "subtraction" || type == "intersection") {
+    if (type == "union" || type == "intersection") {
         G4cout << "Creating boolean solid from components: " << name << G4endl;
         solid = CreateBooleanSolidFromComponents(config, name);
     }
@@ -729,18 +729,18 @@ G4VSolid* GeometryParser::CreateBooleanSolidFromComponents(const json& config, c
         // Debug output to see component structure
         G4cout << "Processing component: " << component["name"].get<std::string>() << G4endl;
         
-        std::string operation = "union"; // Default operation is union
+        std::string operation = "add"; // Default operation is add (include in result)
         if (component.contains("boolean_operation")) {
             operation = component["boolean_operation"].get<std::string>();
             G4cout << "  Boolean operation: " << operation << G4endl;
         }
         
-        if (operation == "union" || operation == "add") {
+        if (operation == "add") {
             unionComponents.push_back(component);
         } else if (operation == "subtract") {
             subtractionComponents.push_back(component);
         } else {
-            G4cout << "Warning: Unknown boolean operation: " << operation << ", treating as union" << G4endl;
+            G4cout << "Warning: Unknown boolean operation: " << operation << ", treating as add" << G4endl;
             unionComponents.push_back(component);
         }
     }

@@ -67,3 +67,4 @@ docs/**/html/
 # Documentation XML files
 docs/*.xml
 docs/**/*.xml
+CLAUDE.md
